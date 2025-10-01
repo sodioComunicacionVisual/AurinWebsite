@@ -1,0 +1,16 @@
+---
+import ButtonIsland from './ButtonIsland.astro';
+
+interface Props {
+  text?: string;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: string;
+  disabled?: boolean;
+  class?: string;
+  href?: string;
+}
+
+const props = Astro.props;
+---
+
+<ButtonIsland {...props} variant="secondary" />

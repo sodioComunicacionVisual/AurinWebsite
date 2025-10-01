@@ -1,0 +1,168 @@
+---
+---
+
+<section class="descripcion">
+  <div class="descripcion-container">
+    <!-- Left column -->
+    <div class="left-column">
+      <h2 class="heading-highlight">
+        En un mundo lleno de estímulos visuales, nuestra misión es crear conexiones que realmente importen.
+      </h2>
+      
+      <div class="content-text">
+        <p>
+          Porque cuanto más unidos estemos en ideas, objetivos y sueños, más lejos podremos llegar juntos.<br/>
+          <strong class="text-highlight">En Aurin, abrazamos la simbiosis de los contrastes:</strong> lo cercano y lo distante, lo humano y lo tecnológico, la intuición y los datos, la creatividad y la estrategia. Creemos que las diferencias amplían perspectivas, enriquecen nuestra visión e integran nuevas formas de entender el mundo, permitiéndonos crear soluciones más innovadoras y efectivas.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Right column -->
+    <div class="right-column">
+      <img src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg" alt="Light SVG" class="triangle-svg" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .descripcion {
+    background: var(--color-black-a);
+    padding: 49px 50px;
+    overflow: hidden;
+  }
+
+  .descripcion-container {
+    max-width: 1392.94px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 50px;
+  }
+
+  /* Left column */
+  .left-column {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .heading-highlight {
+    width: 532px;
+    color: var(--color-yellow);
+    font-size: var(--heading-5-size);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: var(--heading-5-line-height);
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  .content-text {
+    align-self: stretch;
+  }
+
+  .content-text p {
+    color: var(--color-white);
+    font-size: var(--body-1-size);
+    font-family: var(--font-body);
+    font-weight: 400;
+    word-wrap: break-word;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .text-highlight {
+    color: var(--color-yellow);
+    font-weight: 700;
+  }
+
+  /* Right column */
+  .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    overflow: visible;
+    position: relative;
+  }
+
+  .triangle-svg {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    object-position: left bottom;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1400px) {
+    .descripcion {
+      padding: 40px 40px;
+    }
+
+    .descripcion-container {
+      gap: 100px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .descripcion-container {
+      flex-direction: column;
+      gap: 50px;
+    }
+
+    .left-column {
+      width: 100%;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .heading-highlight {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .descripcion {
+      padding: 40px 30px;
+    }
+
+    .left-column {
+      gap: 30px;
+    }
+
+    .heading-highlight {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .content-text p {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .descripcion {
+      padding: 30px 20px;
+    }
+
+    .left-column {
+      gap: 20px;
+    }
+
+    .heading-highlight {
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    .content-text p {
+      font-size: 14px;
+    }
+  }
+</style>

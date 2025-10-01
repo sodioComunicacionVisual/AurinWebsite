@@ -1,0 +1,417 @@
+/* ============================================
+   GLOBAL DESIGN SYSTEM - TYPOGRAPHY
+   ============================================ */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ============================================
+   CSS CUSTOM PROPERTIES (Variables)
+   ============================================ */
+
+:root {
+  /* Font Families */
+  --font-heading: 'Titillium Web', sans-serif;
+  --font-body: 'Urbanist', sans-serif;
+  
+  /* ============================================
+     COLOR PALETTE
+     ============================================ */
+  
+  /* Primary Colors */
+  --color-white: #FFFFFF;
+  --color-black-a: #0A0A0A;
+  --color-black-b: #161616;
+  --color-gray-a: #7D7F79;
+  --color-gray-b: #282828;
+  --color-yellow: #D0DF00;
+  
+  /* ============================================
+     HEADING BOLD - Titillium Web
+     ============================================ */
+  
+  /* HB1 - 64/Auto */
+  --heading-bold-1-size: 64px;
+  --heading-bold-1-line-height: auto;
+  --heading-bold-1-weight: 700;
+  
+  /* HB2 - 48/Auto */
+  --heading-bold-2-size: 48px;
+  --heading-bold-2-line-height: auto;
+  --heading-bold-2-weight: 700;
+  
+  /* HB3 - 40/50 */
+  --heading-bold-3-size: 40px;
+  --heading-bold-3-line-height: 50px;
+  --heading-bold-3-weight: 700;
+  
+  /* HB4 - 36/Auto */
+  --heading-bold-4-size: 36px;
+  --heading-bold-4-line-height: auto;
+  --heading-bold-4-weight: 700;
+  
+  /* HB5 - 32/Auto */
+  --heading-bold-5-size: 32px;
+  --heading-bold-5-line-height: auto;
+  --heading-bold-5-weight: 700;
+  
+  /* ============================================
+     HEADING REGULAR - Titillium Web
+     ============================================ */
+  
+  /* H1 - 64/70 */
+  --heading-1-size: 64px;
+  --heading-1-line-height: 70px;
+  --heading-1-weight: 400;
+  
+  /* H2 - 48/50 */
+  --heading-2-size: 48px;
+  --heading-2-line-height: 50px;
+  --heading-2-weight: 400;
+  
+  /* H3 - 40/50 */
+  --heading-3-size: 40px;
+  --heading-3-line-height: 50px;
+  --heading-3-weight: 400;
+  
+  /* H4 - 36/40 */
+  --heading-4-size: 36px;
+  --heading-4-line-height: 40px;
+  --heading-4-weight: 400;
+  
+  /* H5 - 32/35 */
+  --heading-5-size: 32px;
+  --heading-5-line-height: 35px;
+  --heading-5-weight: 400;
+  
+  /* H6 - 24/30 */
+  --heading-6-size: 24px;
+  --heading-6-line-height: 30px;
+  --heading-6-weight: 400;
+  
+  /* ============================================
+     BODY BOLD - Urbanist
+     ============================================ */
+  
+  /* BB1 - 64/Auto */
+  --body-bold-1-size: 64px;
+  --body-bold-1-line-height: auto;
+  --body-bold-1-weight: 700;
+  
+  /* BB2 - 48/Auto */
+  --body-bold-2-size: 48px;
+  --body-bold-2-line-height: auto;
+  --body-bold-2-weight: 700;
+  
+  /* BB3 - 40/Auto */
+  --body-bold-3-size: 40px;
+  --body-bold-3-line-height: auto;
+  --body-bold-3-weight: 700;
+  
+  /* BB4 - 36/Auto */
+  --body-bold-4-size: 36px;
+  --body-bold-4-line-height: auto;
+  --body-bold-4-weight: 700;
+  
+  /* BB5 - 20/Auto */
+  --body-bold-5-size: 20px;
+  --body-bold-5-line-height: auto;
+  --body-bold-5-weight: 700;
+  
+  /* BB6 - 16/Auto */
+  --body-bold-6-size: 16px;
+  --body-bold-6-line-height: auto;
+  --body-bold-6-weight: 700;
+  
+  /* ============================================
+     BODY REGULAR - Urbanist
+     ============================================ */
+  
+  /* B0.5 - 32/Auto */
+  --body-0-5-size: 32px;
+  --body-0-5-line-height: auto;
+  --body-0-5-weight: 400;
+  
+  /* B0 - 24/Auto */
+  --body-0-size: 24px;
+  --body-0-line-height: auto;
+  --body-0-weight: 400;
+  
+  /* B1 - 20/Auto */
+  --body-1-size: 20px;
+  --body-1-line-height: auto;
+  --body-1-weight: 400;
+  
+  /* B2 - 16/Auto */
+  --body-2-size: 16px;
+  --body-2-line-height: auto;
+  --body-2-weight: 400;
+  
+  /* B3 - 15/Auto */
+  --body-3-size: 15px;
+  --body-3-line-height: auto;
+  --body-3-weight: 400;
+  
+  /* B4 - 14/Auto */
+  --body-4-size: 14px;
+  --body-4-line-height: auto;
+  --body-4-weight: 400;
+  
+  /* ============================================
+     LABEL TEXT - Urbanist
+     ============================================ */
+  
+  /* L1 - 20/Auto */
+  --label-1-size: 20px;
+  --label-1-line-height: auto;
+  --label-1-weight: 400;
+  
+  /* L2 - 16/Auto */
+  --label-2-size: 16px;
+  --label-2-line-height: auto;
+  --label-2-weight: 400;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Heading Bold Classes */
+.heading-bold-1 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-bold-1-size);
+  line-height: var(--heading-bold-1-line-height);
+  font-weight: var(--heading-bold-1-weight);
+}
+
+.heading-bold-2 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-bold-2-size);
+  line-height: var(--heading-bold-2-line-height);
+  font-weight: var(--heading-bold-2-weight);
+}
+
+.heading-bold-3 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-bold-3-size);
+  line-height: var(--heading-bold-3-line-height);
+  font-weight: var(--heading-bold-3-weight);
+}
+
+.heading-bold-4 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-bold-4-size);
+  line-height: var(--heading-bold-4-line-height);
+  font-weight: var(--heading-bold-4-weight);
+}
+
+.heading-bold-5 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-bold-5-size);
+  line-height: var(--heading-bold-5-line-height);
+  font-weight: var(--heading-bold-5-weight);
+}
+
+/* Heading Regular Classes */
+.heading-1 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-1-size);
+  line-height: var(--heading-1-line-height);
+  font-weight: var(--heading-1-weight);
+}
+
+.heading-2 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-2-size);
+  line-height: var(--heading-2-line-height);
+  font-weight: var(--heading-2-weight);
+}
+
+.heading-3 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-3-size);
+  line-height: var(--heading-3-line-height);
+  font-weight: var(--heading-3-weight);
+}
+
+.heading-4 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-4-size);
+  line-height: var(--heading-4-line-height);
+  font-weight: var(--heading-4-weight);
+}
+
+.heading-5 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-5-size);
+  line-height: var(--heading-5-line-height);
+  font-weight: var(--heading-5-weight);
+}
+
+.heading-6 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-6-size);
+  line-height: var(--heading-6-line-height);
+  font-weight: var(--heading-6-weight);
+}
+
+/* Body Bold Classes */
+.body-bold-1 {
+  font-family: var(--font-body);
+  font-size: var(--body-bold-1-size);
+  line-height: var(--body-bold-1-line-height);
+  font-weight: var(--body-bold-1-weight);
+}
+
+.body-bold-2 {
+  font-family: var(--font-body);
+  font-size: var(--body-bold-2-size);
+  line-height: var(--body-bold-2-line-height);
+  font-weight: var(--body-bold-2-weight);
+}
+
+.body-bold-3 {
+  font-family: var(--font-body);
+  font-size: var(--body-bold-3-size);
+  line-height: var(--body-bold-3-line-height);
+  font-weight: var(--body-bold-3-weight);
+}
+
+.body-bold-4 {
+  font-family: var(--font-body);
+  font-size: var(--body-bold-4-size);
+  line-height: var(--body-bold-4-line-height);
+  font-weight: var(--body-bold-4-weight);
+}
+
+.body-bold-5 {
+  font-family: var(--font-body);
+  font-size: var(--body-bold-5-size);
+  line-height: var(--body-bold-5-line-height);
+  font-weight: var(--body-bold-5-weight);
+}
+
+.body-bold-6 {
+  font-family: var(--font-body);
+  font-size: var(--body-bold-6-size);
+  line-height: var(--body-bold-6-line-height);
+  font-weight: var(--body-bold-6-weight);
+}
+
+/* Body Regular Classes */
+.body-0-5 {
+  font-family: var(--font-body);
+  font-size: var(--body-0-5-size);
+  line-height: var(--body-0-5-line-height);
+  font-weight: var(--body-0-5-weight);
+}
+
+.body-0 {
+  font-family: var(--font-body);
+  font-size: var(--body-0-size);
+  line-height: var(--body-0-line-height);
+  font-weight: var(--body-0-weight);
+}
+
+.body-1 {
+  font-family: var(--font-body);
+  font-size: var(--body-1-size);
+  line-height: var(--body-1-line-height);
+  font-weight: var(--body-1-weight);
+}
+
+.body-2 {
+  font-family: var(--font-body);
+  font-size: var(--body-2-size);
+  line-height: var(--body-2-line-height);
+  font-weight: var(--body-2-weight);
+}
+
+.body-3 {
+  font-family: var(--font-body);
+  font-size: var(--body-3-size);
+  line-height: var(--body-3-line-height);
+  font-weight: var(--body-3-weight);
+}
+
+.body-4 {
+  font-family: var(--font-body);
+  font-size: var(--body-4-size);
+  line-height: var(--body-4-line-height);
+  font-weight: var(--body-4-weight);
+}
+
+/* Label Text Classes */
+.label-1 {
+  font-family: var(--font-body);
+  font-size: var(--label-1-size);
+  line-height: var(--label-1-line-height);
+  font-weight: var(--label-1-weight);
+}
+
+.label-2 {
+  font-family: var(--font-body);
+  font-size: var(--label-2-size);
+  line-height: var(--label-2-line-height);
+  font-weight: var(--label-2-weight);
+}
+
+/* ============================================
+   SEMANTIC HTML ELEMENT DEFAULTS
+   ============================================ */
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-1-size);
+  line-height: var(--heading-1-line-height);
+  font-weight: var(--heading-1-weight);
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-2-size);
+  line-height: var(--heading-2-line-height);
+  font-weight: var(--heading-2-weight);
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-3-size);
+  line-height: var(--heading-3-line-height);
+  font-weight: var(--heading-3-weight);
+}
+
+h4 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-4-size);
+  line-height: var(--heading-4-line-height);
+  font-weight: var(--heading-4-weight);
+}
+
+h5 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-5-size);
+  line-height: var(--heading-5-line-height);
+  font-weight: var(--heading-5-weight);
+}
+
+h6 {
+  font-family: var(--font-heading);
+  font-size: var(--heading-6-size);
+  line-height: var(--heading-6-line-height);
+  font-weight: var(--heading-6-weight);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--body-2-size);
+  line-height: var(--body-2-line-height);
+  font-weight: var(--body-2-weight);
+}
+
+p {
+  font-family: var(--font-body);
+  font-size: var(--body-2-size);
+  line-height: var(--body-2-line-height);
+  font-weight: var(--body-2-weight);
+}

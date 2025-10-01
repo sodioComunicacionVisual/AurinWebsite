@@ -1,0 +1,206 @@
+---
+import MainButton from '../UI/MainButton.astro';
+import Card from '../UI/Card.astro';
+---
+
+<section class="especialidades">
+  <div class="especialidades-container">
+    <!-- Left content section -->
+    <div class="content-section">
+      <div class="heading">
+        <span class="heading-normal">Nuestras<br/></span>
+        <span class="heading-highlight">Especialidades</span>
+      </div>
+      
+      <p class="description hide-desktop">
+        Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.
+      </p>
+      
+      <MainButton 
+        text="Conoce más de nuestros servicios"
+        href="/servicios"
+      />
+    </div>
+    
+    <!-- Right cards section -->
+    <div class="cards-section">
+      <div class="cards-grid">
+        <Card 
+          letter="M"
+          title="Auditorías de marca y experiencia"
+        />
+        <Card 
+          letter="E"
+          title="Diseño de experiencias"
+        />
+        <Card 
+          letter="D"
+          title="Construcción de ecosistemas digitales"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .especialidades {
+    width: 100%;
+    background: var(--color-black-a);
+    overflow: hidden;
+  }
+
+  .especialidades-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  /* Left content section */
+  .content-section {
+    flex: 1;
+    height: auto;
+    padding: clamp(30px, 10vw, 50px) clamp(40px, 5vw, 100px);
+    background: var(--color-black-a);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .heading {
+    align-self: stretch;
+  }
+
+  .heading-normal {
+    color: var(--color-white);
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: clamp(28px, 4vw, 35px);
+    word-wrap: break-word;
+  }
+
+  .heading-highlight {
+    color: var(--color-yellow);
+    font-size: clamp(32px, 5vw, 48px);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: clamp(38px, 5.5vw, 50px);
+    word-wrap: break-word;
+  }
+
+  .description {
+    align-self: stretch;
+    color: var(--color-white);
+    font-size: clamp(14px, 3.5vw, 18px);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    word-wrap: break-word;
+    margin: 0;
+    max-width: 500px;
+  }
+
+  .hide-desktop {
+    display: none;
+  }
+
+  /* Right cards section */
+  .cards-section {
+    flex: 1;
+    padding: clamp(30px, 5vw, 50px) clamp(20px, 3vw, 40px);
+    background: var(--color-black-a);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cards-grid {
+    width: 100%;
+    max-width: 713.91px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    justify-items: center;
+  }
+
+  .cards-grid :global(.card) {
+    width: 100%;
+    max-width: 348.95px;
+    height: 348.95px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1200px) {
+    .especialidades-container {
+      flex-direction: column;
+    }
+
+    .content-section {
+      width: 100%;
+      min-width: unset;
+      height: auto;
+      padding: 50px 40px;
+    }
+
+    .cards-section {
+      width: 100%;
+      min-width: unset;
+      height: auto;
+      padding: 50px 40px;
+    }
+
+    .cards-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 348.95px));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content-section {
+      padding: 40px 30px;
+    }
+
+    .cards-section {
+      padding: 40px 30px;
+    }
+
+    .heading-normal,
+    .heading-highlight {
+      text-align: left;
+    }
+
+    .description {
+      max-width: 100%;
+    }
+
+    .hide-desktop {
+      display: block;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .content-section {
+      padding: 30px 20px;
+      gap: 15px;
+    }
+
+    .cards-section {
+      padding: 30px 20px;
+    }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .cards-grid :global(.card) {
+      height: 280px;
+    }
+  }
+</style>

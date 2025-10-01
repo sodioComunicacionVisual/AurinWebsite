@@ -1,0 +1,195 @@
+---
+// Footer component
+---
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <img
+        class="footer-logo"
+        src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+        alt="Aurin Logo"
+      />
+
+      <div class="footer-columns">
+        <!-- Column 1: Oficinas y Contacto -->
+        <div class="footer-column">
+          <div class="footer-section">
+            <h3 class="footer-title">OFICINAS</h3>
+            <div class="footer-link-container">
+              <div class="footer-line"></div>
+              <button class="footer-link">Estamos en Aldea Creativa</button>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h3 class="footer-title">CONTACTO</h3>
+            <div class="footer-link-container">
+              <div class="footer-line"></div>
+              <button class="footer-link">hey@aurin.mx</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Legales -->
+        <div class="footer-column">
+          <div class="footer-section">
+            <h3 class="footer-title">LEGALES</h3>
+            <div class="footer-link-container">
+              <div class="footer-line"></div>
+              <button class="footer-link">Aviso de privacidad</button>
+            </div>
+            <div class="footer-link-container">
+              <div class="footer-line"></div>
+              <button class="footer-link">Términos y condiciones</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-copyright">
+      <p>©2025 Aurin. Todos los derechos reservados</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    background: #0A0A0A;
+    overflow: hidden;
+  }
+
+  .footer-container {
+    max-width: 1513px;
+    margin: 0 auto;
+    padding: 49px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 62px;
+  }
+
+  .footer-content {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .footer-logo {
+    width: 468px;
+    height: 146.82px;
+    flex-shrink: 0;
+  }
+
+  .footer-columns {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+  }
+
+  .footer-column {
+    width: 442.02px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .footer-link-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+  }
+
+  .footer-line {
+    width: 100%;
+    max-width: 20px;
+    height: 100%;
+    border-bottom: 1.07px solid #282828;
+  }
+
+  .footer-title {
+    color: white;
+    font-size: 16px;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 700;
+    line-height: 16px;
+    margin: 0;
+  }
+
+  .footer-link {
+    color: #7D7F79;
+    font-size: 20px;
+    font-family: 'Urbanist', sans-serif;
+    font-weight: 400;
+    line-height: 22px;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .footer-link:hover {
+    color: white;
+  }
+
+  .footer-copyright {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-copyright p {
+    color: white;
+    font-size: 14px;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 400;
+    text-decoration: underline;
+    line-height: 14px;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1200px) {
+    .footer-content {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .footer-columns {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      padding: 60px 24px;
+    }
+
+    .footer-logo {
+      width: 100%;
+      height: auto;
+      max-width: 300px;
+    }
+
+    .footer-columns {
+      flex-direction: column;
+    }
+
+    .footer-column {
+      width: 100%;
+    }
+
+    .footer-copyright p {
+      width: 100%;
+    }
+  }
+</style>

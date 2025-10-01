@@ -1,0 +1,454 @@
+---
+interface HerramientaItem {
+  id: string;
+  letter: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title?: string;
+  titlePart1?: string;
+  titlePart2?: string;
+  description?: string;
+  items?: HerramientaItem[];
+}
+
+const {
+  title = "Nuestra caja de Herramientas",
+  titlePart1 = "Nuestra caja",
+  titlePart2 = "de Herramientas",
+  description = "Con estas capacidades, damos forma a soluciones que conectan, inspiran y generan impacto.",
+  items = [
+    {
+      id: "desarrollo-web",
+      letter: "W",
+      title: "Desarrollo web y de aplicaciones móviles",
+      href: "#",
+    },
+    {
+      id: "usabilidad",
+      letter: "U",
+      title: "Pruebas de usabilidad",
+      href: "#",
+    },
+    {
+      id: "branding",
+      letter: "I",
+      title: "Desarrollo de Branding (Identidad)",
+      href: "#",
+    },
+    {
+      id: "marketing",
+      letter: "M",
+      title: "Marketing digital y redes sociales",
+      href: "#",
+    },
+    {
+      id: "diseno-ux-ui",
+      letter: "X",
+      title: "Diseño UX | UI",
+      href: "#",
+    },
+  ],
+} = Astro.props;
+
+const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<section class="herramientas-section">
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <div class="title-wrapper">
+          <h2 class="title">
+            <span class="title-part1 heading-5">{titlePart1}</span>
+            <br />
+            <span class="title-part2 heading-2">{titlePart2}</span>
+          </h2>
+        </div>
+        <p class="description body-1">{description}</p>
+      </div>
+      <div class="nav-buttons" id={`nav-${uniqueId}`}>
+        <button class="nav-btn prev-btn" aria-label="Anterior" disabled>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+        </button>
+        <button class="nav-btn next-btn" aria-label="Siguiente">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="splide" id={uniqueId}>
+    <div class="splide__track">
+      <ul class="splide__list">
+        {items.map((item) => (
+          <li class="splide__slide">
+            <a href={item.href} class="card-link">
+              <div class="card">
+                <div class="card-letter">
+                  {item.letter}
+                </div>
+                <div class="card-content">
+                  <div class="card-title">
+                    {item.title}
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .herramientas-section {
+    padding: 8rem 0;
+    width: 100%;
+    
+    overflow: hidden;
+
+    background-color:black;
+  }
+
+  .container {
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3.5rem;
+    gap: 2rem;
+    padding: 49px 50px;
+
+  }
+
+  .header-content {
+    flex: 1;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .title-wrapper {
+    max-width: 488px;
+  }
+
+  .title {
+    margin: 0;
+  }
+
+  .title-part1 {
+    color: var(--color-white);
+  }
+
+  .title-part2 {
+    color: var(--color-yellow);
+  }
+
+  .description {
+    align-self: stretch;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-white);
+    margin: 0;
+  }
+
+  .nav-buttons {
+    display: none;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .nav-buttons {
+      display: flex;
+    }
+  }
+
+  .nav-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    background: var(--color-yellow, #C5D400);
+    color: var(--color-black-a, #000);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .splide {
+    width: 100%;
+    padding: 0;
+  }
+
+  .splide__track {
+    overflow: visible;
+  }
+
+  .splide__list {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .splide__slide {
+    width: auto !important;
+    list-style: none;
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card {
+    width: 100%;
+    width: 250px;
+    min-height: 500px;
+    background: linear-gradient(200deg, rgba(0, 0, 0, 0) 47%, #101010 47%), #161616;
+    overflow: hidden;
+    border-radius: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Hover */
+  .card-link:hover .card {
+    background: linear-gradient(200deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), var(--color-yellow, #D0DF00);
+  }
+  
+  .card-letter {
+    width: clamp(200px, 85%, 277px);
+    text-align: right;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-black-a);
+    font-size: clamp(200px, 25vw, 400px);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 0.905;
+    word-wrap: break-word;
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1;
+    position: relative;
+    left: -8vw;
+  }
+
+  .card-link:hover .card-letter {
+    transform: scale(1.02);
+  }
+
+  
+  .card-content {
+    align-self: stretch;
+    padding: 35px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: inline-flex;
+    z-index: 2;
+    position: relative;
+  }
+
+  .card-title {
+    flex: 1 1 0;
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-gray-a);
+    font-size: var(--body-1-size);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: var(--body-1-line-height);
+    word-wrap: break-word;
+    transition: color 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Título en hover */
+  .card-link:hover .card-title {
+    color: var(--color-black-a);
+    transform: translateY(-2px);
+  }
+
+  /* Splide pagination */
+  :global(.splide__pagination) {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0;
+  }
+
+  :global(.splide__pagination__page) {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(197, 212, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
+  }
+
+  :global(.splide__pagination__page.is-active) {
+    background: var(--color-yellow, #C5D400);
+    width: 2rem;
+    border-radius: 0.25rem;
+  }
+
+  :global(.splide__pagination__page:hover:not(.is-active)) {
+    background: rgba(197, 212, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .herramientas-section {
+      padding: 4rem 0;
+    }
+
+    .header {
+      margin-bottom: 2rem;
+      
+    }
+
+    .card-letter {
+      font-size: clamp(150px, 30vw, 250px);
+      width: clamp(100px, 35%, 180px);
+     
+    }
+
+    .card-title {
+      font-size: clamp(16px, 3vw, 20px);
+      
+    }
+
+    .card-content {
+      padding: clamp(15px, 4vw, 30px) 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+ 
+
+    .card-letter {
+      font-size: clamp(120px, 28vw, 200px);
+      width: clamp(80px, 30%, 150px);
+    }
+
+    .card-title {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+
+    .card-content {
+      padding: clamp(12px, 3vw, 25px) 8px;
+    }
+  }
+</style>
+
+<script>
+  import Splide from '@splidejs/splide';
+  import '@splidejs/splide/css/core';
+  import { animate, inView } from "motion";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const splideElement = document.querySelector('.splide');
+    
+    if (splideElement) {
+      const splide = new Splide(splideElement, {
+        type: 'slide',
+        perPage: 3,
+        perMove: 1,
+        gap: '1.75rem',
+        padding: { left: 0, right: 0 },
+        pagination: true,
+        arrows: false,
+        drag: true,
+        autoWidth: true,
+        focus: 0,
+        omitEnd: true,
+        breakpoints: {
+          1024: {
+            perPage: 2,
+            gap: '1.5rem',
+          },
+          768: {
+            perPage: 1,
+            gap: '1rem',
+          },
+        },
+      });
+
+      splide.mount();
+
+      // Conectar botones de navegación
+      const prevBtn = document.querySelector('.prev-btn');
+      const nextBtn = document.querySelector('.next-btn');
+
+      if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => splide.go('<'));
+        nextBtn.addEventListener('click', () => splide.go('>'));
+
+        // Actualizar estado de botones
+        const updateButtons = () => {
+          prevBtn.disabled = splide.index === 0;
+          nextBtn.disabled = splide.index >= splide.length - 1;
+        };
+
+        splide.on('moved', updateButtons);
+        updateButtons();
+      }
+
+      // Animaciones con Motion
+      const slides = document.querySelectorAll('.splide__slide');
+      slides.forEach((slide, index) => {
+        inView(slide, (info) => {
+          animate(
+            slide,
+            { opacity: [0, 1], y: [30, 0] },
+            { 
+              duration: 0.6, 
+              delay: index * 0.1,
+              easing: [0.4, 0, 0.2, 1]
+            }
+          );
+        });
+      });
+    }
+  });
+</script>

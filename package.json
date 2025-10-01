@@ -10,6 +10,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.0.0"
+    "@splidejs/splide": "^4.1.4",
+    "astro": "^4.0.0",
+    "firebase": "^10.7.1",
+    "lenis": "^1.3.11",
+    "lucide-astro": "^0.544.0",
+    "motion": "^12.23.22",
+    "shiki": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5"
   }
 }

@@ -1,0 +1,182 @@
+---
+import ProjectCard from '../UI/ProjectCard.astro';
+import ButtonIsland from '../UI/ButtonIsland.astro';
+---
+
+<section class="projects">
+  <div class="projects-container">
+    <!-- Header section -->
+    <div class="header-section">
+      <div class="heading">
+        <span class="heading-normal">Cada proyecto, una historia distinta.<br/></span>
+        <span class="heading-highlight">Descúbrelas</span>
+      </div>
+      
+      <ButtonIsland 
+        text="Ver más"
+        href="/proyectos"
+        variant="primary"
+      />
+    </div>
+    
+    <!-- Projects grid -->
+    <div class="projects-grid">
+      <ProjectCard 
+        title="Galicia"
+        tags={["UX/UI", "Desarrollo front & back"]}
+        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectGalicia.webp"
+        href="/proyectos/galicia"
+      />
+      
+      <ProjectCard 
+        title="Sinfonica de<br/>Minería"
+        tags={["UX/UI", "Desarrollo front & back"]}
+        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSinfonica.webp"
+        href="/proyectos/sinfonica"
+      />
+      
+      <ProjectCard 
+        title="SAI Derecho y economía"
+        tags={["UX/UI", "Desarrollo front & back"]}
+        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSai.webp"
+        href="/proyectos/sai"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects {
+    background: var(--color-black-a);
+    padding: 49px 50px;
+    overflow: hidden;
+  }
+
+  .projects-container {
+    max-width: 1392.94px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+  }
+
+  /* Header section */
+  .header-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+  }
+
+  .heading {
+    flex: 1;
+    max-width: 488px;
+  }
+
+  .heading-normal {
+    color: var(--color-white);
+    font-size: var(--heading-5-size);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: var(--heading-5-line-height);
+    word-wrap: break-word;
+  }
+
+  .heading-highlight {
+    color: var(--color-yellow);
+    font-size: var(--heading-2-size);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: var(--heading-2-line-height);
+    word-wrap: break-word;
+  }
+
+  /* Projects grid */
+  .projects-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 26px;
+    justify-items: stretch;
+  }
+
+  .projects-grid :global(.project-card) {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1400px) {
+    .projects {
+      padding: 40px 40px;
+    }
+
+    .header-section {
+      gap: 30px;
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .projects {
+      padding: 40px 30px;
+    }
+
+    .header-section {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    .heading {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .projects-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .projects {
+      padding: 30px 20px;
+    }
+
+    .header-section {
+      gap: 20px;
+    }
+
+    .heading {
+      width: 100%;
+    }
+
+    .heading-normal {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .heading-highlight {
+      font-size: 36px;
+      line-height: 40px;
+    }
+
+    .projects-grid {
+      gap: 20px;
+    }
+  }
+</style>

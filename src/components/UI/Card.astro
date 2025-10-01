@@ -1,0 +1,151 @@
+---
+interface Props {
+	letter: string;
+	title: string;
+	href?: string;
+}
+
+const { href, letter, title } = Astro.props;
+const Tag = href ? 'a' : 'div';
+const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<Tag
+	href={href}
+	class="card"
+	data-card-id={uniqueId}
+	target={href ? "_blank" : undefined}
+	rel={href ? "noopener noreferrer" : undefined}
+>
+	<div class="card-letter" data-card-letter>
+		{letter}
+	</div>
+	<div class="card-content" data-card-content>
+		<div class="card-title" data-card-title>
+			{title}
+		</div>
+	</div>
+</Tag>
+
+<style>
+	.card {
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #212224;
+		overflow: hidden;
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+		position: relative;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.card:hover {
+		background: linear-gradient(200deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), var(--color-yellow);
+	}
+	
+	.card-letter {
+		position: absolute;
+		top: -25px;
+		left: 26px;
+		color: var(--color-yellow);
+		font-size: 308.50px;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		line-height: 1;
+		text-align: right;
+		width: 210px;
+		height: 250px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.card:hover .card-letter {
+		color: var(--color-black-a);
+	}
+	
+	.card-content {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 35px 25px;
+		display: flex;
+		align-items: flex-end;
+	}
+
+	.card-title {
+		color: var(--color-yellow);
+		font-size: 32px;
+		font-family: var(--font-heading);
+		font-weight: 300;
+		line-height: 35px;
+		max-width: 290px;
+	}
+
+	.card:hover .card-title {
+		color: var(--color-black-a);
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.card-letter {
+			font-size: 200px;
+			top: -15px;
+			left: 15px;
+			width: 150px;
+			height: 180px;
+		}
+
+		.card-title {
+			font-size: 24px;
+			line-height: 28px;
+		}
+
+		.card-content {
+			padding: 25px 20px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.card-letter {
+			font-size: 150px;
+			top: -10px;
+			left: 10px;
+			width: 120px;
+			height: 140px;
+		}
+
+		.card-title {
+			font-size: 20px;
+			line-height: 24px;
+		}
+
+		.card-content {
+			padding: 20px 15px;
+		}
+	}
+
+	/* Animaciones suaves con CSS - más eficiente que JS */
+	.card-letter,
+	.card-title,
+	.card-content {
+		transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.card:hover .card-letter {
+		transform: scale(1.05) rotate(2deg);
+	}
+
+	.card:hover .card-title {
+		transform: translateY(-5px) scale(1.02);
+	}
+
+	.card:hover .card-content {
+		transform: translateY(-3px);
+	}
+</style>

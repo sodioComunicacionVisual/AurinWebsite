@@ -1,95 +1,38 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Descripcion from '../components/Home/Descripcion.astro';
+import ExpertosUsuarios from '../components/Home/ExpertosUsuarios.astro';
+import EnterpriseMarquee from '../components/Home/EnterpriseMarquee.astro';
+import Especialidades from '../components/Home/Especialidades.astro';
+import MainCat from '../components/Home/MainCat.astro';
+import Herramientas from '../components/Home/Herramientas.astro';
+import Projects from '../components/Home/Projects.astro';
+import Footer from '../components/UI/Footer.astro';
+
 ---
 
 <Layout title="Bienvenido a Astro">
 	<main>
-		<div class="hero">
-			<h1>Bienvenido a <span class="text-gradient">Astro</span></h1>
-			<p class="instructions">
-				Para comenzar, edita los archivos en <code>src/pages</code> y <code>src/components</code>.
-			</p>
-		</div>
+	
+		<Descripcion />
 		
-		<div class="card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentación"
-				body="Aprende cómo funciona Astro y explora la API oficial."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integraciones"
-				body="Descubre plugins y frameworks para potenciar tu proyecto."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Temas"
-				body="Explora temas y plantillas creados por la comunidad."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Comunidad"
-				body="Únete a la comunidad de Astro en Discord."
-			/>
-		</div>
+		<EnterpriseMarquee />
+		
+		
+		<ExpertosUsuarios />
+
+		<Especialidades />
+		
+		
+		<MainCat/>
+
+		<Herramientas />
+
+		<Projects />
+
+		<Footer />
+
 	</main>
 </Layout>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 100%;
-		max-width: 1200px;
-		color: white;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-	
-	.hero {
-		text-align: center;
-		margin-bottom: 4rem;
-		padding: 2rem 0;
-	}
-	
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		margin-bottom: 1em;
-	}
-	
-	.text-gradient {
-		background-image: linear-gradient(45deg, #ff5d01 30%, #ff1639);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(255, 255, 255, 0.25);
-		background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	
-	.instructions code {
-		font-size: 0.8em;
-		font-weight: bold;
-		background: rgba(255, 255, 255, 0.12);
-		color: #ff5d01;
-		border-radius: 4px;
-		padding: 0.3em 0.4em;
-	}
-	
-	.card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
-</style>
+

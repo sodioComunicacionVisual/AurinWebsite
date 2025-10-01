@@ -1,0 +1,192 @@
+---
+// Infinite Slider Marquee - Astro Island with Motion Dev
+// Uses client:load for interactive animation
+const LOGOS = [
+  { src: "https://html.tailus.io/blocks/customers/openai.svg", alt: "OpenAI Logo", height: 24 },
+  { src: "https://html.tailus.io/blocks/customers/nvidia.svg", alt: "Nvidia Logo", height: 20 },
+  { src: "https://html.tailus.io/blocks/customers/column.svg", alt: "Column Logo", height: 16 },
+  { src: "https://html.tailus.io/blocks/customers/github.svg", alt: "GitHub Logo", height: 16 },
+  { src: "https://html.tailus.io/blocks/customers/nike.svg", alt: "Nike Logo", height: 20 },
+  { src: "https://html.tailus.io/blocks/customers/lemonsqueezy.svg", alt: "Lemon Squeezy Logo", height: 20 },
+  { src: "https://html.tailus.io/blocks/customers/laravel.svg", alt: "Laravel Logo", height: 16 },
+  { src: "https://html.tailus.io/blocks/customers/lilly.svg", alt: "Lilly Logo", height: 28 },
+];
+---
+
+<section class="enterprise-marquee">
+  <div class="marquee-wrapper">
+    <div class="marquee-content">
+
+      
+      <!-- Slider section -->
+      <div class="marquee-slider" id="marquee-slider">
+        <div class="slider-track" id="slider-track">
+          {LOGOS.map((logo, index) => (
+            <>
+              <div class="logo-item">
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  style={`height: ${logo.height}px`}
+                  width="auto"
+                />
+              </div>
+              {index < LOGOS.length - 1 && <div class="logo-separator"></div>}
+            </>
+          ))}
+          {LOGOS.map((logo, index) => (
+            <>
+              <div class="logo-item">
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  style={`height: ${logo.height}px`}
+                  width="auto"
+                />
+              </div>
+              {index < LOGOS.length - 1 && <div class="logo-separator"></div>}
+            </>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .enterprise-marquee {
+    background: var(--color-black-a);
+    padding: 4rem 0;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-wrapper {
+    margin: 0 auto;
+    max-width: 1536px;
+    padding: 0 1.5rem;
+  }
+
+  .marquee-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .marquee-content {
+      flex-direction: row;
+      gap: 0;
+    }
+  }
+
+  .marquee-text {
+    flex-shrink: 0;
+    text-align: center;
+    max-width: 176px;
+  }
+
+  @media (min-width: 768px) {
+    .marquee-text {
+      text-align: right;
+      border-right: 1px solid var(--color-gray-b);
+      padding-right: 1.5rem;
+    }
+  }
+
+  .marquee-text p {
+    font-size: 0.875rem;
+    color: var(--color-gray-a);
+    font-family: var(--font-body);
+  }
+
+  .marquee-slider {
+    width: 100%;
+    padding: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+  }
+
+  @media (min-width: 768px) {
+    .marquee-slider {
+      flex: 1;
+    }
+  }
+
+  .slider-track {
+    display: flex;
+    gap: 56px;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+  }
+
+  .logo-separator {
+    width: 1px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
+  }
+
+  .slider-track:hover {
+    animation-duration: 60s;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-item img {
+    filter: invert(1);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    width: auto;
+  }
+
+  .logo-item:hover img {
+    opacity: 1;
+  }
+</style>
+
+<script is:inline>
+  // Infinite marquee con CSS animations
+  // Pausa la animación en hover para mejor UX
+  
+  (function() {
+    function initMarquee() {
+      const track = document.getElementById('slider-track');
+      if (!track) return;
+
+      // CSS animations manejan el loop, solo controlamos hover
+      track.addEventListener('mouseenter', () => {
+        track.style.animationPlayState = 'paused';
+      });
+
+      track.addEventListener('mouseleave', () => {
+        track.style.animationPlayState = 'running';
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMarquee);
+    } else {
+      initMarquee();
+    }
+
+    document.addEventListener('astro:page-load', initMarquee);
+  })();
+</script>
