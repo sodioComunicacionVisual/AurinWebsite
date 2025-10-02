@@ -1,13 +1,20 @@
 ---
+import ScrollReveal from '../UI/ScrollReveal.astro';
 ---
 
 <section class="descripcion">
   <div class="descripcion-container">
     <!-- Left column -->
     <div class="left-column">
-      <h2 class="heading-highlight">
-        En un mundo lleno de estímulos visuales, nuestra misión es crear conexiones que realmente importen.
-      </h2>
+      <ScrollReveal 
+        text="En un mundo lleno de estímulos visuales, nuestra misión es crear conexiones que realmente importen."
+        tag="h2"
+        textClass="heading-highlight"
+        baseOpacity={0.2}
+        baseRotation={4}
+        blurStrength={5}
+        enableBlur={true}
+      />
       
       <div class="content-text">
         <p>
@@ -52,15 +59,19 @@
     padding-bottom: 20px;
   }
 
-  .heading-highlight {
+  :global(.heading-highlight) {
     width: 532px;
-    color: var(--color-yellow);
-    font-size: var(--heading-5-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--heading-5-line-height);
+    color: var(--color-yellow) !important;
+    font-size: var(--heading-5-size) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-5-line-height) !important;
     word-wrap: break-word;
-    margin: 0;
+    margin: 0 !important;
+  }
+
+  :global(.heading-highlight .scroll-reveal-word) {
+    color: var(--color-yellow) !important;
   }
 
   .content-text {

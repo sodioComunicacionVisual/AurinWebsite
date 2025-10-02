@@ -1,0 +1,169 @@
+---
+import MainButton from '../UI/MainButton.astro';
+---
+
+<section class="introduction">
+    <div class="container">
+        <div class="content">
+            <div class="heading-wrapper">
+                <h2 class="heading">
+                    <span class="heading-light">Cuando lo abstracto <br/></span>
+                    <span class="heading-highlight">vuelve claro, útil y real</span>
+                </h2>
+                <p class="description">
+                    Explora nuestros proyectos más recientes y descubre cómo hemos ayudado a nuestros clientes a romper límites. Desde startups disruptivas hasta empresas consolidadas, cada colaboración refleja nuestra pasión por el diseño, nuestro equilibrio entre lo humano y lo tecnológico, y nuestra capacidad para descubrir oportunidades que se transforman en logros reales.
+                </p>
+            </div>
+            <div class="cta-wrapper">
+                <MainButton text="Comienza tu proyecto ahora" href="#contacto" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .introduction {
+        width: 100%;
+        background: var(--color-black-a);
+        padding: 100px 50px;
+        box-sizing: border-box;
+    }
+
+    .container {
+        max-width: 1392.94px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 80px;
+        width: 100%;
+    }
+
+    .heading-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 40px;
+        min-width: 0;
+    }
+
+    .heading {
+        margin: 0;
+    }
+
+    .heading-light {
+        color: var(--color-white);
+        font-size: clamp(24px, 3vw, 32px);
+        font-family: var(--font-heading);
+        font-weight: 300;
+        line-height: 1.2;
+    }
+
+    .heading-highlight {
+        color: var(--color-yellow);
+        font-size: clamp(32px, 4.5vw, 48px);
+        font-family: var(--font-heading);
+        font-weight: 300;
+        line-height: 1.1;
+    }
+
+    .description {
+        align-self: stretch;
+        color: var(--color-white);
+        font-size: clamp(16px, 2vw, 20px);
+        font-family: var(--font-body);
+        font-weight: 400;
+        line-height: 1.4;
+        margin: 0;
+    }
+
+    .cta-wrapper {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .introduction {
+            padding: 80px 40px;
+        }
+
+        .content {
+            gap: 60px;
+        }
+
+        .heading-wrapper {
+            gap: 30px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .introduction {
+            padding: 60px 30px;
+        }
+
+        .content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .heading-wrapper {
+            width: 100%;
+            gap: 24px;
+        }
+
+        .cta-wrapper {
+            width: 100%;
+            align-items: flex-start;
+        }
+
+        .heading-light {
+            font-size: clamp(20px, 5vw, 28px);
+        }
+
+        .heading-highlight {
+            font-size: clamp(28px, 7vw, 40px);
+        }
+
+        .description {
+            font-size: clamp(14px, 3.5vw, 18px);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .introduction {
+            padding: 40px 20px;
+        }
+
+        .content {
+            gap: 30px;
+        }
+
+        .heading-wrapper {
+            gap: 20px;
+        }
+
+        .heading-light {
+            font-size: clamp(18px, 5vw, 24px);
+        }
+
+        .heading-highlight {
+            font-size: clamp(24px, 7vw, 36px);
+        }
+
+        .description {
+            font-size: clamp(14px, 3.5vw, 16px);
+            line-height: 1.5;
+        }
+    }
+</style>

@@ -1,0 +1,220 @@
+---
+interface Props {
+  text: string;
+  enableBlur?: boolean;
+  baseOpacity?: number;
+  baseRotation?: number;
+  blurStrength?: number;
+  containerClass?: string;
+  textClass?: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+}
+
+const {
+  text,
+  enableBlur = true,
+  baseOpacity = 0.1,
+  baseRotation = 3,
+  blurStrength = 4,
+  containerClass = '',
+  textClass = '',
+  tag = 'h2',
+} = Astro.props;
+
+// Split text into words for animation
+const words = text.split(/(\s+)/);
+---
+
+<div 
+  class={`scroll-reveal-container ${containerClass}`} 
+  data-scroll-reveal
+  data-enable-blur={enableBlur}
+  data-base-opacity={baseOpacity}
+  data-base-rotation={baseRotation}
+  data-blur-strength={blurStrength}
+>
+  {tag === 'h1' && (
+    <h1 class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </h1>
+  )}
+  {tag === 'h2' && (
+    <h2 class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </h2>
+  )}
+  {tag === 'h3' && (
+    <h3 class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </h3>
+  )}
+  {tag === 'h4' && (
+    <h4 class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </h4>
+  )}
+  {tag === 'h5' && (
+    <h5 class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </h5>
+  )}
+  {tag === 'h6' && (
+    <h6 class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </h6>
+  )}
+  {tag === 'p' && (
+    <p class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </p>
+  )}
+  {tag === 'span' && (
+    <span class={`scroll-reveal-text ${textClass}`} data-scroll-text>
+      {words.map((word, index) => 
+        word.match(/^\s+$/) ? (
+          <span>{word}</span>
+        ) : (
+          <span class="scroll-reveal-word" data-word>{word}</span>
+        )
+      )}
+    </span>
+  )}
+</div>
+
+<style>
+  .scroll-reveal-container {
+    margin: 0;
+  }
+
+  .scroll-reveal-text {
+    transform-origin: 0% 50%;
+  }
+
+  .scroll-reveal-word {
+    display: inline-block;
+    will-change: opacity, filter, transform;
+  }
+</style>
+
+<script>
+  import { animate, scroll, stagger, type AnimationOptions } from 'motion';
+
+  function initScrollReveal() {
+    const containers = document.querySelectorAll('[data-scroll-reveal]');
+
+    containers.forEach((container) => {
+      const textElement = container.querySelector('[data-scroll-text]') as HTMLElement;
+      const words = Array.from(container.querySelectorAll('[data-word]')) as HTMLElement[];
+
+      if (!textElement || words.length === 0) return;
+
+      // Get props from data attributes or use defaults
+      const enableBlur = container.getAttribute('data-enable-blur') !== 'false';
+      const baseOpacity = parseFloat(container.getAttribute('data-base-opacity') || '0.1');
+      const baseRotation = parseFloat(container.getAttribute('data-base-rotation') || '3');
+      const blurStrength = parseFloat(container.getAttribute('data-blur-strength') || '4');
+
+      // Rotation animation for the text element
+      scroll(
+        animate(
+          textElement,
+          {
+            rotate: [baseRotation, 0],
+          }
+        ),
+        {
+          target: textElement,
+          offset: ['start end', 'start center'],
+        }
+      );
+
+      // Opacity animation for words
+      scroll(
+        animate(
+          words,
+          {
+            opacity: [baseOpacity, 1],
+          },
+          {
+            delay: stagger(0.05),
+          } as AnimationOptions
+        ),
+        {
+          target: textElement,
+          offset: ['start 0.9', 'start 0.3'],
+        }
+      );
+
+      // Blur animation for words (if enabled)
+      if (enableBlur) {
+        scroll(
+          animate(
+            words,
+            {
+              filter: [`blur(${blurStrength}px)`, 'blur(0px)'],
+            },
+            {
+              delay: stagger(0.05),
+            } as AnimationOptions
+          ),
+          {
+            target: textElement,
+            offset: ['start 0.9', 'start 0.3'],
+          }
+        );
+      }
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollReveal);
+  } else {
+    initScrollReveal();
+  }
+
+  // Re-initialize on Astro page transitions
+  document.addEventListener('astro:page-load', initScrollReveal);
+</script>

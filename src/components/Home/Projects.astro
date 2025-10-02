@@ -1,16 +1,23 @@
 ---
 import ProjectCard from '../UI/ProjectCard.astro';
 import ButtonIsland from '../UI/ButtonIsland.astro';
+import ScrollReveal from '../UI/ScrollReveal.astro';
 ---
 
 <section class="projects">
   <div class="projects-container">
     <!-- Header section -->
     <div class="header-section">
-      <div class="heading">
-        <span class="heading-normal">Cada proyecto, una historia distinta.<br/></span>
-        <span class="heading-highlight">Descúbrelas</span>
-      </div>
+      <ScrollReveal 
+        text="Cada proyecto, una historia distinta. Descúbrelas"
+        tag="h2"
+        textClass="heading"
+        containerClass="heading-wrapper"
+        baseOpacity={0.15}
+        baseRotation={5}
+        blurStrength={6}
+        enableBlur={true}
+      />
       
       <ButtonIsland 
         text="Ver más"
@@ -48,7 +55,7 @@ import ButtonIsland from '../UI/ButtonIsland.astro';
 <style>
   .projects {
     background: var(--color-black-a);
-    padding: 49px 50px;
+    padding: 200px 50px;
     overflow: hidden;
   }
 
@@ -72,27 +79,34 @@ import ButtonIsland from '../UI/ButtonIsland.astro';
     flex-wrap: wrap;
   }
 
-  .heading {
+  :global(.heading-wrapper) {
     flex: 1;
     max-width: 488px;
   }
 
-  .heading-normal {
-    color: var(--color-white);
-    font-size: var(--heading-5-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--heading-5-line-height);
-    word-wrap: break-word;
+  :global(.heading) {
+    margin: 0 !important;
   }
 
-  .heading-highlight {
-    color: var(--color-yellow);
-    font-size: var(--heading-2-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--heading-2-line-height);
-    word-wrap: break-word;
+  :global(.heading .scroll-reveal-word:nth-child(1)),
+  :global(.heading .scroll-reveal-word:nth-child(2)),
+  :global(.heading .scroll-reveal-word:nth-child(3)),
+  :global(.heading .scroll-reveal-word:nth-child(4)),
+  :global(.heading .scroll-reveal-word:nth-child(5)),
+  :global(.heading .scroll-reveal-word:nth-child(6)) {
+    color: var(--color-white) !important;
+    font-size: var(--heading-5-size) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-5-line-height) !important;
+  }
+
+  :global(.heading .scroll-reveal-word:nth-child(n+7)) {
+    color: var(--color-yellow) !important;
+    font-size: var(--heading-2-size) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-2-line-height) !important;
   }
 
   /* Projects grid */

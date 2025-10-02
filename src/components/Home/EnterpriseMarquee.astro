@@ -2,14 +2,14 @@
 // Infinite Slider Marquee - Astro Island with Motion Dev
 // Uses client:load for interactive animation
 const LOGOS = [
-  { src: "https://html.tailus.io/blocks/customers/openai.svg", alt: "OpenAI Logo", height: 24 },
-  { src: "https://html.tailus.io/blocks/customers/nvidia.svg", alt: "Nvidia Logo", height: 20 },
-  { src: "https://html.tailus.io/blocks/customers/column.svg", alt: "Column Logo", height: 16 },
-  { src: "https://html.tailus.io/blocks/customers/github.svg", alt: "GitHub Logo", height: 16 },
-  { src: "https://html.tailus.io/blocks/customers/nike.svg", alt: "Nike Logo", height: 20 },
-  { src: "https://html.tailus.io/blocks/customers/lemonsqueezy.svg", alt: "Lemon Squeezy Logo", height: 20 },
-  { src: "https://html.tailus.io/blocks/customers/laravel.svg", alt: "Laravel Logo", height: 16 },
-  { src: "https://html.tailus.io/blocks/customers/lilly.svg", alt: "Lilly Logo", height: 28 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AntojosSabores.svg", alt: "Antojos Sabores Logo", height: 43 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Galicia.svg", alt: "Galicia Logo", height: 36 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/InglesIndividual.svg", alt: "Inglés Individual Logo", height: 43 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Latiz.svg", alt: "Latiz Logo", height: 36 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/MexicoPacific.svg", alt: "Mexico Pacific Logo", height: 43 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Pinnacle.svg", alt: "Pinnacle Logo", height: 40 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/SinfonicadeMineria.svg", alt: "Sinfónica de Minería Logo", height: 43 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/TioFrancisco%20.svg", alt: "Tío Francisco Logo", height: 40 },
 ];
 ---
 
@@ -130,10 +130,6 @@ const LOGOS = [
     flex-shrink: 0;
   }
 
-  .slider-track:hover {
-    animation-duration: 60s;
-  }
-
   @keyframes scroll {
     0% {
       transform: translateX(0);
@@ -153,40 +149,8 @@ const LOGOS = [
   .logo-item img {
     filter: invert(1);
     opacity: 0.7;
-    transition: opacity 0.3s ease;
     width: auto;
-  }
-
-  .logo-item:hover img {
-    opacity: 1;
+    transform: scale(2.5);
   }
 </style>
 
-<script is:inline>
-  // Infinite marquee con CSS animations
-  // Pausa la animación en hover para mejor UX
-  
-  (function() {
-    function initMarquee() {
-      const track = document.getElementById('slider-track');
-      if (!track) return;
-
-      // CSS animations manejan el loop, solo controlamos hover
-      track.addEventListener('mouseenter', () => {
-        track.style.animationPlayState = 'paused';
-      });
-
-      track.addEventListener('mouseleave', () => {
-        track.style.animationPlayState = 'running';
-      });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initMarquee);
-    } else {
-      initMarquee();
-    }
-
-    document.addEventListener('astro:page-load', initMarquee);
-  })();
-</script>

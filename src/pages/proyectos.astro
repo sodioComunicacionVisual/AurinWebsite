@@ -1,0 +1,136 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/UI/Header.astro';
+import Footer from '../components/UI/Footer.astro';
+import Introduction from '../components/Projects/Introduction.astro';
+import ProjectCard from '../components/UI/ProjectCard.astro';
+import MainCat from '../components/Home/MainCat.astro';
+---
+
+<Layout title="Proyectos - Aurin">
+  <Header />
+  
+  <main class="proyectos-page">
+    <!-- Introduction Section -->
+    <Introduction />
+    
+    <!-- First Strip of Projects -->
+    <section class="projects-strip">
+      <div class="strip-container">
+        <ProjectCard
+          title="Proyecto Innovador 1"
+          tags={["Branding", "UI/UX", "Web"]}
+          image="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80"
+          href="#"
+        />
+        <ProjectCard
+          title="Transformación Digital"
+          tags={["Desarrollo", "Estrategia"]}
+          image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+          href="#"
+        />
+        <ProjectCard
+          title="Experiencia de Usuario"
+          tags={["UX Research", "Design"]}
+          image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+          href="#"
+        />
+      </div>
+    </section>
+    
+    <!-- Second Strip of Projects -->
+    <section class="projects-strip">
+      <div class="strip-container">
+        <ProjectCard
+          title="Identidad Visual"
+          tags={["Branding", "Diseño Gráfico"]}
+          image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
+          href="#"
+        />
+        <ProjectCard
+          title="Plataforma Digital"
+          tags={["Web App", "Mobile"]}
+          image="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80"
+          href="#"
+        />
+        <ProjectCard
+          title="Estrategia de Marca"
+          tags={["Marketing", "Branding"]}
+          image="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80"
+          href="#"
+        />
+      </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <MainCat />
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  .proyectos-page {
+    width: 100%;
+    background: var(--color-black-a);
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+  
+  /* Projects Strip */
+  .projects-strip {
+    width: 100%;
+    padding: 60px 0;
+    background: var(--color-black-a);
+  }
+  
+  .strip-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .strip-container {
+      padding: 0 60px;
+      gap: 30px;
+    }
+  }
+  
+  @media (max-width: 968px) {
+    .strip-container {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 40px;
+    }
+    
+    .projects-strip {
+      padding: 40px 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .proyectos-page {
+      padding-top: 60px;
+    }
+    
+    .strip-container {
+      padding: 0 30px;
+      gap: 24px;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .strip-container {
+      grid-template-columns: 1fr;
+      padding: 0 20px;
+    }
+    
+    .projects-strip {
+      padding: 30px 0;
+    }
+  }
+</style>

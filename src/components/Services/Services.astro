@@ -1,0 +1,77 @@
+---
+// Stacking Cards Component - Adapted from Oliver Larose
+import ServicesCard from './ServicesCard.tsx';
+import SplitCard from './SplitCard.tsx';
+
+const services = [
+  {
+    type: 'split',
+    letter: 'M',
+    title: 'Auditorías de marca y experiencia',
+    description:
+      'Identificamos oportunidades, resolvemos desafíos y alineamos cada punto de contacto con tu visión estratégica. Evaluamos la identidad visual de tu marca, analizamos la experiencia del cliente en todos los canales y proponemos estrategias para optimizar su percepción en el mercado.',
+  },
+  {
+    type: 'split',
+    letter: 'X',
+    title: 'Diseño de experiencias',
+    description:
+      'Identificamos oportunidades, resolvemos desafíos y alineamos cada punto de contacto con tu visión estratégica. Evaluamos la identidad visual de tu marca, analizamos la experiencia del cliente en todos los canales y proponemos estrategias para optimizar su percepción en el mercado.',
+  },
+  {
+    type: 'split',
+    letter: 'D',
+    title: 'Construcción de ecosistemas digitales',
+    description:
+      'Identificamos oportunidades, resolvemos desafíos y alineamos cada punto de contacto con tu visión estratégica. Evaluamos la identidad visual de tu marca, analizamos la experiencia del cliente en todos los canales y proponemos estrategias para optimizar su percepción en el mercado.',
+  },
+];
+---
+
+<section class="services-stacking">
+  <div class="services-container">
+    {services.map((service, i) => {
+      const targetScale = 1 - (services.length - i) * 0.05;
+      
+      if (service.type === 'split') {
+        return (
+          <SplitCard
+            i={i}
+            letter={service.letter || 'M'}
+            title={service.title || ''}
+            description={service.description || ''}
+            range={[i * 0.25, 1]}
+            targetScale={targetScale}
+            client:load
+          />
+        );
+      }
+      
+      return (
+        <ServicesCard
+          i={i}
+          letter={service.letter || 'S'}
+          title={service.title || ''}
+          color={'#D0DF00'}
+          description={service.description || ''}
+          range={[i * 0.25, 1]}
+          targetScale={targetScale}
+          client:load
+        />
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .services-stacking {
+    width: 100%;
+    background: var(--color-black-a);
+    position: relative;
+  }
+
+  .services-container {
+    width: 100%;
+    position: relative;
+  }
+</style>

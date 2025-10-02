@@ -41,10 +41,29 @@ const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
 		position: relative;
 		text-decoration: none;
 		cursor: pointer;
+		opacity: 0;
+		transform: translateY(30px);
+		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 	}
 
-	.card:hover {
+	.card::before {
+		content: '';
+		position: absolute;
+		inset: 0;
 		background: linear-gradient(200deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), var(--color-yellow);
+		border-radius: 10px;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+		pointer-events: none;
+	}
+
+	.card.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.card:hover::before {
+		opacity: 1;
 	}
 	
 	.card-letter {
@@ -134,7 +153,7 @@ const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
 	.card-letter,
 	.card-title,
 	.card-content {
-		transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+		transition: all 0.3s ease;
 	}
 
 	.card:hover .card-letter {

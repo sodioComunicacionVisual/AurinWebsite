@@ -1,0 +1,309 @@
+---
+import { ArrowRight, X } from 'lucide-astro';
+
+interface Props {
+  isOpen?: boolean;
+}
+
+const { isOpen = false } = Astro.props;
+
+const menuItems = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Servicios', href: '/servicios' },
+  { label: 'Proyectos', href: '/proyectos' },
+  { label: 'Nosotros', href: '/nosotros' },
+  { label: 'Contacto', href: '/contacto' },
+];
+---
+
+<div class="mega-menu" data-mega-menu>
+  <div class="mega-menu-overlay" data-menu-overlay></div>
+  
+  <div class="mega-menu-content" data-menu-content>
+    <button class="close-button" data-close-menu aria-label="Cerrar menú">
+      <X size={32} />
+    </button>
+
+    <nav class="menu-nav">
+      {menuItems.map((item, index) => (
+        <div class="menu-item" data-menu-item data-index={index}>
+          <div class="menu-item-arrow">
+            <ArrowRight size={40} strokeWidth={3} />
+          </div>
+          <a href={item.href} class="menu-link">
+            {item.label}
+          </a>
+        </div>
+      ))}
+    </nav>
+  </div>
+</div>
+
+<style>
+  .mega-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mega-menu.is-open {
+    pointer-events: all;
+    opacity: 1;
+  }
+
+  .mega-menu-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mega-menu.is-open .mega-menu-overlay {
+    opacity: 1;
+  }
+
+  .mega-menu-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-yellow, #D0DF00);
+    transform: translateY(-100%);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mega-menu.is-open .mega-menu-content {
+    transform: translateY(0);
+  }
+
+  .close-button {
+    position: absolute;
+    top: 30px;
+    right: 100px;
+    background: transparent;
+    border: none;
+    color: var(--color-black-a, #0A0A0A);
+    cursor: pointer;
+    padding: 10px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+  }
+
+  .close-button:hover {
+    transform: rotate(90deg) scale(1.1);
+  }
+
+  .menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 2.5rem;
+  }
+
+  .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .menu-item-arrow {
+    color: var(--color-black-a, #0A0A0A);
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    z-index: 0;
+  }
+
+  .menu-item:hover .menu-item-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .menu-link {
+    font-family: var(--font-heading, 'Titillium Web', sans-serif);
+    font-size: 4rem;
+    font-weight: 600;
+    color: var(--color-black-a, #0A0A0A);
+    text-decoration: none;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-2.5rem);
+    display: inline-block;
+  }
+
+  .menu-item:hover .menu-link {
+    transform: translateX(0) skewX(-5deg);
+  }
+
+  /* Animación de entrada para los items */
+  .mega-menu.is-open .menu-item {
+    animation: slideInItem 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+  }
+
+  .mega-menu.is-open .menu-item:nth-child(1) { animation-delay: 0.2s; }
+  .mega-menu.is-open .menu-item:nth-child(2) { animation-delay: 0.3s; }
+  .mega-menu.is-open .menu-item:nth-child(3) { animation-delay: 0.4s; }
+  .mega-menu.is-open .menu-item:nth-child(4) { animation-delay: 0.5s; }
+  .mega-menu.is-open .menu-item:nth-child(5) { animation-delay: 0.6s; }
+
+  @keyframes slideInItem {
+    from {
+      opacity: 0;
+      transform: translateX(-80px) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0) translateY(0);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .close-button {
+      right: 60px;
+    }
+
+    .menu-link {
+      font-size: 3.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .close-button {
+      top: 20px;
+      right: 30px;
+    }
+
+    .menu-link {
+      font-size: 2.5rem;
+    }
+
+    .menu-nav {
+      gap: 1.5rem;
+    }
+
+    .menu-item-arrow :global(svg) {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .close-button {
+      right: 20px;
+    }
+
+    .close-button :global(svg) {
+      width: 28px;
+      height: 28px;
+    }
+
+    .menu-link {
+      font-size: 2rem;
+    }
+
+    .menu-nav {
+      gap: 1.25rem;
+      padding: 0 1.5rem;
+    }
+
+    .menu-item-arrow :global(svg) {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .close-button {
+      top: 15px;
+      right: 16px;
+    }
+
+    .menu-link {
+      font-size: 1.75rem;
+    }
+
+    .menu-nav {
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .menu-link {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  // Mega Menu functionality
+  function initMegaMenu() {
+    const megaMenu = document.querySelector('[data-mega-menu]') as HTMLElement;
+    const closeButton = document.querySelector('[data-close-menu]') as HTMLButtonElement;
+    const overlay = document.querySelector('[data-menu-overlay]') as HTMLElement;
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    if (!megaMenu) return;
+
+    // Listen for custom event to open menu
+    document.addEventListener('toggle-mega-menu', () => {
+      megaMenu.classList.toggle('is-open');
+      document.body.style.overflow = megaMenu.classList.contains('is-open') ? 'hidden' : '';
+    });
+
+    // Close button
+    closeButton?.addEventListener('click', () => {
+      megaMenu.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+
+    // Close on overlay click
+    overlay?.addEventListener('click', () => {
+      megaMenu.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+
+    // Close on link click
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        megaMenu.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && megaMenu.classList.contains('is-open')) {
+        megaMenu.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMegaMenu);
+  } else {
+    initMegaMenu();
+  }
+
+  // Re-initialize on navigation (for SPA-like behavior)
+  document.addEventListener('astro:page-load', initMegaMenu);
+</script>

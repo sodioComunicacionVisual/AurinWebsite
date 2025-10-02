@@ -58,7 +58,7 @@ import Card from '../UI/Card.astro';
 
   /* Left content section */
   .content-section {
-    flex: 1;
+    flex: 0 0 auto;
     height: auto;
     padding: clamp(30px, 10vw, 50px) clamp(40px, 5vw, 100px);
     background: var(--color-black-a);
@@ -125,7 +125,7 @@ import Card from '../UI/Card.astro';
     width: 100%;
     max-width: 713.91px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     justify-items: center;
   }
@@ -134,6 +134,11 @@ import Card from '../UI/Card.astro';
     width: 100%;
     max-width: 348.95px;
     height: 348.95px;
+  }
+
+  .cards-grid :global(.card:nth-child(3)) {
+    grid-column: 1 / -1;
+    max-width: 100%;
   }
 
   /* Responsive adjustments */
@@ -204,3 +209,29 @@ import Card from '../UI/Card.astro';
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.especialidades .card');
+
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    cards.forEach((card, index) => {
+      // Añadir delay escalonado
+      card.style.transitionDelay = `${index * 0.15}s`;
+      observer.observe(card);
+    });
+  });
+</script>

@@ -1,0 +1,137 @@
+---
+// UX Description Component
+---
+
+<section class="ux-description">
+  <div class="container">
+    <div class="content-wrapper">
+      <div class="left-column">
+        <h2 class="title">
+          <span class="highlight">Diseño UX/UI:</span>
+          <span class="subtitle">Simplificamos lo complejo</span>
+        </h2>
+      </div>
+      
+      <div class="right-column">
+        <p class="description">
+          Como usuarios de tecnología que somos, nos encanta explorar y construir interfaces intuitivas diseñadas para adaptarse a las necesidades de los usuarios, logrando experiencias que equilibran forma y función. Desde el diseño de aplicaciones bancarias que simplifican transacciones hasta sistemas de navegación accesibles para sitios web complejos, nuestras soluciones transforman lo complicado en algo fácil de usar.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ux-description {
+    width: 100%;
+    background: var(--color-black-a);
+    padding: 100px 0;
+  }
+
+  .container {
+    margin: 0 auto;
+    padding: 0 50px;
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .left-column {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+
+  .title {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .highlight {
+    color: var(--color-yellow);
+    font-size: 24px;
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+
+  .subtitle {
+    color: var(--color-white);
+    font-size: 24px;
+    font-family: var(--font-body);
+    font-weight: 400;
+  }
+
+  .right-column {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+
+  .description {
+    color: var(--color-white);
+    font-size: 20px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .ux-description {
+      padding: 80px 0;
+    }
+
+    .content-wrapper {
+      gap: 80px;
+    }
+  }
+
+  @media (max-width: 968px) {
+    .ux-description {
+      padding: 60px 0;
+    }
+
+    .container {
+      padding: 0 30px;
+    }
+
+    .content-wrapper {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .left-column,
+    .right-column {
+      width: 100%;
+      flex: none;
+    }
+
+    .highlight,
+    .subtitle {
+      font-size: 22px;
+    }
+
+    .description {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 20px;
+    }
+
+    .highlight,
+    .subtitle {
+      font-size: 20px;
+    }
+
+    .description {
+      font-size: 16px;
+    }
+  }
+</style>

@@ -1,10 +1,15 @@
 ---
 // Footer component
+import LampLight from './LampLight.astro';
 ---
 
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-content">
+      <!-- Lámpara decorativa en el lado izquierdo -->
+      <div class="lamp-decoration">
+        <LampLight lightColor="#fcffbb" intensity="medium" />
+      </div>
       <img
         class="footer-logo"
         src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
@@ -59,6 +64,23 @@
     width: 100%;
     background: #0A0A0A;
     overflow: hidden;
+    position: relative;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/FooterLight.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
   }
 
   .footer-container {
@@ -72,14 +94,32 @@
 
   .footer-content {
     display: flex;
+    padding-top: 80px;
     align-items: center;
     gap: 36px;
+    position: relative;
+  }
+
+  .lamp-decoration {
+    position: absolute;
+    left: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
   }
 
   .footer-logo {
     width: 468px;
     height: 146.82px;
     flex-shrink: 0;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .footer-logo.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .footer-columns {
@@ -93,6 +133,14 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .footer-column.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .footer-section {
@@ -193,3 +241,36 @@
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const footerLogo = document.querySelector('.footer .footer-logo') as HTMLElement;
+    const footerColumns = document.querySelectorAll('.footer .footer-column');
+
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Animar el logo
+    if (footerLogo) {
+      footerLogo.style.transitionDelay = '0.2s';
+      observer.observe(footerLogo);
+    }
+
+    // Animar las columnas con delay escalonado
+    footerColumns.forEach((column, index) => {
+      (column as HTMLElement).style.transitionDelay = `${0.3 + index * 0.15}s`;
+      observer.observe(column);
+    });
+  });
+</script>

@@ -4,7 +4,7 @@ import LampLight from '../UI/LampLight.astro';
 import ScrollReveal from '../UI/ScrollReveal.astro';
 ---
 
-<section class="expertos-usuarios">
+<section class="services-banner">
   <div class="lamp-decoration">
     <LampLight lightColor="#D0DF00" intensity="medium" />
   </div>
@@ -14,7 +14,7 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
       <div class="title-column">
         <div class="subtitle">Expertos en</div>
         <ScrollReveal 
-          text="Usuarios"
+          text="Servicios"
           tag="h1"
           textClass="main-title"
           baseOpacity={0.15}
@@ -28,14 +28,15 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
       <div class="content-column">
         <div class="description">
           <p>
-            Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, 
-            y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.
+            Transformamos ideas en experiencias digitales excepcionales. 
+            Nuestros servicios están diseñados para crear soluciones que conectan, 
+            inspiran y generan resultados tangibles para tu negocio.
           </p>
         </div>
         
         <MainButton 
-          text="Conoce a nuestros autores de experiencias" 
-          href="#autores"
+          text="Descubre nuestros servicios" 
+          href="#servicios"
         />
       </div>
     </div>
@@ -43,11 +44,11 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
 </section>
 
 <style>
-  .expertos-usuarios {
+  .services-banner {
     width: 100vw;
     max-width: 100%;
     background: var(--color-black-a);
-    padding: 49px 50px;
+    padding: 200px 50px 0px 50px;
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
@@ -57,7 +58,7 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     margin-right: -50vw;
   }
 
-  .expertos-usuarios::before {
+  .services-banner::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -163,8 +164,8 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
 
   /* Responsive Design */
   @media (max-width: 1200px) {
-    .expertos-usuarios {
-      padding: 40px 30px;
+    .services-banner {
+      padding: 120px 40px 0px 40px;
     }
 
     .content-wrapper {
@@ -173,8 +174,8 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
   }
 
   @media (max-width: 768px) {
-    .expertos-usuarios {
-      padding: 30px 20px;
+    .services-banner {
+      padding: 100px 30px 0px 30px;
     }
 
     .container {
@@ -210,8 +211,8 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
   }
 
   @media (max-width: 480px) {
-    .expertos-usuarios {
-      padding: 24px 16px;
+    .services-banner {
+      padding: 80px 20px 0px 20px;
     }
 
     .container {
