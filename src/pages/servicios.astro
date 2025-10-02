@@ -8,9 +8,83 @@ import HerramientasVariant from '../components/Services/HerramientasVariant.astr
 import UxDescription from '../components/Services/UxDescription.astro';
 import MainCat from '../components/Home/MainCat.astro';
 import Projects from '../components/Home/Projects.astro';
+
+// SEO optimizado para LLMs y motores de búsqueda
+const seoTitle = "Servicios de Diseño y Comunicación Visual | Aurin México";
+const seoDescription = "Descubre nuestros servicios de diseño gráfico, branding, identidad corporativa, UX/UI, estrategia digital y comunicación visual. Soluciones creativas personalizadas para impulsar tu marca en México.";
+const seoKeywords = "servicios de diseño gráfico, branding profesional, identidad corporativa, diseño UX/UI, estrategia digital, comunicación visual, diseño web México, servicios creativos";
+
+// Datos estructurados para SEO (Schema.org)
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Servicios de Comunicación Visual y Diseño",
+  "provider": {
+    "@type": "Organization",
+    "name": "Aurin",
+    "url": "https://aurin.mx",
+    "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hey@aurin.mx",
+      "contactType": "customer service"
+    }
+  },
+  "areaServed": "MX",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Servicios de Diseño y Comunicación Visual",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Diseño Gráfico",
+          "description": "Servicios profesionales de diseño gráfico para medios digitales e impresos"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Branding e Identidad Corporativa",
+          "description": "Desarrollo de marca, identidad visual y estrategia de branding"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Diseño UX/UI",
+          "description": "Diseño de experiencia de usuario e interfaces digitales"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Estrategia Digital",
+          "description": "Consultoría y estrategia de comunicación digital"
+        }
+      }
+    ]
+  }
+};
+
+// Selectores CSS para contenido speakable (optimización de voz)
+const speakable = [".services-banner", ".services-list", ".ux-description"];
+
 ---
 
-<Layout title="Servicios - Aurin">
+<Layout 
+  title={seoTitle}
+  description={seoDescription}
+  keywords={seoKeywords}
+  structuredData={structuredData}
+  speakable={speakable}
+  canonical="https://aurin.mx/servicios"
+  ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+>
   <Header />
   <SBanner />
   <Services />

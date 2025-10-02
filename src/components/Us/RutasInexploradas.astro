@@ -1,0 +1,138 @@
+---
+import MainButton from '../UI/MainButton.astro';
+---
+
+<section class="rutas-inexploradas">
+  <div class="rutas-container">
+    <!-- Título -->
+    <div class="title-wrapper">
+      <h2 class="rutas-title">
+        <span class="title-normal">Descubridores de</span><br/>
+        <span class="title-highlight">rutas inexploradas</span>
+      </h2>
+    </div>
+
+    <!-- Contenido -->
+    <div class="content-wrapper">
+      <div class="text-columns">
+        <p class="column-text">
+          Como exploradores intrépidos, nuestro equipo multidisciplinario se adentra en lo desconocido, buscando los caminos más innovadores para llevar cada proyecto al éxito. Cada miembro, como un aventurero experto, aporta su visión única y sus habilidades en diseño, UX/UI, estrategia, desarrollo web y gestión de proyectos, trazando rutas que otros no han recorrido.
+        </p>
+        <p class="column-text">
+          Nuestra misión no es solo caminar por senderos ya existentes, sino descubrir nuevas soluciones que inspiren, conecten y garanticen resultados extraordinarios. En cada trayecto, encontramos oportunidades para transformar metas en logros y proyectos en historias de éxito.
+        </p>
+      </div>
+
+      <!-- Botón -->
+      <div class="button-wrapper">
+        <MainButton 
+          text="Quiero explorar con Aurin"
+          href="/contacto"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rutas-inexploradas {
+    width: 100%;
+    background: var(--color-black-a);
+    padding-block: clamp(5rem, 12.5vw, 12.5rem);
+    padding-inline: clamp(1.25rem, 3.125vw, 3.125rem);
+    overflow: hidden;
+  }
+
+  .rutas-container {
+    max-width: 87rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: clamp(1.5rem, 2.625vw, 2.625rem);
+  }
+
+  /* Título */
+  .title-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .rutas-title {
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .title-normal {
+    color: var(--color-white);
+    font-size: clamp(1.25rem, 2vw, 2rem);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  .title-highlight {
+    color: var(--color-yellow);
+    font-size: clamp(1.75rem, 3vw, 3rem);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: 1.05;
+  }
+
+  /* Contenido */
+  .content-wrapper {
+    width: 100%;
+    padding-left: clamp(0rem, 22%, 18.75rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: clamp(1.875rem, 2.5vw, 2.5rem);
+  }
+
+  .text-columns {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: clamp(2.5rem, 5.125vw, 5.125rem);
+    flex-wrap: wrap;
+  }
+
+  .column-text {
+    flex: 1;
+    min-width: min(100%, 18.75rem);
+    max-width: 27.9375rem;
+    color: var(--color-white);
+    font-size: clamp(1rem, 1.25vw, 1.25rem);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.5;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  .button-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .content-wrapper {
+      padding-left: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .text-columns {
+      flex-direction: column;
+    }
+
+    .column-text {
+      max-width: 100%;
+    }
+  }
+</style>

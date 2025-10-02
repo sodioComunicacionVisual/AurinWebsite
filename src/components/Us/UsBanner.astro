@@ -1,0 +1,110 @@
+---
+import MainButton from '../UI/MainButton.astro';
+---
+
+<section class="us-banner">
+  <div class="banner-container">
+    <!-- Título principal -->
+    <div class="title-section">
+      <h1 class="banner-title">
+        Realizadores de experiencias a través del diseño y la tecnología.
+      </h1>
+    </div>
+
+    <!-- Descripción -->
+    <div class="description-section">
+      <div class="description-content">
+        <p class="banner-description">
+          Los Aurin creemos en el poder de la cercanía para entender, conectar e inspirar, y en la visión de ir más lejos para llevar cada proyecto más allá de las expectativas. Gracias a nuestro enfoque y al uso de diseño y tecnología, ampliamos el impacto y la visibilidad de nuestros clientes, aliados y equipo, proyectándolos hacia nuevos horizontes.
+        </p>
+      </div>
+    </div>
+
+    <!-- Botón de acción -->
+    <div class="button-section">
+      <MainButton 
+        text="Comienza tu proceso Aurin"
+        href="/contacto"
+        class="banner-button"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .us-banner {
+    width: 100%;
+    background: var(--color-black-a);
+    padding-block-start: clamp(5rem, 10vh, 8rem);
+    padding:200px 0px 100px 0px;
+    
+  }
+
+  .banner-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(0.625rem, 2vw, 1.25rem);
+  }
+
+  /* Título Section */
+  .title-section {
+    padding-block: clamp(1rem, 2vh, 1.5rem);
+    padding-inline: clamp(1.25rem, 8vw, 6.25rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .banner-title {
+    text-align: center;
+    color: var(--color-yellow);
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: 1.1;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  /* Description Section */
+  .description-section {
+    padding-block: clamp(1rem, 2vh, 1.5rem);
+    padding-inline: clamp(1.25rem, 8vw, 6.25rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 3.75rem);
+  }
+
+  .description-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .banner-description {
+    text-align: center;
+    color: var(--color-white);
+    font-size: clamp(0.9375rem, 1.5vw, 1.25rem);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.5;
+    word-wrap: break-word;
+    margin: 0;
+  }
+
+  /* Button Section */
+  .button-section {
+    padding-block: clamp(1rem, 2vh, 1.5rem);
+    padding-inline: clamp(1.25rem, 8vw, 6.25rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/UI/Header.astro';
+import UsBanner from '../components/Us/UsBanner.astro';
+import MainImage from '../components/Us/MainImage.astro';
+import RutasInexploradas from '../components/Us/RutasInexploradas.astro';
+import LongCards from '../components/Us/LongCards.astro';
+import ComoLlegamos from '../components/Us/ComoLlegamos.astro';
+import DisenoColaboracion from '../components/Us/DisenoColaboracion.astro';
+import Alianzas from '../components/Us/Alianzas.astro';
+import Projects from '../components/Home/Projects.astro';
+import Footer from '../components/UI/Footer.astro';
+---
+
+<Layout 
+  title="Nosotros - Aurin"
+  description="Realizadores de experiencias a través del diseño y la tecnología. Conoce más sobre Aurin."
+>
+  <Header />
+  <main>
+    <UsBanner />
+    <MainImage />
+    <RutasInexploradas />
+    <LongCards />
+    <ComoLlegamos />
+    <DisenoColaboracion />
+    <Alianzas />
+    <Projects />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    background: var(--color-black-a);
+  }
+</style>

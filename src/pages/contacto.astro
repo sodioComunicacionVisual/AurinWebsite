@@ -1,0 +1,40 @@
+---
+import Header from '../components/UI/Header.astro';
+import Footer from '../components/UI/Footer.astro';
+import MegaMenu from '../components/UI/MegaMenu.astro';
+import Form from '../components/Contact/Form.astro';
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Contacta con Aurin - Estudio creativo en Aldea Creativa" />
+    <title>Contacto - Aurin</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <Header />
+    <MegaMenu />
+    <main>
+      <Form />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-black-a);
+    overflow-x: hidden;
+  }
+
+  main {
+    min-height: 100vh;
+    padding-top: 88px;
+  }
+</style>
