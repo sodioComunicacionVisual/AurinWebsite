@@ -5,9 +5,76 @@ import Footer from '../components/UI/Footer.astro';
 import Introduction from '../components/Projects/Introduction.astro';
 import ProjectCard from '../components/UI/ProjectCard.astro';
 import MainCat from '../components/Home/MainCat.astro';
+
+// SEO optimizado para LLMs y motores de búsqueda
+const seoTitle = "Proyectos - Aurin | Portfolio de Diseño Gráfico y Branding México";
+const seoDescription = "Explora nuestro portfolio de proyectos de diseño gráfico, branding e identidad corporativa. Casos de éxito en comunicación visual, estrategia digital y experiencias de usuario realizados por Aurin en México.";
+const seoKeywords = "portfolio aurin, proyectos diseño gráfico, casos éxito branding, trabajos identidad corporativa, portfolio agencia méxico, proyectos comunicación visual";
+
+// Datos estructurados para SEO (Schema.org)
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Portfolio de Proyectos - Aurin",
+  "description": seoDescription,
+  "url": "https://aurin.mx/proyectos",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Aurin",
+    "url": "https://aurin.mx",
+    "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Portfolio de Proyectos de Diseño",
+      "itemListElement": [
+        {
+          "@type": "CreativeWork",
+          "name": "Proyecto Innovador 1",
+          "description": "Proyecto de branding, UI/UX y desarrollo web",
+          "creator": {
+            "@type": "Organization",
+            "name": "Aurin"
+          },
+          "keywords": ["Branding", "UI/UX", "Web"]
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Transformación Digital",
+          "description": "Proyecto de desarrollo y estrategia digital",
+          "creator": {
+            "@type": "Organization",
+            "name": "Aurin"
+          },
+          "keywords": ["Desarrollo", "Estrategia"]
+        },
+        {
+          "@type": "CreativeWork",
+          "name": "Experiencia de Usuario",
+          "description": "Proyecto de investigación UX y diseño",
+          "creator": {
+            "@type": "Organization",
+            "name": "Aurin"
+          },
+          "keywords": ["UX Research", "Design"]
+        }
+      ]
+    }
+  }
+};
+
+// Selectores CSS para contenido speakable (optimización de voz)
+const speakable = [".projects-introduction", ".projects-strip", ".project-card"];
 ---
 
-<Layout title="Proyectos - Aurin">
+<Layout 
+  title={seoTitle}
+  description={seoDescription}
+  keywords={seoKeywords}
+  structuredData={structuredData}
+  speakable={speakable}
+  canonical="https://aurin.mx/proyectos"
+  ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+>
   <Header />
   
   <main class="proyectos-page">
