@@ -1,17 +1,47 @@
 ---
 import { Menu, Globe } from 'lucide-astro';
+import { getLangFromUrl, getLocalizedUrl, getAlternateLanguage } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
 
 interface Props {
   class?: string;
 }
 
 const { class: className } = Astro.props;
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const alternateLang = getAlternateLanguage(currentLang);
+const t = translations[currentLang];
+
+// Generate alternate URL for language switching
+const currentPath = Astro.url.pathname;
+let alternateUrl = getLocalizedUrl(currentPath, alternateLang);
+
+// Handle specific page mappings
+if (currentPath === '/nosotros' && alternateLang === 'en') {
+  alternateUrl = '/en/about';
+} else if (currentPath === '/en/about' && alternateLang === 'es') {
+  alternateUrl = '/nosotros';
+} else if (currentPath === '/servicios' && alternateLang === 'en') {
+  alternateUrl = '/en/services';
+} else if (currentPath === '/en/services' && alternateLang === 'es') {
+  alternateUrl = '/servicios';
+} else if (currentPath === '/contacto' && alternateLang === 'en') {
+  alternateUrl = '/en/contact';
+} else if (currentPath === '/en/contact' && alternateLang === 'es') {
+  alternateUrl = '/contacto';
+} else if (currentPath === '/proyectos' && alternateLang === 'en') {
+  alternateUrl = '/en/projects';
+} else if (currentPath === '/en/projects' && alternateLang === 'es') {
+  alternateUrl = '/proyectos';
+}
 ---
 
 <header class={`header ${className || ''}`}>
   <div class="header-container">
     <!-- Logo Section -->
-    <a href="/" class="logo-link" aria-label="Ir a inicio">
+    <a href={currentLang === 'es' ? '/' : '/en'} class="logo-link" aria-label={currentLang === 'es' ? 'Ir a inicio' : 'Go to home'}>
       <img
         class="header-logo"
         src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AurinTinyWhiteLogo.svg"
@@ -22,14 +52,18 @@ const { class: className } = Astro.props;
     <!-- Actions Section -->
     <div class="actions-section">
       <!-- Language Toggle Button -->
-      <button class="lang-button" aria-label="Switch to English">
+      <a 
+        href={alternateUrl} 
+        class="lang-button" 
+        aria-label={currentLang === 'es' ? t.header.switchToEnglish : t.header.switchToSpanish}
+      >
         <Globe size={20} />
-        <span>EN</span>
-      </button>
+        <span>{alternateLang.toUpperCase()}</span>
+      </a>
 
       <!-- Menu Button -->
-      <button class="menu-button" data-menu-trigger aria-label="Open menu">
-        <span class="menu-text">Menú</span>
+      <button class="menu-button" data-menu-trigger aria-label={currentLang === 'es' ? 'Abrir menú' : 'Open menu'}>
+        <span class="menu-text">{t.header.menu}</span>
         <div class="menu-icon">
           <div class="menu-icon-bg"></div>
           <Menu size={24} strokeWidth={2.5} class="menu-icon-svg" />
@@ -160,6 +194,7 @@ const { class: className } = Astro.props;
     font-weight: 400;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
   }
 
   .lang-button:hover {

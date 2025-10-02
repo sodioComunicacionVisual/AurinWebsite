@@ -1,5 +1,11 @@
 ---
 import MainButton from '../UI/MainButton.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="us-banner">
@@ -7,7 +13,7 @@ import MainButton from '../UI/MainButton.astro';
     <!-- Título principal -->
     <div class="title-section">
       <h1 class="banner-title">
-        Realizadores de experiencias a través del diseño y la tecnología.
+        {t.about.usBanner.title}
       </h1>
     </div>
 
@@ -15,7 +21,7 @@ import MainButton from '../UI/MainButton.astro';
     <div class="description-section">
       <div class="description-content">
         <p class="banner-description">
-          Los Aurin creemos en el poder de la cercanía para entender, conectar e inspirar, y en la visión de ir más lejos para llevar cada proyecto más allá de las expectativas. Gracias a nuestro enfoque y al uso de diseño y tecnología, ampliamos el impacto y la visibilidad de nuestros clientes, aliados y equipo, proyectándolos hacia nuevos horizontes.
+          {t.about.usBanner.description}
         </p>
       </div>
     </div>
@@ -23,7 +29,7 @@ import MainButton from '../UI/MainButton.astro';
     <!-- Botón de acción -->
     <div class="button-section">
       <MainButton 
-        text="Comienza tu proceso Aurin"
+        text={t.about.usBanner.buttonText}
         href="/contacto"
         class="banner-button"
       />

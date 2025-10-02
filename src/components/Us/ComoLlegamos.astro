@@ -1,6 +1,12 @@
 ---
 import MainButton from '../UI/MainButton.astro';
 import LampLight from '../UI/LampLight.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="como-llegamos">
@@ -9,11 +15,11 @@ import LampLight from '../UI/LampLight.astro';
   </div>
   <div class="como-llegamos-container">
     <div class="left-column">
-      <h3 class="heading-white">¿Cómo llegamos</h3>
-      <h2 class="heading-yellow">Hasta aquí?</h2>
+      <h3 class="heading-white">{t.about.comoLlegamos.headingWhite}</h3>
+      <h2 class="heading-yellow">{t.about.comoLlegamos.headingYellow}</h2>
       <div class="button-group">
         <MainButton
-          text="Comienza tu proyecto hoy"
+          text={t.about.comoLlegamos.buttonText}
           href="/contacto"
         />
       </div>
@@ -22,10 +28,10 @@ import LampLight from '../UI/LampLight.astro';
     <div class="right-column">
       <div class="text-content">
         <p>
-          Quizá te preguntes cómo, después de 26 años, apenas escuchas de Aurin. La respuesta está en nuestro propio viaje de transformación. Recorrimos nuevas rutas y nos reinventamos.
+          {t.about.comoLlegamos.paragraph1}
         </p>
         <p>
-          Hemos sido nuestro propio caso de éxito, demostrando que al estar más cerca de nuestra esencia y mirar más lejos, logramos evolucionar. Hoy, esta nueva identidad refleja quiénes somos y el impacto que queremos crear contigo.
+          {t.about.comoLlegamos.paragraph2}
         </p>
       </div>
     </div>

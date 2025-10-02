@@ -1,18 +1,23 @@
 ---
 // Alianzas.astro
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="alianzas">
   <div class="alianzas-container">
     <div class="heading-column">
-      <h3 class="heading-white">El poder de</h3>
-      <h2 class="heading-yellow">las alianzas</h2>
+      <h3 class="heading-white">{t.about.alianzas.headingWhite}</h3>
+      <h2 class="heading-yellow">{t.about.alianzas.headingYellow}</h2>
     </div>
 
     <div class="content-column">
       <div class="text-content">
-        <p class="body-text">
-          La colaboración es la base para crear soluciones excepcionales. Junto a socios estratégicos como <strong>Ancient Technologies, Ideograma y TopDesign</strong>, unimos nuestra experiencia para desarrollar proyectos únicos. Esta sinergia impulsa la innovación, nos mantiene a la vanguardia y expande los límites del diseño y el desarrollo.
+        <p class="body-text" set:html={t.about.alianzas.description}>
         </p>
       </div>
 

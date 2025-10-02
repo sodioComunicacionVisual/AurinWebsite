@@ -1,5 +1,11 @@
 ---
 // UX Description Component
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="ux-description">
@@ -7,14 +13,14 @@
     <div class="content-wrapper">
       <div class="left-column">
         <h2 class="title">
-          <span class="highlight">Diseño UX/UI:</span>
-          <span class="subtitle">Simplificamos lo complejo</span>
+          <span class="highlight">{t.services.uxDescription.highlight}</span>
+          <span class="subtitle">{t.services.uxDescription.subtitle}</span>
         </h2>
       </div>
       
       <div class="right-column">
         <p class="description">
-          Como usuarios de tecnología que somos, nos encanta explorar y construir interfaces intuitivas diseñadas para adaptarse a las necesidades de los usuarios, logrando experiencias que equilibran forma y función. Desde el diseño de aplicaciones bancarias que simplifican transacciones hasta sistemas de navegación accesibles para sitios web complejos, nuestras soluciones transforman lo complicado en algo fácil de usar.
+          {t.services.uxDescription.description}
         </p>
       </div>
     </div>

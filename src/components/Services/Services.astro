@@ -2,28 +2,31 @@
 // Stacking Cards Component - Adapted from Oliver Larose
 import ServicesCard from './ServicesCard.tsx';
 import SplitCard from './SplitCard.tsx';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 
 const services = [
   {
     type: 'split',
     letter: 'M',
-    title: 'Auditorías de marca y experiencia',
-    description:
-      'Identificamos oportunidades, resolvemos desafíos y alineamos cada punto de contacto con tu visión estratégica. Evaluamos la identidad visual de tu marca, analizamos la experiencia del cliente en todos los canales y proponemos estrategias para optimizar su percepción en el mercado.',
+    title: t.services.servicesList[0].title,
+    description: t.services.servicesList[0].description,
   },
   {
     type: 'split',
     letter: 'X',
-    title: 'Diseño de experiencias',
-    description:
-      'Identificamos oportunidades, resolvemos desafíos y alineamos cada punto de contacto con tu visión estratégica. Evaluamos la identidad visual de tu marca, analizamos la experiencia del cliente en todos los canales y proponemos estrategias para optimizar su percepción en el mercado.',
+    title: t.services.servicesList[1].title,
+    description: t.services.servicesList[1].description,
   },
   {
     type: 'split',
     letter: 'D',
-    title: 'Construcción de ecosistemas digitales',
-    description:
-      'Identificamos oportunidades, resolvemos desafíos y alineamos cada punto de contacto con tu visión estratégica. Evaluamos la identidad visual de tu marca, analizamos la experiencia del cliente en todos los canales y proponemos estrategias para optimizar su percepción en el mercado.',
+    title: t.services.servicesList[2].title,
+    description: t.services.servicesList[2].description,
   },
 ];
 ---

@@ -1,5 +1,11 @@
 ---
 import MainButton from '../UI/MainButton.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="rutas-inexploradas">
@@ -7,8 +13,8 @@ import MainButton from '../UI/MainButton.astro';
     <!-- Título -->
     <div class="title-wrapper">
       <h2 class="rutas-title">
-        <span class="title-normal">Descubridores de</span><br/>
-        <span class="title-highlight">rutas inexploradas</span>
+        <span class="title-normal">{t.about.rutasInexploradas.titleNormal}</span><br/>
+        <span class="title-highlight">{t.about.rutasInexploradas.titleHighlight}</span>
       </h2>
     </div>
 
@@ -16,17 +22,17 @@ import MainButton from '../UI/MainButton.astro';
     <div class="content-wrapper">
       <div class="text-columns">
         <p class="column-text">
-          Como exploradores intrépidos, nuestro equipo multidisciplinario se adentra en lo desconocido, buscando los caminos más innovadores para llevar cada proyecto al éxito. Cada miembro, como un aventurero experto, aporta su visión única y sus habilidades en diseño, UX/UI, estrategia, desarrollo web y gestión de proyectos, trazando rutas que otros no han recorrido.
+          {t.about.rutasInexploradas.paragraph1}
         </p>
         <p class="column-text">
-          Nuestra misión no es solo caminar por senderos ya existentes, sino descubrir nuevas soluciones que inspiren, conecten y garanticen resultados extraordinarios. En cada trayecto, encontramos oportunidades para transformar metas en logros y proyectos en historias de éxito.
+          {t.about.rutasInexploradas.paragraph2}
         </p>
       </div>
 
       <!-- Botón -->
       <div class="button-wrapper">
         <MainButton 
-          text="Quiero explorar con Aurin"
+          text={t.about.rutasInexploradas.buttonText}
           href="/contacto"
         />
       </div>

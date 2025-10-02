@@ -1,11 +1,16 @@
 ---
-// Banner component - Placeholder for maquetación
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="banner">
   <div class="banner-container">
     <div class="banner-placeholder">
-      <h2>Banner Aquí</h2>
+      <h2>{t.banner.title}</h2>
     </div>
   </div>
 </section>

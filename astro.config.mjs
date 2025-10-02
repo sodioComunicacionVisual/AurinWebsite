@@ -5,10 +5,17 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'https://aurin.mx',
   output: 'server',
   adapter: vercel(),
   integrations: [lenis(), react()],
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  },
   markdown: {
     shikiConfig: {
       theme: 'github-dark',

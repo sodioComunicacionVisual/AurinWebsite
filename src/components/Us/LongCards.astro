@@ -1,16 +1,22 @@
 ---
 // @ts-nocheck
 import { ArrowUpRight } from 'lucide-astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
 
 interface CardData {
   number: string;
   label: string;
 }
 
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
 const cards: CardData[] = [
-  { number: "600+", label: "Clientes" },
-  { number: "26+", label: "Años" },
-  { number: "16+", label: "Países" }
+  { number: "600+", label: t.about.longCards.clients },
+  { number: "26+", label: t.about.longCards.years },
+  { number: "16+", label: t.about.longCards.countries }
 ];
 ---
 
@@ -217,16 +223,15 @@ const cards: CardData[] = [
         card as HTMLElement,
         () => {
           animate(
-            card as HTMLElement,
-            // @ts-ignore - Motion DOM keyframes accept arrays
+            card,
             {
               opacity: [0, 1],
-              transform: ['translateY(40px)', 'translateY(0px)']
+              y: [40, 0]
             },
             {
               duration: 0.8,
               delay: index * 0.15,
-              easing: [0.22, 1, 0.36, 1]
+              ease: [0.22, 1, 0.36, 1]
             }
           );
           return () => {}; // Return cleanup function

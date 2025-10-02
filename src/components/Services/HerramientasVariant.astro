@@ -1,5 +1,11 @@
 ---
 import ScrollReveal from '../UI/ScrollReveal.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 
 interface HerramientaItem {
   id: string;
@@ -17,39 +23,39 @@ interface Props {
 }
 
 const {
-  title = "Nuestra caja de Herramientas",
-  titlePart1 = "Nuestra caja",
-  titlePart2 = "de Herramientas",
-  description = "Con estas capacidades, damos forma a soluciones que conectan, inspiran y generan impacto.",
+  title = t.services.tools.titlePart1 + " " + t.services.tools.titlePart2,
+  titlePart1 = t.services.tools.titlePart1,
+  titlePart2 = t.services.tools.titlePart2,
+  description = t.services.tools.description,
   items = [
     {
       id: "desarrollo-web",
       letter: "W",
-      title: "Desarrollo web y de aplicaciones móviles",
+      title: t.services.tools.items[0].title,
       href: "#",
     },
     {
       id: "usabilidad",
       letter: "U",
-      title: "Pruebas de usabilidad",
+      title: t.services.tools.items[1].title,
       href: "#",
     },
     {
       id: "branding",
       letter: "I",
-      title: "Desarrollo de Branding (Identidad)",
+      title: t.services.tools.items[2].title,
       href: "#",
     },
     {
       id: "marketing",
       letter: "M",
-      title: "Marketing digital y redes sociales",
+      title: t.services.tools.items[3].title,
       href: "#",
     },
     {
       id: "diseno-ux-ui",
       letter: "X",
-      title: "Diseño UX | UI",
+      title: t.services.tools.items[4].title,
       href: "#",
     },
   ],

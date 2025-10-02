@@ -1,6 +1,12 @@
 ---
 import MainButton from '../UI/MainButton.astro';
 import Card from '../UI/Card.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="especialidades">
@@ -8,16 +14,16 @@ import Card from '../UI/Card.astro';
     <!-- Left content section -->
     <div class="content-section">
       <div class="heading">
-        <span class="heading-normal">Nuestras<br/></span>
-        <span class="heading-highlight">Especialidades</span>
+        <span class="heading-normal">{t.especialidades.heading}<br/></span>
+        <span class="heading-highlight">{t.especialidades.headingHighlight}</span>
       </div>
       
       <p class="description hide-desktop">
-        Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.
+        {t.especialidades.description}
       </p>
       
       <MainButton 
-        text="Conoce más de nuestros servicios"
+        text={t.especialidades.buttonText}
         href="/servicios"
       />
     </div>
@@ -27,15 +33,15 @@ import Card from '../UI/Card.astro';
       <div class="cards-grid">
         <Card 
           letter="M"
-          title="Auditorías de marca y experiencia"
+          title={t.especialidades.card1Title}
         />
         <Card 
           letter="E"
-          title="Diseño de experiencias"
+          title={t.especialidades.card2Title}
         />
         <Card 
           letter="D"
-          title="Construcción de ecosistemas digitales"
+          title={t.especialidades.card3Title}
         />
       </div>
     </div>
@@ -243,7 +249,7 @@ import Card from '../UI/Card.astro';
 
     cards.forEach((card, index) => {
       // Añadir delay escalonado
-      card.style.transitionDelay = `${index * 0.15}s`;
+      (card as HTMLElement).style.transitionDelay = `${index * 0.15}s`;
       observer.observe(card);
     });
   });

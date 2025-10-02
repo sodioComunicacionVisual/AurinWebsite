@@ -2,6 +2,12 @@
 import ProjectCard from '../UI/ProjectCard.astro';
 import ButtonIsland from '../UI/ButtonIsland.astro';
 import ScrollReveal from '../UI/ScrollReveal.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="projects">
@@ -9,7 +15,7 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     <!-- Header section -->
     <div class="header-section">
       <ScrollReveal 
-        text="Cada proyecto, una historia distinta. Descúbrelas"
+        text={t.projects.heading}
         tag="h2"
         textClass="heading"
         containerClass="heading-wrapper"
@@ -20,8 +26,8 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
       />
       
       <ButtonIsland 
-        text="Ver más"
-        href="/proyectos"
+        text={t.projects.buttonText}
+        href={currentLang === 'es' ? '/proyectos' : '/en/projects'}
         variant="primary"
       />
     </div>
@@ -30,21 +36,21 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     <div class="projects-grid">
       <ProjectCard 
         title="Galicia"
-        tags={["UX/UI", "Desarrollo front & back"]}
+        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
         image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectGalicia.webp"
         href="/proyectos/galicia"
       />
       
       <ProjectCard 
         title="Sinfonica de<br/>Minería"
-        tags={["UX/UI", "Desarrollo front & back"]}
+        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
         image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSinfonica.webp"
         href="/proyectos/sinfonica"
       />
       
       <ProjectCard 
         title="SAI Derecho y economía"
-        tags={["UX/UI", "Desarrollo front & back"]}
+        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
         image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSai.webp"
         href="/proyectos/sai"
       />

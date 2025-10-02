@@ -1,12 +1,18 @@
 ---
 // MainImage component - Imagen principal de la sección Nosotros
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="main-image-section">
   <div class="image-wrapper">
     <img 
       src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/NosotrosImage.webp"
-      alt="Aurin Team"
+      alt={t.about.mainImage.alt}
       class="main-image"
       loading="lazy"
       decoding="async"

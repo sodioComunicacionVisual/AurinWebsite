@@ -1,27 +1,27 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/UI/Header.astro';
-import MegaMenu from '../components/UI/MegaMenu.astro';
-import Banner from '../components/Home/Banner.astro';
-import Descripcion from '../components/Home/Descripcion.astro';
-import ExpertosUsuarios from '../components/Home/ExpertosUsuarios.astro';
-import EnterpriseMarquee from '../components/Home/EnterpriseMarquee.astro';
-import Especialidades from '../components/Home/Especialidades.astro';
-import MainCat from '../components/Home/MainCat.astro';
-import Herramientas from '../components/Home/Herramientas.astro';
-import Projects from '../components/Home/Projects.astro';
-import Footer from '../components/UI/Footer.astro';
-import { translations } from '../i18n/translations.js';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/UI/Header.astro';
+import MegaMenu from '../../components/UI/MegaMenu.astro';
+import Banner from '../../components/Home/Banner.astro';
+import Descripcion from '../../components/Home/Descripcion.astro';
+import ExpertosUsuarios from '../../components/Home/ExpertosUsuarios.astro';
+import EnterpriseMarquee from '../../components/Home/EnterpriseMarquee.astro';
+import Especialidades from '../../components/Home/Especialidades.astro';
+import MainCat from '../../components/Home/MainCat.astro';
+import Herramientas from '../../components/Home/Herramientas.astro';
+import Projects from '../../components/Home/Projects.astro';
+import Footer from '../../components/UI/Footer.astro';
+import { translations } from '../../i18n/translations.js';
 
-// Get Spanish translations (default)
-const t = translations.es;
+// Get English translations
+const t = translations.en;
 
-// SEO optimizado para LLMs y motores de búsqueda
+// SEO optimized for LLMs and search engines
 const seoTitle = t.seo.title;
 const seoDescription = t.seo.description;
 const seoKeywords = t.seo.keywords;
 
-// Datos estructurados para SEO (Schema.org)
+// Structured data for SEO (Schema.org)
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -46,7 +46,7 @@ const structuredData = {
   "serviceType": t.structuredData.serviceTypes
 };
 
-// Selectores CSS para contenido speakable (optimización de voz)
+// CSS selectors for speakable content (voice optimization)
 const speakable = [".banner-content", ".descripcion-principal", ".especialidades-section"];
 
 ---
@@ -57,7 +57,7 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 	keywords={seoKeywords}
 	structuredData={structuredData}
 	speakable={speakable}
-	canonical="https://aurin.mx/"
+	canonical="https://aurin.mx/en/"
 	ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
 	<Header />
@@ -85,5 +85,3 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 
 	</main>
 </Layout>
-
-

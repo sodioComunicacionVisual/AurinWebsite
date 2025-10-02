@@ -1,5 +1,11 @@
 ---
 import MainButton from '../UI/MainButton.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="introduction">
@@ -7,15 +13,15 @@ import MainButton from '../UI/MainButton.astro';
         <div class="content">
             <div class="heading-wrapper">
                 <h2 class="heading">
-                    <span class="heading-light">Cuando lo abstracto <br/></span>
-                    <span class="heading-highlight">vuelve claro, útil y real</span>
+                    <span class="heading-light">{t.projects.introduction.headingLight} <br/></span>
+                    <span class="heading-highlight">{t.projects.introduction.headingHighlight}</span>
                 </h2>
                 <p class="description">
-                    Explora nuestros proyectos más recientes y descubre cómo hemos ayudado a nuestros clientes a romper límites. Desde startups disruptivas hasta empresas consolidadas, cada colaboración refleja nuestra pasión por el diseño, nuestro equilibrio entre lo humano y lo tecnológico, y nuestra capacidad para descubrir oportunidades que se transforman en logros reales.
+                    {t.projects.introduction.description}
                 </p>
             </div>
             <div class="cta-wrapper">
-                <MainButton text="Comienza tu proyecto ahora" href="#contacto" />
+                <MainButton text={t.projects.introduction.ctaButton} href="#contacto" />
             </div>
         </div>
     </div>

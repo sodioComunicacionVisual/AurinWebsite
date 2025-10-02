@@ -1,17 +1,23 @@
 ---
 import SecondaryButton from '../UI/SecondaryButton.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="diseno-colaboracion">
     <div class="content-column">
         <div class="text-card">
             <div class="text-content">
-                <h2 class="heading-2">Diseño, colaboración e innovación en un entorno hecho para crear</h2>
+                <h2 class="heading-2">{t.about.disenoColaboracion.heading}</h2>
             </div>
-            <p class="body-1">Aurin tiene su sede en Aldea Creativa, un espacio donde diseño e innovación convergen. Rodeados de mentes creativas, trabajamos en un ambiente que inspira, conecta y enriquece cada proyecto, fomentando la colaboración y el intercambio de ideas.</p>
+            <p class="body-1">{t.about.disenoColaboracion.description}</p>
             <div class="button-group">
                 <SecondaryButton
-                    text="Conoce Aldea Creativa"
+                    text={t.about.disenoColaboracion.buttonText}
                     href="https://aldeacreativa.com"
                     target="_blank"
                 />
@@ -22,7 +28,7 @@ import SecondaryButton from '../UI/SecondaryButton.astro';
         <div class="image-wrapper">
             <img
                 src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/DisenoColaboracionInnovacion.webp"
-                alt="Aldea Creativa - Espacio de diseño e innovación"
+                alt={t.about.disenoColaboracion.imageAlt}
                 loading="lazy"
             />
         </div>

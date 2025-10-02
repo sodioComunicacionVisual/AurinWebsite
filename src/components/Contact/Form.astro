@@ -2,14 +2,20 @@
 // @ts-nocheck
 import { Mail, MapPin } from 'lucide-astro';
 import MainButton from '../UI/MainButton.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="contact-section">
   <div class="contact-container">
     <div class="contact-header">
       <h2 class="contact-title">
-        Preguntanos cualquier<br/>cosa o solo dinos
-        <span class="highlight"> ¡Hola!</span>
+        {t.contact.form.title}
+        <span class="highlight"> {t.contact.form.titleHighlight}</span>
       </h2>
     </div>
 
@@ -26,27 +32,27 @@ import MainButton from '../UI/MainButton.astro';
       </div>
 
       <div class="contact-form-wrapper">
-        <h3 class="form-title">Contáctanos</h3>
+        <h3 class="form-title">{t.contact.form.formTitle}</h3>
         <form class="contact-form">
           <div class="form-row">
             <div class="form-group">
-              <label for="nombre" class="form-label">Nombre</label>
+              <label for="nombre" class="form-label">{t.contact.form.labels.name}</label>
               <input
                 type="text"
                 id="nombre"
                 name="nombre"
-                placeholder="Escribe tu nombre aquí y apellidos..."
+                placeholder={t.contact.form.placeholders.name}
                 class="form-input"
                 required
               />
             </div>
             <div class="form-group">
-              <label for="correo" class="form-label">Correo</label>
+              <label for="correo" class="form-label">{t.contact.form.labels.email}</label>
               <input
                 type="email"
                 id="correo"
                 name="correo"
-                placeholder="Escribe tu correo aquí"
+                placeholder={t.contact.form.placeholders.email}
                 class="form-input"
                 required
               />
@@ -55,10 +61,10 @@ import MainButton from '../UI/MainButton.astro';
 
           <div class="form-row">
             <div class="form-group">
-              <label for="servicio" class="form-label">Servicio de interés</label>
+              <label for="servicio" class="form-label">{t.contact.form.labels.service}</label>
               <div class="motion-dropdown" data-dropdown>
                 <button type="button" class="dropdown-trigger" data-trigger>
-                  <span class="dropdown-text" data-text>Selecciona un servicio...</span>
+                  <span class="dropdown-text" data-text>{t.contact.form.placeholders.service}</span>
                   <div class="dropdown-arrow" data-arrow>
                     <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -66,41 +72,23 @@ import MainButton from '../UI/MainButton.astro';
                   </div>
                 </button>
                 <div class="dropdown-menu" data-menu>
-                  <div class="dropdown-option" data-value="diseno-grafico">
-                    <span style="color: white !important;">Diseño Gráfico</span>
-                    <div class="option-description" style="color: white !important;">Servicios profesionales de diseño gráfico</div>
-                  </div>
-                  <div class="dropdown-option" data-value="branding">
-                    <span style="color: white !important;">Branding e Identidad Corporativa</span>
-                    <div class="option-description" style="color: white !important;">Desarrollo de marca e identidad visual</div>
-                  </div>
-                  <div class="dropdown-option" data-value="ux-ui">
-                    <span style="color: white !important;">Diseño UX/UI</span>
-                    <div class="option-description" style="color: white !important;">Experiencia de usuario e interfaces digitales</div>
-                  </div>
-                  <div class="dropdown-option" data-value="estrategia-digital">
-                    <span style="color: white !important;">Estrategia Digital</span>
-                    <div class="option-description" style="color: white !important;">Consultoría y estrategia de comunicación</div>
-                  </div>
-                  <div class="dropdown-option" data-value="consultoria">
-                    <span style="color: white !important;">Consultoría General</span>
-                    <div class="option-description" style="color: white !important;">Asesoría personalizada para tu proyecto</div>
-                  </div>
-                  <div class="dropdown-option" data-value="otro">
-                    <span style="color: white !important;">Otro</span>
-                    <div class="option-description" style="color: white !important;">Cuéntanos sobre tu proyecto específico</div>
-                  </div>
+                  {t.contact.form.services.map((service) => (
+                    <div class="dropdown-option" data-value={service.value}>
+                      <span style="color: white !important;">{service.title}</span>
+                      <div class="option-description" style="color: white !important;">{service.description}</div>
+                    </div>
+                  ))}
                 </div>
                 <input type="hidden" name="servicio" id="servicio" required>
               </div>
             </div>
             <div class="form-group">
-              <label for="asunto" class="form-label">Asunto</label>
+              <label for="asunto" class="form-label">{t.contact.form.labels.subject}</label>
               <input
                 type="text"
                 id="asunto"
                 name="asunto"
-                placeholder="¿De qué quieres hablarnos?"
+                placeholder={t.contact.form.placeholders.subject}
                 class="form-input"
                 required
               />
@@ -108,11 +96,11 @@ import MainButton from '../UI/MainButton.astro';
           </div>
 
           <div class="form-group">
-            <label for="mensaje" class="form-label">Mensaje</label>
+            <label for="mensaje" class="form-label">{t.contact.form.labels.message}</label>
             <textarea
               id="mensaje"
               name="mensaje"
-              placeholder="Escribe tu mensaje..."
+              placeholder={t.contact.form.placeholders.message}
               class="form-textarea"
               rows="5"
               required
@@ -120,7 +108,7 @@ import MainButton from '../UI/MainButton.astro';
           </div>
 
           <div class="form-actions">
-            <MainButton text="Enviar" type="submit" />
+            <MainButton text={t.contact.form.button} type="submit" />
           </div>
         </form>
       </div>
@@ -520,8 +508,13 @@ import MainButton from '../UI/MainButton.astro';
 
 <script>
   import { animate, stagger } from 'motion';
+  import { getLangFromUrl } from '../../i18n/utils.js';
+  import { translations } from '../../i18n/translations.js';
 
   document.addEventListener('DOMContentLoaded', () => {
+    // Get current language and translations
+    const currentLang = getLangFromUrl(new URL(window.location.href));
+    const t = translations[currentLang];
     const form = document.querySelector('.contact-form') as HTMLFormElement;
     const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
 
@@ -576,17 +569,18 @@ import MainButton from '../UI/MainButton.astro';
         menu.classList.add('open');
         
         // Animate arrow rotation
-        animate(arrow, { transform: 'rotate(180deg)' }, { duration: 0.3, easing: 'ease-out' });
+        animate(arrow, { rotate: 180 }, { duration: 0.3, ease: 'easeOut' });
         
         // Animate menu appearance with Motion
         animate(menu, 
           { 
             opacity: [0, 1],
-            transform: ['scale(0.95) translateY(-10px)', 'scale(1) translateY(0px)']
+            scale: [0.95, 1],
+            y: [-10, 0]
           }, 
           { 
             duration: 0.3, 
-            easing: [0.4, 0, 0.2, 1] 
+            ease: [0.4, 0, 0.2, 1] 
           }
         );
 
@@ -594,12 +588,12 @@ import MainButton from '../UI/MainButton.astro';
         animate(options, 
           { 
             opacity: [0, 1],
-            transform: ['translateX(-20px)', 'translateX(0px)']
+            x: [-20, 0]
           }, 
           { 
             duration: 0.2, 
             delay: stagger(0.05),
-            easing: 'ease-out'
+            ease: 'easeOut'
           }
         );
       }
@@ -609,17 +603,18 @@ import MainButton from '../UI/MainButton.astro';
         trigger.classList.remove('open');
         
         // Animate arrow rotation back
-        animate(arrow, { transform: 'rotate(0deg)' }, { duration: 0.3, easing: 'ease-out' });
+        animate(arrow, { rotate: 0 }, { duration: 0.3, ease: 'easeOut' });
         
         // Animate menu disappearance
         animate(menu, 
           { 
             opacity: [1, 0],
-            transform: ['scale(1) translateY(0px)', 'scale(0.95) translateY(-10px)']
+            scale: [1, 0.95],
+            y: [0, -10]
           }, 
           { 
             duration: 0.2, 
-            easing: [0.4, 0, 0.2, 1] 
+            ease: [0.4, 0, 0.2, 1] 
           }
         ).finished.then(() => {
           menu.classList.remove('open');
@@ -632,11 +627,11 @@ import MainButton from '../UI/MainButton.astro';
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // Deshabilitar el botón durante el envío
+        // Disable button during submission
         if (submitButton) {
           submitButton.disabled = true;
           const originalText = submitButton.textContent;
-          submitButton.textContent = 'Enviando...';
+          submitButton.textContent = t.contact.form.sending;
         }
 
         const formData = new FormData(form);
@@ -660,28 +655,28 @@ import MainButton from '../UI/MainButton.astro';
           const result = await response.json();
 
           if (response.ok) {
-            // Éxito
-            alert('¡Mensaje enviado correctamente! Te contactaremos pronto.');
+            // Success
+            alert(t.contact.form.success);
             form.reset();
             // Reset dropdown
             if (text && hiddenInput) {
-              text.textContent = 'Selecciona un servicio...';
+              text.textContent = t.contact.form.placeholders.service;
               text.classList.remove('selected');
               hiddenInput.value = '';
             }
           } else {
-            // Error del servidor
-            alert(`Error: ${result.error || 'No se pudo enviar el mensaje'}`);
+            // Server error
+            alert(`${t.contact.form.error}: ${result.error || t.contact.form.error}`);
           }
         } catch (error) {
-          // Error de red
+          // Network error
           console.error('Error:', error);
-          alert('Error de conexión. Por favor, inténtalo de nuevo.');
+          alert(t.contact.form.networkError);
         } finally {
-          // Rehabilitar el botón
+          // Re-enable button
           if (submitButton) {
             submitButton.disabled = false;
-            submitButton.textContent = 'Enviar';
+            submitButton.textContent = t.contact.form.button;
           }
         }
       });

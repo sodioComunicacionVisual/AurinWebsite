@@ -1,19 +1,24 @@
 ---
 import SecondaryButton from '../UI/SecondaryButton.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="main-cat-container">
   <div class="main-cat-wrapper" data-parallax-wrapper>
     <div class="main-cat-content">
       <div class="main-cat-text">
-        <p class="body-0">
-          Da el primer paso para transformar tu<br/>visión en algo real.
+        <p class="body-0" set:html={t.mainCat.text}>
         </p>
       </div>
     </div>
     <div class="main-cat-cta">
       <div class="button-wrapper">
-        <SecondaryButton text="Contáctanos" href="/contacto" />
+        <SecondaryButton text={t.mainCat.buttonText} href="/contacto" />
       </div>
     </div>
   </div>

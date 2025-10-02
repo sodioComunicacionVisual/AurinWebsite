@@ -1,5 +1,7 @@
 ---
 import { ArrowRight, X } from 'lucide-astro';
+import { getLangFromUrl } from '../../i18n/utils';
+import { translations } from '../../i18n/translations';
 
 interface Props {
   isOpen?: boolean;
@@ -7,12 +9,15 @@ interface Props {
 
 const { isOpen = false } = Astro.props;
 
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
 const menuItems = [
-  { label: 'Inicio', href: '/' },
-  { label: 'Servicios', href: '/servicios' },
-  { label: 'Proyectos', href: '/proyectos' },
-  { label: 'Nosotros', href: '/nosotros' },
-  { label: 'Contacto', href: '/contacto' },
+  { label: t.megaMenu.menuItems.home, href: currentLang === 'es' ? '/' : '/en' },
+  { label: t.megaMenu.menuItems.services, href: currentLang === 'es' ? '/servicios' : '/en/services' },
+  { label: t.megaMenu.menuItems.projects, href: currentLang === 'es' ? '/proyectos' : '/en/projects' },
+  { label: t.megaMenu.menuItems.about, href: currentLang === 'es' ? '/nosotros' : '/en/about' },
+  { label: t.megaMenu.menuItems.contact, href: currentLang === 'es' ? '/contacto' : '/en/contact' },
 ];
 ---
 
@@ -20,7 +25,7 @@ const menuItems = [
   <div class="mega-menu-overlay" data-menu-overlay></div>
   
   <div class="mega-menu-content" data-menu-content>
-    <button class="close-button" data-close-menu aria-label="Cerrar menú">
+    <button class="close-button" data-close-menu aria-label={t.megaMenu.closeMenu}>
       <X size={32} />
     </button>
 

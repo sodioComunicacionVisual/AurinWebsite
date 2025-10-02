@@ -1,30 +1,30 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/UI/Header.astro';
-import Footer from '../components/UI/Footer.astro';
-import SBanner from '../components/Services/SBanner.astro';
-import Services from '../components/Services/Services.astro';
-import HerramientasVariant from '../components/Services/HerramientasVariant.astro';
-import UxDescription from '../components/Services/UxDescription.astro';
-import MainCat from '../components/Home/MainCat.astro';
-import Projects from '../components/Home/Projects.astro';
-import { getLangFromUrl } from '../i18n/utils.js';
-import { translations } from '../i18n/translations.js';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/UI/Header.astro';
+import Footer from '../../components/UI/Footer.astro';
+import SBanner from '../../components/Services/SBanner.astro';
+import ServicesComponent from '../../components/Services/Services.astro';
+import HerramientasVariant from '../../components/Services/HerramientasVariant.astro';
+import UxDescription from '../../components/Services/UxDescription.astro';
+import MainCat from '../../components/Home/MainCat.astro';
+import Projects from '../../components/Home/Projects.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 
-// SEO optimizado para LLMs y motores de búsqueda
+// SEO optimized for LLMs and search engines
 const seoTitle = t.services.seo.title;
 const seoDescription = t.services.seo.description;
 const seoKeywords = t.services.seo.keywords;
 
-// Datos estructurados para SEO (Schema.org)
+// Structured data for SEO (Schema.org)
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "serviceType": "Servicios de Comunicación Visual y Diseño",
+  "serviceType": "Visual Communication and Design Services",
   "provider": {
     "@type": "Organization",
     "name": "Aurin",
@@ -39,45 +39,45 @@ const structuredData = {
   "areaServed": "MX",
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Servicios de Diseño y Comunicación Visual",
+    "name": "Design and Visual Communication Services",
     "itemListElement": [
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Diseño Gráfico",
-          "description": "Servicios profesionales de diseño gráfico para medios digitales e impresos"
+          "name": "Graphic Design",
+          "description": "Professional graphic design services for digital and print media"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Branding e Identidad Corporativa",
-          "description": "Desarrollo de marca, identidad visual y estrategia de branding"
+          "name": "Branding and Corporate Identity",
+          "description": "Brand development, visual identity and branding strategy"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Diseño UX/UI",
-          "description": "Diseño de experiencia de usuario e interfaces digitales"
+          "name": "UX/UI Design",
+          "description": "User experience design and digital interfaces"
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Estrategia Digital",
-          "description": "Consultoría y estrategia de comunicación digital"
+          "name": "Digital Strategy",
+          "description": "Digital communication consulting and strategy"
         }
       }
     ]
   }
 };
 
-// Selectores CSS para contenido speakable (optimización de voz)
+// CSS selectors for speakable content (voice optimization)
 const speakable = [".services-banner", ".services-list", ".ux-description"];
 
 ---
@@ -88,12 +88,12 @@ const speakable = [".services-banner", ".services-list", ".ux-description"];
   keywords={seoKeywords}
   structuredData={structuredData}
   speakable={speakable}
-  canonical="https://aurin.mx/servicios"
+  canonical="https://aurin.mx/en/services"
   ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
   <Header />
   <SBanner />
-  <Services />
+  <ServicesComponent />
   <HerramientasVariant />
   <UxDescription />
   <MainCat />

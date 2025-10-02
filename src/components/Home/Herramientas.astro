@@ -1,5 +1,7 @@
 ---
 import ScrollReveal from '../UI/ScrollReveal.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
 
 interface HerramientaItem {
   id: string;
@@ -16,40 +18,44 @@ interface Props {
   items?: HerramientaItem[];
 }
 
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
 const {
-  title = "Nuestra caja de Herramientas",
-  titlePart1 = "Nuestra caja",
-  titlePart2 = "de Herramientas",
-  description = "Con estas capacidades, damos forma a soluciones que conectan, inspiran y generan impacto.",
+  title = t.herramientas.titlePart1 + " " + t.herramientas.titlePart2,
+  titlePart1 = t.herramientas.titlePart1,
+  titlePart2 = t.herramientas.titlePart2,
+  description = t.herramientas.description,
   items = [
     {
       id: "desarrollo-web",
       letter: "W",
-      title: "Desarrollo web y de aplicaciones móviles",
+      title: t.herramientas.webDev,
       href: "#",
     },
     {
       id: "usabilidad",
       letter: "U",
-      title: "Pruebas de usabilidad",
+      title: t.herramientas.usability,
       href: "#",
     },
     {
       id: "branding",
       letter: "I",
-      title: "Desarrollo de Branding (Identidad)",
+      title: t.herramientas.branding,
       href: "#",
     },
     {
       id: "marketing",
       letter: "M",
-      title: "Marketing digital y redes sociales",
+      title: t.herramientas.marketing,
       href: "#",
     },
     {
       id: "diseno-ux-ui",
       letter: "X",
-      title: "Diseño UX | UI",
+      title: t.herramientas.uxui,
       href: "#",
     },
   ],

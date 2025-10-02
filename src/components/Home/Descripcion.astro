@@ -1,5 +1,11 @@
 ---
 import ScrollReveal from '../UI/ScrollReveal.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="descripcion">
@@ -7,7 +13,7 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     <!-- Left column -->
     <div class="left-column">
       <ScrollReveal 
-        text="En un mundo lleno de estímulos visuales, nuestra misión es crear conexiones que realmente importen."
+        text={t.descripcion.mainHeading}
         tag="h2"
         textClass="heading-highlight"
         baseOpacity={0.2}
@@ -18,16 +24,16 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
       
       <div class="content-text">
         <p>
-          Porque cuanto más unidos estemos en ideas, objetivos y sueños, más lejos podremos llegar juntos.<br/>
-          <strong class="text-highlight">En Aurin, abrazamos la simbiosis de los contrastes:</strong> lo cercano y lo distante, lo humano y lo tecnológico, la intuición y los datos, la creatividad y la estrategia. Creemos que las diferencias amplían perspectivas, enriquecen nuestra visión e integran nuevas formas de entender el mundo, permitiéndonos crear soluciones más innovadoras y efectivas.
+          {t.descripcion.contentText}<br/>
+          <strong class="text-highlight">{t.descripcion.contentHighlight}</strong> {t.descripcion.contentContinue}
         </p>
       </div>
     </div>
     
     <!-- Right column -->
     <div class="right-column">
-      <div class="parallax-text-small" data-parallax-small>+Lejos</div>
-      <div class="parallax-text-large" data-parallax-large>+Cerca</div>
+      <div class="parallax-text-small" data-parallax-small>{t.descripcion.parallaxSmall}</div>
+      <div class="parallax-text-large" data-parallax-large>{t.descripcion.parallaxLarge}</div>
       <img src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg" alt="Light SVG" class="triangle-svg" />
     </div>
   </div>

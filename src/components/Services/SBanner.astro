@@ -2,19 +2,25 @@
 import MainButton from '../UI/MainButton.astro';
 import LampLight from '../UI/LampLight.astro';
 import ScrollReveal from '../UI/ScrollReveal.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="services-banner">
-  <div class="lamp-decoration">
+  <div class="lamp-decoration" style="padding-top: 50px;">
     <LampLight lightColor="#D0DF00" intensity="medium" />
   </div>
   <div class="container">
     <div class="content-wrapper">
       <!-- Left Column: Title -->
       <div class="title-column">
-        <div class="subtitle">Expertos en</div>
+        <div class="subtitle">{t.services.banner.subtitle}</div>
         <ScrollReveal 
-          text="Servicios"
+          text={t.services.banner.title}
           tag="h1"
           textClass="main-title"
           baseOpacity={0.15}
@@ -28,14 +34,12 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
       <div class="content-column">
         <div class="description">
           <p>
-            Transformamos ideas en experiencias digitales excepcionales. 
-            Nuestros servicios están diseñados para crear soluciones que conectan, 
-            inspiran y generan resultados tangibles para tu negocio.
+            {t.services.banner.description}
           </p>
         </div>
         
         <MainButton 
-          text="Descubre nuestros servicios" 
+          text={t.services.banner.buttonText} 
           href="#servicios"
         />
       </div>

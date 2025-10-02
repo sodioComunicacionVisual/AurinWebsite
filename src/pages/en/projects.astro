@@ -1,30 +1,30 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/UI/Header.astro';
-import Footer from '../components/UI/Footer.astro';
-import Introduction from '../components/Projects/Introduction.astro';
-import ProjectCard from '../components/UI/ProjectCard.astro';
-import MainCat from '../components/Home/MainCat.astro';
-import { getLangFromUrl } from '../i18n/utils.js';
-import { translations } from '../i18n/translations.js';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/UI/Header.astro';
+import Footer from '../../components/UI/Footer.astro';
+import Introduction from '../../components/Projects/Introduction.astro';
+import ProjectCard from '../../components/UI/ProjectCard.astro';
+import MainCat from '../../components/Home/MainCat.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 
-// SEO optimizado para LLMs y motores de búsqueda
+// SEO optimized for LLMs and search engines
 const seoTitle = t.projects.seo.title;
 const seoDescription = t.projects.seo.description;
 const seoKeywords = t.projects.seo.keywords;
 
-// Datos estructurados para SEO (Schema.org)
+// Structured data for SEO (Schema.org)
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": currentLang === 'es' ? "Portfolio de Proyectos - Aurin" : "Project Portfolio - Aurin",
+  "name": "Project Portfolio - Aurin",
   "description": seoDescription,
-  "url": currentLang === 'es' ? "https://aurin.mx/proyectos" : "https://aurin.mx/en/projects",
-  "inLanguage": currentLang === 'es' ? "es-MX" : "en-US",
+  "url": "https://aurin.mx/en/projects",
+  "inLanguage": "en-US",
   "mainEntity": {
     "@type": "Organization",
     "name": "Aurin",
@@ -32,12 +32,12 @@ const structuredData = {
     "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": currentLang === 'es' ? "Portfolio de Proyectos de Diseño" : "Design Project Portfolio",
+      "name": "Design Project Portfolio",
       "itemListElement": [
         {
           "@type": "CreativeWork",
           "name": t.projects.projectTitles["proyecto-innovador-1"],
-          "description": currentLang === 'es' ? "Proyecto de branding, UI/UX y desarrollo web" : "Branding, UI/UX and web development project",
+          "description": "Branding, UI/UX and web development project",
           "creator": {
             "@type": "Organization",
             "name": "Aurin"
@@ -47,7 +47,7 @@ const structuredData = {
         {
           "@type": "CreativeWork",
           "name": t.projects.projectTitles["transformacion-digital"],
-          "description": currentLang === 'es' ? "Proyecto de desarrollo y estrategia digital" : "Development and digital strategy project",
+          "description": "Development and digital strategy project",
           "creator": {
             "@type": "Organization",
             "name": "Aurin"
@@ -57,7 +57,7 @@ const structuredData = {
         {
           "@type": "CreativeWork",
           "name": t.projects.projectTitles["experiencia-usuario"],
-          "description": currentLang === 'es' ? "Proyecto de investigación UX y diseño" : "UX research and design project",
+          "description": "UX research and design project",
           "creator": {
             "@type": "Organization",
             "name": "Aurin"
@@ -69,11 +69,11 @@ const structuredData = {
   }
 };
 
-// Selectores CSS para contenido speakable (optimización de voz)
+// CSS selectors for speakable content (voice optimization)
 const speakable = [".projects-introduction", ".projects-strip", ".project-card"];
 
-// Canonical URL based on language
-const canonicalUrl = currentLang === 'es' ? "https://aurin.mx/proyectos" : "https://aurin.mx/en/projects";
+// Canonical URL
+const canonicalUrl = "https://aurin.mx/en/projects";
 ---
 
 <Layout 

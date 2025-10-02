@@ -2,6 +2,12 @@
 import MainButton from '../UI/MainButton.astro';
 import LampLight from '../UI/LampLight.astro';
 import ScrollReveal from '../UI/ScrollReveal.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
 <section class="expertos-usuarios">
@@ -12,9 +18,9 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     <div class="content-wrapper">
       <!-- Left Column: Title -->
       <div class="title-column">
-        <div class="subtitle">Expertos en</div>
+        <div class="subtitle">{t.expertosUsuarios.subtitle}</div>
         <ScrollReveal 
-          text="Usuarios"
+          text={t.expertosUsuarios.title}
           tag="h1"
           textClass="main-title"
           baseOpacity={0.15}
@@ -28,13 +34,12 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
       <div class="content-column">
         <div class="description">
           <p>
-            Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, 
-            y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.
+            {t.expertosUsuarios.description}
           </p>
         </div>
         
         <MainButton 
-          text="Conoce a nuestros autores de experiencias" 
+          text={t.expertosUsuarios.buttonText}
           href="#autores"
         />
       </div>
