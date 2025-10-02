@@ -1,9 +1,11 @@
 import { defineConfig } from 'astro/config';
+import lenis from 'astro-lenis';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
   output: 'static',
+  integrations: [lenis()],
   markdown: {
     shikiConfig: {
       theme: 'github-dark',
