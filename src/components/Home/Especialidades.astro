@@ -46,14 +46,17 @@ import Card from '../UI/Card.astro';
   .especialidades {
     width: 100%;
     background: var(--color-black-a);
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   .especialidades-container {
+    width: 100%;
+    max-width: 100vw;
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
     flex-wrap: wrap;
+    box-sizing: border-box;
   }
 
   /* Left content section */
@@ -68,6 +71,7 @@ import Card from '../UI/Card.astro';
     justify-content: flex-start;
     align-items: flex-start;
     gap: 20px;
+    box-sizing: border-box;
   }
 
   .heading {
@@ -111,6 +115,7 @@ import Card from '../UI/Card.astro';
   /* Right cards section */
   .cards-section {
     flex: 1;
+    min-width: 0;
     padding: clamp(30px, 5vw, 50px) clamp(20px, 3vw, 40px);
     background: var(--color-black-a);
     overflow: hidden;
@@ -119,6 +124,7 @@ import Card from '../UI/Card.astro';
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    box-sizing: border-box;
   }
 
   .cards-grid {
@@ -127,42 +133,44 @@ import Card from '../UI/Card.astro';
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
-    justify-items: center;
+    justify-items: start;
   }
 
   .cards-grid :global(.card) {
     width: 100%;
     max-width: 348.95px;
-    height: 348.95px;
   }
 
-  .cards-grid :global(.card:nth-child(3)) {
-    grid-column: 1 / -1;
-    max-width: 100%;
-  }
 
   /* Responsive adjustments */
-  @media (max-width: 1200px) {
+  @media (max-width: 991px) {
     .especialidades-container {
       flex-direction: column;
     }
 
     .content-section {
       width: 100%;
-      min-width: unset;
+      min-width: 0;
       height: auto;
       padding: 50px 40px;
     }
 
     .cards-section {
       width: 100%;
-      min-width: unset;
+      min-width: 0;
       height: auto;
       padding: 50px 40px;
+      align-items: flex-start;
     }
 
     .cards-grid {
-      grid-template-columns: repeat(auto-fit, minmax(280px, 348.95px));
+      grid-template-columns: repeat(2, 1fr);
+      max-width: 100%;
+      justify-items: stretch;
+    }
+
+    .cards-grid :global(.card) {
+      max-width: none;
     }
   }
 
@@ -173,6 +181,15 @@ import Card from '../UI/Card.astro';
 
     .cards-section {
       padding: 40px 30px;
+    }
+
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .cards-grid :global(.card) {
+      max-width: none;
     }
 
     .heading-normal,
@@ -202,10 +219,6 @@ import Card from '../UI/Card.astro';
     .cards-grid {
       grid-template-columns: 1fr;
       gap: 20px;
-    }
-
-    .cards-grid :global(.card) {
-      height: 280px;
     }
   }
 </style>

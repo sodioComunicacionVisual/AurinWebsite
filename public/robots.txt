@@ -1,0 +1,42 @@
+# robots.txt para SEO moderno y LLMs
+# Optimizado para permitir acceso a bots de IA y motores de búsqueda
+
+# Permitir todos los rastreadores
+User-agent: *
+Allow: /
+
+# Permitir bots específicos de IA y LLMs
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: GeminiBot
+Allow: /
+
+User-agent: Bard-Google
+Allow: /
+
+# Permitir Googlebot y Bingbot
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Bloquear áreas privadas o administrativas (si existen)
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap
+Sitemap: https://aurin.mx/sitemap.xml

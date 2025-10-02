@@ -69,7 +69,7 @@ const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
 	.card-letter {
 		position: absolute;
 		top: -25px;
-		left: 26px;
+		left: -5px;
 		color: var(--color-yellow);
 		font-size: 308.50px;
 		font-family: var(--font-heading);
@@ -111,6 +111,23 @@ const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
 	}
 
 	/* Responsive */
+	@media (max-width: 1240px) and (min-width: 992px) {
+		.card-letter {
+			font-size: 120px;
+			top: 10px;
+			left: 10px;
+			width: 100px;
+			height: 100px;
+			justify-content: flex-start;
+			align-items: flex-start;
+		}
+
+		.card-title {
+			font-size: 24px;
+			line-height: 30px;
+		}
+	}
+
 	@media (max-width: 768px) {
 		.card-letter {
 			font-size: 200px;
@@ -149,22 +166,9 @@ const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
 		}
 	}
 
-	/* Animaciones suaves con CSS - más eficiente que JS */
+	/* Transiciones de color suaves */
 	.card-letter,
-	.card-title,
-	.card-content {
-		transition: all 0.3s ease;
-	}
-
-	.card:hover .card-letter {
-		transform: scale(1.05) rotate(2deg);
-	}
-
-	.card:hover .card-title {
-		transform: translateY(-5px) scale(1.02);
-	}
-
-	.card:hover .card-content {
-		transform: translateY(-3px);
+	.card-title {
+		transition: color 0.3s ease;
 	}
 </style>

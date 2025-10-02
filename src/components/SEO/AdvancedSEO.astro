@@ -1,0 +1,83 @@
+---
+// Componente SEO Avanzado optimizado para LLMs y IA
+export interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  structuredData?: object;
+  speakable?: string[];
+  keywords?: string;
+  author?: string;
+  twitterCard?: string;
+}
+
+const {
+  title,
+  description = "Aurin User Experts",
+  canonical,
+  ogImage = "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+  ogType = "website",
+  structuredData,
+  speakable,
+  keywords,
+  author = "Aurin",
+  twitterCard = "summary_large_image"
+} = Astro.props;
+
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site).href;
+const siteUrl = Astro.site?.href || "https://aurin.mx";
+---
+
+<!-- Meta Tags Básicos -->
+<title>{title}</title>
+<meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
+{author && <meta name="author" content={author} />}
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="Aurin" />
+<meta property="og:locale" content="es_MX" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content={twitterCard} />
+<meta name="twitter:url" content={canonicalURL} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Datos Estructurados (Schema.org) -->
+{structuredData && (
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+)}
+
+<!-- Speakable Schema para optimización de voz -->
+{speakable && speakable.length > 0 && (
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": speakable
+    }
+  })} />
+)}
+
+<!-- Meta Tags Adicionales para SEO -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="googlebot" content="index, follow" />
+<meta name="bingbot" content="index, follow" />
+
+<!-- Permitir bots de IA y LLMs -->
+<meta name="GPTBot" content="index, follow" />
+<meta name="OAI-SearchBot" content="index, follow" />
+<meta name="PerplexityBot" content="index, follow" />
+<meta name="ClaudeBot" content="index, follow" />
+<meta name="GeminiBot" content="index, follow" />

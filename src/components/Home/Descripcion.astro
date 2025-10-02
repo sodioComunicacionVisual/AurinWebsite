@@ -26,6 +26,8 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     
     <!-- Right column -->
     <div class="right-column">
+      <div class="parallax-text-small" data-parallax-small>+Lejos</div>
+      <div class="parallax-text-large" data-parallax-large>+Cerca</div>
       <img src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg" alt="Light SVG" class="triangle-svg" />
     </div>
   </div>
@@ -109,6 +111,32 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     height: 500px;
     object-fit: cover;
     object-position: left bottom;
+    position: relative;
+    z-index: 1;
+  }
+
+  .parallax-text-small {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    color: var(--color-black-a);
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 300;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .parallax-text-large {
+    position: absolute;
+    bottom: 50px;
+    left: 200px;
+    color: var(--color-black-a);
+    font-family: var(--font-heading);
+    font-size: 120px;
+    font-weight: 600;
+    z-index: 2;
+    pointer-events: none;
   }
 
   /* Responsive adjustments */
@@ -177,3 +205,32 @@ import ScrollReveal from '../UI/ScrollReveal.astro';
     }
   }
 </style>
+
+<script>
+  import { scroll, animate } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const smallText = document.querySelector('[data-parallax-small]') as HTMLElement;
+    const largeText = document.querySelector('[data-parallax-large]') as HTMLElement;
+
+    if (smallText) {
+      scroll(
+        animate(smallText, { y: [0, 40] }),
+        {
+          target: smallText,
+          offset: ['start end', 'end start']
+        }
+      );
+    }
+
+    if (largeText) {
+      scroll(
+        animate(largeText, { y: [0, -60] }),
+        {
+          target: largeText,
+          offset: ['start end', 'end start']
+        }
+      );
+    }
+  });
+</script>

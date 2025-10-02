@@ -12,9 +12,56 @@ import Herramientas from '../components/Home/Herramientas.astro';
 import Projects from '../components/Home/Projects.astro';
 import Footer from '../components/UI/Footer.astro';
 
+// SEO optimizado para LLMs y motores de búsqueda
+const seoTitle = "Aurin User Experts | Diseño Gráfico y Branding en México";
+const seoDescription = "Aurin es una agencia de comunicación visual especializada en diseño gráfico, branding, identidad corporativa y estrategia digital. Transformamos ideas en experiencias visuales memorables para empresas en México.";
+const seoKeywords = "agencia de comunicación visual, diseño gráfico México, branding, identidad corporativa, diseño web, estrategia digital, Aurin, agencia creativa";
+
+// Datos estructurados para SEO (Schema.org)
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Aurin",
+  "url": "https://aurin.mx",
+  "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+  "description": seoDescription,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Aldea Creativa",
+    "addressCountry": "MX"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "hey@aurin.mx",
+    "contactType": "customer service"
+  },
+  "sameAs": [
+    "https://aldeacreativa.mx/"
+  ],
+  "areaServed": "MX",
+  "serviceType": [
+    "Diseño Gráfico",
+    "Branding",
+    "Identidad Corporativa",
+    "Comunicación Visual",
+    "Estrategia Digital"
+  ]
+};
+
+// Selectores CSS para contenido speakable (optimización de voz)
+const speakable = [".banner-content", ".descripcion-principal", ".especialidades-section"];
+
 ---
 
-<Layout title="Bienvenido a Astro">
+<Layout 
+	title={seoTitle}
+	description={seoDescription}
+	keywords={seoKeywords}
+	structuredData={structuredData}
+	speakable={speakable}
+	canonical="https://aurin.mx/"
+	ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+>
 	<Header />
 	<MegaMenu />
 	<main>

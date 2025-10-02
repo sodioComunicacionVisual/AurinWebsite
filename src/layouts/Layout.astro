@@ -1,23 +1,56 @@
 ---
 import '../styles/global.css';
 import MegaMenu from '../components/UI/MegaMenu.astro';
+import AdvancedSEO from '../components/SEO/AdvancedSEO.astro';
 
 interface Props {
 	title: string;
+	description?: string;
+	canonical?: string;
+	ogImage?: string;
+	ogType?: string;
+	structuredData?: object;
+	speakable?: string[];
+	keywords?: string;
+	author?: string;
+	twitterCard?: string;
 }
 
-const { title } = Astro.props;
+const { 
+	title,
+	description,
+	canonical,
+	ogImage,
+	ogType,
+	structuredData,
+	speakable,
+	keywords,
+	author,
+	twitterCard
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Proyecto Astro" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		
+		<!-- SEO Avanzado -->
+		<AdvancedSEO 
+			title={title}
+			description={description}
+			canonical={canonical}
+			ogImage={ogImage}
+			ogType={ogType}
+			structuredData={structuredData}
+			speakable={speakable}
+			keywords={keywords}
+			author={author}
+			twitterCard={twitterCard}
+		/>
 	</head>
 	<body>
 		<MegaMenu />

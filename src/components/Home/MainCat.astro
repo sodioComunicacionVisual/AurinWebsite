@@ -3,7 +3,7 @@ import SecondaryButton from '../UI/SecondaryButton.astro';
 ---
 
 <section class="main-cat-container">
-  <div class="main-cat-wrapper">
+  <div class="main-cat-wrapper" data-parallax-wrapper>
     <div class="main-cat-content">
       <div class="main-cat-text">
         <p class="body-0">
@@ -62,7 +62,7 @@ import SecondaryButton from '../UI/SecondaryButton.astro';
     flex: 0 0 auto;
     width: auto;
     padding: 2rem 5rem;
-    background: linear-gradient(179deg, #D0DF00 58%, #EAF11D 58%), #D0DF00;
+    background: linear-gradient(220deg, #D0DF00 61%, #EAF11D 37%), #D0DEF0;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     display: flex;
@@ -140,3 +140,21 @@ import SecondaryButton from '../UI/SecondaryButton.astro';
     }
   }
 </style>
+
+<script>
+  import { scroll, animate } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.querySelector('[data-parallax-wrapper]') as HTMLElement;
+
+    if (wrapper) {
+      scroll(
+        animate(wrapper, { y: [0, -50] }),
+        {
+          target: wrapper,
+          offset: ['start end', 'end start']
+        }
+      );
+    }
+  });
+</script>
