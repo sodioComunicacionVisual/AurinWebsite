@@ -15,8 +15,6 @@ const t = translations[currentLang];
         <p class="body-0" set:html={t.mainCat.text}>
         </p>
       </div>
-    </div>
-    <div class="main-cat-cta">
       <div class="button-wrapper">
         <SecondaryButton text={t.mainCat.buttonText} href="/contacto" />
       </div>
@@ -43,11 +41,10 @@ const t = translations[currentLang];
   .main-cat-content {
     flex: 1;
     padding: 2rem 3rem;
-    background: linear-gradient(10deg, #DDEB0E 56%, #E9F319 56%), #D0DF00;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    background: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/MainCATBackground.webp') center/cover;
+    border-radius: 10px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -63,18 +60,6 @@ const t = translations[currentLang];
     margin: 0;
   }
 
-  .main-cat-cta {
-    flex: 0 0 auto;
-    width: auto;
-    padding: 2rem 5rem;
-    background: linear-gradient(220deg, #D0DF00 61%, #EAF11D 37%), #D0DEF0;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
 
   .button-wrapper {
     position: static;
@@ -87,9 +72,6 @@ const t = translations[currentLang];
       padding: 1.5rem 2rem;
     }
 
-    .main-cat-cta {
-      padding: 1.5rem 3rem;
-    }
   }
 
   @media (max-width: 768px) {
@@ -97,9 +79,6 @@ const t = translations[currentLang];
       padding: 1rem 1.5rem;
     }
 
-    .main-cat-cta {
-      padding: 1rem 2rem;
-    }
 
     .main-cat-text p {
       font-size: 18px;
@@ -112,9 +91,6 @@ const t = translations[currentLang];
       padding: 1rem;
     }
 
-    .main-cat-cta {
-      padding: 1rem 1.5rem;
-    }
 
     .main-cat-text p {
       font-size: 16px;
@@ -131,9 +107,6 @@ const t = translations[currentLang];
       padding: 0.75rem;
     }
 
-    .main-cat-cta {
-      padding: 0.75rem 1rem;
-    }
 
     .main-cat-text p {
       font-size: 14px;

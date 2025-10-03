@@ -214,7 +214,7 @@ export const translations = {
       card3Title: 'Digital ecosystem construction'
     },
     mainCat: {
-      text: 'Take the first step to transform your<br/>vision into something real.',
+      text: 'Take the first step to transform your vision into something real.',
       buttonText: 'Contact us'
     },
     herramientas: {
@@ -525,7 +525,7 @@ export const translations = {
       card3Title: 'Construcción de ecosistemas digitales'
     },
     mainCat: {
-      text: 'Da el primer paso para transformar tu<br/>visión en algo real.',
+      text: 'Da el primer paso para transformar tu visión en algo real.',
       buttonText: 'Contáctanos'
     },
     herramientas: {

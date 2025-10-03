@@ -98,7 +98,7 @@ const wrapperClass = `button-wrapper button-wrapper--${variant} ${className}`;
   }
 
   .button-text span {
-    font-size: var(--body-1-size);
+    font-size: clamp(14px, 4cqw, 18px);
     font-family: var(--font-body);
     font-weight: 600;
     word-wrap: break-word;
@@ -212,6 +212,13 @@ const wrapperClass = `button-wrapper button-wrapper--${variant} ${className}`;
     transform: none;
     box-shadow: none;
     background: var(--color-black-a);
+  }
+
+  /* Mobile responsive font size - 30% smaller */
+  @media (max-width: 768px) {
+    .button-text span {
+      font-size: clamp(10px, 3cqw, 13px);
+    }
   }
 </style>
 
