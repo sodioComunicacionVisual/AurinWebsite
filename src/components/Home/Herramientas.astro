@@ -86,12 +86,12 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 
   <section class="splide" id={uniqueId} aria-label="Herramientas carousel">
     <div class="splide__track">
-      <ul class="splide__list">
-        {items.map((item) => (
-          <li class="splide__slide">
-            <a href={item.href} class="card-link">
+      <ul class="splide__list" role="list">
+        {items.map((item, index) => (
+          <li class="splide__slide" role="listitem" aria-label={`${index + 1} de ${items.length}: ${item.title}`}>
+            <a href={item.href} class="card-link" aria-label={`Ver más sobre ${item.title}`}>
               <div class="card">
-                <div class="card-letter">
+                <div class="card-letter" aria-hidden="true">
                   {item.letter}
                 </div>
                 <div class="card-content">
@@ -273,7 +273,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     justify-content: flex-end;
     display: flex;
     flex-direction: column;
-    color: #7D7F79;
+    color: #A0A0A0; /* Improved contrast from #7D7F79 */
     font-size: var(--body-1-size);
     font-family: var(--font-heading);
     font-weight: 300;
@@ -405,7 +405,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
   import { animate, inView } from "motion";
 
   document.addEventListener('DOMContentLoaded', () => {
-    const splideElement = document.querySelector('.splide');
+    const splideElement = document.querySelector('.splide') as HTMLElement;
     
     if (splideElement) {
       const splide = new Splide(splideElement, {

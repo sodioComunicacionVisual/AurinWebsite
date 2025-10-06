@@ -8,10 +8,10 @@ interface Props {
 const { letter, title, href } = Astro.props;
 ---
 
-<li class="splide__slide">
-  <a href={href} class="card-link">
+<li class="splide__slide" role="listitem">
+  <a href={href} class="card-link" aria-label={`Ver más sobre ${title}`}>
     <div class="card">
-      <div class="card-letter">
+      <div class="card-letter" aria-hidden="true">
         {letter}
       </div>
       <div class="card-content">
@@ -119,7 +119,7 @@ const { letter, title, href } = Astro.props;
     justify-content: flex-end;
     display: flex;
     flex-direction: column;
-    color: #7D7F79;
+    color: #A0A0A0; /* Improved contrast from #7D7F79 */
     font-size: var(--body-1-size);
     font-family: var(--font-heading);
     font-weight: 300;

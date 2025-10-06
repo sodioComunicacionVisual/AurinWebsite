@@ -135,6 +135,13 @@ const words = text.split(/(\s+)/);
   .scroll-reveal-word {
     display: inline-block;
     will-change: opacity, filter, transform;
+    /* Ensure minimum contrast ratio for accessibility */
+    opacity: 0.7 !important;
+  }
+  
+  /* Ensure visible text during animation for accessibility */
+  .scroll-reveal-word.motion-safe {
+    opacity: 1 !important;
   }
 </style>
 
@@ -152,9 +159,24 @@ const words = text.split(/(\s+)/);
 
       // Get props from data attributes or use defaults
       const enableBlur = container.getAttribute('data-enable-blur') !== 'false';
-      const baseOpacity = parseFloat(container.getAttribute('data-base-opacity') || '0.1');
+      // Improved base opacity for better accessibility contrast
+      const baseOpacity = parseFloat(container.getAttribute('data-base-opacity') || '0.4');
       const baseRotation = parseFloat(container.getAttribute('data-base-rotation') || '3');
       const blurStrength = parseFloat(container.getAttribute('data-blur-strength') || '4');
+      
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Skip animations if user prefers reduced motion
+      if (prefersReducedMotion) {
+        words.forEach(word => {
+          word.style.opacity = '1';
+          word.style.filter = 'none';
+          word.classList.add('motion-safe');
+        });
+        textElement.style.transform = 'none';
+        return;
+      }
 
       // Rotation animation for the text element
       scroll(
@@ -170,12 +192,12 @@ const words = text.split(/(\s+)/);
         }
       );
 
-      // Opacity animation for words
+      // Opacity animation for words with improved base opacity
       scroll(
         animate(
           words,
           {
-            opacity: [baseOpacity, 1],
+            opacity: [Math.max(baseOpacity, 0.4), 1],
           },
           {
             delay: stagger(0.05),
@@ -193,7 +215,7 @@ const words = text.split(/(\s+)/);
           animate(
             words,
             {
-              filter: [`blur(${blurStrength}px)`, 'blur(0px)'],
+              filter: [`blur(${Math.min(blurStrength, 2)}px)`, 'blur(0px)'],
             },
             {
               delay: stagger(0.05),

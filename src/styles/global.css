@@ -26,7 +26,7 @@
   --color-white: #FFFFFF;
   --color-black-a: #0A0A0A;
   --color-black-b: #161616;
-  --color-gray-a: #7D7F79;
+  --color-gray-a: #A0A0A0; /* Improved contrast from #7D7F79 */
   --color-gray-b: #282828;
   --color-yellow: #D0DF00;
   
