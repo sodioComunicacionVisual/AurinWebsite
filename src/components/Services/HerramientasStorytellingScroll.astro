@@ -1,5 +1,6 @@
 ---
 import ScrollReveal from '../UI/ScrollReveal.astro';
+import StoryTellingCard from './StoryTellingCard.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 
@@ -29,15 +30,15 @@ const {
   description = t.services.tools.description,
   items = [
     {
-      id: "desarrollo-web",
-      letter: "W",
-      title: t.services.tools.items[0].title,
+      id: "diseno-ux-ui",
+      letter: "X",
+      title: t.services.tools.items[4].title,
       href: "#",
     },
     {
-      id: "usabilidad",
-      letter: "U",
-      title: t.services.tools.items[1].title,
+      id: "desarrollo-web",
+      letter: "W",
+      title: t.services.tools.items[0].title,
       href: "#",
     },
     {
@@ -53,9 +54,9 @@ const {
       href: "#",
     },
     {
-      id: "diseno-ux-ui",
-      letter: "X",
-      title: t.services.tools.items[4].title,
+      id: "usabilidad",
+      letter: "U",
+      title: t.services.tools.items[1].title,
       href: "#",
     },
   ],
@@ -80,7 +81,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
               enableBlur={true}
             />
           </div>
-          <p class="description body-1">{description}</p>
+          <p class="description body-2">{description}</p>
         </div>
       </div>
     </div>
@@ -89,24 +90,83 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
       <div class="splide__track">
         <ul class="splide__list">
           {items.map((item) => (
-            <li class="splide__slide">
-              <a href={item.href} class="card-link">
-                <div class="card">
-                  <div class="card-letter">
-                    {item.letter}
-                  </div>
-                  <div class="card-content">
-                    <div class="card-title">
-                      {item.title}
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </li>
+            <StoryTellingCard 
+              letter={item.letter}
+              title={item.title}
+              href={item.href}
+            />
           ))}
         </ul>
       </div>
     </section>
+
+    <!-- Dynamic Content Container -->
+    <div class="dynamic-content-container">
+      <!-- UX/UI Design Content -->
+      <div class="content-section" data-content="0">
+        <div class="content-left">
+          <span class="content-title body-1">Diseño UX/UI: </span>
+          <span class="content-subtitle body-2">Simplificamos lo complejo.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Como usuarios de tecnología que somos, nos encanta explorar y construir interfaces intuitivas diseñadas para adaptarse a las necesidades de los usuarios, logrando experiencias que equilibran forma y función. Desde el diseño de aplicaciones bancarias que simplifican transacciones hasta sistemas de navegación accesibles para sitios web complejos, nuestras soluciones transforman lo complicado en algo fácil de usar.
+          </div>
+        </div>
+      </div>
+
+      <!-- Web Development Content -->
+      <div class="content-section" data-content="1">
+        <div class="content-left">
+          <span class="content-title body-1">Desarrollo web y de aplicaciones móviles: </span>
+          <span class="content-subtitle body-2">Información y funcionalidad, a la mano.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Diseñamos y desarrollamos sitios web y aplicaciones móviles que combinan funcionalidad, diseño y rendimiento. Desde sitios que ofrecen experiencias inmersivas hasta apps que optimizan procesos y mejoran la interacción del usuario, nuestras soluciones están pensadas para adaptarse a tus necesidades y generar impacto.
+          </div>
+        </div>
+      </div>
+
+      <!-- Branding Content -->
+      <div class="content-section" data-content="2">
+        <div class="content-left">
+          <span class="content-title body-1">Desarrollo de branding: </span>
+          <span class="content-subtitle body-2">Diseñamos tu marca de principio a fin.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Creamos sistemas que trascienden, conectando profundamente con las audiencias. Desde el rediseño completo de identidades visuales, incluyendo logotipos y papelería corporativa, hasta la creación de guías de estilo que garantizan coherencia en todos los canales, nuestras soluciones dan vida a marcas memorables y consistentes.
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketing Content -->
+      <div class="content-section" data-content="3">
+        <div class="content-left">
+          <span class="content-title body-1">Marketing digital y redes sociales: </span>
+          <span class="content-subtitle body-2">Conectamos con intención.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Creamos estrategias digitales que construyen comunidades y generan resultados. Desde campañas de marketing de contenido hasta la gestión creativa de redes sociales, desarrollamos mensajes que reflejan tu voz y conectan con la audiencia correcta. Nos enfocamos en métricas reales, contenido significativo y creatividad constante para fortalecer tu presencia digital.
+          </div>
+        </div>
+      </div>
+
+      <!-- Usability Testing Content -->
+      <div class="content-section" data-content="4">
+        <div class="content-left">
+          <span class="content-title body-1">Pruebas de usabilidad: </span>
+          <span class="content-subtitle body-2">Mejoramos con precisión.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Llevamos a cabo pruebas para asegurar que cada solución cumpla con los estándares de usabilidad y rendimiento.
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </div>
 
@@ -117,8 +177,10 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
   }
 
   .herramientas-section {
-    padding: 8rem 0;
+    padding: 0rem 0rem 8rem 0rem;
     width: 100%;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
     height: 100vh;
     position: sticky;
     top: 0;
@@ -129,21 +191,25 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     background-color: black;
   }
 
+  @media (max-height: 800px) {
+    .herramientas-section {
+      overflow-y: auto;
+      justify-content: flex-start;
+      padding-top: 2rem;
+    }
+  }
+
   .container {
-    max-width: var(--maxWidth);
-    margin: 0 auto;
     padding: 0 2rem;
   }
 
   .header {
-
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     margin-bottom: 3.5rem;
     gap: 2rem;
-    padding: 49px 50px;
-
+    padding: 0px 0px 49px 0px;
   }
 
   .header-content {
@@ -153,6 +219,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     justify-content: flex-start;
     align-items: flex-start;
     gap: 30px;
+    padding-top: 49px;
   }
 
   .title-wrapper {
@@ -196,132 +263,36 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     margin: 0 auto;
   }
 
-  @media (min-width: 1224px) {
+  .splide__list {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    transition: transform 0.6s ease-out;
+  }
+
+  @media (min-width: 1200px) {
     .splide__list {
       justify-content: space-between;
     }
   }
 
-  .card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+  @media (max-width: 1199px) {
+    .splide__list {
+      justify-content: flex-start;
+      width: max-content;
+    }
+    
+    .splide__track {
+      overflow: hidden;
+    }
   }
 
-  .card {
-    width: 250px;
-    min-height: 500px;
-    background: linear-gradient(161deg, rgba(0, 0, 0, 0) 47%, #101010 47%), #161616;
-    overflow: hidden;
-    border-radius: 10px;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-    position: relative;
-    text-decoration: none;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    flex-shrink: 0;
-  }
-
-  /* Cards impares (1, 3, 5) - Gris claro */
-  .splide__slide:nth-child(odd) .card {
-    background: linear-gradient(197deg, rgba(0, 0, 0, 0) 47%, #A0A0A0 47%), #C2C2C2;
-  }
-
-  /* Cards pares (2, 4) - Gris oscuro */
-  .splide__slide:nth-child(even) .card {
-    background: linear-gradient(185deg, rgba(0, 0, 0, 0) 47%, #1A1A1A 47%), #282828;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(161deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), #D0DF00;
-    border-radius: 10px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  .card.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Hover */
-  .card-link:hover .card::before {
-    opacity: 1;
-  }
-  
-  .card-letter {
-    width: clamp(200px, 85%, 277px);
-    text-align: right;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    color: var(--color-black-a);
-    font-size: clamp(200px, 25vw, 400px);
-    font-family: var(--font-heading);
-    font-weight: 600;
-    line-height: 0.905;
-    word-wrap: break-word;
-    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 1;
-    position: relative;
-    left: -8vw;
-  }
-
-  .card-link:hover .card-letter {
-    transform: scale(1.02);
-  }
-
-  
-  .card-content {
-    align-self: stretch;
-    padding: 35px 10px;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    display: inline-flex;
-    z-index: 2;
-    position: relative;
-  }
-
-  .card-title {
-    flex: 1 1 0;
-    justify-content: flex-end;
-    display: flex;
-    flex-direction: column;
-    color: #7D7F79;
-    font-size: var(--body-1-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--body-1-line-height);
-    word-wrap: break-word;
-    transition: color 0.3s ease, transform 0.3s ease;
-  }
-
-  /* Texto negro para cards impares */
-  .splide__slide:nth-child(odd) .card-title {
-    color: #0A0A0A;
-  }
-
-  /* Texto blanco para cards pares */
-  .splide__slide:nth-child(even) .card-title {
-    color: white;
-  }
-
-  /* Título en hover */
-  .card-link:hover .card-title {
-    color: #0A0A0A;
-    transform: translateY(-2px);
-  }
 
   /* Splide pagination */
   :global(.splide__pagination) {
@@ -356,7 +327,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 
   @media (max-width: 768px) {
     .herramientas-section {
-      padding: 4rem 0;
+      padding: 0rem 0rem 4rem 0rem;
     }
 
     .container {
@@ -365,7 +336,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 
     .header {
       margin-bottom: 2rem;
-      padding: 49px 0;
+      padding: 0px 0px 49px 0px;
     }
 
     .card::before {
@@ -432,6 +403,130 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
       padding: clamp(12px, 3vw, 25px) 8px;
     }
   }
+
+  /* Dynamic Content Container Styles */
+  .dynamic-content-container {
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    padding: 0 2rem;
+    margin-top: 4rem;
+    position: relative;
+    min-height: 200px;
+  }
+
+  .content-section {
+    width: 100%;
+    padding: 20px;
+    background: #0A0A0A;
+    justify-content: space-between;
+    align-items: flex-start;
+    display: flex;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transition: opacity 0.5s ease;
+    gap: 2rem;
+  }
+
+  .content-section.active {
+    opacity: 1;
+    position: relative;
+  }
+
+  .content-left {
+    flex: 1;
+    align-self: stretch;
+    min-width: 394px;
+  }
+
+  .content-title {
+    color: #D0DF00;
+    font-size: 36px;
+    font-family: var(--font-heading, 'Titillium Web');
+    font-weight: 300;
+    line-height: 40px;
+    word-wrap: break-word;
+  }
+
+  .content-subtitle {
+    color: white;
+    font-size: 32px;
+    font-family: var(--font-heading, 'Titillium Web');
+    font-weight: 300;
+    line-height: 35px;
+    word-wrap: break-word;
+  }
+
+  .content-right {
+    width: 728px;
+    align-self: stretch;
+    position: relative;
+  }
+
+  .content-description {
+    color: white;
+    font-size: 20px;
+    font-family: var(--font-body, 'Urbanist');
+    font-weight: 400;
+    word-wrap: break-word;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1200px) {
+    .content-section {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .content-left {
+      min-width: auto;
+    }
+
+    .content-right {
+      width: 100%;
+    }
+
+    .content-title {
+      font-size: 28px;
+      line-height: 32px;
+    }
+
+    .content-subtitle {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .content-description {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .dynamic-content-container {
+      padding: 0 1rem;
+      margin-top: 2rem;
+    }
+
+    .content-section {
+      padding: 15px;
+    }
+
+    .content-title {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .content-subtitle {
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    .content-description {
+      font-size: 16px;
+    }
+  }
 </style>
 
 <script>
@@ -472,7 +567,6 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 
       splide.mount();
 
-
       // Animaciones con IntersectionObserver para las cards
       const cards = document.querySelectorAll('.card');
 
@@ -495,6 +589,90 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
         (card as HTMLElement).style.transitionDelay = `${index * 0.15}s`;
         observer.observe(card);
       });
+
+      // Scroll-triggered card activation and content switching
+      const scrollContainer = document.querySelector('.scroll-container');
+      const contentSections = document.querySelectorAll('.content-section');
+      
+      if (scrollContainer) {
+        let currentActiveIndex = -1;
+        
+        const handleScroll = () => {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const containerRect = scrollContainer.getBoundingClientRect();
+          const containerTop = scrollTop + containerRect.top;
+          const containerHeight = scrollContainer.offsetHeight;
+          
+          // Calculate scroll progress within the container (0 to 1)
+          const scrollProgress = Math.max(0, Math.min(1, (scrollTop - containerTop) / (containerHeight - window.innerHeight)));
+          
+          // Calculate which card should be active based on scroll progress
+          const totalCards = cards.length;
+          const newActiveIndex = Math.floor(scrollProgress * totalCards);
+          
+          // Only update if the active card has changed
+          if (newActiveIndex !== currentActiveIndex && newActiveIndex >= 0 && newActiveIndex < totalCards) {
+            // Remove active class from all cards
+            cards.forEach(card => card.classList.remove('scroll-active'));
+            
+            // Add active class only to the current card (not cumulative)
+            cards.forEach((card, index) => {
+              if (index === newActiveIndex) {
+                card.classList.add('scroll-active');
+              } else {
+                card.classList.remove('scroll-active');
+              }
+            });
+
+            // Horizontal scroll for mobile/tablet viewports
+            if (window.innerWidth < 1200) {
+              const herramientasSection = document.querySelector('.herramientas-section');
+              const currentSplideList = herramientasSection?.querySelector('.splide__list') as HTMLElement;
+              if (currentSplideList && cards.length > 0) {
+                const cardWidth = 250 + 32; // card width + gap
+                const containerWidth = currentSplideList.parentElement?.offsetWidth || 0;
+                const totalWidth = cards.length * cardWidth;
+                const maxTranslate = Math.max(0, totalWidth - containerWidth);
+                const translateX = Math.min(scrollProgress * maxTranslate, maxTranslate);
+                
+                currentSplideList.style.transform = `translateX(-${translateX}px)`;
+              }
+            }
+            
+            // Update content sections
+            contentSections.forEach((section, index) => {
+              if (index === newActiveIndex) {
+                section.classList.add('active');
+              } else {
+                section.classList.remove('active');
+              }
+            });
+            
+            currentActiveIndex = newActiveIndex;
+          }
+          
+          // Remove active class if we're outside the scroll container
+          if (scrollProgress <= 0 || scrollProgress >= 1) {
+            cards.forEach(card => card.classList.remove('scroll-active'));
+            contentSections.forEach(section => section.classList.remove('active'));
+            currentActiveIndex = -1;
+          }
+        };
+        
+        // Throttle scroll events for better performance
+        let ticking = false;
+        const throttledScroll = () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              handleScroll();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        };
+        
+        window.addEventListener('scroll', throttledScroll, { passive: true });
+      }
     }
   });
 </script>

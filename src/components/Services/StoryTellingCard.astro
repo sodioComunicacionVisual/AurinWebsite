@@ -1,0 +1,180 @@
+---
+interface Props {
+  letter: string;
+  title: string;
+  href: string;
+}
+
+const { letter, title, href } = Astro.props;
+---
+
+<li class="splide__slide">
+  <a href={href} class="card-link">
+    <div class="card">
+      <div class="card-letter">
+        {letter}
+      </div>
+      <div class="card-content">
+        <div class="card-title">
+          {title}
+        </div>
+      </div>
+    </div>
+  </a>
+</li>
+
+<style>
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .card {
+    width: 250px;
+    height: 350px;
+    background: linear-gradient(161deg, rgba(0, 0, 0, 0) 47%, #101010 47%), #161616;
+    overflow: hidden;
+    border-radius: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    flex-shrink: 0;
+  }
+
+  /* Cards impares (1, 3, 5) - Gris claro */
+  .splide__slide:nth-child(odd) .card {
+    background: linear-gradient(197deg, rgba(0, 0, 0, 0) 47%, #A0A0A0 47%), #C2C2C2;
+  }
+
+  /* Cards pares (2, 4) - Gris oscuro */
+  .splide__slide:nth-child(even) .card {
+    background: linear-gradient(185deg, rgba(0, 0, 0, 0) 47%, #1A1A1A 47%), #282828;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(161deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), #D0DF00;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .card.scroll-active::before {
+    opacity: 1;
+  }
+
+  .card.scroll-active .card-title {
+    color: #0A0A0A !important;
+    transform: translateY(-2px);
+  }
+
+  .card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .card-letter {
+    width: clamp(150px, 100px, 237px);
+    text-align: right;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-black-a);
+    font-size: clamp(140px, 25vw, 280px);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 0.905;
+    word-wrap: break-word;
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1;
+    position: relative;
+    left: -4vw;
+  }
+  
+  .card-content {
+    align-self: stretch;
+    padding: 0px 10px 35px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: inline-flex;
+    z-index: 2;
+    position: relative;
+  }
+
+  .card-title {
+    flex: 1 1 0;
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    color: #7D7F79;
+    font-size: var(--body-1-size);
+    font-family: var(--font-heading);
+    font-weight: 300;
+    line-height: var(--body-1-line-height);
+    word-wrap: break-word;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Texto negro para cards impares */
+  .splide__slide:nth-child(odd) .card-title {
+    color: #0A0A0A;
+  }
+
+  /* Texto blanco para cards pares */
+  .splide__slide:nth-child(even) .card-title {
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .card-letter {
+      font-size: clamp(150px, 30vw, 250px);
+      width: clamp(100px, 35%, 180px);
+    }
+
+    .card-title {
+      font-size: clamp(16px, 3vw, 20px);
+    }
+
+    .card {
+      width: 220px;
+      min-height: 320px;
+    }
+
+    .card-content {
+      padding: clamp(15px, 4vw, 30px) 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card-letter {
+      font-size: clamp(120px, 28vw, 200px);
+      width: clamp(80px, 30%, 150px);
+    }
+
+    .card-title {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+
+    .card {
+      width: 200px;
+      min-height: 280px;
+    }
+
+    .card-content {
+      padding: clamp(12px, 3vw, 25px) 8px;
+    }
+  }
+</style>
