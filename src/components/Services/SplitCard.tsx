@@ -57,6 +57,7 @@ export default function SplitCard({
       <style>{`
         .split-card {
           min-width: 100%;
+          max-width: var(--maxWidth);
           min-height: 400px;
           display: flex;
           gap: 0;
@@ -238,6 +239,12 @@ export default function SplitCard({
           .card-description {
             font-size: clamp(12px, 2vw, 16px);
           }
+        }
+        
+        .card-wrapper {
+          max-width: var(--maxWidth);
+          margin: 0 auto;
+          width: 100%;
         }
       `}</style>
     </div>

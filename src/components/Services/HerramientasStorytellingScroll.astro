@@ -64,58 +64,69 @@ const {
 const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<section class="herramientas-section">
-  <div class="container">
-    <div class="header">
-      <div class="header-content">
-        <div class="title-wrapper">
-          <ScrollReveal 
-            text={`${titlePart1}\n${titlePart2}`}
-            tag="h2"
-            textClass="title"
-            baseOpacity={0.15}
-            baseRotation={5}
-            blurStrength={6}
-            enableBlur={true}
-          />
+<div class="scroll-container">
+  <section class="herramientas-section">
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <div class="title-wrapper">
+            <ScrollReveal 
+              text={`${titlePart1}\n${titlePart2}`}
+              tag="h2"
+              textClass="title"
+              baseOpacity={0.15}
+              baseRotation={5}
+              blurStrength={6}
+              enableBlur={true}
+            />
+          </div>
+          <p class="description body-1">{description}</p>
         </div>
-        <p class="description body-1">{description}</p>
       </div>
     </div>
-  </div>
 
-  <section class="splide" id={uniqueId} aria-label="Herramientas carousel">
-    <div class="splide__track">
-      <ul class="splide__list">
-        {items.map((item) => (
-          <li class="splide__slide">
-            <a href={item.href} class="card-link">
-              <div class="card">
-                <div class="card-letter">
-                  {item.letter}
-                </div>
-                <div class="card-content">
-                  <div class="card-title">
-                    {item.title}
+    <section class="splide" id={uniqueId} aria-label="Herramientas carousel">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {items.map((item) => (
+            <li class="splide__slide">
+              <a href={item.href} class="card-link">
+                <div class="card">
+                  <div class="card-letter">
+                    {item.letter}
+                  </div>
+                  <div class="card-content">
+                    <div class="card-title">
+                      {item.title}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   </section>
-</section>
+</div>
 
 <style>
+  .scroll-container {
+    height: 500vh;
+    position: relative;
+  }
+
   .herramientas-section {
     padding: 8rem 0;
     width: 100%;
-    
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     overflow: hidden;
-
-    background-color:black;
+    background-color: black;
   }
 
   .container {

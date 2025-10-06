@@ -52,6 +52,7 @@ export default function ServicesCard({
       <style>{`
         .service-card {
           width: 70%;
+          max-width: var(--maxWidth);
           min-height: 300px;
           background: linear-gradient(184deg, rgba(0, 0, 0, 0) 58%, #181818 58%), #282828;
           overflow: hidden;

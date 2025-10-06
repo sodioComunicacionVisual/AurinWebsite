@@ -9,28 +9,30 @@ const t = translations[currentLang];
 ---
 
 <section class="diseno-colaboracion">
-    <div class="content-column">
-        <div class="text-card">
-            <div class="text-content">
-                <h2 class="heading-2">{t.about.disenoColaboracion.heading}</h2>
-            </div>
-            <p class="body-1">{t.about.disenoColaboracion.description}</p>
-            <div class="button-group">
-                <SecondaryButton
-                    text={t.about.disenoColaboracion.buttonText}
-                    href="https://aldeacreativa.com"
-                    target="_blank"
-                />
+    <div class="diseno-container">
+        <div class="content-column">
+            <div class="text-card">
+                <div class="text-content">
+                    <h2 class="heading-2">{t.about.disenoColaboracion.heading}</h2>
+                </div>
+                <p class="body-1">{t.about.disenoColaboracion.description}</p>
+                <div class="button-group">
+                    <SecondaryButton
+                        text={t.about.disenoColaboracion.buttonText}
+                        href="https://aldeacreativa.com"
+                        target="_blank"
+                    />
+                </div>
             </div>
         </div>
-    </div>
-    <div class="image-column">
-        <div class="image-wrapper">
-            <img
-                src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/DisenoColaboracionInnovacion.webp"
-                alt={t.about.disenoColaboracion.imageAlt}
-                loading="lazy"
-            />
+        <div class="image-column">
+            <div class="image-wrapper">
+                <img
+                    src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/DisenoColaboracionInnovacion.webp"
+                    alt={t.about.disenoColaboracion.imageAlt}
+                    loading="lazy"
+                />
+            </div>
         </div>
     </div>
 </section>
@@ -41,6 +43,11 @@ const t = translations[currentLang];
         padding: 50px;
         background: var(--color-black-a);
         overflow: hidden;
+    }
+
+    .diseno-container {
+        max-width: var(--maxWidth);
+        margin: 0 auto;
         display: flex;
         gap: 10px;
     }
@@ -122,8 +129,11 @@ const t = translations[currentLang];
     /* Responsive Design */
     @media (max-width: 1024px) {
         .diseno-colaboracion {
-            flex-direction: column;
             padding: 30px;
+        }
+
+        .diseno-container {
+            flex-direction: column;
         }
 
         .content-column,

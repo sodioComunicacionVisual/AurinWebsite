@@ -170,12 +170,20 @@
   --label-2-size: 16px;
   --label-2-line-height: auto;
   --label-2-weight: 400;
+  
+  /* ============================================
+     LAYOUT VARIABLES
+     ============================================ */
+  
+  /* Max Width */
+  --maxWidth: 1500px;
 }
 
 /* ============================================
    UTILITY CLASSES
    ============================================ */
 
+   
 /* Heading Bold Classes */
 .heading-bold-1 {
   font-family: var(--font-heading);

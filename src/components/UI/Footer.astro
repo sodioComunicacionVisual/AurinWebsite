@@ -90,7 +90,7 @@ const t = translations[currentLang];
   }
 
   .footer-container {
-    max-width: 1513px;
+    max-width: var(--maxWidth);
     margin: 0 auto;
     padding: 49px 50px;
     display: flex;
@@ -112,6 +112,12 @@ const t = translations[currentLang];
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
+  }
+
+  @media (min-width: 1501px) {
+    .lamp-decoration {
+      display: none;
+    }
   }
 
   .footer-logo {
