@@ -416,6 +416,11 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
         pagination: false,
         arrows: false,
         drag: true,
+        accessibility: {
+          slideRole: '',
+          slideLabel: '',
+          slideLabelFormat: '',
+        },
         breakpoints: {
           1024: {
             fixedWidth: '250px',
