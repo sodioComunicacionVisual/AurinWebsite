@@ -1,0 +1,145 @@
+{
+  "name": "Ticket Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "4e6682f0-0b3e-4b7a-8376-6d46d2c07cdd",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        592,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer datos del ticket\nconst ticketData = $input.item.json.ticketData || $input.item.json.query || '';\n\n// Parsear información usando regex\nconst nameMatch = ticketData.match(/(?:nombre?|name)[:\\s]+([^,\\n]+)/i);\nconst emailMatch = ticketData.match(/(?:email|correo)[:\\s]+([^\\s,\\n]+)/i);\nconst descMatch = ticketData.match(/(?:descripci[oó]n?|description)[:\\s]+(.+)/is);\nconst companyMatch = ticketData.match(/(?:empresa|company)[:\\s]+([^,\\n]+)/i);\n\nconst name = nameMatch ? nameMatch[1].trim() : 'No proporcionado';\nconst email = emailMatch ? emailMatch[1].trim() : 'No proporcionado';\nconst description = descMatch ? descMatch[1].trim() : ticketData;\nconst company = companyMatch ? companyMatch[1].trim() : 'No especificado';\n\nreturn {\n  json: {\n    name: name,\n    email: email,\n    description: description,\n    company: company,\n    ticketId: `TICKET-${Date.now()}`,\n    createdAt: new Date().toISOString()\n  }\n};"
+      },
+      "id": "8a700a41-c396-435a-b320-608ce60abb5b",
+      "name": "Parse Ticket Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "email-subject",
+              "name": "emailSubject",
+              "value": "=🎫 Nuevo Ticket de Soporte Aurin - {{ $json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "email-body",
+              "name": "emailBody",
+              "value": "=Nuevo Ticket de Soporte - Aurin Chatbot\n\n═══════════════════════════════════\nID: {{ $json.ticketId }}\nFecha: {{ $json.createdAt }}\n═══════════════════════════════════\n\nINFORMACIÓN DEL CLIENTE:\n\nNombre: {{ $json.name }}\nEmail: {{ $json.email }}\nEmpresa: {{ $json.company }}\n\nDESCRIPCIÓN DE LA SOLICITUD:\n{{ $json.description }}\n\n═══════════════════════════════════\nACCIONES SUGERIDAS:\n- Responder al cliente en: {{ $json.email }}\n- Revisar historial de conversación si está disponible\n- Clasificar el tipo de consulta (Branding, UX/UI, Estrategia, etc.)\n\n═══════════════════════════════════\n\n✨ Este ticket fue generado automáticamente por el chatbot de Aurin.\n📧 Para más información contacta a: hey@aurin.mx\n🌐 https://aurin.mx\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ee0394b7-3e44-495c-86a8-925f2062174a",
+      "name": "Format Email",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@aurin.mx",
+        "toEmail": "karen@sodio.net",
+        "subject": "={{ $json.emailSubject }}",
+        "options": {}
+      },
+      "id": "9b6cd609-1738-41d3-bd6f-8dcfb5240a13",
+      "name": "Send Email to Karen",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1264,
+        -80
+      ],
+      "webhookId": "999dd61f-b51d-448f-9046-3260d27c2383"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Formatear respuesta de éxito\nconst ticketData = $('Parse Ticket Data').item.json;\n\nreturn {\n  json: {\n    output: `✅ Perfecto, ${ticketData.name}. He creado un ticket de soporte y nuestro equipo te contactará a ${ticketData.email} muy pronto.\\n\\n📋 Tu número de ticket es: **${ticketData.ticketId}**\\n\\nNos pondremos en contacto contigo dentro de las próximas 24 horas para atender tu solicitud.`,\n    success: true,\n    ticketId: ticketData.ticketId,\n    emailSent: true\n  }\n};"
+      },
+      "id": "6819dec6-8e3c-4a73-adfb-bb55e8efb33f",
+      "name": "Format Success Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1472,
+        -80
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Ticket Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Ticket Data": {
+      "main": [
+        [
+          {
+            "node": "Format Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Email": {
+      "main": [
+        [
+          {
+            "node": "Send Email to Karen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email to Karen": {
+      "main": [
+        [
+          {
+            "node": "Format Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fda9104a-982f-42fa-92a0-b2132bf3c412",
+  "meta": {
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  },
+  "id": "xofJhOkiHd6ietuS",
+  "tags": []
+}

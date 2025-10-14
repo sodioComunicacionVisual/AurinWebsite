@@ -16,10 +16,11 @@ export default function ChatbotWidget() {
   const [isTyping, setIsTyping] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [sessionId, setSessionId] = useState<string>('')
   const [isOnline, setIsOnline] = useState(true)
+  const [sessionId, setSessionId] = useState<string>('')
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -59,6 +60,29 @@ export default function ChatbotWidget() {
     const checkConnection = () => {
       setIsOnline(ChatApiClient.isOnline())
     }
+
+    // Función para bloquear scroll del body
+    const preventBodyScroll = () => {
+      document.body.style.overflow = 'hidden'
+    }
+
+    // Función para restaurar scroll del body
+    const restoreBodyScroll = () => {
+      document.body.style.overflow = ''
+    }
+
+    // Función para cerrar chat
+    const closeChatbot = () => {
+      setIsExpanded(false)
+      restoreBodyScroll()
+    }
+
+    // Click outside handler
+    const handleClickOutside = (event: MouseEvent) => {
+      if (chatContainerRef.current && !chatContainerRef.current.contains(event.target as Node)) {
+        closeChatbot()
+      }
+    }
     
     checkMobile()
     initializeSession()
@@ -67,13 +91,22 @@ export default function ChatbotWidget() {
     window.addEventListener('resize', checkMobile)
     window.addEventListener('online', checkConnection)
     window.addEventListener('offline', checkConnection)
+
+    // Bloquear scroll del body cuando el chat está expandido
+    if (isExpanded) {
+      preventBodyScroll()
+      // Agregar listener para click outside
+      document.addEventListener('mousedown', handleClickOutside)
+    }
     
     return () => {
       window.removeEventListener('resize', checkMobile)
       window.removeEventListener('online', checkConnection)
       window.removeEventListener('offline', checkConnection)
+      document.removeEventListener('mousedown', handleClickOutside)
+      restoreBodyScroll() // Restaurar scroll al desmontar
     }
-  }, [])
+  }, [isExpanded])
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() && !selectedFile) return
@@ -119,8 +152,20 @@ export default function ChatbotWidget() {
         })
       })
 
-      const data = await response.json()
       setIsTyping(false)
+
+      // Verificar si la respuesta es exitosa
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        const errorMessage = SessionManager.addMessage({
+          text: errorData.output || errorData.error || "Lo siento, hubo un problema. Por favor intenta de nuevo o contáctanos en hey@aurin.mx",
+          sender: "bot"
+        })
+        setMessages(SessionManager.getMessages())
+        return
+      }
+
+      const data = await response.json()
 
       // Respuesta del bot desde n8n
       const botMessage = SessionManager.addMessage({
@@ -214,6 +259,7 @@ export default function ChatbotWidget() {
 
   return (
     <motion.div 
+      ref={chatContainerRef}
       className={`chatbot-main ${isMobile ? 'chatbot-main--mobile' : ''}`}
       initial={{ scale: 0.8, opacity: 0, y: 20 }}
       animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -246,7 +292,11 @@ export default function ChatbotWidget() {
           </div>
         </div>
         <motion.button
-          onClick={() => setIsExpanded(false)}
+          onClick={() => {
+            setIsExpanded(false)
+            // Restaurar scroll del body al cerrar
+            document.body.style.overflow = ''
+          }}
           className="chatbot-minimize-btn"
           aria-label="Minimizar chat"
           whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
@@ -257,7 +307,22 @@ export default function ChatbotWidget() {
       </motion.div>
 
       {/* Messages Container */}
-      <div className="chatbot-messages chatbot-scrollbar">
+      <div 
+        className="chatbot-messages chatbot-scrollbar"
+        onWheel={(e) => {
+          // Permitir scroll dentro del contenedor de mensajes
+          const container = e.currentTarget
+          const isScrollingUp = e.deltaY < 0
+          const isScrollingDown = e.deltaY > 0
+          const isAtTop = container.scrollTop === 0
+          const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 1
+
+          // Prevenir propagación del scroll al body si estamos scrolleando dentro del contenedor
+          if ((isScrollingUp && !isAtTop) || (isScrollingDown && !isAtBottom)) {
+            e.stopPropagation()
+          }
+        }}
+      >
         <AnimatePresence>
           {messages.map((message) => (
             <motion.div

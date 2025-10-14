@@ -135,11 +135,9 @@ const words = text.split(/(\s+)/);
   .scroll-reveal-word {
     display: inline-block;
     will-change: opacity, filter, transform;
-    /* Ensure minimum contrast ratio for accessibility */
     opacity: 0.7 !important;
   }
   
-  /* Ensure visible text during animation for accessibility */
   .scroll-reveal-word.motion-safe {
     opacity: 1 !important;
   }
