@@ -1,0 +1,15 @@
+---
+// Componente Astro que actúa como contenedor para el widget de React
+// Siguiendo las buenas prácticas de Astro Islands Architecture
+import ChatbotWidget from './ChatbotWidget.tsx';
+import './chatbot.css';
+---
+
+<!-- 
+  Usando client:only="react" para evitar errores de SSR con window
+  El componente necesita APIs del navegador que no están disponibles en el servidor
+-->
+<div class="chatbot-container">
+  <ChatbotWidget client:only="react" />
+</div>
+

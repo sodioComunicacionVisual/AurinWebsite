@@ -3,6 +3,7 @@ import '../styles/global.css';
 import MegaMenu from '../components/UI/MegaMenu.astro';
 import AdvancedSEO from '../components/SEO/AdvancedSEO.astro';
 import PageLoader from '../components/UI/PageLoader.astro';
+import ChatbotContainer from '../components/Chatbot/ChatbotContainer.astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
@@ -63,6 +64,7 @@ const {
 		<PageLoader />
 		<MegaMenu />
 		<slot />
+		<ChatbotContainer />
 		<SpeedInsights />
 	</body>
 </html>

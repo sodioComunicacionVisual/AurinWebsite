@@ -3,11 +3,15 @@ import lenis from 'astro-lenis';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 
+import node from '@astrojs/node';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://aurin.mx',
   output: 'server',
-  adapter: vercel(),
+  adapter: node({
+    mode: 'standalone',
+  }),
   integrations: [lenis(), react()],
   i18n: {
     defaultLocale: 'es',
