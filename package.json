@@ -17,6 +17,7 @@
     "@splidejs/splide": "^4.1.4",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
+    "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "astro": "^5.14.1",
     "astro-lenis": "^1.0.5",

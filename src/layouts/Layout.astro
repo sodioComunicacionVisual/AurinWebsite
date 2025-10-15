@@ -5,6 +5,7 @@ import AdvancedSEO from '../components/SEO/AdvancedSEO.astro';
 import PageLoader from '../components/UI/PageLoader.astro';
 import ChatbotContainer from '../components/Chatbot/ChatbotContainer.astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
 	title: string;
@@ -69,6 +70,7 @@ const {
 		<slot />
 		<ChatbotContainer />
 		<SpeedInsights />
+		<Analytics />
 	</body>
 </html>
 
