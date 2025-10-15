@@ -38,10 +38,10 @@ export const POST: APIRoute = async ({ request }) => {
 
     console.log('Intentando enviar email con datos:', { nombre, correo, servicio, asunto, mensaje });
     
-    // Enviar email con Resend - usando el formato correcto según la documentación
+    // Enviar email con Resend
     const emailData = await resend.emails.send({
       from: 'Aurin <onboarding@resend.dev>',
-      to: ['sodioanalytics@gmail.com'],
+      to: ['info@sodio.net'],
       subject: `${asunto} - ${nombre}`,
       replyTo: correo,
       html: `
