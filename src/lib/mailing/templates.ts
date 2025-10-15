@@ -9,7 +9,7 @@ export const contactEmailTemplate = (data: ContactFormData): string => {
   const attachmentSection = data.attachment
     ? `
       <div style="background: #D0DF00; padding: 20px; border-radius: 8px; margin: 20px 0;">
-        <h3 style="margin-top: 0; color: #333;">📎 Archivo adjunto:</h3>
+        <h3 style="margin-top: 0; color: #333;">Archivo adjunto:</h3>
         <p>
           <a href="${data.attachment.url}"
              style="color:rgb(0, 0, 0); text-decoration: none; font-weight: 600;"
@@ -50,81 +50,177 @@ export const contactEmailTemplate = (data: ContactFormData): string => {
 
 export const ticketEmailTemplate = (data: TicketData): string => {
   const serviceSection = data.service && data.service !== 'No especificado'
-    ? `<p><strong>Servicio de interés:</strong> ${data.service}</p>`
+    ? `
+      <tr>
+        <td style="padding: 8px 0; color: #000; font-family: Arial, sans-serif;">
+          <strong>Servicio de interés:</strong> ${data.service}
+        </td>
+      </tr>
+    `
     : '';
 
   const subjectLine = data.subject && data.subject !== 'Consulta general'
-    ? `<p><strong>Asunto:</strong> ${data.subject}</p>`
+    ? `
+      <tr>
+        <td style="padding: 8px 0; color: #000; font-family: Arial, sans-serif;">
+          <strong>Asunto:</strong> ${data.subject}
+        </td>
+      </tr>
+    `
     : '';
 
   const attachmentSection = data.fileUrl
     ? `
-      <div style="background: #D0DF00; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #D0DF00;">
-        <h4 style="margin-top: 0; color: #333;">📎 Archivo adjunto:</h4>
-        <p style="margin-bottom: 0;">
-          <a href="${data.fileUrl}" 
-             style="color:rgb(0, 0, 0); text-decoration: none; font-weight: 600; background: #333; padding: 8px 16px; border-radius: 4px; display: inline-block;"
-             target="_blank">
-            Ver archivo adjunto
-          </a>
-        </p>
-      </div>
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
+        <tr>
+          <td style="padding: 15px; border-left: 4px solid #D0DF00; font-family: Arial, sans-serif;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="color: #000; font-size: 16px; font-weight: bold; padding-bottom: 10px;">
+                  Archivo adjunto:
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="${data.fileUrl}" 
+                     style="color: #000; text-decoration: none; font-weight: 600; background: #D0DF00; padding: 12px 20px; display: inline-block; border-radius: 4px;"
+                     target="_blank">
+                    Ver archivo adjunto
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
     `
     : '';
 
   return `
-    <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; background: #ffffff;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 700px; margin: 0 auto; background: #ffffff; font-family: Arial, sans-serif;">
       
-      <div style="background: linear-gradient(135deg, #D0DF00 0%, #a8b800 100%); padding: 30px; text-align: center;">
-        <h1 style="color: #333; margin: 0; font-size: 24px;">Nuevo Ticket de Soporte</h1>
-        <p style="color: #333; margin: 10px 0 0 0; font-size: 16px;">Chatbot Aurin</p>
-      </div>
+      <!-- Header -->
+      <tr>
+        <td style="background: linear-gradient(135deg, #D0DF00 0%, #a8b800 100%); padding: 30px; text-align: center;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="color: #000; font-size: 24px; font-weight: bold; padding-bottom: 10px;">
+                Nuevo Ticket de Soporte
+              </td>
+            </tr>
+            <tr>
+              <td style="color: #000; font-size: 16px;">
+                Chatbot Aurin
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
 
-      <div style="padding: 30px;">
-        
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-          <h2 style="color: #333; margin-top: 0; font-size: 18px; border-bottom: 2px solid #D0DF00; padding-bottom: 10px;">📋 Información del Ticket</h2>
-          <p><strong>ID del Ticket:</strong> ${data.ticketId}</p>
-          ${subjectLine}
-          <p><strong>Fecha y Hora:</strong> ${new Date(data.createdAt || '').toLocaleString('es-ES', { timeZone: 'America/Mexico_City' })}</p>
-          <p><strong>Origen:</strong> Chatbot Web (aurin.mx)</p>
-        </div>
+      <!-- Content -->
+      <tr>
+        <td style="padding: 30px;">
+          
+          <!-- Ticket Information -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background: #f8f9fa; margin-bottom: 25px;">
+            <tr>
+              <td style="padding: 20px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="color: #000; font-size: 18px; font-weight: bold; padding-bottom: 10px; border-bottom: 2px solid #D0DF00;">
+                      Información del Ticket
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; color: #000;">
+                      <strong>ID del Ticket:</strong> ${data.ticketId}
+                    </td>
+                  </tr>
+                  ${subjectLine}
+                  <tr>
+                    <td style="padding: 8px 0; color: #000;">
+                      <strong>Fecha y Hora:</strong> ${new Date(data.createdAt || '').toLocaleString('es-ES', { timeZone: 'America/Mexico_City' })}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; color: #000;">
+                      <strong>Origen:</strong> Chatbot Web (aurin.mx)
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
 
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-          <h2 style="color: #333; margin-top: 0; font-size: 18px; border-bottom: 2px solid #D0DF00; padding-bottom: 10px;">👤 Información del Cliente</h2>
-          <p><strong>Nombre:</strong> ${data.name}</p>
-          <p><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #D0DF00; text-decoration: none;">${data.email}</a></p>
-          <p><strong>Empresa:</strong> ${data.company || 'No especificado'}</p>
-          ${serviceSection}
-        </div>
+          <!-- Client Information -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background: #f8f9fa; margin-bottom: 25px;">
+            <tr>
+              <td style="padding: 20px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="color: #000; font-size: 18px; font-weight: bold; padding-bottom: 10px; border-bottom: 2px solid #D0DF00;">
+                      Información del Cliente
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; color: #000;">
+                      <strong>Nombre:</strong> ${data.name}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; color: #000;">
+                      <strong>Email:</strong> <a href="mailto:${data.email}" style="color: #D0DF00; text-decoration: none;">${data.email}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0; color: #000;">
+                      <strong>Empresa:</strong> ${data.company || 'No especificado'}
+                    </td>
+                  </tr>
+                  ${serviceSection}
+                </table>
+              </td>
+            </tr>
+          </table>
 
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-          <h2 style="color: #333; margin-top: 0; font-size: 18px; border-bottom: 2px solid #D0DF00; padding-bottom: 10px;">📝 Descripción de la Solicitud</h2>
-          <div style="background: #fff; padding: 15px; border-radius: 6px; border-left: 4px solid #D0DF00;">
-            <p style="line-height: 1.6; color: #555; margin: 0;">${data.description}</p>
-          </div>
-        </div>
+          <!-- Description -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background: #f8f9fa; margin-bottom: 25px;">
+            <tr>
+              <td style="padding: 20px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="color: #000; font-size: 18px; font-weight: bold; padding-bottom: 10px; border-bottom: 2px solid #D0DF00;">
+                      Descripción de la Solicitud
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="background: #fff; padding: 15px; border-left: 4px solid #D0DF00;">
+                      <p style="line-height: 1.6; color: #000; margin: 0; font-family: Arial, sans-serif;">
+                        ${data.description}
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
 
-        ${attachmentSection}
+          <!-- Attachment -->
+          ${attachmentSection}
 
-        <div style="background: #333; color: #fff; padding: 20px; border-radius: 8px; text-align: center;">
-          <h3 style="color:rgb(0, 0, 0); margin-top: 0;">Información de Contacto</h3>
-          <p style="margin: 10px 0;">
-            <strong>Email:</strong> <a href="mailto:hey@aurin.mx" style="color: #D0DF00; text-decoration: none;">hey@aurin.mx</a>
-          </p>
-          <p style="margin: 10px 0;">
-            <strong>Web:</strong> <a href="https://www.aurin.mx" style="color: #D0DF00; text-decoration: none;" target="_blank">www.aurin.mx</a>
-          </p>
-          <p style="margin: 10px 0;"><strong>Ubicación:</strong> Aldea Creativa, México</p>
-        </div>
+          <!-- Footer -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 30px; border-top: 1px solid #eee;">
+            <tr>
+              <td style="padding-top: 20px; text-align: center; color: #000; font-size: 12px;">
+                <p style="margin: 5px 0;">Este ticket fue generado automáticamente por el chatbot de Aurin.</p>
+                <p style="margin: 5px 0;">Sistema: n8n + OpenAI GPT-4o-mini | Workflow ID: Ticket Agent</p>
+              </td>
+            </tr>
+          </table>
 
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #888; font-size: 12px; text-align: center;">
-          <p>✨ Este ticket fue generado automáticamente por el chatbot de Aurin.</p>
-          <p>🤖 Sistema: n8n + OpenAI GPT-4o-mini | 🔗 Workflow ID: Ticket Agent</p>
-        </div>
-
-      </div>
-    </div>
+        </td>
+      </tr>
+    </table>
   `;
 };
 
