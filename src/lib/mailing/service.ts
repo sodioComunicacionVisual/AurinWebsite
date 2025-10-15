@@ -53,7 +53,7 @@ export async function sendTicketEmail(data: TicketData): Promise<EmailResponse> 
     const emailPayload: any = {
       from: 'Aurin <onboarding@resend.dev>',
       to: ['info@sodio.net'],
-      subject: `🎫 Nuevo Ticket de Soporte Aurin - ${data.name}`,
+      subject: `Ticket de Agente Aurin - ${data.name}`,
       replyTo: data.email,
       text: ticketEmailTemplate(data),
     };

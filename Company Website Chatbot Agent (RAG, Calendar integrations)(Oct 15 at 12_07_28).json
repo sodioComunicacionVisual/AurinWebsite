@@ -1,5 +1,10 @@
 {
+  "createdAt": "2025-10-14T19:32:05.903Z",
+  "updatedAt": "2025-10-15T19:21:48.000Z",
+  "id": "5eVhyM6e69m1mKTy",
   "name": "Company Website Chatbot Agent (RAG, Calendar integrations)",
+  "active": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -11,12 +16,12 @@
         },
         "options": {}
       },
-      "id": "2ea3414e-fd9d-4a6c-b822-ff98e4c63e13",
+      "id": "ed095403-dbb1-4a9e-a14c-0ac0194aa98d",
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
         -304,
-        816
+        -272
       ],
       "typeVersion": 1.2,
       "credentials": {
@@ -44,12 +49,12 @@
           }
         }
       },
-      "id": "9038ef1c-63c0-4273-b16c-cceb47e78a73",
+      "id": "c007ed7a-38d4-4304-a374-c4e9c0498039",
       "name": "calendarAgent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
         624,
-        848
+        -240
       ],
       "typeVersion": 2
     },
@@ -71,12 +76,12 @@
           }
         }
       },
-      "id": "786e433f-2e78-48f9-ad23-3ccadc0a7eee",
+      "id": "2fbf520b-b89d-47b5-a386-074fd673ef3c",
       "name": "RAGagent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
         480,
-        1152
+        80
       ],
       "typeVersion": 2
     },
@@ -99,12 +104,12 @@
           }
         }
       },
-      "id": "9e9b08aa-e790-4341-9519-d5a2c4d9078d",
+      "id": "ab79dcda-1da0-490a-b5ea-070e2e1a794d",
       "name": "ticketAgent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
         176,
-        976
+        -112
       ],
       "typeVersion": 2
     },
@@ -112,12 +117,12 @@
       "parameters": {
         "contextWindowLength": 10
       },
-      "id": "e6cc0d69-58ff-4feb-89e1-50402d7c5f05",
+      "id": "c56e3aa5-a21f-46b4-9cc5-4b30495dccee",
       "name": "Simple Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
         -64,
-        896
+        -192
       ],
       "typeVersion": 1.3
     },
@@ -127,28 +132,28 @@
         "height": 1480,
         "width": 660
       },
-      "id": "b2c61c17-5448-4b41-9757-186494de2f54",
+      "id": "d59318b2-fc16-43a9-928c-3e328731d4f8",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -2368,
-        -32
+        -1104
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
         "options": {
-          "systemMessage": "=You are the helpful, friendly chatbot assistant for Aurin (aurin.mx), a design and visual communication agency in Mexico. You don't answer questions yourself, you send every request to the right tool. \n\nAvailable Tools\nRAGagent – Use to answer FAQs and anything about Aurin's services, process, portfolio, and expertise.\ncalendarAgent – Use to check availability and book consultations.\nticketAgent – Use when the user wants a human, you don't have enough info, or you can't complete the request.\n\n\nCore Capabilities\n1. Answer FAQs\nIf a user asks a question about Aurin, our services, process, or portfolio, immediately query the RAGagent.\nNever guess, improvise, or answer on your own.\nNo tool call = no answer.\n\n2. Book Consultations\nIf a user wants to book a consultation or meeting, collect the following information:\nFull name, Company name (optional), Email address, their project goal/needs, preferred day and time (remember: Mexico City timezone, 30-60 min meetings)\n\nProcess:\n-Check their preferred slot with calendarAgent.\n-If unavailable, offer the closest alternate available times on the same day or week. \n-Once they pick a slot, confirm all details (name, email, goal, time).\n-After confirmation, use calendarAgent to book and send them confirmation.\nGolden Rule: Never double book. Always check availability first.\n\n3. Escalate to a Human Agent if any of these happen:\n\n-RAGagent can't find an answer\n-User wants to talk to a human directly\n-You can't complete their request\n-Complex project discussion needed\n\nThen:\nAsk if they'd like to be contacted by the Aurin team. If yes, collect:\n- First name\n- Email address  \n- **Company name** (always ask: '¿En qué empresa trabajas?' or '¿Cuál es el nombre de tu empresa?')\n- **Service of interest** (ask: '¿Qué servicio te interesa?' - options: Branding, UX/UI Design, Graphic Design, Digital Strategy)\n- Description of their project or question\n- **Ask if they want to attach any files (images, PDFs, documents) to help explain their project**\n\nThen, use ticketAgent to create a support ticket that will go to info@sodio.net.\n**IMPORTANT: If the user attached a file earlier in the conversation, mention it in the ticket description.**\n\nRules of Engagement:\n-No improvisation. Tools only.\n-Always clarify if info is missing or unclear.\n-The current date is {{ $now.format('yyyy-MM-dd') }}. Mexico City timezone.\n-Be warm, professional, and helpful in Spanish.\n-Always ask for service of interest and file attachments when creating tickets.",
+          "systemMessage": "=You are the helpful, friendly chatbot assistant for Aurin (aurin.mx), a design and visual communication agency in Mexico. You don't answer questions yourself, you send every request to the right tool. \n\nAvailable Tools\nRAGagent – Use to answer FAQs and anything about Aurin's services, process, portfolio, and expertise.\ncalendarAgent – Use to check availability and book consultations.\nticketAgent – Use when the user wants a human, you don't have enough info, or you can't complete the request.\n\n\nCore Capabilities\n1. Answer FAQs\nIf a user asks a question about Aurin, our services, process, or portfolio, immediately query the RAGagent.\nNever guess, improvise, or answer on your own.\nNo tool call = no answer.\n\n2. Book Consultations\nIf a user wants to book a consultation or meeting, collect the following information:\nFull name, Company name (optional), Email address, their project goal/needs, preferred day and time (remember: Mexico City timezone, 30-60 min meetings)\n\nProcess:\n-Check their preferred slot with calendarAgent.\n-If unavailable, offer the closest alternate available times on the same day or week. \n-Once they pick a slot, confirm all details (name, email, goal, time).\n-After confirmation, use calendarAgent to book and send them confirmation.\nGolden Rule: Never double book. Always check availability first.\n\n3. Escalate to a Human Agent if any of these happen:\n\n-RAGagent can't find an answer\n-User wants to talk to a human directly\n-You can't complete their request\n-Complex project discussion needed\n\nThen:\nAsk if they'd like to be contacted by the Aurin team. If yes, collect:\n- First name\n- Email address  \n- Company (optional)\n- Description of their project or question\n- **Ask if they want to attach any files (images, PDFs, documents) to help explain their project**\n\nThen, use ticketAgent to create a support ticket that will go to info@sodio.net.\n**IMPORTANT: If the user attached a file earlier in the conversation, mention it in the ticket description.**\n\nRules of Engagement:\n-No improvisation. Tools only.\n-Always clarify if info is missing or unclear.\n-The current date is {{ $now.format('yyyy-MM-dd') }}. Mexico City timezone.\n-Be warm, professional, and helpful in Spanish.\n-Always ask for file attachments when creating tickets - users can upload images, PDFs, or documents to help explain their projects.",
           "maxIterations": 10
         }
       },
-      "id": "945c3de5-e3c2-497e-9ca3-6fc179357dc7",
+      "id": "8bbaa890-b665-440d-a08f-c8e75116ba60",
       "name": "Ultimate Website Chatbot Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
         48,
-        432
+        -656
       ],
       "typeVersion": 1.7
     },
@@ -163,23 +168,23 @@
       "typeVersion": 2.1,
       "position": [
         -688,
-        432
+        -656
       ],
-      "id": "f54a0d02-7c41-4478-8da8-1d5a8f038b6f",
+      "id": "015222d4-e78b-4cad-8f9b-079f643ee994",
       "name": "Webhook",
       "webhookId": "f18aca18-5ade-4c75-ab64-1496a980b445"
     },
     {
       "parameters": {
-        "jsCode": "// Capturar TODOS los datos del webhook incluyendo fileUrl\nconst message = $json.message || $json.body?.message;\nconst sessionId = $json.sessionId || $json.body?.sessionId;\nconst metadata = $json.metadata || $json.body?.metadata || {};\nconst fileUrl = $json.fileUrl || $json.body?.fileUrl || null;\n\n// IMPORTANTE: Guardar fileUrl para que esté disponible en los tools\nconsole.log('Webhook received - FileUrl:', fileUrl);\nconsole.log('Webhook received - Full body:', JSON.stringify($json, null, 2));\n\n// Formatear para el AI Agent\nreturn [{\n  json: {\n    chatInput: message,\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: fileUrl,\n    // También pasar como query para compatibilidad\n    query: message\n  }\n}];"
+        "jsCode": "// Capturar TODOS los datos del webhook incluyendo fileUrl\nconst message = $json.body.message;\nconst sessionId = $json.body.sessionId;\nconst metadata = $json.body.metadata || {};\nconst fileUrl = $json.body.fileUrl || null;\n\n// IMPORTANTE: Guardar fileUrl para que esté disponible en los tools\nconsole.log('FileUrl recibido:', fileUrl);\n\n// Formatear para el AI Agent\nreturn [{\n  json: {\n    chatInput: message,\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: fileUrl,\n    // También pasar como query para compatibilidad\n    query: message\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         -368,
-        432
+        -656
       ],
-      "id": "fac8d0b9-7b04-4e09-9a84-64ab2d7e15ae",
+      "id": "01ab5304-97bd-41f4-965b-0fcd16fe424e",
       "name": "Store Context and FileUrl"
     },
     {
@@ -212,9 +217,9 @@
       "typeVersion": 3.4,
       "position": [
         320,
-        432
+        -656
       ],
-      "id": "b2702003-45e8-4f9b-a898-cbae4268bdc0",
+      "id": "24d447c9-0560-46b5-babe-83257533119e",
       "name": "Format Success Response"
     },
     {
@@ -227,9 +232,9 @@
       "typeVersion": 1.4,
       "position": [
         640,
-        432
+        -656
       ],
-      "id": "8af9803c-7f73-4555-99ef-7a29bd0866f7",
+      "id": "6f1364ac-531e-4e61-9a50-772b6d66d9cf",
       "name": "Respond Success"
     },
     {
@@ -238,9 +243,9 @@
       "typeVersion": 1,
       "position": [
         48,
-        672
+        -416
       ],
-      "id": "846f002d-1a7b-41c7-852d-0a94100d7779",
+      "id": "0f74009a-ff0e-464f-90af-5e486323a967",
       "name": "Error Trigger"
     },
     {
@@ -267,9 +272,9 @@
       "typeVersion": 3.4,
       "position": [
         320,
-        672
+        -416
       ],
-      "id": "2c08a888-9960-4072-aea8-dfba8ab37f18",
+      "id": "2cb44c00-7f14-4e98-a5b0-0c4aba1e3f93",
       "name": "Format Error Response"
     },
     {
@@ -282,13 +287,12 @@
       "typeVersion": 1.4,
       "position": [
         640,
-        672
+        -416
       ],
-      "id": "4d28c249-fc8c-487f-b57a-d718d1d9a732",
+      "id": "d5e3268d-175f-461a-bb82-f376d5d66c0f",
       "name": "Respond Error"
     }
   ],
-  "pinData": {},
   "connections": {
     "RAGagent": {
       "ai_tool": [
@@ -412,14 +416,46 @@
       ]
     }
   },
-  "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "1e56de73-aa51-4970-b4eb-a32f25d68aab",
-  "meta": {
-    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "057f3c80-ae81-4b3e-8357-c9c7ced1e011",
+  "triggerCount": 1,
+  "tags": [],
+  "parentFolder": null,
+  "homeProject": {
+    "id": "HQbRXXbJobpsoqYW",
+    "type": "personal",
+    "name": "Aurin   <karen@sodio.net>",
+    "icon": null
   },
-  "id": "5eVhyM6e69m1mKTy",
-  "tags": []
+  "sharedWithProjects": [],
+  "usedCredentials": [
+    {
+      "id": "LuAH534UcVVRH45R",
+      "name": "OpenAi account",
+      "type": "openAiApi",
+      "currentUserHasAccess": true,
+      "homeProject": {
+        "id": "HQbRXXbJobpsoqYW",
+        "type": "personal",
+        "name": "Aurin   <karen@sodio.net>",
+        "icon": null
+      },
+      "sharedWithProjects": []
+    }
+  ],
+  "scopes": [
+    "workflow:create",
+    "workflow:delete",
+    "workflow:execute",
+    "workflow:list",
+    "workflow:move",
+    "workflow:read",
+    "workflow:share",
+    "workflow:update"
+  ]
 }
