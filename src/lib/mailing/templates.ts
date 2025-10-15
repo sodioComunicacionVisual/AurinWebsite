@@ -49,15 +49,12 @@ export const contactEmailTemplate = (data: ContactFormData): string => {
 };
 
 export const ticketEmailTemplate = (data: TicketData): string => {
+  const serviceSection = (data as any).service && (data as any).service !== 'No especificado'
+    ? `Servicio de interés: ${(data as any).service}\n`
+    : '';
+
   const attachmentSection = data.fileUrl
-    ? `
-═══════════════════════════════════════════════════
-📎 ARCHIVO ADJUNTO
-═══════════════════════════════════════════════════
-
-🔗 Ver archivo: ${data.fileUrl}
-
-    `
+    ? `\n📎 ARCHIVO ADJUNTO: ${data.fileUrl}\n`
     : '';
 
   return `Nuevo Ticket de Soporte - Chatbot Aurin
@@ -77,39 +74,12 @@ Origen: Chatbot Web (aurin.mx)
 Nombre: ${data.name}
 Email: ${data.email}
 Empresa: ${data.company || 'No especificado'}
-
+${serviceSection}
 ═══════════════════════════════════════════════════
 📝 DESCRIPCIÓN DE LA SOLICITUD
 ═══════════════════════════════════════════════════
 
-${data.description}
-
-${attachmentSection}
-═══════════════════════════════════════════════════
-✅ ACCIONES SUGERIDAS
-═══════════════════════════════════════════════════
-
-1. Responder al cliente en: ${data.email}
-2. Revisar el contexto completo de la conversación si está disponible
-3. Clasificar el tipo de consulta:
-   □ Branding / Identidad Corporativa
-   □ UX/UI / Diseño Digital
-   □ Diseño Gráfico
-   □ Estrategia Digital
-   □ Consultoría General
-   □ Otra: _________________
-
-4. Asignar prioridad:
-   □ Alta (responder en 2-4 horas)
-   □ Media (responder en 24 horas)
-   □ Baja (responder en 48 horas)
-
-5. Siguiente paso:
-   □ Agendar consulta gratuita
-   □ Enviar propuesta
-   □ Solicitar más información
-   □ Referir a otro servicio
-
+${data.description}${attachmentSection}
 ═══════════════════════════════════════════════════
 📧 INFORMACIÓN DE CONTACTO
 ═══════════════════════════════════════════════════
