@@ -55,7 +55,7 @@ export async function sendTicketEmail(data: TicketData): Promise<EmailResponse> 
       to: ['info@sodio.net'],
       subject: `Ticket de Agente Aurin - ${data.name}`,
       replyTo: data.email,
-      text: ticketEmailTemplate(data),
+      html: ticketEmailTemplate(data),
     };
 
     // Add attachment if present
