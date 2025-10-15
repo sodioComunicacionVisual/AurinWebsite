@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/UI/Header.astro';
 import Footer from '../components/UI/Footer.astro';
 import Form from '../components/Contact/Form.astro';
+import Toast from '../components/UI/Toast.astro';
 import { getLangFromUrl } from '../i18n/utils.js';
 import { translations } from '../i18n/translations.js';
 
@@ -43,7 +44,7 @@ const structuredData = {
 const speakable = [".contact-form", ".contact-info"];
 ---
 
-<Layout 
+<Layout
   title={seoTitle}
   description={seoDescription}
   keywords={seoKeywords}
@@ -57,6 +58,7 @@ const speakable = [".contact-form", ".contact-info"];
     <Form />
   </main>
   <Footer />
+  <Toast />
 </Layout>
 
 <style>

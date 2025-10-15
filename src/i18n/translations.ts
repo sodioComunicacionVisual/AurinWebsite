@@ -71,6 +71,26 @@ export const translations = {
         networkError: "Connection error. Please try again."
       }
     },
+    chatbot: {
+      welcome: "Hello! 👋 I'm Aurin's virtual assistant. I'm here to help you with any questions about our visual communication and branding services. How can I help you today?",
+      title: "AI Assistant",
+      online: "Online",
+      offline: "Offline",
+      openChat: "Open chat",
+      minimizeChat: "Minimize chat",
+      placeholder: "Type a message...",
+      send: "Send message",
+      attach: "Attach file",
+      removeFile: "Remove file",
+      dragFiles: "Drop files here",
+      maxSize: "Max 10MB",
+      noConnection: "No internet connection. Check your connection and try again.",
+      errorGeneric: "Sorry, there was an error. Please try again.",
+      errorResponse: "Sorry, there was a problem. Please try again or contact us at hey@aurin.mx",
+      errorProcess: "Sorry, I couldn't process your message",
+      avatarAlt: "Assistant avatar",
+      botAvatarAlt: "Bot avatar"
+    },
     header: {
       menu: "Menu",
       switchToSpanish: "Switch to Spanish",
@@ -381,6 +401,26 @@ export const translations = {
         error: "Error: No se pudo enviar el mensaje",
         networkError: "Error de conexión. Por favor, inténtalo de nuevo."
       }
+    },
+    chatbot: {
+      welcome: "¡Hola! 👋 Soy el asistente virtual de Aurin. Estoy aquí para ayudarte con cualquier pregunta sobre nuestros servicios de comunicación visual y branding. ¿En qué puedo ayudarte hoy?",
+      title: "Asistente IA",
+      online: "En línea",
+      offline: "Sin conexión",
+      openChat: "Abrir chat",
+      minimizeChat: "Minimizar chat",
+      placeholder: "Escribe un mensaje...",
+      send: "Enviar mensaje",
+      attach: "Adjuntar archivo",
+      removeFile: "Remover archivo",
+      dragFiles: "Suelta los archivos aquí",
+      maxSize: "Máx 10MB",
+      noConnection: "No hay conexión a internet. Verifica tu conexión e intenta nuevamente.",
+      errorGeneric: "Lo siento, hubo un error. Por favor intenta de nuevo.",
+      errorResponse: "Lo siento, hubo un problema. Por favor intenta de nuevo o contáctanos en hey@aurin.mx",
+      errorProcess: "Lo siento, no pude procesar tu mensaje",
+      avatarAlt: "Avatar del asistente",
+      botAvatarAlt: "Avatar del bot"
     },
     header: {
       menu: "Menú",

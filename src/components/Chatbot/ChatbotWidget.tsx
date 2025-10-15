@@ -8,7 +8,54 @@ import { getCurrentTime, validateFile, formatFileSize, formatMessageTime } from 
 import { SessionManager, type ChatMessage } from '../../lib/chatbot/sessionManager'
 import { ChatApiClient } from '../../lib/chatbot/apiClient'
 
-export default function ChatbotWidget() {
+interface ChatbotTranslations {
+  welcome: string;
+  title: string;
+  online: string;
+  offline: string;
+  openChat: string;
+  minimizeChat: string;
+  placeholder: string;
+  send: string;
+  attach: string;
+  removeFile: string;
+  dragFiles: string;
+  maxSize: string;
+  noConnection: string;
+  errorGeneric: string;
+  errorResponse: string;
+  errorProcess: string;
+  avatarAlt: string;
+  botAvatarAlt: string;
+}
+
+interface ChatbotWidgetProps {
+  lang?: string;
+  translations?: ChatbotTranslations;
+}
+
+export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidgetProps) {
+  // Default translations (fallback to Spanish)
+  const t = translations || {
+    welcome: "¡Hola! 👋 Soy el asistente virtual de Aurin. Estoy aquí para ayudarte con cualquier pregunta sobre nuestros servicios de comunicación visual y branding. ¿En qué puedo ayudarte hoy?",
+    title: "Asistente IA",
+    online: "En línea",
+    offline: "Sin conexión",
+    openChat: "Abrir chat",
+    minimizeChat: "Minimizar chat",
+    placeholder: "Escribe un mensaje...",
+    send: "Enviar mensaje",
+    attach: "Adjuntar archivo",
+    removeFile: "Remover archivo",
+    dragFiles: "Suelta los archivos aquí",
+    maxSize: "Máx 10MB",
+    noConnection: "No hay conexión a internet. Verifica tu conexión e intenta nuevamente.",
+    errorGeneric: "Lo siento, hubo un error. Por favor intenta de nuevo.",
+    errorResponse: "Lo siento, hubo un problema. Por favor intenta de nuevo o contáctanos en hey@aurin.mx",
+    errorProcess: "Lo siento, no pude procesar tu mensaje",
+    avatarAlt: "Avatar del asistente",
+    botAvatarAlt: "Avatar del bot"
+  };
   const [isExpanded, setIsExpanded] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [inputValue, setInputValue] = useState("")
@@ -28,6 +75,16 @@ export default function ChatbotWidget() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
+  // Helper function to save messages only when there are 2+ messages
+  const saveMessagesToSession = (messagesToSave: ChatMessage[]) => {
+    if (messagesToSave.length >= 2) {
+      // Save all messages including welcome message
+      const session = SessionManager.getCurrentSession()
+      session.messages = messagesToSave
+      SessionManager.saveSession(session)
+    }
+  }
+
   useEffect(() => {
     scrollToBottom()
   }, [messages, isTyping])
@@ -36,24 +93,26 @@ export default function ChatbotWidget() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
     }
-    
+
     const initializeSession = () => {
       const session = SessionManager.getCurrentSession()
       setSessionId(session.sessionId)
       const savedMessages = SessionManager.getMessages()
+
+      // If there are saved messages, use them (already includes welcome message)
       if (savedMessages.length > 0) {
         setMessages(savedMessages)
       } else {
-        // Mensaje de bienvenida hardcoded
+        // First time: create welcome message with current translation (NOT saved yet)
         const welcomeMessage: ChatMessage = {
           id: nanoid(8),
-          text: '¡Hola! 👋 Soy el asistente virtual de Aurin. Estoy aquí para ayudarte con cualquier pregunta sobre nuestros servicios de comunicación visual y branding. ¿En qué puedo ayudarte hoy?',
+          text: t.welcome,
           sender: 'bot',
           timestamp: new Date().toISOString(),
           file: undefined
         }
         setMessages([welcomeMessage])
-        SessionManager.addMessage(welcomeMessage)
+        // Note: NOT calling SessionManager.addMessage here - only in state
       }
     }
     
@@ -106,29 +165,36 @@ export default function ChatbotWidget() {
       document.removeEventListener('mousedown', handleClickOutside)
       restoreBodyScroll() // Restaurar scroll al desmontar
     }
-  }, [isExpanded])
+  }, [isExpanded, t])
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() && !selectedFile) return
     if (!isOnline) {
-      alert('No hay conexión a internet. Verifica tu conexión e intenta nuevamente.')
+      alert(t.noConnection)
       return
     }
 
     const messageText = inputValue.trim()
-    
-    const userMessage = SessionManager.addMessage({
+
+    // Create user message
+    const userMessage: ChatMessage = {
+      id: nanoid(8),
       text: messageText,
       sender: "user",
+      timestamp: new Date().toISOString(),
       file: selectedFile ? {
         name: selectedFile.name,
         size: formatFileSize(selectedFile.size),
         type: selectedFile.type,
         url: URL.createObjectURL(selectedFile)
       } : undefined
-    })
+    }
 
-    setMessages(SessionManager.getMessages())
+    // Update state with new message
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
+    saveMessagesToSession(updatedMessages)
+
     setInputValue("")
     setSelectedFile(null)
     setIsTyping(true)
@@ -157,31 +223,46 @@ export default function ChatbotWidget() {
       // Verificar si la respuesta es exitosa
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
-        const errorMessage = SessionManager.addMessage({
-          text: errorData.output || errorData.error || "Lo siento, hubo un problema. Por favor intenta de nuevo o contáctanos en hey@aurin.mx",
-          sender: "bot"
-        })
-        setMessages(SessionManager.getMessages())
+        const errorMessage: ChatMessage = {
+          id: nanoid(8),
+          text: errorData.output || errorData.error || t.errorResponse,
+          sender: "bot",
+          timestamp: new Date().toISOString(),
+          file: undefined
+        }
+        const updatedMessages = [...messages, userMessage, errorMessage]
+        setMessages(updatedMessages)
+        saveMessagesToSession(updatedMessages)
         return
       }
 
       const data = await response.json()
 
       // Respuesta del bot desde n8n
-      const botMessage = SessionManager.addMessage({
-        text: data.output || data.response || "Lo siento, no pude procesar tu mensaje",
-        sender: "bot"
-      })
-      setMessages(SessionManager.getMessages())
+      const botMessage: ChatMessage = {
+        id: nanoid(8),
+        text: data.output || data.response || t.errorProcess,
+        sender: "bot",
+        timestamp: new Date().toISOString(),
+        file: undefined
+      }
+      const updatedMessagesWithBot = [...messages, userMessage, botMessage]
+      setMessages(updatedMessagesWithBot)
+      saveMessagesToSession(updatedMessagesWithBot)
     } catch (error) {
       console.error('Error:', error)
       setIsTyping(false)
-      
-      const errorMessage = SessionManager.addMessage({
-        text: "Lo siento, hubo un error. Por favor intenta de nuevo.",
-        sender: "bot"
-      })
-      setMessages(SessionManager.getMessages())
+
+      const errorMessage: ChatMessage = {
+        id: nanoid(8),
+        text: t.errorGeneric,
+        sender: "bot",
+        timestamp: new Date().toISOString(),
+        file: undefined
+      }
+      const updatedMessagesWithError = [...messages, userMessage, errorMessage]
+      setMessages(updatedMessagesWithError)
+      saveMessagesToSession(updatedMessagesWithError)
     }
   }
 
@@ -235,7 +316,7 @@ export default function ChatbotWidget() {
       <motion.button
         onClick={() => setIsExpanded(true)}
         className="chatbot-floating-btn"
-        aria-label="Abrir chat"
+        aria-label={t.openChat}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         initial={{ scale: 0 }}
@@ -275,20 +356,20 @@ export default function ChatbotWidget() {
       >
         <div className="chatbot-header-info">
           <div className="chatbot-avatar">
-            <img 
-              src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Avatar_2%404x.webp" 
-              alt="Avatar del asistente"
+            <img
+              src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Avatar_2%404x.webp"
+              alt={t.avatarAlt}
               className="chatbot-avatar-img"
             />
-            <motion.div 
+            <motion.div
               className="chatbot-online-indicator"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
           </div>
           <div>
-            <h3 className="chatbot-title">Asistente IA</h3>
-            <p className="chatbot-status">{isOnline ? 'En línea' : 'Sin conexión'}</p>
+            <h3 className="chatbot-title">{t.title}</h3>
+            <p className="chatbot-status">{isOnline ? t.online : t.offline}</p>
           </div>
         </div>
         <motion.button
@@ -298,7 +379,7 @@ export default function ChatbotWidget() {
             document.body.style.overflow = ''
           }}
           className="chatbot-minimize-btn"
-          aria-label="Minimizar chat"
+          aria-label={t.minimizeChat}
           whileHover={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
           whileTap={{ scale: 0.95 }}
         >
@@ -334,15 +415,15 @@ export default function ChatbotWidget() {
               transition={{ type: "spring", stiffness: 500, damping: 30 }}
             >
             {message.sender === "bot" && (
-              <motion.div 
+              <motion.div
                 className="chatbot-bot-avatar"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.1, type: "spring", stiffness: 300 }}
               >
-                <img 
-                  src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Avatar_2%404x.webp" 
-                  alt="Avatar del bot"
+                <img
+                  src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Avatar_2%404x.webp"
+                  alt={t.botAvatarAlt}
                   className="chatbot-bot-avatar-img"
                 />
               </motion.div>
@@ -406,9 +487,9 @@ export default function ChatbotWidget() {
               transition={{ type: "spring", stiffness: 500, damping: 30 }}
             >
               <div className="chatbot-bot-avatar">
-                <img 
-                  src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Avatar_2%404x.webp" 
-                  alt="Avatar del bot"
+                <img
+                  src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Avatar_2%404x.webp"
+                  alt={t.botAvatarAlt}
                   className="chatbot-bot-avatar-img"
                 />
               </div>
@@ -468,8 +549,8 @@ export default function ChatbotWidget() {
                 >
                   <Paperclip size={48} color="#d0df00" />
                 </motion.div>
-                <p className="chatbot-drag-title">Suelta los archivos aquí</p>
-                <p className="chatbot-drag-subtitle">Máx 10MB</p>
+                <p className="chatbot-drag-text">{t.dragFiles}</p>
+                <p className="chatbot-drag-subtext">{t.maxSize}</p>
               </motion.div>
             </motion.div>
           )}
@@ -502,7 +583,7 @@ export default function ChatbotWidget() {
               <motion.button
                 onClick={() => setSelectedFile(null)}
                 className="chatbot-remove-file-btn"
-                aria-label="Remover archivo"
+                aria-label={t.removeFile}
                 whileHover={{ backgroundColor: 'rgba(239, 68, 68, 0.2)', scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -523,8 +604,8 @@ export default function ChatbotWidget() {
           <motion.button
             onClick={() => fileInputRef.current?.click()}
             className="chatbot-attach-btn"
-            aria-label="Adjuntar archivo"
-            whileHover={{ 
+            aria-label={t.attach}
+            whileHover={{
               backgroundColor: 'rgba(208, 223, 0, 0.1)',
               scale: 1.1
             }}
@@ -543,7 +624,7 @@ export default function ChatbotWidget() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyPress}
-            placeholder="Escribe un mensaje..."
+            placeholder={t.placeholder}
             className="chatbot-textarea"
             onFocus={(e) => e.currentTarget.style.borderColor = '#d0df00'}
             onBlur={(e) => e.currentTarget.style.borderColor = '#2a2a2a'}
@@ -554,7 +635,7 @@ export default function ChatbotWidget() {
             onClick={handleSendMessage}
             disabled={!inputValue.trim() && !selectedFile}
             className={`chatbot-send-btn ${(!inputValue.trim() && !selectedFile) ? 'chatbot-send-btn--disabled' : ''}`}
-            aria-label="Enviar mensaje"
+            aria-label={t.send}
             whileHover={(!inputValue.trim() && !selectedFile) ? {} : { 
               scale: 1.05,
               boxShadow: '0 4px 12px rgba(208, 223, 0, 0.4)'

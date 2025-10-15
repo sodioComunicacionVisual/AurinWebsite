@@ -3,13 +3,19 @@
 // Siguiendo las buenas prácticas de Astro Islands Architecture
 import ChatbotWidget from './ChatbotWidget.tsx';
 import './chatbot.css';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
 ---
 
-<!-- 
+<!--
   Usando client:only="react" para evitar errores de SSR con window
   El componente necesita APIs del navegador que no están disponibles en el servidor
+  La key fuerza el re-render cuando cambia el idioma
 -->
 <div class="chatbot-container">
-  <ChatbotWidget client:only="react" />
+  <ChatbotWidget client:only="react" key={currentLang} lang={currentLang} translations={t.chatbot} />
 </div>
 

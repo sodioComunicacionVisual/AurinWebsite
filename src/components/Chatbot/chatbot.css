@@ -15,9 +15,9 @@
   --chatbot-radius: 20px;
   --chatbot-radius-sm: 8px;
   --chatbot-radius-full: 50%;
-  --chatbot-z-high: 9999;
-  --chatbot-z-medium: 9998;
-  --chatbot-z-low: 9997;
+  --chatbot-z-high: 9997;
+  --chatbot-z-medium: 9996;
+  --chatbot-z-low: 9995;
 }
 
 /* Animaciones */
@@ -418,7 +418,6 @@
 
 .chatbot-textarea {
   flex: 1;
-  min-height: 44px;
   max-height: 120px;
   background-color: var(--chatbot-bg-light);
   border: 1px solid var(--chatbot-border);

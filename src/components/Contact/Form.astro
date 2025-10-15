@@ -656,7 +656,12 @@ const t = translations[currentLang];
 
           if (response.ok) {
             // Success
-            alert(t.contact.form.success);
+            (window as any).showToast({
+              title: t.contact.form.success,
+              description: '',
+              type: 'success',
+              duration: 5000
+            });
             form.reset();
             // Reset dropdown
             if (text && hiddenInput) {
@@ -666,12 +671,22 @@ const t = translations[currentLang];
             }
           } else {
             // Server error
-            alert(`${t.contact.form.error}: ${result.error || t.contact.form.error}`);
+            (window as any).showToast({
+              title: t.contact.form.error,
+              description: result.error || '',
+              type: 'error',
+              duration: 6000
+            });
           }
         } catch (error) {
           // Network error
           console.error('Error:', error);
-          alert(t.contact.form.networkError);
+          (window as any).showToast({
+            title: t.contact.form.networkError,
+            description: '',
+            type: 'error',
+            duration: 6000
+          });
         } finally {
           // Re-enable button
           if (submitButton) {
