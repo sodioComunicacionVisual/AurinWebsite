@@ -3,7 +3,7 @@ import type { APIRoute } from 'astro';
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    
+
     // Validar campos requeridos
     if (!body.message || !body.sessionId) {
       return new Response(JSON.stringify({
@@ -15,12 +15,13 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const { message, sessionId, metadata } = body;
+    const { message, sessionId, metadata, fileUrl } = body;
 
     // Preparar payload para n8n según el formato que espera el nodo Code
     const n8nPayload = {
       message: message,
       sessionId: sessionId,
+      fileUrl: fileUrl || null, // URL del archivo subido a Vercel Blob
       metadata: metadata || {}
     };
 

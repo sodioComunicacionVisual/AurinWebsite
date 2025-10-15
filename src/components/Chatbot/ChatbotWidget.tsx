@@ -199,6 +199,41 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
     }
 
     const messageText = inputValue.trim()
+    let fileUrl: string | undefined = undefined
+    let fileMetadata: { name: string; size: string; type: string; url: string } | undefined = undefined
+
+    // Upload file to Vercel Blob if present
+    if (selectedFile) {
+      try {
+        const formData = new FormData()
+        formData.append('file', selectedFile)
+
+        const uploadResponse = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        })
+
+        if (!uploadResponse.ok) {
+          throw new Error('Failed to upload file')
+        }
+
+        const uploadData = await uploadResponse.json()
+        fileUrl = uploadData.url
+
+        if (fileUrl) {
+          fileMetadata = {
+            name: selectedFile.name,
+            size: formatFileSize(selectedFile.size),
+            type: selectedFile.type,
+            url: fileUrl
+          }
+        }
+      } catch (uploadError) {
+        console.error('File upload error:', uploadError)
+        alert('Error al subir el archivo. Intenta de nuevo.')
+        return
+      }
+    }
 
     // Create user message
     const userMessage: ChatMessage = {
@@ -206,12 +241,7 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
       text: messageText,
       sender: "user",
       timestamp: new Date().toISOString(),
-      file: selectedFile ? {
-        name: selectedFile.name,
-        size: formatFileSize(selectedFile.size),
-        type: selectedFile.type,
-        url: URL.createObjectURL(selectedFile)
-      } : undefined
+      file: fileMetadata
     }
 
     // Update state with new message
@@ -233,11 +263,14 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
         body: JSON.stringify({
           message: messageText,
           sessionId: sessionId,
+          fileUrl: fileUrl, // Incluir URL del archivo si existe
           metadata: {
             timestamp: new Date().toISOString(),
             userId: 'anonymous',
             userAgent: navigator.userAgent,
-            referrer: document.referrer
+            referrer: document.referrer,
+            hasAttachment: !!fileUrl,
+            fileName: fileMetadata?.name
           }
         })
       })

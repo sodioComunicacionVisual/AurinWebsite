@@ -107,6 +107,36 @@ const t = translations[currentLang];
             ></textarea>
           </div>
 
+          <div class="form-group">
+            <label for="archivo" class="form-label">Archivo adjunto (opcional)</label>
+            <div class="file-upload-area">
+              <input
+                type="file"
+                id="archivo"
+                name="archivo"
+                class="file-input"
+                accept="image/*,.pdf,.txt"
+              />
+              <label for="archivo" class="file-upload-label">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="file-upload-text">Adjuntar archivo (máx 10MB)</span>
+              </label>
+              <div class="file-preview" style="display: none;">
+                <div class="file-preview-info">
+                  <span class="file-preview-name"></span>
+                  <span class="file-preview-size"></span>
+                </div>
+                <button type="button" class="file-remove-btn">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="form-actions">
             <MainButton text={t.contact.form.button} type="submit" />
           </div>
@@ -392,6 +422,97 @@ const t = translations[currentLang];
     align-items: center;
   }
 
+  /* File Upload Styles */
+  .file-upload-area {
+    width: 100%;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--color-gray-b);
+    border: 2px dashed var(--color-gray-a);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--color-gray-a);
+  }
+
+  .file-upload-label:hover {
+    border-color: var(--color-yellow);
+    background: #333;
+    color: var(--color-yellow);
+  }
+
+  .file-upload-label svg {
+    flex-shrink: 0;
+  }
+
+  .file-upload-text {
+    font-family: var(--font-body);
+    font-size: var(--body-4-size);
+    font-weight: 400;
+  }
+
+  .file-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--color-gray-b);
+    border: 1px solid var(--color-yellow);
+    border-radius: 5px;
+    margin-top: 8px;
+  }
+
+  .file-preview-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .file-preview-name {
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--body-4-size);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .file-preview-size {
+    color: var(--color-gray-a);
+    font-family: var(--font-body);
+    font-size: 12px;
+  }
+
+  .file-remove-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-gray-a);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .file-remove-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
   /* Responsive Design */
   @media (max-width: 1200px) {
     .contact-container {
@@ -622,6 +743,48 @@ const t = translations[currentLang];
       }
     }
 
+    // File upload handling
+    const fileInput = document.getElementById('archivo') as HTMLInputElement;
+    const fileUploadLabel = document.querySelector('.file-upload-label') as HTMLElement;
+    const filePreview = document.querySelector('.file-preview') as HTMLElement;
+    const filePreviewName = document.querySelector('.file-preview-name') as HTMLElement;
+    const filePreviewSize = document.querySelector('.file-preview-size') as HTMLElement;
+    const fileRemoveBtn = document.querySelector('.file-remove-btn') as HTMLButtonElement;
+
+    let selectedFile: File | null = null;
+
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          // Validate file size (10MB max)
+          if (file.size > 10 * 1024 * 1024) {
+            (window as any).showToast({
+              title: 'Archivo muy grande',
+              description: 'El archivo debe ser menor a 10MB',
+              type: 'error',
+              duration: 5000
+            });
+            fileInput.value = '';
+            return;
+          }
+
+          selectedFile = file;
+          filePreviewName.textContent = file.name;
+          filePreviewSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+          fileUploadLabel.style.display = 'none';
+          filePreview.style.display = 'flex';
+        }
+      });
+
+      fileRemoveBtn?.addEventListener('click', () => {
+        selectedFile = null;
+        fileInput.value = '';
+        fileUploadLabel.style.display = 'flex';
+        filePreview.style.display = 'none';
+      });
+    }
+
     // Form submission logic
     if (form) {
       form.addEventListener('submit', async (e) => {
@@ -634,14 +797,58 @@ const t = translations[currentLang];
           submitButton.textContent = t.contact.form.sending;
         }
 
+        let fileUrl: string | null = null;
+        let filename: string | null = null;
+
+        // Upload file first if present
+        if (selectedFile) {
+          try {
+            const fileFormData = new FormData();
+            fileFormData.append('file', selectedFile);
+
+            const uploadResponse = await fetch('/api/upload', {
+              method: 'POST',
+              body: fileFormData
+            });
+
+            if (!uploadResponse.ok) {
+              throw new Error('Failed to upload file');
+            }
+
+            const uploadData = await uploadResponse.json();
+            fileUrl = uploadData.url;
+            filename = uploadData.filename;
+          } catch (uploadError) {
+            console.error('File upload error:', uploadError);
+            (window as any).showToast({
+              title: 'Error al subir archivo',
+              description: 'No se pudo subir el archivo. Intenta sin archivo.',
+              type: 'error',
+              duration: 5000
+            });
+
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = t.contact.form.button;
+            }
+            return;
+          }
+        }
+
         const formData = new FormData(form);
-        const data = {
+        const data: any = {
           nombre: formData.get('nombre') as string,
           correo: formData.get('correo') as string,
           servicio: formData.get('servicio') as string,
           asunto: formData.get('asunto') as string,
           mensaje: formData.get('mensaje') as string,
         };
+
+        // Add file info if uploaded
+        if (fileUrl && filename) {
+          data.fileUrl = fileUrl;
+          data.filename = filename;
+        }
 
         try {
           const response = await fetch('/api/contact', {
@@ -668,6 +875,13 @@ const t = translations[currentLang];
               text.textContent = t.contact.form.placeholders.service;
               text.classList.remove('selected');
               hiddenInput.value = '';
+            }
+            // Reset file upload
+            if (selectedFile) {
+              selectedFile = null;
+              fileInput.value = '';
+              fileUploadLabel.style.display = 'flex';
+              filePreview.style.display = 'none';
             }
           } else {
             // Server error

@@ -373,6 +373,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .chatbot-file-info {
@@ -435,13 +437,24 @@
 .chatbot-file-preview-info{
   display: flex;
   flex-direction: column;
-  max-width: 100%;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.chatbot-file-preview-name, 
-.chatbot-file-preview-size {
+.chatbot-file-preview-name {
   color: white;
   font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0 0 2px;
+}
+
+.chatbot-file-preview-size {
+  color: var(--chatbot-text-secondary);
+  font-size: 12px;
+  margin: 0;
 }
 
 .chatbot-textarea:focus {
