@@ -1,0 +1,413 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/UI/Header.astro';
+import Footer from '../components/UI/Footer.astro';
+import MainCat from '../components/Home/MainCat.astro';
+import { getLangFromUrl } from '../i18n/utils';
+
+const currentLang = getLangFromUrl(Astro.url);
+---
+
+<Layout
+  title="Aviso de Privacidad - Aurin | Protección de Datos Personales"
+  description="Conoce cómo Aurin protege y gestiona tus datos personales. Lee nuestro aviso de privacidad completo sobre el tratamiento de información personal."
+>
+  <Header />
+
+  <main class="privacy-page">
+    <div class="privacy-container">
+      <div class="privacy-header">
+        <h1 class="privacy-title">Aviso de Privacidad</h1>
+        <p class="privacy-subtitle">Última actualización: Enero 2025</p>
+      </div>
+
+      <div class="privacy-content">
+        <section class="privacy-section">
+          <h2>1. Identidad y Domicilio del Responsable</h2>
+          <p>
+            Aurin, con domicilio en Aldea Creativa, México, es responsable del tratamiento de sus datos personales.
+            Nos comprometemos a proteger su información de acuerdo con la Ley Federal de Protección de Datos
+            Personales en Posesión de los Particulares.
+          </p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>2. Datos Personales que Recabamos</h2>
+          <p>
+            Para las finalidades señaladas en este aviso de privacidad, podemos recabar sus datos personales
+            de distintas formas cuando nos los proporciona directamente; cuando visita nuestro sitio web o
+            utiliza nuestros servicios en línea.
+          </p>
+          <p>Los datos personales que recabamos de forma directa incluyen:</p>
+          <ul>
+            <li>Nombre completo</li>
+            <li>Correo electrónico</li>
+            <li>Teléfono de contacto</li>
+            <li>Información sobre su proyecto o necesidades de servicio</li>
+            <li>Datos de comunicación y preferencias</li>
+          </ul>
+        </section>
+
+        <section class="privacy-section">
+          <h2>3. Finalidades del Tratamiento</h2>
+          <p>Los datos personales que recabamos serán utilizados para las siguientes finalidades:</p>
+          <ul>
+            <li>Proveer los servicios de diseño gráfico, branding y comunicación visual solicitados</li>
+            <li>Responder a consultas, solicitudes y comunicaciones</li>
+            <li>Enviar información sobre nuestros servicios y promociones</li>
+            <li>Mejorar nuestros servicios y experiencia del cliente</li>
+            <li>Cumplir con obligaciones legales y regulatorias</li>
+            <li>Realizar análisis estadísticos y de mercado</li>
+          </ul>
+        </section>
+
+        <section class="privacy-section">
+          <h2>4. Transferencia de Datos</h2>
+          <p>
+            Sus datos personales pueden ser compartidos con proveedores de servicios que nos ayudan a operar
+            nuestro negocio, como servicios de hosting, análisis web y herramientas de comunicación.
+            Todos nuestros proveedores están obligados a mantener la confidencialidad de su información.
+          </p>
+          <p>
+            No compartimos, vendemos ni transferimos sus datos personales a terceros para fines de marketing
+            sin su consentimiento expreso.
+          </p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>5. Derechos ARCO</h2>
+          <p>
+            Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y
+            las condiciones del uso que les damos (Acceso). Asimismo, es su derecho solicitar la corrección
+            de su información personal en caso de que esté desactualizada, sea inexacta o incompleta
+            (Rectificación); que la eliminemos de nuestros registros o bases de datos cuando considere que
+            la misma no está siendo utilizada adecuadamente (Cancelación); así como oponerse al uso de sus
+            datos personales para fines específicos (Oposición).
+          </p>
+          <p>
+            Para ejercer cualquiera de estos derechos, puede contactarnos a través de
+            <a href="mailto:hey@aurin.mx">hey@aurin.mx</a>.
+          </p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>6. Revocación del Consentimiento</h2>
+          <p>
+            Usted puede revocar el consentimiento que nos ha otorgado para el tratamiento de sus datos
+            personales en cualquier momento, enviando una solicitud a
+            <a href="mailto:hey@aurin.mx">hey@aurin.mx</a>.
+            Sin embargo, es importante que tenga en cuenta que no en todos los casos podremos atender su
+            solicitud o concluir el uso de forma inmediata, ya que es posible que por alguna obligación
+            legal requiramos seguir tratando sus datos personales.
+          </p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>7. Uso de Cookies y Tecnologías de Rastreo</h2>
+          <p>
+            Le informamos que en nuestra página de internet utilizamos cookies, web beacons y otras
+            tecnologías a través de las cuales es posible monitorear su comportamiento como usuario de
+            internet, brindarle un mejor servicio y experiencia de usuario al navegar en nuestra página,
+            así como ofrecerle nuevos productos y servicios basados en sus preferencias.
+          </p>
+          <p>
+            Los datos personales que obtenemos de estas tecnologías de rastreo son los siguientes:
+            horario de navegación, tiempo de navegación en nuestra página de internet, secciones
+            consultadas, y páginas de internet accedidas previo a la nuestra.
+          </p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>8. Modificaciones al Aviso de Privacidad</h2>
+          <p>
+            Nos reservamos el derecho de efectuar en cualquier momento modificaciones o actualizaciones
+            al presente aviso de privacidad. Estas modificaciones estarán disponibles en nuestro sitio
+            web con la fecha de última actualización.
+          </p>
+        </section>
+
+        <section class="privacy-section">
+          <h2>9. Contacto</h2>
+          <p>
+            Para cualquier duda, aclaración o ejercicio de sus derechos relacionados con la protección
+            de datos personales, puede contactarnos en:
+          </p>
+          <p>
+            <strong>Email:</strong> <a href="mailto:hey@aurin.mx">hey@aurin.mx</a><br>
+            <strong>Sitio web:</strong> <a href="https://aurin.mx">www.aurin.mx</a>
+          </p>
+        </section>
+      </div>
+    </div>
+
+    <MainCat />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .privacy-page {
+    background: var(--color-black-a, #0A0A0A);
+    min-height: 100vh;
+    padding-top: 100px;
+  }
+
+  .privacy-container {
+    max-width: var(--maxWidth, 1400px);
+    margin: 0 auto;
+    padding: 80px 100px;
+  }
+
+  .privacy-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(208, 223, 0, 0.2);
+  }
+
+  .privacy-title {
+    color: white;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+  }
+
+  .privacy-subtitle {
+    color: #A0A0A0;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .privacy-content {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .privacy-section {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  .privacy-section:nth-child(1) { animation-delay: 0.1s; }
+  .privacy-section:nth-child(2) { animation-delay: 0.2s; }
+  .privacy-section:nth-child(3) { animation-delay: 0.3s; }
+  .privacy-section:nth-child(4) { animation-delay: 0.4s; }
+  .privacy-section:nth-child(5) { animation-delay: 0.5s; }
+  .privacy-section:nth-child(6) { animation-delay: 0.6s; }
+  .privacy-section:nth-child(7) { animation-delay: 0.7s; }
+  .privacy-section:nth-child(8) { animation-delay: 0.8s; }
+  .privacy-section:nth-child(9) { animation-delay: 0.9s; }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .privacy-section h2 {
+    color: var(--color-yellow, #D0DF00);
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 24px 0;
+  }
+
+  .privacy-section p {
+    color: white;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.7;
+    margin: 0 0 20px 0;
+  }
+
+  .privacy-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .privacy-section ul {
+    color: white;
+    font-family: 'Urbanist', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.7;
+    margin: 20px 0;
+    padding-left: 24px;
+  }
+
+  .privacy-section li {
+    margin-bottom: 12px;
+    padding-left: 8px;
+  }
+
+  .privacy-section li::marker {
+    color: var(--color-yellow, #D0DF00);
+  }
+
+  .privacy-section a {
+    color: var(--color-yellow, #D0DF00);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    font-weight: 500;
+  }
+
+  .privacy-section a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .privacy-container {
+      padding: 60px 60px;
+    }
+
+    .privacy-title {
+      font-size: 52px;
+    }
+
+    .privacy-section h2 {
+      font-size: 28px;
+    }
+
+    .privacy-section p,
+    .privacy-section ul {
+      font-size: 17px;
+    }
+  }
+
+  @media (max-width: 968px) {
+    .privacy-container {
+      padding: 50px 40px;
+    }
+
+    .privacy-title {
+      font-size: 42px;
+    }
+
+    .privacy-section h2 {
+      font-size: 26px;
+    }
+
+    .privacy-content {
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .privacy-page {
+      padding-top: 80px;
+    }
+
+    .privacy-container {
+      padding: 40px 30px;
+    }
+
+    .privacy-header {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+    }
+
+    .privacy-title {
+      font-size: 36px;
+    }
+
+    .privacy-subtitle {
+      font-size: 16px;
+    }
+
+    .privacy-section h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .privacy-section p,
+    .privacy-section ul {
+      font-size: 16px;
+    }
+
+    .privacy-content {
+      gap: 35px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .privacy-container {
+      padding: 30px 20px;
+    }
+
+    .privacy-title {
+      font-size: 32px;
+    }
+
+    .privacy-subtitle {
+      font-size: 15px;
+    }
+
+    .privacy-section h2 {
+      font-size: 22px;
+    }
+
+    .privacy-section p,
+    .privacy-section ul {
+      font-size: 15px;
+    }
+
+    .privacy-section ul {
+      padding-left: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .privacy-page {
+      padding-top: 70px;
+    }
+
+    .privacy-container {
+      padding: 24px 16px;
+    }
+
+    .privacy-header {
+      margin-bottom: 30px;
+      padding-bottom: 24px;
+    }
+
+    .privacy-title {
+      font-size: 28px;
+    }
+
+    .privacy-subtitle {
+      font-size: 14px;
+    }
+
+    .privacy-section h2 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .privacy-section p,
+    .privacy-section ul {
+      font-size: 14px;
+    }
+
+    .privacy-content {
+      gap: 30px;
+    }
+
+    .privacy-section li {
+      margin-bottom: 10px;
+    }
+  }
+</style>
