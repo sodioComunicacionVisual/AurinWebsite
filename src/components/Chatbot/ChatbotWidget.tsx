@@ -70,6 +70,7 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
   const chatContainerRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const hasInitialized = useRef(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -89,33 +90,56 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
     scrollToBottom()
   }, [messages, isTyping])
 
+  // Initialize session only once on mount
+  useEffect(() => {
+    if (hasInitialized.current) return
+
+    const session = SessionManager.getCurrentSession()
+    setSessionId(session.sessionId)
+    const savedMessages = SessionManager.getMessages()
+
+    // If there are saved messages, use them (already includes welcome message)
+    if (savedMessages.length > 0) {
+      setMessages(savedMessages)
+    } else {
+      // First time: create welcome message with current translation (NOT saved yet)
+      const welcomeMessage: ChatMessage = {
+        id: nanoid(8),
+        text: t.welcome,
+        sender: 'bot',
+        timestamp: new Date().toISOString(),
+        file: undefined
+      }
+      setMessages([welcomeMessage])
+      // Note: NOT calling SessionManager.addMessage here - only in state
+    }
+
+    hasInitialized.current = true
+  }, [])
+
+  // Update welcome message when language changes
+  useEffect(() => {
+    if (!hasInitialized.current) return
+
+    setMessages(prevMessages => {
+      if (prevMessages.length === 0) return prevMessages
+
+      // Update only the first bot message (welcome message)
+      return prevMessages.map((msg, index) => {
+        if (index === 0 && msg.sender === 'bot') {
+          return { ...msg, text: t.welcome }
+        }
+        return msg
+      })
+    })
+  }, [lang, t.welcome])
+
+  // Handle event listeners and body scroll
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
     }
 
-    const initializeSession = () => {
-      const session = SessionManager.getCurrentSession()
-      setSessionId(session.sessionId)
-      const savedMessages = SessionManager.getMessages()
-
-      // If there are saved messages, use them (already includes welcome message)
-      if (savedMessages.length > 0) {
-        setMessages(savedMessages)
-      } else {
-        // First time: create welcome message with current translation (NOT saved yet)
-        const welcomeMessage: ChatMessage = {
-          id: nanoid(8),
-          text: t.welcome,
-          sender: 'bot',
-          timestamp: new Date().toISOString(),
-          file: undefined
-        }
-        setMessages([welcomeMessage])
-        // Note: NOT calling SessionManager.addMessage here - only in state
-      }
-    }
-    
     const checkConnection = () => {
       setIsOnline(ChatApiClient.isOnline())
     }
@@ -142,11 +166,10 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
         closeChatbot()
       }
     }
-    
+
     checkMobile()
-    initializeSession()
     checkConnection()
-    
+
     window.addEventListener('resize', checkMobile)
     window.addEventListener('online', checkConnection)
     window.addEventListener('offline', checkConnection)
@@ -157,7 +180,7 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
       // Agregar listener para click outside
       document.addEventListener('mousedown', handleClickOutside)
     }
-    
+
     return () => {
       window.removeEventListener('resize', checkMobile)
       window.removeEventListener('online', checkConnection)
@@ -165,7 +188,7 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
       document.removeEventListener('mousedown', handleClickOutside)
       restoreBodyScroll() // Restaurar scroll al desmontar
     }
-  }, [isExpanded, t])
+  }, [isExpanded])
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() && !selectedFile) return
