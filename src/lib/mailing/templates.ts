@@ -49,8 +49,12 @@ export const contactEmailTemplate = (data: ContactFormData): string => {
 };
 
 export const ticketEmailTemplate = (data: TicketData): string => {
-  const serviceSection = (data as any).service && (data as any).service !== 'No especificado'
-    ? `Servicio de interés: ${(data as any).service}\n`
+  const serviceSection = data.service && data.service !== 'No especificado'
+    ? `Servicio de interés: ${data.service}\n`
+    : '';
+
+  const subjectLine = data.subject && data.subject !== 'Consulta general'
+    ? `Asunto: ${data.subject}\n`
     : '';
 
   const attachmentSection = data.fileUrl
@@ -64,7 +68,7 @@ export const ticketEmailTemplate = (data: TicketData): string => {
 ═══════════════════════════════════════════════════
 
 ID del Ticket: ${data.ticketId}
-Fecha y Hora: ${data.createdAt}
+${subjectLine}Fecha y Hora: ${data.createdAt}
 Origen: Chatbot Web (aurin.mx)
 
 ═══════════════════════════════════════════════════

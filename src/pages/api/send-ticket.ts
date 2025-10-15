@@ -14,7 +14,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const data = JSON.parse(body);
-    const { name, email, company, description, ticketId, createdAt, fileUrl } = data;
+    const { name, email, company, service, subject, description, ticketId, createdAt, fileUrl } = data;
 
     // Validación básica
     if (!name || !email || !description) {
@@ -33,13 +33,15 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    console.log('Creating ticket with data:', { name, email, company, description, ticketId, fileUrl });
+    console.log('Creating ticket with data:', { name, email, company, service, subject, description, ticketId, fileUrl });
 
     // Prepare ticket data
     const ticketData: TicketData = {
       name,
       email,
       company: company || 'No especificado',
+      service: service || 'No especificado',
+      subject: subject || 'Consulta general',
       description,
       ticketId: ticketId || `AURIN-${Date.now()}`,
       createdAt: createdAt || new Date().toISOString(),
