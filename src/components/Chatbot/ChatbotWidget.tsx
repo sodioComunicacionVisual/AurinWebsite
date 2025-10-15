@@ -1,12 +1,13 @@
-import { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect } from 'react'
 import { MessageCircle, ChevronDown, Send, Paperclip, X, FileText, ImageIcon, Download } from "lucide-react"
-import { motion, AnimatePresence } from "motion/react"
+import { motion, AnimatePresence } from "framer-motion"
 import { nanoid } from 'nanoid'
 import type { Message } from './types'
 import { sampleMessages, botResponses } from './constants'
 import { getCurrentTime, validateFile, formatFileSize, formatMessageTime } from './utils'
 import { SessionManager, type ChatMessage } from '../../lib/chatbot/sessionManager'
 import { ChatApiClient } from '../../lib/chatbot/apiClient'
+import { MarkdownRenderer } from './MarkdownRenderer'
 
 interface ChatbotTranslations {
   welcome: string;
@@ -458,7 +459,11 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.05 }}
               >
-                {message.text}
+                {message.sender === 'bot' ? (
+                  <MarkdownRenderer content={message.text} />
+                ) : (
+                  message.text
+                )}
                 {message.file && (
                   <motion.div 
                     className="chatbot-file-attachment"

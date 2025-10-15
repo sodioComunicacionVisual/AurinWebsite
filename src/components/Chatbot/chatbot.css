@@ -432,6 +432,18 @@
   line-height: 1.4;
 }
 
+.chatbot-file-preview-info{
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.chatbot-file-preview-name, 
+.chatbot-file-preview-size {
+  color: white;
+  font-size: 14px;
+}
+
 .chatbot-textarea:focus {
   border-color: var(--chatbot-primary);
 }
