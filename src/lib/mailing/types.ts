@@ -21,10 +21,12 @@ export interface TicketData {
   name: string;
   email: string;
   company?: string;
+  service?: string;
   description: string;
-  ticketId: string;
-  createdAt: string;
+  ticketId?: string;
+  createdAt?: string;
   fileUrl?: string;
+  subject?: string;
 }
 
 export interface EmailResponse {

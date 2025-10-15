@@ -1,0 +1,141 @@
+{
+  "name": "Ticket Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "4fa675f1-2b0f-4d4d-b1f0-d3b81a080671",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer datos del ticket y fileUrl con múltiples fuentes\nconst ticketData = $input.item.json.ticketData || $input.item.json.query || '';\n\n// Buscar fileUrl en múltiples ubicaciones posibles\nconst fileUrl = $input.item.json.fileUrl \n  || $input.item.json.body?.fileUrl \n  || $input.item.json.metadata?.fileUrl \n  || null;\n\nconsole.log('Ticket Agent - FileUrl recibido:', fileUrl);\nconsole.log('Ticket Agent - TicketData:', ticketData);\n\n// Parsear información usando regex mejorado\nconst nameMatch = ticketData.match(/(?:nombre?|name)[:\\s]+([^,\\n]+)/i);\nconst emailMatch = ticketData.match(/(?:email|correo)[:\\s]+([^\\s,\\n]+)/i);\nconst descMatch = ticketData.match(/(?:descripci[oó]n?|description)[:\\s]+(.+)/is);\n\n// Mejorar detección de empresa - buscar múltiples patrones\nconst companyPatterns = [\n  /(?:empresa|company|trabajo en|work at|soy de)[:\\s]+([^,\\n.]+)/i,\n  /en\\s+([A-Z][a-zA-Z\\s]+)(?:\\s|,|\\.|$)/,\n  /de\\s+([A-Z][a-zA-Z\\s]+)(?:\\s|,|\\.|$)/\n];\n\nlet company = 'No especificado';\nfor (const pattern of companyPatterns) {\n  const match = ticketData.match(pattern);\n  if (match && match[1].trim().length > 2) {\n    company = match[1].trim();\n    break;\n  }\n}\n\n// Buscar servicio de interés\nconst serviceMatch = ticketData.match(/(?:servicio|service|interés|interest)[:\\s]*([^,\\n.]+)/i);\nconst service = serviceMatch ? serviceMatch[1].trim() : 'No especificado';\n\nconst name = nameMatch ? nameMatch[1].trim() : 'No proporcionado';\nconst email = emailMatch ? emailMatch[1].trim() : 'No proporcionado';\nlet description = descMatch ? descMatch[1].trim() : ticketData;\n\n// Agregar servicio a la descripción si se detectó\nif (service !== 'No especificado') {\n  description += `\\n\\n🎯 **Servicio de interés:** ${service}`;\n}\n\n// Si hay fileUrl, agregarlo a la descripción\nif (fileUrl) {\n  description += `\\n\\n📎 **Archivo adjunto:** ${fileUrl}`;\n}\n\nreturn {\n  json: {\n    name: name,\n    email: email,\n    description: description,\n    company: company,\n    service: service,\n    ticketId: `AURIN-${Date.now()}`,\n    createdAt: new Date().toISOString(),\n    fileUrl: fileUrl\n  }\n};"
+      },
+      "id": "f71bac67-d58b-4c4e-a573-26b1f6cccf96",
+      "name": "Parse Ticket Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        192,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aurin.mx/api/send-ticket",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "company",
+              "value": "={{ $json.company }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json.description }}"
+            },
+            {
+              "name": "ticketId",
+              "value": "={{ $json.ticketId }}"
+            },
+            {
+              "name": "createdAt",
+              "value": "={{ $json.createdAt }}"
+            },
+            {
+              "name": "fileUrl",
+              "value": "={{ $json.fileUrl }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $json.service }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e31d7300-5aed-427f-8931-bba08a527203",
+      "name": "Send Ticket to API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        416,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// La API ya retorna el mensaje formateado y listo para el usuario\nconst apiResponse = $input.item.json;\n\n// Si la API retornó el mensaje de confirmación, usarlo\nif (apiResponse.output) {\n  return {\n    json: {\n      output: apiResponse.output,\n      success: apiResponse.success,\n      ticketId: apiResponse.ticketId,\n      emailSent: apiResponse.emailSent\n    }\n  };\n}\n\n// Fallback en caso de que la API no retorne el formato esperado\nconst ticketData = $('Parse Ticket Data').item.json;\nconst hasFile = ticketData.fileUrl ? ' Tu archivo adjunto ha sido incluido.' : '';\n\nreturn {\n  json: {\n    output: `✅ **Perfecto, ${ticketData.name}!**\\n\\nHe creado un ticket de soporte y nuestro equipo te contactará a **${ticketData.email}** muy pronto.${hasFile}\\n\\n**📋 Detalles de tu ticket:**\\n- Número de ticket: **${ticketData.ticketId}**\\n- Estado: En proceso\\n- Tiempo estimado de respuesta: 24 horas\\n\\n**📧 Email de contacto:** [hey@aurin.mx](mailto:hey@aurin.mx)\\n\\nNos pondremos en contacto contigo dentro de las próximas 24 horas para atender tu solicitud personalmente.\\n\\n¿Hay algo más en lo que pueda ayudarte mientras tanto?`,\n    success: true,\n    ticketId: ticketData.ticketId,\n    emailSent: true,\n    customerName: ticketData.name,\n    customerEmail: ticketData.email,\n    fileAttached: !!ticketData.fileUrl\n  }\n};"
+      },
+      "id": "838bcb04-0172-430b-846b-4b954ecf02af",
+      "name": "Format Response for Bot",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        -32
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Ticket Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Ticket Data": {
+      "main": [
+        [
+          {
+            "node": "Send Ticket to API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Ticket to API": {
+      "main": [
+        [
+          {
+            "node": "Format Response for Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "74b1b881-9299-4763-a2a0-4f282df66746",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  },
+  "id": "xofJhOkiHd6ietuS",
+  "tags": []
+}

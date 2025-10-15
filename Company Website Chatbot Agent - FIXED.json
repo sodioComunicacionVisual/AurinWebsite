@@ -1,0 +1,425 @@
+{
+  "name": "Company Website Chatbot Agent (RAG, Calendar integrations)",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "2ea3414e-fd9d-4a6c-b822-ff98e4c63e13",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -304,
+        816
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "XXl9qS4splZaD3VC",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "calendarAgent",
+        "description": "Call this tool for any calendar action.",
+        "workflowId": {
+          "__rl": true,
+          "value": "qjGXYKG8lfA6iKPx",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/qjGXYKG8lfA6iKPx",
+          "cachedResultName": "Calendar Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ $json.query }}"
+          }
+        }
+      },
+      "id": "9038ef1c-63c0-4273-b16c-cceb47e78a73",
+      "name": "calendarAgent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        624,
+        848
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "name": "RAGagent",
+        "description": "Call this tool to answer FAQs about Aurin services, portfolio, and expertise. Pass the user's question as input.",
+        "workflowId": {
+          "__rl": true,
+          "value": "rPEVrWKRByrpoSC6",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/rPEVrWKRByrpoSC6",
+          "cachedResultName": "RAG Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "question": "={{ $json.query }}"
+          }
+        }
+      },
+      "id": "786e433f-2e78-48f9-ad23-3ccadc0a7eee",
+      "name": "RAGagent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        480,
+        1152
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "name": "ticketAgent",
+        "description": "Call this tool to create a support ticket when user wants human contact. IMPORTANT: Always pass the complete user message as ticketData AND the fileUrl if available.",
+        "workflowId": {
+          "__rl": true,
+          "value": "xofJhOkiHd6ietuS",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/xofJhOkiHd6ietuS",
+          "cachedResultName": "Ticket Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ticketData": "={{ $('Store Context and FileUrl').item.json.chatInput }}",
+            "fileUrl": "={{ $('Store Context and FileUrl').item.json.fileUrl }}"
+          }
+        }
+      },
+      "id": "9e9b08aa-e790-4341-9519-d5a2c4d9078d",
+      "name": "ticketAgent",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        176,
+        976
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "id": "e6cc0d69-58ff-4feb-89e1-50402d7c5f05",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        -64,
+        896
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "content": "# Website Chatbot Agent with Modular Sub-Agent Architecture\n\n#### Overview \nThis workflow implements a modular **Website AI Chatbot Assistant** capable of handling multiple types of customer interactions autonomously. Instead of relying on a single large agent to handle all logic and tools, this system routes user queries to specialized sub-agents—each dedicated to a specific function.\n\n By using a manager-style orchestration layer, this approach prevents overloading a single AI model with excessive context, leading to cleaner routing, faster execution, and easier scaling as your automation needs grow.\n\n\n#### How It Works\n\n**1. Chat Trigger**  \n- The flow is initiated when a chat message is received via the website widget.\n\n**2. Manager Agent (Ultimate Website AI Assistant)**  \n- The central LLM-based agent is responsible for parsing the message and deciding which specialized sub-agent to route it to.\n- It uses an OpenAI GPT model for natural language understanding and a lightweight memory system to preserve recent context.\n\n**3. Sub-Agent Routing**  \n- `calendarAgent`: Handles availability checks and books meetings on connected calendars.  \n- `RAGAgent`: Searches company documentation or FAQs to provide accurate responses from your internal knowledge base.  \n- `ticketAgent`: Forwards requests to human support by generating and sending support tickets to a designated email.\n\n---\n\n#### Setup Instructions\n\n1. **Embed the Chatbot**  \n   - Use a custom HTML widget or script to embed the chatbot interface on your website.  \n   - Connect the frontend to the webhook that triggers the `When chat message received` node.\n\n2. **Configure Your OpenAI Key**  \n   - Insert your API key in the `OpenAI Chat Model` node.  \n   - Adjust the model parameters for temperature, max tokens, etc., based on how formal or creative you want the bot to be.\n\n3. **Customize Sub-Agents**  \n   - `calendarAgent`: Connect to your Google or Outlook calendar for real-time availability.  \n   - `RAGAgent`: Upload your company documents, FAQs, or knowledge base for accurate responses.  \n   - `ticketAgent`: Configure email settings to forward support requests to your team.\n\n4. **Test and Deploy**  \n   - Test each sub-agent individually to ensure proper routing and responses.  \n   - Deploy the webhook URL to your website's chatbot widget.\n\n---\n\n#### Benefits\n\n- **Modular Design**: Each sub-agent handles a specific function, making the system easier to maintain and scale.\n- **Faster Execution**: Smaller, focused agents execute faster than a single large agent.\n- **Easy Customization**: Add or modify sub-agents without affecting the entire system.\n- **Better Context Management**: The memory system preserves conversation context while keeping each agent focused.\n\n---\n\n#### Next Steps\n\n1. **Add More Sub-Agents**: Create specialized agents for product recommendations, order tracking, or other business-specific functions.\n2. **Enhance Memory**: Implement persistent memory across sessions for returning customers.\n3. **Analytics Integration**: Add tracking to monitor conversation flows and optimize agent performance.\n4. **Multi-language Support**: Extend sub-agents to handle multiple languages based on user preferences.",
+        "height": 1480,
+        "width": 660
+      },
+      "id": "b2c61c17-5448-4b41-9757-186494de2f54",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2368,
+        -32
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are the helpful, friendly chatbot assistant for Aurin (aurin.mx), a design and visual communication agency in Mexico. You don't answer questions yourself, you send every request to the right tool. \n\nAvailable Tools\nRAGagent – Use to answer FAQs and anything about Aurin's services, process, portfolio, and expertise.\ncalendarAgent – Use to check availability and book consultations.\nticketAgent – Use when the user wants a human, you don't have enough info, or you can't complete the request.\n\n\nCore Capabilities\n1. Answer FAQs\nIf a user asks a question about Aurin, our services, process, or portfolio, immediately query the RAGagent.\nNever guess, improvise, or answer on your own.\nNo tool call = no answer.\n\n2. Book Consultations\nIf a user wants to book a consultation or meeting, collect the following information:\nFull name, Company name (optional), Email address, their project goal/needs, preferred day and time (remember: Mexico City timezone, 30-60 min meetings)\n\nProcess:\n-Check their preferred slot with calendarAgent.\n-If unavailable, offer the closest alternate available times on the same day or week. \n-Once they pick a slot, confirm all details (name, email, goal, time).\n-After confirmation, use calendarAgent to book and send them confirmation.\nGolden Rule: Never double book. Always check availability first.\n\n3. Escalate to a Human Agent if any of these happen:\n\n-RAGagent can't find an answer\n-User wants to talk to a human directly\n-You can't complete their request\n-Complex project discussion needed\n\nThen:\nAsk if they'd like to be contacted by the Aurin team. If yes, collect:\n- First name\n- Email address  \n- **Company name** (always ask: '¿En qué empresa trabajas?' or '¿Cuál es el nombre de tu empresa?')\n- **Service of interest** (ask: '¿Qué servicio te interesa?' - options: Branding, UX/UI Design, Graphic Design, Digital Strategy)\n- Description of their project or question\n- **Ask if they want to attach any files (images, PDFs, documents) to help explain their project**\n\nThen, use ticketAgent to create a support ticket that will go to info@sodio.net.\n**IMPORTANT: When calling ticketAgent, the tool will automatically receive the complete user message and any attached files. Just call the tool - don't format the data yourself.**\n\nRules of Engagement:\n-No improvisation. Tools only.\n-Always clarify if info is missing or unclear.\n-The current date is {{ $now.format('yyyy-MM-dd') }}. Mexico City timezone.\n-Be warm, professional, and helpful in Spanish.\n-Always ask for company name, service of interest and file attachments when creating tickets.",
+          "maxIterations": 10
+        }
+      },
+      "id": "945c3de5-e3c2-497e-9ca3-6fc179357dc7",
+      "name": "Ultimate Website Chatbot Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        48,
+        432
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/chatbot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -688,
+        432
+      ],
+      "id": "f54a0d02-7c41-4478-8da8-1d5a8f038b6f",
+      "name": "Webhook",
+      "webhookId": "f18aca18-5ade-4c75-ab64-1496a980b445"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Capturar TODOS los datos del webhook incluyendo fileUrl\nconst message = $json.message || $json.body?.message;\nconst sessionId = $json.sessionId || $json.body?.sessionId;\nconst metadata = $json.metadata || $json.body?.metadata || {};\nconst fileUrl = $json.fileUrl || $json.body?.fileUrl || null;\n\n// IMPORTANTE: Guardar fileUrl para que esté disponible en los tools\nconsole.log('Webhook received - FileUrl:', fileUrl);\nconsole.log('Webhook received - Full body:', JSON.stringify($json, null, 2));\n\n// Formatear para el AI Agent\nreturn [{\n  json: {\n    chatInput: message,\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: fileUrl,\n    // También pasar como query para compatibilidad\n    query: message\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -368,
+        432
+      ],
+      "id": "fac8d0b9-7b04-4e09-9a84-64ab2d7e15ae",
+      "name": "Store Context and FileUrl"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "success-output",
+              "name": "success",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "output-text",
+              "name": "output",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "session-id",
+              "name": "sessionId",
+              "value": "={{ $('Store Context and FileUrl').item.json.sessionId }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        432
+      ],
+      "id": "b2702003-45e8-4f9b-a898-cbae4268bdc0",
+      "name": "Format Success Response"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        432
+      ],
+      "id": "8af9803c-7f73-4555-99ef-7a29bd0866f7",
+      "name": "Respond Success"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        48,
+        672
+      ],
+      "id": "846f002d-1a7b-41c7-852d-0a94100d7779",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "error-output",
+              "name": "output",
+              "type": "string",
+              "value": "Disculpa, tuve un problema procesando tu mensaje. ¿Podrías reformular tu pregunta o contactarnos en hey@aurin.mx?"
+            },
+            {
+              "id": "error-success",
+              "name": "success",
+              "type": "boolean",
+              "value": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        672
+      ],
+      "id": "2c08a888-9960-4072-aea8-dfba8ab37f18",
+      "name": "Format Error Response"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        672
+      ],
+      "id": "4d28c249-fc8c-487f-b57a-d718d1d9a732",
+      "name": "Respond Error"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "RAGagent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Ultimate Website Chatbot Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ticketAgent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Ultimate Website Chatbot Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Ultimate Website Chatbot Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "calendarAgent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Ultimate Website Chatbot Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Ultimate Website Chatbot Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Store Context and FileUrl",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Context and FileUrl": {
+      "main": [
+        [
+          {
+            "node": "Ultimate Website Chatbot Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ultimate Website Chatbot Agent": {
+      "main": [
+        [
+          {
+            "node": "Format Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Success Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Error Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1e56de73-aa51-4970-b4eb-a32f25d68aab",
+  "meta": {
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  },
+  "id": "5eVhyM6e69m1mKTy",
+  "tags": []
+}

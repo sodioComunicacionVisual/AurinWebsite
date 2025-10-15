@@ -1,0 +1,270 @@
+{
+  "name": "Ticket Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "/ticket",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -640,
+        400
+      ],
+      "id": "f54a0d02-7c41-4478-8da8-1d5a8f038b6f",
+      "name": "Webhook",
+      "webhookId": "f18aca18-5ade-4c75-ab64-1496a980b445"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer datos del webhook\nconst ticketData = $json.ticketData || '';\nconst fileUrl = $json.fileUrl || null;\n\nconsole.log('=== TICKET AGENT DEBUG ===');\nconsole.log('Received ticketData:', ticketData);\nconsole.log('Received fileUrl:', fileUrl);\nconsole.log('Full webhook data:', JSON.stringify($json, null, 2));\n\n// Patrones mejorados para extraer información\nconst namePatterns = [\n  /(?:me llamo|soy|mi nombre es|name is)\\s+([A-Za-zÀ-ÿ\\s]+?)(?:\\s|,|\\.|$)/i,\n  /^([A-Za-zÀ-ÿ]+)\\s+[A-Za-zÀ-ÿ]+/,\n  /name:\\s*([^,\\n]+)/i\n];\n\nconst emailPatterns = [\n  /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})/,\n  /email[:\\s]*([^,\\s\\n]+)/i,\n  /correo[:\\s]*([^,\\s\\n]+)/i\n];\n\nconst companyPatterns = [\n  /(?:empresa|company|trabajo en|work at|soy de|en la empresa|de la empresa)[:\\s]+([^,\\n.!?]+)/i,\n  /en\\s+([A-Z][a-zA-ZÀ-ÿ\\s&.-]+)(?:\\s|,|\\.|!|\\?|$)/,\n  /de\\s+([A-Z][a-zA-ZÀ-ÿ\\s&.-]+)(?:\\s|,|\\.|!|\\?|$)/,\n  /([A-Z][a-zA-ZÀ-ÿ&.-]+)\\s+(?:empresa|company|corporación)/i\n];\n\nconst servicePatterns = [\n  /(?:servicio|service|interés|interest|necesito|need)[:\\s]*([^,\\n.!?]+)/i,\n  /(?:branding|UX\\/UI|UX|UI|graphic design|diseño gráfico|digital strategy|estrategia digital)/i,\n  /(?:diseño|design|marca|brand|web|website|app|aplicación)/i\n];\n\n// Extraer información\nlet name = 'No especificado';\nfor (const pattern of namePatterns) {\n  const match = ticketData.match(pattern);\n  if (match && match[1] && match[1].trim().length > 1) {\n    name = match[1].trim();\n    // Limpiar caracteres especiales al final\n    name = name.replace(/[,\\.!\\?]+$/, '');\n    break;\n  }\n}\n\nlet email = 'No especificado';\nfor (const pattern of emailPatterns) {\n  const match = ticketData.match(pattern);\n  if (match && match[1]) {\n    email = match[1].trim();\n    break;\n  }\n}\n\nlet company = 'No especificado';\nfor (const pattern of companyPatterns) {\n  const match = ticketData.match(pattern);\n  if (match && match[1] && match[1].trim().length > 2) {\n    company = match[1].trim();\n    // Limpiar caracteres especiales\n    company = company.replace(/[,\\.!\\?]+$/, '');\n    // Evitar palabras comunes que no son empresas\n    if (!['el', 'la', 'un', 'una', 'mi', 'tu', 'su'].includes(company.toLowerCase())) {\n      break;\n    }\n  }\n}\n\nlet service = 'No especificado';\nfor (const pattern of servicePatterns) {\n  const match = ticketData.match(pattern);\n  if (match && match[1]) {\n    service = match[1].trim();\n    service = service.replace(/[,\\.!\\?]+$/, '');\n    break;\n  }\n}\n\n// Si no se encontró servicio específico, buscar palabras clave\nif (service === 'No especificado') {\n  if (/branding|marca|brand/i.test(ticketData)) {\n    service = 'Branding';\n  } else if (/UX\\/UI|UX|UI|interfaz|usuario/i.test(ticketData)) {\n    service = 'UX/UI Design';\n  } else if (/gráfico|graphic|diseño/i.test(ticketData)) {\n    service = 'Graphic Design';\n  } else if (/digital|strategy|estrategia/i.test(ticketData)) {\n    service = 'Digital Strategy';\n  }\n}\n\n// Crear descripción completa\nlet description = ticketData;\n\n// Agregar información estructurada\nif (service !== 'No especificado') {\n  description += `\\n\\n🎯 **Servicio de interés:** ${service}`;\n}\n\nif (fileUrl) {\n  description += `\\n\\n📎 **Archivo adjunto:** ${fileUrl}`;\n}\n\nconsole.log('=== EXTRACTED DATA ===');\nconsole.log('Name:', name);\nconsole.log('Email:', email);\nconsole.log('Company:', company);\nconsole.log('Service:', service);\nconsole.log('Description:', description);\nconsole.log('FileUrl:', fileUrl);\n\nreturn [{\n  json: {\n    name: name,\n    email: email,\n    company: company,\n    service: service,\n    description: description,\n    fileUrl: fileUrl,\n    subject: `Nuevo ticket de soporte - ${name} (${company})`\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        400
+      ],
+      "id": "fac8d0b9-7b04-4e09-9a84-64ab2d7e15ae",
+      "name": "Parse Ticket Data"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aurin.mx/api/mailing/ticket",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "company",
+              "value": "={{ $json.company }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $json.service }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json.description }}"
+            },
+            {
+              "name": "fileUrl",
+              "value": "={{ $json.fileUrl }}"
+            },
+            {
+              "name": "subject",
+              "value": "={{ $json.subject }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        400
+      ],
+      "id": "b2702003-45e8-4f9b-a898-cbae4268bdc0",
+      "name": "Send Ticket Email"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "success-output",
+              "name": "success",
+              "value": true,
+              "type": "boolean"
+            },
+            {
+              "id": "message-output",
+              "name": "message",
+              "value": "¡Perfecto! He creado tu ticket de soporte. El equipo de Aurin se pondrá en contacto contigo pronto a {{ $('Parse Ticket Data').item.json.email }}. 📧\\n\\n✅ **Datos registrados:**\\n👤 **Nombre:** {{ $('Parse Ticket Data').item.json.name }}\\n🏢 **Empresa:** {{ $('Parse Ticket Data').item.json.company }}\\n🎯 **Servicio:** {{ $('Parse Ticket Data').item.json.service }}\\n{{ $('Parse Ticket Data').item.json.fileUrl ? '📎 **Archivo adjunto:** Incluido' : '' }}\\n\\n¿Hay algo más en lo que pueda ayudarte mientras tanto?",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        400
+      ],
+      "id": "8af9803c-7f73-4555-99ef-7a29bd0866f7",
+      "name": "Format Success Response"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        400
+      ],
+      "id": "4d28c249-fc8c-487f-b57a-d718d1d9a732",
+      "name": "Respond Success"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        640
+      ],
+      "id": "846f002d-1a7b-41c7-852d-0a94100d7779",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "error-success",
+              "name": "success",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "id": "error-message",
+              "name": "message",
+              "value": "Disculpa, hubo un problema creando tu ticket. Por favor contacta directamente a info@sodio.net o intenta nuevamente.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        640
+      ],
+      "id": "2c08a888-9960-4072-aea8-dfba8ab37f18",
+      "name": "Format Error Response"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        640
+      ],
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Respond Error"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Parse Ticket Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Ticket Data": {
+      "main": [
+        [
+          {
+            "node": "Send Ticket Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Ticket Email": {
+      "main": [
+        [
+          {
+            "node": "Format Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Success Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format Error Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Error Response": {
+      "main": [
+        [
+          {
+            "node": "Respond Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1e56de73-aa51-4970-b4eb-a32f25d68aab",
+  "meta": {
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  },
+  "id": "xofJhOkiHd6ietuS",
+  "tags": []
+}
