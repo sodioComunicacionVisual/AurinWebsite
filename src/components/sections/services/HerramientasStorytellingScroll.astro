@@ -1,0 +1,686 @@
+---
+import ScrollReveal from '../../ui/ScrollReveal.astro';
+import StoryTellingCard from './StoryTellingCard.astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+interface HerramientaItem {
+  id: string;
+  letter: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title?: string;
+  titlePart1?: string;
+  titlePart2?: string;
+  description?: string;
+  items?: HerramientaItem[];
+}
+
+const {
+  title = t.services.tools.titlePart1 + " " + t.services.tools.titlePart2,
+  titlePart1 = t.services.tools.titlePart1,
+  titlePart2 = t.services.tools.titlePart2,
+  description = t.services.tools.description,
+  items = [
+    {
+      id: "diseno-ux-ui",
+      letter: "X",
+      title: t.services.tools.items[4].title,
+      href: "#",
+    },
+    {
+      id: "desarrollo-web",
+      letter: "W",
+      title: t.services.tools.items[0].title,
+      href: "#",
+    },
+    {
+      id: "branding",
+      letter: "I",
+      title: t.services.tools.items[2].title,
+      href: "#",
+    },
+    {
+      id: "marketing",
+      letter: "M",
+      title: t.services.tools.items[3].title,
+      href: "#",
+    },
+    {
+      id: "usabilidad",
+      letter: "U",
+      title: t.services.tools.items[1].title,
+      href: "#",
+    },
+  ],
+} = Astro.props;
+
+const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="scroll-container">
+  <section class="herramientas-section">
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <div class="title-wrapper">
+            <ScrollReveal 
+              text={`${titlePart1}\n${titlePart2}`}
+              tag="h2"
+              textClass="title"
+              baseOpacity={0.15}
+              baseRotation={5}
+              blurStrength={6}
+              enableBlur={true}
+            />
+          </div>
+          <p class="description body-2">{description}</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="splide" id={uniqueId} aria-label="Herramientas carousel">
+      <div class="splide__track">
+        <ul class="splide__list">
+          {items.map((item) => (
+            <StoryTellingCard 
+              letter={item.letter}
+              title={item.title}
+              href={item.href}
+            />
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- Dynamic Content Container -->
+    <div class="dynamic-content-container">
+      <!-- UX/UI Design Content -->
+      <div class="content-section" data-content="0">
+        <div class="content-left">
+          <span class="content-title body-1">Diseño UX/UI: </span>
+          <span class="content-subtitle body-2">Simplificamos lo complejo.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Como usuarios de tecnología que somos, nos encanta explorar y construir interfaces intuitivas diseñadas para adaptarse a las necesidades de los usuarios, logrando experiencias que equilibran forma y función. Desde el diseño de aplicaciones bancarias que simplifican transacciones hasta sistemas de navegación accesibles para sitios web complejos, nuestras soluciones transforman lo complicado en algo fácil de usar.
+          </div>
+        </div>
+      </div>
+
+      <!-- Web Development Content -->
+      <div class="content-section" data-content="1">
+        <div class="content-left">
+          <span class="content-title body-1">Desarrollo web y de aplicaciones móviles: </span>
+          <span class="content-subtitle body-2">Información y funcionalidad, a la mano.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Diseñamos y desarrollamos sitios web y aplicaciones móviles que combinan funcionalidad, diseño y rendimiento. Desde sitios que ofrecen experiencias inmersivas hasta apps que optimizan procesos y mejoran la interacción del usuario, nuestras soluciones están pensadas para adaptarse a tus necesidades y generar impacto.
+          </div>
+        </div>
+      </div>
+
+      <!-- Branding Content -->
+      <div class="content-section" data-content="2">
+        <div class="content-left">
+          <span class="content-title body-1">Desarrollo de branding: </span>
+          <span class="content-subtitle body-2">Diseñamos tu marca de principio a fin.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Creamos sistemas que trascienden, conectando profundamente con las audiencias. Desde el rediseño completo de identidades visuales, incluyendo logotipos y papelería corporativa, hasta la creación de guías de estilo que garantizan coherencia en todos los canales, nuestras soluciones dan vida a marcas memorables y consistentes.
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketing Content -->
+      <div class="content-section" data-content="3">
+        <div class="content-left">
+          <span class="content-title body-1">Marketing digital y redes sociales: </span>
+          <span class="content-subtitle body-2">Conectamos con intención.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Creamos estrategias digitales que construyen comunidades y generan resultados. Desde campañas de marketing de contenido hasta la gestión creativa de redes sociales, desarrollamos mensajes que reflejan tu voz y conectan con la audiencia correcta. Nos enfocamos en métricas reales, contenido significativo y creatividad constante para fortalecer tu presencia digital.
+          </div>
+        </div>
+      </div>
+
+      <!-- Usability Testing Content -->
+      <div class="content-section" data-content="4">
+        <div class="content-left">
+          <span class="content-title body-1">Pruebas de usabilidad: </span>
+          <span class="content-subtitle body-2">Mejoramos con precisión.</span>
+        </div>
+        <div class="content-right">
+          <div class="content-description body-3">
+            Llevamos a cabo pruebas para asegurar que cada solución cumpla con los estándares de usabilidad y rendimiento.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .scroll-container {
+    height: 500vh;
+    position: relative;
+  }
+
+  .herramientas-section {
+    padding: 0rem 0rem 8rem 0rem;
+    width: 100%;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    background-color: black;
+  }
+
+  @media (max-height: 800px) {
+    .herramientas-section {
+      overflow-y: auto;
+      justify-content: flex-start;
+      padding-top: 2rem;
+    }
+  }
+
+  .container {
+    padding: 0 2rem;
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3.5rem;
+    gap: 2rem;
+    padding: 0px 0px 49px 0px;
+  }
+
+  .header-content {
+    flex: 1;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 30px;
+    padding-top: 49px;
+  }
+
+  .title-wrapper {
+    max-width: 488px;
+  }
+
+  :global(.title) {
+    margin: 0 !important;
+  }
+
+  :global(.title .scroll-reveal-word:nth-child(1)),
+  :global(.title .scroll-reveal-word:nth-child(2)) {
+    color: var(--color-white) !important;
+    font-size: var(--heading-5-size) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-5-line-height) !important;
+  }
+
+  :global(.title .scroll-reveal-word:nth-child(n+3)) {
+    color: var(--color-yellow) !important;
+    font-size: var(--heading-2-size) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-2-line-height) !important;
+  }
+
+  .description {
+    align-self: stretch;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-white);
+    margin: 0;
+  }
+
+
+  .splide {
+    width: 100%;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+  }
+
+  .splide__list {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    transition: transform 0.6s ease-out;
+  }
+
+  @media (min-width: 1200px) {
+    .splide__list {
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    .splide__list {
+      justify-content: flex-start;
+      width: max-content;
+    }
+    
+    .splide__track {
+      overflow: hidden;
+    }
+  }
+
+
+  /* Splide pagination */
+  :global(.splide__pagination) {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0;
+  }
+
+  :global(.splide__pagination__page) {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(197, 212, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
+  }
+
+  :global(.splide__pagination__page.is-active) {
+    background: var(--color-yellow, #C5D400);
+    width: 2rem;
+    border-radius: 0.25rem;
+  }
+
+  :global(.splide__pagination__page:hover:not(.is-active)) {
+    background: rgba(197, 212, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .herramientas-section {
+      padding: 0rem 0rem 4rem 0rem;
+    }
+
+    .container {
+      padding: 0;
+    }
+
+    .header {
+      margin-bottom: 2rem;
+      padding: 0px 0px 49px 0px;
+    }
+
+    .card::before {
+      opacity: 1;
+    }
+
+    .card-title {
+      color: #0A0A0A !important;
+    }
+
+    .card-letter {
+      font-size: clamp(150px, 30vw, 250px);
+      width: clamp(100px, 35%, 180px);
+     
+    }
+
+    .card-title {
+      font-size: clamp(16px, 3vw, 20px);
+      
+    }
+
+    .card {
+      width: 220px;
+      min-height: 400px;
+    }
+
+    .card-content {
+      padding: clamp(15px, 4vw, 30px) 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 0;
+    }
+
+    .header {
+      padding: 49px 0;
+    }
+
+    .card::before {
+      opacity: 1;
+    }
+
+    .card-title {
+      color: #0A0A0A !important;
+    }
+
+    .card-letter {
+      font-size: clamp(120px, 28vw, 200px);
+      width: clamp(80px, 30%, 150px);
+    }
+
+    .card-title {
+      font-size: clamp(14px, 2.5vw, 18px);
+    }
+
+    .card {
+      width: 200px;
+      min-height: 350px;
+    }
+
+    .card-content {
+      padding: clamp(12px, 3vw, 25px) 8px;
+    }
+  }
+
+  /* Dynamic Content Container Styles */
+  .dynamic-content-container {
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    padding: 0 2rem;
+    margin-top: 4rem;
+    position: relative;
+    min-height: 200px;
+  }
+
+  .content-section {
+    width: 100%;
+    padding: 20px;
+    background: #0A0A0A;
+    justify-content: space-between;
+    align-items: flex-start;
+    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transition: opacity 0.5s ease;
+    gap: 2rem;
+    pointer-events: none;
+  }
+
+  .content-section.active {
+    display: flex;
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .content-left {
+    flex: 1;
+    align-self: stretch;
+    min-width: 394px;
+  }
+
+  .content-title {
+    color: #D0DF00;
+    font-size: 36px;
+    font-family: var(--font-heading, 'Titillium Web');
+    font-weight: 300;
+    line-height: 40px;
+    word-wrap: break-word;
+  }
+
+  .content-subtitle {
+    color: white;
+    font-size: 32px;
+    font-family: var(--font-heading, 'Titillium Web');
+    font-weight: 300;
+    line-height: 35px;
+    word-wrap: break-word;
+  }
+
+  .content-right {
+    width: 728px;
+    align-self: stretch;
+    position: relative;
+  }
+
+  .content-description {
+    color: white;
+    font-size: 20px;
+    font-family: var(--font-body, 'Urbanist');
+    font-weight: 400;
+    word-wrap: break-word;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1200px) {
+    .content-section {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .content-left {
+      min-width: auto;
+    }
+
+    .content-right {
+      width: 100%;
+    }
+
+    .content-title {
+      font-size: 28px;
+      line-height: 32px;
+    }
+
+    .content-subtitle {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .content-description {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .dynamic-content-container {
+      padding: 0 1rem;
+      margin-top: 2rem;
+    }
+
+    .content-section {
+      padding: 15px;
+    }
+
+    .content-title {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .content-subtitle {
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    .content-description {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<script>
+  import Splide from '@splidejs/splide';
+  import '@splidejs/splide/css/core';
+  import { animate, inView } from "motion";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const splideElement = document.querySelector('.splide');
+    
+    if (splideElement) {
+      const splide = new Splide(splideElement as HTMLElement, {
+        fixedWidth: '250px',
+        perMove: 1,
+        gap: '1.75rem',
+        accessibility: {
+          slideRole: '',
+          slideLabel: '',
+          slideLabelFormat: '',
+        },
+        padding: '2rem',
+        pagination: false,
+        arrows: false,
+        drag: true,
+        breakpoints: {
+          1024: {
+            fixedWidth: '250px',
+            gap: '1.5rem',
+            padding: '1.5rem',
+          },
+          768: {
+            fixedWidth: '220px',
+            gap: '1rem',
+            padding: '1rem',
+          },
+          480: {
+            fixedWidth: '200px',
+            gap: '0.5rem',
+            padding: '0.5rem',
+          },
+        },
+      });
+
+      splide.mount();
+
+      // Animaciones con IntersectionObserver para las cards
+      const cards = document.querySelectorAll('.card');
+
+      const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      cards.forEach((card, index) => {
+        // Añadir delay escalonado
+        (card as HTMLElement).style.transitionDelay = `${index * 0.15}s`;
+        observer.observe(card);
+      });
+
+      // Scroll-triggered card activation and content switching
+      const scrollContainer = document.querySelector('.scroll-container');
+      const contentSections = document.querySelectorAll('.content-section');
+      
+      if (scrollContainer) {
+        let currentActiveIndex = -1;
+        
+        const handleScroll = () => {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const containerRect = scrollContainer.getBoundingClientRect();
+          const containerTop = scrollTop + containerRect.top;
+          const containerHeight = scrollContainer.offsetHeight;
+          
+          // Calculate scroll progress within the container (0 to 1)
+          const scrollProgress = Math.max(0, Math.min(1, (scrollTop - containerTop) / (containerHeight - window.innerHeight)));
+          
+          // Calculate which card should be active based on scroll progress
+          const totalCards = cards.length;
+          const newActiveIndex = Math.floor(scrollProgress * totalCards);
+          
+          // Only update if the active card has changed
+          if (newActiveIndex !== currentActiveIndex && newActiveIndex >= 0 && newActiveIndex < totalCards) {
+            // Remove active class from all cards
+            cards.forEach(card => card.classList.remove('scroll-active'));
+            
+            // Add active class only to the current card (not cumulative)
+            cards.forEach((card, index) => {
+              if (index === newActiveIndex) {
+                card.classList.add('scroll-active');
+              } else {
+                card.classList.remove('scroll-active');
+              }
+            });
+
+            // Horizontal scroll for mobile/tablet viewports
+            if (window.innerWidth < 1200) {
+              const herramientasSection = document.querySelector('.herramientas-section');
+              const currentSplideList = herramientasSection?.querySelector('.splide__list') as HTMLElement;
+              if (currentSplideList && cards.length > 0) {
+                const cardWidth = 250 + 32; // card width + gap
+                const containerWidth = currentSplideList.parentElement?.offsetWidth || 0;
+                const totalWidth = cards.length * cardWidth;
+                const maxTranslate = Math.max(0, totalWidth - containerWidth);
+                const translateX = Math.min(scrollProgress * maxTranslate, maxTranslate);
+                
+                currentSplideList.style.transform = `translateX(-${translateX}px)`;
+              }
+            }
+            
+            // Update content sections
+            contentSections.forEach((section, index) => {
+              if (index === newActiveIndex) {
+                section.classList.add('active');
+              } else {
+                section.classList.remove('active');
+              }
+            });
+            
+            currentActiveIndex = newActiveIndex;
+          }
+          
+          // Remove active class if we're outside the scroll container
+          if (scrollProgress <= 0 || scrollProgress >= 1) {
+            cards.forEach(card => card.classList.remove('scroll-active'));
+            contentSections.forEach(section => section.classList.remove('active'));
+            currentActiveIndex = -1;
+          }
+        };
+        
+        // Throttle scroll events for better performance
+        let ticking = false;
+        const throttledScroll = () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              handleScroll();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        };
+        
+        window.addEventListener('scroll', throttledScroll, { passive: true });
+      }
+    }
+  });
+</script>

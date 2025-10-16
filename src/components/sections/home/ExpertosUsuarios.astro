@@ -1,0 +1,243 @@
+---
+import MainButton from '../../ui/MainButton.astro';
+import LampLight from '../../ui/LampLight.astro';
+import ScrollReveal from '../../ui/ScrollReveal.astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class="expertos-usuarios">
+  <div class="lamp-decoration">
+    <LampLight lightColor="#D0DF00" intensity="medium" />
+  </div>
+  <div class="container">
+    <div class="content-wrapper">
+      <!-- Left Column: Title -->
+      <div class="title-column">
+        <div class="subtitle">{t.expertosUsuarios.subtitle}</div>
+        <ScrollReveal 
+          text={t.expertosUsuarios.title}
+          tag="h1"
+          textClass="main-title"
+          baseOpacity={0.15}
+          baseRotation={5}
+          blurStrength={6}
+          enableBlur={true}
+        />
+      </div>
+
+      <!-- Right Column: Description and CTA -->
+      <div class="content-column">
+        <div class="description">
+          <p>
+            {t.expertosUsuarios.description}
+          </p>
+        </div>
+        
+        <MainButton 
+          text={t.expertosUsuarios.buttonText}
+          href="#autores"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .expertos-usuarios {
+    width: 100vw;
+    max-width: 100%;
+    background: var(--color-black-a);
+    padding: 100px 50px 200px 50px;
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+  }
+
+  .expertos-usuarios::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 300px;
+    background-image: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ExpertosUsuarios.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    width: 100%;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 80px;
+    width: 100%;
+  }
+
+  /* Left Column - Title */
+  .title-column {
+    flex: 0 0 40%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .subtitle {
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: clamp(24px, 4vw, var(--heading-4-size));
+    font-weight: 300;
+    line-height: var(--heading-4-line-height);
+  }
+
+  :global(.main-title) {
+    color: var(--color-yellow) !important;
+    font-family: var(--font-heading) !important;
+    font-size: clamp(40px, 6vw, var(--heading-1-size)) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-1-line-height) !important;
+    margin: 0 !important;
+  }
+
+  :global(.main-title .scroll-reveal-word) {
+    color: var(--color-yellow) !important;
+  }
+
+  /* Right Column - Content */
+  .content-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 33px;
+    min-width: 0;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .description p {
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: clamp(16px, 2vw, var(--body-1-size));
+    font-weight: var(--body-1-weight);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .lamp-decoration {
+    position: absolute;
+    left: -100px;
+    top: 40%;
+
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .expertos-usuarios {
+      padding: 40px 30px;
+    }
+
+    .content-wrapper {
+      gap: 60px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .expertos-usuarios {
+      padding: 30px 20px;
+    }
+
+    .container {
+      padding: 0 10px;
+    }
+
+    .content-wrapper {
+      flex-direction: column;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .title-column,
+    .content-column {
+      width: 100%;
+      flex: none;
+    }
+
+    .subtitle {
+      font-size: clamp(20px, 5vw, 28px);
+      line-height: 1.2;
+    }
+
+    .main-title {
+      font-size: clamp(32px, 8vw, 48px);
+      line-height: 1.1;
+    }
+
+    .description p {
+      font-size: clamp(14px, 3.5vw, 18px);
+      line-height: 1.5;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .expertos-usuarios {
+      padding: 24px 16px;
+    }
+
+    .container {
+      padding: 0 5px;
+    }
+
+    .content-wrapper {
+      gap: 24px;
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 5vw, 24px);
+    }
+
+    .main-title {
+      font-size: clamp(28px, 8vw, 40px);
+    }
+
+    .description p {
+      font-size: clamp(14px, 3.5vw, 16px);
+    }
+  }
+</style>

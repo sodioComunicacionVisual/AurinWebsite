@@ -1,0 +1,914 @@
+---
+// @ts-nocheck
+import { Mail, MapPin } from 'lucide-astro';
+import MainButton from '../../ui/MainButton.astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class="contact-section">
+  <div class="contact-container">
+    <div class="contact-header">
+      <h2 class="contact-title">
+        {t.contact.form.title}
+        <span class="highlight"> {t.contact.form.titleHighlight}</span>
+      </h2>
+    </div>
+
+    <div class="contact-content">
+      <div class="contact-info">
+        <div class="info-item">
+          <Mail size={24} class="icon-yellow" />
+          <a href="mailto:hola@aurin.com" class="info-text">hola@aurin.com</a>
+        </div>
+        <div class="info-item">
+          <MapPin size={24} class="icon-yellow" />
+          <p class="info-text">Aldea Creativa, #207 San Jerónimo. La pradera</p>
+        </div>
+      </div>
+
+      <div class="contact-form-wrapper">
+        <h3 class="form-title">{t.contact.form.formTitle}</h3>
+        <form class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre" class="form-label">{t.contact.form.labels.name}</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder={t.contact.form.placeholders.name}
+                class="form-input"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="correo" class="form-label">{t.contact.form.labels.email}</label>
+              <input
+                type="email"
+                id="correo"
+                name="correo"
+                placeholder={t.contact.form.placeholders.email}
+                class="form-input"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="servicio" class="form-label">{t.contact.form.labels.service}</label>
+              <div class="motion-dropdown" data-dropdown>
+                <button type="button" class="dropdown-trigger" data-trigger>
+                  <span class="dropdown-text" data-text>{t.contact.form.placeholders.service}</span>
+                  <div class="dropdown-arrow" data-arrow>
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </button>
+                <div class="dropdown-menu" data-menu>
+                  {t.contact.form.services.map((service) => (
+                    <div class="dropdown-option" data-value={service.value}>
+                      <span style="color: white !important;">{service.title}</span>
+                      <div class="option-description" style="color: white !important;">{service.description}</div>
+                    </div>
+                  ))}
+                </div>
+                <input type="hidden" name="servicio" id="servicio" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="asunto" class="form-label">{t.contact.form.labels.subject}</label>
+              <input
+                type="text"
+                id="asunto"
+                name="asunto"
+                placeholder={t.contact.form.placeholders.subject}
+                class="form-input"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mensaje" class="form-label">{t.contact.form.labels.message}</label>
+            <textarea
+              id="mensaje"
+              name="mensaje"
+              placeholder={t.contact.form.placeholders.message}
+              class="form-textarea"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="archivo" class="form-label">Archivo adjunto (opcional)</label>
+            <div class="file-upload-area">
+              <input
+                type="file"
+                id="archivo"
+                name="archivo"
+                class="file-input"
+                accept="image/*,.pdf,.txt"
+              />
+              <label for="archivo" class="file-upload-label">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="file-upload-text">Adjuntar archivo (máx 10MB)</span>
+              </label>
+              <div class="file-preview" style="display: none;">
+                <div class="file-preview-info">
+                  <span class="file-preview-name"></span>
+                  <span class="file-preview-size"></span>
+                </div>
+                <button type="button" class="file-remove-btn">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <MainButton text={t.contact.form.button} type="submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    width: 100%;
+    background: var(--color-black-a);
+    padding: 100px 0;
+  }
+
+  .contact-container {
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    padding: 0 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 150px;
+  }
+
+  .contact-header {
+    max-width: 600px;
+  }
+
+  .contact-title {
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: var(--heading-5-size);
+    font-weight: 300;
+    line-height: var(--heading-5-line-height);
+    margin: 0;
+  }
+
+  .highlight {
+    color: var(--color-yellow);
+    font-size: var(--heading-2-size);
+    font-weight: 300;
+    line-height: var(--heading-2-line-height);
+  }
+
+  .contact-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 200px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    min-width: 272px;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .icon-yellow {
+    color: var(--color-yellow);
+    flex-shrink: 0;
+  }
+
+  .info-text {
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--body-2-size);
+    font-weight: 400;
+    margin: 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .info-text:hover {
+    color: var(--color-yellow);
+  }
+
+  .contact-form-wrapper {
+    flex: 1;
+    max-width: 792px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .form-title {
+    color: var(--color-yellow);
+    font-family: var(--font-heading);
+    font-size: var(--heading-2-size);
+    font-weight: 300;
+    line-height: var(--heading-2-line-height);
+    margin: 0;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 20px;
+  }
+
+  .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-label {
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--body-bold-5-size);
+    font-weight: 600;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--color-gray-b);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--body-4-size);
+    font-weight: 400;
+    transition: background 0.3s ease, outline 0.3s ease;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--color-gray-a);
+  }
+
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    outline: 2px solid var(--color-yellow);
+    background: #333;
+  }
+
+  /* Motion Dropdown Styling */
+  .motion-dropdown {
+    position: relative;
+    width: 100%;
+  }
+
+  .dropdown-trigger {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--color-gray-b);
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--color-white)!important;
+    font-family: var(--font-body);
+    font-size: var(--body-4-size);
+    font-weight: 400;
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dropdown-trigger:hover {
+    background: #333;
+  }
+
+  .dropdown-trigger:focus {
+    outline: 2px solid var(--color-yellow);
+    background: #333;
+  }
+
+  .dropdown-text {
+    flex: 1;
+    text-align: left;
+    color: var(--color-white)!important;
+  }
+
+  .dropdown-text.selected {
+    color: var(--color-white)!important;
+  }
+
+  .dropdown-arrow {
+    color: var(--color-gray-a);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdown-trigger:hover .dropdown-arrow {
+    color: var(--color-yellow);
+  }
+
+  .dropdown-trigger.open .dropdown-arrow {
+    color: var(--color-yellow);
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-gray-b);
+    border-radius: 5px;
+    margin-top: 4px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dropdown-menu.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+
+  .dropdown-option {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .dropdown-option:last-child {
+    border-bottom: none;
+  }
+
+  .dropdown-option:hover {
+    background: var(--color-yellow);
+    color: var(--color-black-a);
+    transform: translateX(4px);
+  }
+
+  .dropdown-option span {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .option-description {
+    font-size: 12px;
+    opacity: 0.8;
+    line-height: 1.3;
+  }
+
+  .dropdown-option:hover .option-description {
+    opacity: 0.9;
+  }
+
+  .form-input {
+    height: 44px;
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 133px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  /* File Upload Styles */
+  .file-upload-area {
+    width: 100%;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+  .file-upload-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--color-gray-b);
+    border: 2px dashed var(--color-gray-a);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--color-gray-a);
+  }
+
+  .file-upload-label:hover {
+    border-color: var(--color-yellow);
+    background: #333;
+    color: var(--color-yellow);
+  }
+
+  .file-upload-label svg {
+    flex-shrink: 0;
+  }
+
+  .file-upload-text {
+    font-family: var(--font-body);
+    font-size: var(--body-4-size);
+    font-weight: 400;
+  }
+
+  .file-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--color-gray-b);
+    border: 1px solid var(--color-yellow);
+    border-radius: 5px;
+    margin-top: 8px;
+  }
+
+  .file-preview-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .file-preview-name {
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: var(--body-4-size);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .file-preview-size {
+    color: var(--color-gray-a);
+    font-family: var(--font-body);
+    font-size: 12px;
+  }
+
+  .file-remove-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-gray-a);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .file-remove-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .contact-container {
+      padding: 0 60px;
+      gap: 100px;
+    }
+
+    .contact-content {
+      gap: 100px;
+    }
+  }
+
+  @media (max-width: 968px) {
+    .contact-container {
+      padding: 0 40px;
+      gap: 80px;
+    }
+
+    .contact-content {
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    .contact-info {
+      width: 100%;
+    }
+
+    .contact-form-wrapper {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-section {
+      padding: 80px 0;
+    }
+
+    .contact-container {
+      padding: 0 30px;
+      gap: 60px;
+    }
+
+    .contact-title {
+      font-size: 24px;
+      line-height: 28px;
+    }
+
+    .highlight {
+      font-size: 36px;
+      line-height: 40px;
+    }
+
+    .form-title {
+      font-size: 36px;
+      line-height: 40px;
+    }
+
+    .form-row {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .contact-section {
+      padding: 60px 0;
+    }
+
+    .contact-container {
+      padding: 0 20px;
+      gap: 40px;
+    }
+
+    .contact-title {
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    .highlight {
+      font-size: 28px;
+      line-height: 32px;
+    }
+
+    .form-title {
+      font-size: 28px;
+      line-height: 32px;
+    }
+
+    .info-item {
+      gap: 15px;
+    }
+
+    .icon-yellow {
+      width: 20px;
+      height: 20px;
+    }
+
+    .info-text {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .contact-section {
+      padding: 40px 0;
+    }
+
+    .contact-container {
+      padding: 0 16px;
+      gap: 30px;
+    }
+
+  }
+</style>
+
+<script>
+  import { animate, stagger } from 'motion';
+  import { getLangFromUrl } from '../../../i18n/utils.js';
+  import { translations } from '../../../i18n/translations.js';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Get current language and translations
+    const currentLang = getLangFromUrl(new URL(window.location.href));
+    const t = translations[currentLang];
+    const form = document.querySelector('.contact-form') as HTMLFormElement;
+    const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+    // Motion Dropdown functionality
+    const dropdown = document.querySelector('[data-dropdown]') as HTMLElement;
+    const trigger = dropdown?.querySelector('[data-trigger]') as HTMLButtonElement;
+    const menu = dropdown?.querySelector('[data-menu]') as HTMLElement;
+    const arrow = dropdown?.querySelector('[data-arrow]') as HTMLElement;
+    const text = dropdown?.querySelector('[data-text]') as HTMLElement;
+    const hiddenInput = dropdown?.querySelector('input[type="hidden"]') as HTMLInputElement;
+    const options = dropdown?.querySelectorAll('.dropdown-option') as NodeListOf<HTMLElement>;
+
+    let isOpen = false;
+
+    if (dropdown && trigger && menu && arrow && text && hiddenInput) {
+      // Toggle dropdown
+      trigger.addEventListener('click', () => {
+        isOpen = !isOpen;
+        
+        if (isOpen) {
+          openDropdown();
+        } else {
+          closeDropdown();
+        }
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target as Node) && isOpen) {
+          closeDropdown();
+        }
+      });
+
+      // Handle option selection
+      options.forEach((option) => {
+        option.addEventListener('click', () => {
+          const value = option.getAttribute('data-value');
+          const label = option.querySelector('span')?.textContent;
+          
+          if (value && label) {
+            hiddenInput.value = value;
+            text.textContent = label;
+            text.classList.add('selected');
+            closeDropdown();
+          }
+        });
+      });
+
+      function openDropdown() {
+        isOpen = true;
+        trigger.classList.add('open');
+        menu.classList.add('open');
+        
+        // Animate arrow rotation
+        animate(arrow, { rotate: 180 }, { duration: 0.3, ease: 'easeOut' });
+        
+        // Animate menu appearance with Motion
+        animate(menu, 
+          { 
+            opacity: [0, 1],
+            scale: [0.95, 1],
+            y: [-10, 0]
+          }, 
+          { 
+            duration: 0.3, 
+            ease: [0.4, 0, 0.2, 1] 
+          }
+        );
+
+        // Stagger animate options
+        animate(options, 
+          { 
+            opacity: [0, 1],
+            x: [-20, 0]
+          }, 
+          { 
+            duration: 0.2, 
+            delay: stagger(0.05),
+            ease: 'easeOut'
+          }
+        );
+      }
+
+      function closeDropdown() {
+        isOpen = false;
+        trigger.classList.remove('open');
+        
+        // Animate arrow rotation back
+        animate(arrow, { rotate: 0 }, { duration: 0.3, ease: 'easeOut' });
+        
+        // Animate menu disappearance
+        animate(menu, 
+          { 
+            opacity: [1, 0],
+            scale: [1, 0.95],
+            y: [0, -10]
+          }, 
+          { 
+            duration: 0.2, 
+            ease: [0.4, 0, 0.2, 1] 
+          }
+        ).finished.then(() => {
+          menu.classList.remove('open');
+        });
+      }
+    }
+
+    // File upload handling
+    const fileInput = document.getElementById('archivo') as HTMLInputElement;
+    const fileUploadLabel = document.querySelector('.file-upload-label') as HTMLElement;
+    const filePreview = document.querySelector('.file-preview') as HTMLElement;
+    const filePreviewName = document.querySelector('.file-preview-name') as HTMLElement;
+    const filePreviewSize = document.querySelector('.file-preview-size') as HTMLElement;
+    const fileRemoveBtn = document.querySelector('.file-remove-btn') as HTMLButtonElement;
+
+    let selectedFile: File | null = null;
+
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (file) {
+          // Validate file size (10MB max)
+          if (file.size > 10 * 1024 * 1024) {
+            (window as any).showToast({
+              title: 'Archivo muy grande',
+              description: 'El archivo debe ser menor a 10MB',
+              type: 'error',
+              duration: 5000
+            });
+            fileInput.value = '';
+            return;
+          }
+
+          selectedFile = file;
+          filePreviewName.textContent = file.name;
+          filePreviewSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+          fileUploadLabel.style.display = 'none';
+          filePreview.style.display = 'flex';
+        }
+      });
+
+      fileRemoveBtn?.addEventListener('click', () => {
+        selectedFile = null;
+        fileInput.value = '';
+        fileUploadLabel.style.display = 'flex';
+        filePreview.style.display = 'none';
+      });
+    }
+
+    // Form submission logic
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Disable button during submission
+        if (submitButton) {
+          submitButton.disabled = true;
+          const originalText = submitButton.textContent;
+          submitButton.textContent = t.contact.form.sending;
+        }
+
+        let fileUrl: string | null = null;
+        let filename: string | null = null;
+
+        // Upload file first if present
+        if (selectedFile) {
+          try {
+            const fileFormData = new FormData();
+            fileFormData.append('file', selectedFile);
+
+            const uploadResponse = await fetch('/api/upload', {
+              method: 'POST',
+              body: fileFormData
+            });
+
+            if (!uploadResponse.ok) {
+              throw new Error('Failed to upload file');
+            }
+
+            const uploadData = await uploadResponse.json();
+            fileUrl = uploadData.url;
+            filename = uploadData.filename;
+          } catch (uploadError) {
+            console.error('File upload error:', uploadError);
+            (window as any).showToast({
+              title: 'Error al subir archivo',
+              description: 'No se pudo subir el archivo. Intenta sin archivo.',
+              type: 'error',
+              duration: 5000
+            });
+
+            if (submitButton) {
+              submitButton.disabled = false;
+              submitButton.textContent = t.contact.form.button;
+            }
+            return;
+          }
+        }
+
+        const formData = new FormData(form);
+        const data: any = {
+          nombre: formData.get('nombre') as string,
+          correo: formData.get('correo') as string,
+          servicio: formData.get('servicio') as string,
+          asunto: formData.get('asunto') as string,
+          mensaje: formData.get('mensaje') as string,
+        };
+
+        // Add file info if uploaded
+        if (fileUrl && filename) {
+          data.fileUrl = fileUrl;
+          data.filename = filename;
+        }
+
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Success
+            (window as any).showToast({
+              title: t.contact.form.success,
+              description: '',
+              type: 'success',
+              duration: 5000
+            });
+            form.reset();
+            // Reset dropdown
+            if (text && hiddenInput) {
+              text.textContent = t.contact.form.placeholders.service;
+              text.classList.remove('selected');
+              hiddenInput.value = '';
+            }
+            // Reset file upload
+            if (selectedFile) {
+              selectedFile = null;
+              fileInput.value = '';
+              fileUploadLabel.style.display = 'flex';
+              filePreview.style.display = 'none';
+            }
+          } else {
+            // Server error
+            (window as any).showToast({
+              title: t.contact.form.error,
+              description: result.error || '',
+              type: 'error',
+              duration: 6000
+            });
+          }
+        } catch (error) {
+          // Network error
+          console.error('Error:', error);
+          (window as any).showToast({
+            title: t.contact.form.networkError,
+            description: '',
+            type: 'error',
+            duration: 6000
+          });
+        } finally {
+          // Re-enable button
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = t.contact.form.button;
+          }
+        }
+      });
+    }
+  });
+</script>

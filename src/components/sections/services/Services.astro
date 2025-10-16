@@ -1,0 +1,80 @@
+---
+// Stacking Cards Component - Adapted from Oliver Larose
+import ServicesCard from './ServicesCard.tsx';
+import SplitCard from './SplitCard.tsx';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+const services = [
+  {
+    type: 'split',
+    letter: 'M',
+    title: t.services.servicesList[0].title,
+    description: t.services.servicesList[0].description,
+  },
+  {
+    type: 'split',
+    letter: 'X',
+    title: t.services.servicesList[1].title,
+    description: t.services.servicesList[1].description,
+  },
+  {
+    type: 'split',
+    letter: 'D',
+    title: t.services.servicesList[2].title,
+    description: t.services.servicesList[2].description,
+  },
+];
+---
+
+<section class="services-stacking">
+  <div class="services-container">
+    {services.map((service, i) => {
+      const targetScale = 1 - (services.length - i) * 0.05;
+      
+      if (service.type === 'split') {
+        return (
+          <SplitCard
+            i={i}
+            letter={service.letter || 'M'}
+            title={service.title || ''}
+            description={service.description || ''}
+            range={[i * 0.25, 1]}
+            targetScale={targetScale}
+            client:load
+          />
+        );
+      }
+      
+      return (
+        <ServicesCard
+          i={i}
+          letter={service.letter || 'S'}
+          title={service.title || ''}
+          color={'#D0DF00'}
+          description={service.description || ''}
+          range={[i * 0.25, 1]}
+          targetScale={targetScale}
+          client:load
+        />
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .services-stacking {
+    width: 100%;
+    background: var(--color-black-a);
+    position: relative;
+  }
+
+  .services-container {
+    width: 100%;
+    position: relative;
+  }
+</style>

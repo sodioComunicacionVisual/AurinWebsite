@@ -1,6 +1,6 @@
 /**
  * Mailing Service
- * Centralized email sending logic using Resend
+ * Centralized email using Resend
  */
 
 import { Resend } from 'resend';

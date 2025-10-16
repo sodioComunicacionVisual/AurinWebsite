@@ -1,0 +1,39 @@
+---
+import MainButton from '../../ui/MainButton.astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+import styles from './UsBanner.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles['us-banner']}>
+  <div class={styles['banner-container']}>
+    <!-- Título principal -->
+    <div class={styles['title-section']}>
+      <h1 class={styles['banner-title']}>
+        {t.about.usBanner.title}
+      </h1>
+    </div>
+
+    <!-- Descripción -->
+    <div class={styles['description-section']}>
+      <div class={styles['description-content']}>
+        <p class={styles['banner-description']}>
+          {t.about.usBanner.description}
+        </p>
+      </div>
+    </div>
+
+    <!-- Botón de acción -->
+    <div class={styles['button-section']}>
+      <MainButton
+        text={t.about.usBanner.buttonText}
+        href="/contacto"
+        class="banner-button"
+      />
+    </div>
+  </div>
+</section>
