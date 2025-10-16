@@ -3,21 +3,22 @@ import MainButton from '../../ui/MainButton.astro';
 import LampLight from '../../ui/LampLight.astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
+import styles from './ComoLlegamos.module.css';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 ---
 
-<section class="como-llegamos">
-  <div class="lamp-decoration">
+<section class={styles['como-llegamos']}>
+  <div class={styles['lamp-decoration']}>
     <LampLight lightColor="#D0DF00" intensity="medium" />
   </div>
-  <div class="como-llegamos-container">
-    <div class="left-column">
-      <h3 class="heading-white">{t.about.comoLlegamos.headingWhite}</h3>
-      <h2 class="heading-yellow">{t.about.comoLlegamos.headingYellow}</h2>
-      <div class="button-group">
+  <div class={styles['como-llegamos-container']}>
+    <div class={styles['left-column']}>
+      <h3 class={styles['heading-white']}>{t.about.comoLlegamos.headingWhite}</h3>
+      <h2 class={styles['heading-yellow']}>{t.about.comoLlegamos.headingYellow}</h2>
+      <div class={styles['button-group']}>
         <MainButton
           text={t.about.comoLlegamos.buttonText}
           href="/contacto"
@@ -25,8 +26,8 @@ const t = translations[currentLang];
       </div>
     </div>
 
-    <div class="right-column">
-      <div class="text-content">
+    <div class={styles['right-column']}>
+      <div class={styles['text-content']}>
         <p>
           {t.about.comoLlegamos.paragraph1}
         </p>
@@ -38,157 +39,3 @@ const t = translations[currentLang];
   </div>
 </section>
 
-<style>
-  .como-llegamos {
-    background: var(--color-black-a);
-    padding: 200px 50px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .lamp-decoration {
-    position: absolute;
-    left: -100px;
-    top: 40%;
-    transform: translateY(-50%);
-    z-index: 0;
-  }
-
-  .como-llegamos-container {
-    max-width: var(--maxWidth);
-    margin: 0 auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 60px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .left-column {
-    flex: 0 0 417px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .heading-yellow {
-    color: var(--color-yellow);
-    font-size: var(--heading-1-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--heading-1-line-height);
-    margin: 0;
-  }
-
-  .heading-white {
-    color: var(--color-white);
-    font-size: var(--heading-4-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--heading-4-line-height);
-    margin: 0;
-  }
-
-  .button-group {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .right-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 60px;
-  }
-
-  .text-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .text-content p {
-    color: var(--color-white);
-    font-size: var(--body-1-size);
-    font-family: var(--font-body);
-    font-weight: 400;
-    line-height: var(--body-1-line-height);
-    margin: 0;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 1400px) {
-    .como-llegamos {
-      padding: 40px 40px;
-    }
-
-    .como-llegamos-container {
-      gap: 40px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    .como-llegamos-container {
-      flex-direction: column;
-      gap: 40px;
-    }
-
-    .left-column {
-      flex: 1;
-      width: 100%;
-    }
-
-    .right-column {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .como-llegamos {
-      padding: 40px 30px;
-    }
-
-    .heading-yellow {
-      font-size: var(--heading-2-size);
-      line-height: var(--heading-2-line-height);
-    }
-
-    .heading-white {
-      font-size: var(--heading-5-size);
-      line-height: var(--heading-5-line-height);
-    }
-
-    .como-llegamos-container {
-      gap: 30px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .como-llegamos {
-      padding: 30px 20px;
-    }
-
-    .heading-yellow {
-      font-size: 36px;
-      line-height: 40px;
-    }
-
-    .heading-white {
-      font-size: 24px;
-      line-height: 28px;
-    }
-
-    .text-content p {
-      font-size: var(--body-2-size);
-    }
-  }
-</style>

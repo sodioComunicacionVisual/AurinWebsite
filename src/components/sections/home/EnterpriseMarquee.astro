@@ -1,6 +1,8 @@
 ---
 // Infinite Slider Marquee - Astro Island with Motion Dev
 // Uses client:load for interactive animation
+import styles from './EnterpriseMarquee.module.css';
+
 const LOGOS = [
   { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AntojosSabores.svg", alt: "Antojos Sabores Logo", height: 43 },
   { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Galicia.svg", alt: "Galicia Logo", height: 36 },
@@ -13,17 +15,17 @@ const LOGOS = [
 ];
 ---
 
-<section class="enterprise-marquee">
-  <div class="marquee-wrapper">
-    <div class="marquee-content">
+<section class={styles.enterpriseMarquee}>
+  <div class={styles.marqueeWrapper}>
+    <div class={styles.marqueeContent}>
 
       
       <!-- Slider section -->
-      <div class="marquee-slider" id="marquee-slider">
-        <div class="slider-track" id="slider-track">
+      <div class={styles.marqueeSlider} id="marquee-slider">
+        <div class={styles.sliderTrack} id="slider-track">
           {LOGOS.map((logo, index) => (
             <>
-              <div class="logo-item">
+              <div class={styles.logoItem}>
                 <img
                   src={logo.src}
                   alt={logo.alt}
@@ -31,20 +33,7 @@ const LOGOS = [
                   width="auto"
                 />
               </div>
-              {index < LOGOS.length - 1 && <div class="logo-separator"></div>}
-            </>
-          ))}
-          {LOGOS.map((logo, index) => (
-            <>
-              <div class="logo-item">
-                <img
-                  src={logo.src}
-                  alt={logo.alt}
-                  style={`height: ${logo.height}px`}
-                  width="auto"
-                />
-              </div>
-              {index < LOGOS.length - 1 && <div class="logo-separator"></div>}
+              {index < LOGOS.length - 1 && <div class={styles.logoSeparator}></div>}
             </>
           ))}
         </div>
@@ -53,104 +42,24 @@ const LOGOS = [
   </div>
 </section>
 
-<style>
-  .enterprise-marquee {
-    background: var(--color-black-a);
-    padding: 10rem 0;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .marquee-wrapper {
-    margin: 0 auto;
-    max-width: var(--maxWidth);
-    padding: 0 1.5rem;
-  }
-
-  .marquee-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .marquee-content {
-      flex-direction: row;
-      gap: 0;
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sliderTrack = document.getElementById('slider-track');
+    
+    if (sliderTrack) {
+      // Clone all logo items to create seamless infinite scroll
+      const logoItems = sliderTrack.children;
+      const itemsArray = Array.from(logoItems);
+      
+      // Duplicate the items for seamless loop
+      itemsArray.forEach(item => {
+        const clone = item.cloneNode(true);
+        sliderTrack.appendChild(clone);
+      });
+      
+      // Set up the animation
+      const totalWidth = sliderTrack.scrollWidth / 2; // Half because we duplicated
+      sliderTrack.style.setProperty('--scroll-width', `${totalWidth}px`);
     }
-  }
-
-  .marquee-text {
-    flex-shrink: 0;
-    text-align: center;
-    max-width: 176px;
-  }
-
-  @media (min-width: 768px) {
-    .marquee-text {
-      text-align: right;
-      border-right: 1px solid var(--color-gray-b);
-      padding-right: 1.5rem;
-    }
-  }
-
-  .marquee-text p {
-    font-size: 0.875rem;
-    color: var(--color-gray-a);
-    font-family: var(--font-body);
-  }
-
-  .marquee-slider {
-    width: 100%;
-    padding: 1.5rem 0;
-    position: relative;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
-  }
-
-  @media (min-width: 768px) {
-    .marquee-slider {
-      flex: 1;
-    }
-  }
-
-  .slider-track {
-    display: flex;
-    gap: 56px;
-    width: max-content;
-    animation: scroll 30s linear infinite;
-  }
-
-  .logo-separator {
-    width: 1px;
-    height: 32px;
-    background-color: rgba(255, 255, 255, 0.2);
-    flex-shrink: 0;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  .logo-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .logo-item img {
-    filter: invert(1);
-    opacity: 0.7;
-    width: auto;
-    transform: scale(2.5);
-  }
-</style>
-
+  });
+</script>

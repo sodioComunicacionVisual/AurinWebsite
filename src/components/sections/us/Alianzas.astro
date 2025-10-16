@@ -2,42 +2,43 @@
 // Alianzas.astro
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
+import styles from './Alianzas.module.css';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 ---
 
-<section class="alianzas">
-  <div class="alianzas-container">
-    <div class="heading-column">
-      <h3 class="heading-white">{t.about.alianzas.headingWhite}</h3>
-      <h2 class="heading-yellow">{t.about.alianzas.headingYellow}</h2>
+<section class={styles.alianzas}>
+  <div class={styles['alianzas-container']}>
+    <div class={styles['heading-column']}>
+      <h3 class={styles['heading-white']}>{t.about.alianzas.headingWhite}</h3>
+      <h2 class={styles['heading-yellow']}>{t.about.alianzas.headingYellow}</h2>
     </div>
 
-    <div class="content-column">
-      <div class="text-content">
-        <p class="body-text" set:html={t.about.alianzas.description}>
+    <div class={styles['content-column']}>
+      <div class={styles['text-content']}>
+        <p class={styles['body-text']} set:html={t.about.alianzas.description}>
         </p>
       </div>
 
-      <div class="logos-container">
-        <img 
-          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AncientGreen.svg" 
+      <div class={styles['logos-container']}>
+        <img
+          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AncientGreen.svg"
           alt="Ancient Technologies"
-          class="partner-logo"
+          class={styles['partner-logo']}
           loading="lazy"
         />
-        <img 
-          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/IdeogramaGreen.svg" 
+        <img
+          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/IdeogramaGreen.svg"
           alt="Ideograma"
-          class="partner-logo"
+          class={styles['partner-logo']}
           loading="lazy"
         />
-        <img 
-          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/TopDesignGreen.svg" 
+        <img
+          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/TopDesignGreen.svg"
           alt="TopDesign"
-          class="partner-logo"
+          class={styles['partner-logo']}
           loading="lazy"
         />
       </div>
@@ -45,190 +46,3 @@ const t = translations[currentLang];
   </div>
 </section>
 
-<style>
-  .alianzas {
-    margin: 200px 0px;
-    padding: 200px 100px;
-    background: var(--color-black-b);
-    overflow: hidden;
-  }
-
-  .alianzas-container {
-    max-width: var(--maxWidth);
-    margin: 0 auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 100px;
-  }
-
-  .heading-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 14px;
-    flex-shrink: 0;
-  }
-
-  .heading-white {
-    color: var(--color-white);
-    font-size: var(--heading-4-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--heading-4-line-height);
-    margin: 0;
-  }
-
-  .heading-yellow {
-    color: var(--color-yellow);
-    font-size: var(--heading-1-size);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: var(--heading-1-line-height);
-    margin: 0;
-  }
-
-  .content-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 60px;
-  }
-
-  .text-content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .body-text {
-    color: var(--color-white);
-    font-size: var(--body-1-size);
-    font-family: var(--font-body);
-    font-weight: 400;
-    line-height: var(--body-1-line-height);
-    margin: 0;
-  }
-
-  .body-text strong {
-    font-weight: 700;
-  }
-
-  .logos-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 60px;
-    flex-wrap: wrap;
-  }
-
-  .partner-logo {
-    height: 32px;
-    width: auto;
-    object-fit: contain;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  .partner-logo:hover {
-    transform: translateY(-4px);
-    opacity: 0.8;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 1400px) {
-    .alianzas {
-      padding: 80px 50px;
-    }
-
-    .alianzas-container {
-      gap: 60px;
-    }
-
-    .content-column {
-      padding-right: 0;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    .alianzas {
-      padding: 60px 40px;
-    }
-
-    .alianzas-container {
-      flex-direction: column;
-      gap: 40px;
-    }
-
-    .heading-column {
-      width: 100%;
-    }
-
-    .content-column {
-      width: 100%;
-      padding: 0;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .alianzas {
-      padding: 40px 30px;
-    }
-
-    .heading-white {
-      font-size: var(--heading-5-size);
-      line-height: var(--heading-5-line-height);
-    }
-
-    .heading-yellow {
-      font-size: var(--heading-2-size);
-      line-height: var(--heading-2-line-height);
-    }
-
-    .logos-container {
-      gap: 40px;
-    }
-
-    .partner-logo {
-      height: 24px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .alianzas {
-      padding: 30px 20px;
-    }
-
-    .heading-white {
-      font-size: 24px;
-      line-height: 28px;
-    }
-
-    .heading-yellow {
-      font-size: 36px;
-      line-height: 40px;
-    }
-
-    .content-column {
-      gap: 40px;
-    }
-
-    .body-text {
-      font-size: var(--body-2-size);
-    }
-
-    .logos-container {
-      gap: 30px;
-      justify-content: center;
-    }
-
-    .partner-logo {
-      height: 20px;
-    }
-  }
-</style>

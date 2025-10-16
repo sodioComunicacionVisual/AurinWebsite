@@ -3,22 +3,23 @@ import MainButton from '../../ui/MainButton.astro';
 import Card from '../../ui/Card.astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
+import styles from './Especialidades.module.css';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 ---
 
-<section class="especialidades">
-  <div class="especialidades-container">
+<section class={styles.especialidades}>
+  <div class={styles.especialidadesContainer}>
     <!-- Left content section -->
-    <div class="content-section">
-      <div class="heading">
-        <span class="heading-normal">{t.especialidades.heading}<br/></span>
-        <span class="heading-highlight">{t.especialidades.headingHighlight}</span>
+    <div class={styles.contentSection}>
+      <div class={styles.heading}>
+        <span class={styles.headingNormal}>{t.especialidades.heading}<br/></span>
+        <span class={styles.headingHighlight}>{t.especialidades.headingHighlight}</span>
       </div>
       
-      <p class="description">
+      <p class={styles.description}>
         Cada idea se convierte en un recorrido único, diseñado para inspirar y conectar.
       </p>
       
@@ -29,8 +30,8 @@ const t = translations[currentLang];
     </div>
     
     <!-- Right cards section -->
-    <div class="cards-section">
-      <div class="cards-grid">
+    <div class={styles.cardsSection}>
+      <div class={styles.cardsGrid}>
         <Card 
           letter="M"
           title={t.especialidades.card1Title}
@@ -48,187 +49,7 @@ const t = translations[currentLang];
   </div>
 </section>
 
-<style>
-  .especialidades {
-    width: 100%;
-    background: var(--color-black-a);
-    overflow-x: hidden;
-  }
 
-  .especialidades-container {
-    width: 100%;
-    max-width: var(--maxWidth);
-    margin: 0 auto;
-    display: flex;
-    justify-content: flex-start;
-    align-items: stretch;
-    flex-wrap: wrap;
-    box-sizing: border-box;
-  }
-
-  /* Left content section */
-  .content-section {
-    flex: 0 0 auto;
-    height: auto;
-    padding: clamp(30px, 10vw, 50px) clamp(40px, 5vw, 100px);
-    background: var(--color-black-a);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 20px;
-    box-sizing: border-box;
-  }
-
-  @media (min-width: 1500px) {
-    .content-section {
-      padding-left: 1.5rem;
-    }
-  }
-
-  .heading {
-    align-self: stretch;
-  }
-
-  .heading-normal {
-    color: var(--color-white);
-    font-size: clamp(24px, 3.5vw, 32px);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: clamp(28px, 4vw, 35px);
-    word-wrap: break-word;
-  }
-
-  .heading-highlight {
-    color: var(--color-yellow);
-    font-size: clamp(32px, 5vw, 48px);
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: clamp(38px, 5.5vw, 50px);
-    word-wrap: break-word;
-  }
-
-  .description {
-    align-self: stretch;
-    color: var(--color-white);
-    font-size: clamp(14px, 3.5vw, 18px);
-    font-family: var(--font-body);
-    font-weight: 400;
-    line-height: 1.6;
-    word-wrap: break-word;
-    margin: 0;
-    max-width: 500px;
-  }
-
-
-  /* Right cards section */
-  .cards-section {
-    flex: 1;
-    min-width: 0;
-    padding: clamp(30px, 5vw, 50px) clamp(20px, 3vw, 40px);
-    background: var(--color-black-a);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-    box-sizing: border-box;
-  }
-
-  .cards-grid {
-    width: 100%;
-    max-width: 713.91px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    justify-items: start;
-  }
-
-  .cards-grid :global(.card) {
-    width: 100%;
-    max-width: 348.95px;
-  }
-
-
-  /* Responsive adjustments */
-  @media (max-width: 991px) {
-    .especialidades-container {
-      flex-direction: column;
-    }
-
-    .content-section {
-      width: 100%;
-      min-width: 0;
-      height: auto;
-      padding: 50px 40px;
-    }
-
-    .cards-section {
-      width: 100%;
-      min-width: 0;
-      height: auto;
-      padding: 50px 40px;
-      align-items: flex-start;
-    }
-
-    .cards-grid {
-      grid-template-columns: repeat(2, 1fr);
-      max-width: 100%;
-      justify-items: stretch;
-    }
-
-    .cards-grid :global(.card) {
-      max-width: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .content-section {
-      padding: 40px 30px;
-    }
-
-    .cards-section {
-      padding: 40px 30px;
-    }
-
-    .cards-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-
-    .cards-grid :global(.card) {
-      max-width: none;
-    }
-
-    .heading-normal,
-    .heading-highlight {
-      text-align: left;
-    }
-
-    .description {
-      max-width: 100%;
-    }
-
-  }
-
-  @media (max-width: 480px) {
-    .content-section {
-      padding: 30px 20px;
-      gap: 15px;
-    }
-
-    .cards-section {
-      padding: 30px 20px;
-    }
-
-    .cards-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

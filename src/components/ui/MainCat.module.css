@@ -1,0 +1,91 @@
+.mainCatContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-black-a);
+  padding: 100px 20px;
+}
+
+.mainCatWrapper {
+  width: 100%;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
+  display: flex;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.mainCatContent {
+  flex: 1;
+  padding: 2rem 3rem;
+  background: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/MainCATBackground.webp') center/cover;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainCatText {
+  width: 100%;
+  color: var(--color-black-a);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.mainCatText p {
+  margin: 0;
+}
+
+.buttonWrapper {
+  position: static;
+  transform: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mainCatContent {
+    padding: 1.5rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainCatContent {
+    padding: 1rem 1.5rem;
+  }
+
+  .mainCatText p {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 640px) {
+  .mainCatContent {
+    padding: 1rem;
+  }
+
+  .mainCatText p {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainCatContainer {
+    padding: 1rem 0.5rem;
+  }
+
+  .mainCatContent {
+    padding: 0.75rem;
+  }
+
+  .mainCatText p {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .buttonWrapper :global(.button-text span) {
+    font-size: 14px;
+  }
+}

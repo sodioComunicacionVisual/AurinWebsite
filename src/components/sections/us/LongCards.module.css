@@ -1,0 +1,163 @@
+  .long-cards {
+    background: var(--color-black-a);
+    padding-block: clamp(3rem, 6.25vw, 6.25rem);
+    padding-inline: clamp(1.25rem, 3.125vw, 3.125rem);
+  }
+
+  .cards-wrapper {
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 0.5vw, 0.5rem);
+  }
+
+  /* Long Card */
+  .long-card {
+    min-height: clamp(12.5rem, 20vw, 18.75rem);
+    background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #161616;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .long-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(210deg, rgba(0, 0, 0, 0) 47%, #949E03 47%), #D0DF00;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .long-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Main Content */
+  .card-main-content {
+    flex: 1;
+    align-self: stretch;
+    padding-inline: clamp(1.5rem, 5.5vw, 4.9375rem);
+    padding-top: clamp(5.5rem, 7vw, 6.5rem);
+    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    overflow: visible;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: clamp(1rem, 2vw, 2rem);
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-number {
+    max-width: clamp(15rem, 36vw, 32.9375rem);
+    color: #D0DF00;
+    font-size: clamp(4rem, 15.5vw, 12.5rem);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1;
+    transition: color 0.5s ease;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .long-card:hover .card-number {
+    color: #0A0A0A !important;
+  }
+
+  .card-label {
+    flex: 1;
+    align-self: stretch;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: white;
+    font-size: clamp(1.25rem, 2vw, 2rem);
+    font-family: var(--font-body);
+    font-weight: 400;
+    transition: color 0.5s ease;
+    min-width: 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .long-card:hover .card-label {
+    color: #0A0A0A !important;
+  }
+
+  /* Icon Wrapper */
+  .card-icon-wrapper {
+    width: clamp(3.25rem, 12.5vw, 12.5rem);
+    align-self: stretch;
+    padding: 0.625rem;
+    border-radius: 7.73px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    flex-shrink: 0;
+  }
+
+  .card-icon {
+    width: clamp(2.5rem, 3.25vw, 3.26125rem);
+    height: clamp(2.5rem, 3.25vw, 3.26125rem);
+    position: relative;
+    background: #0A0A0A;
+    border-radius: 9.66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: color 0.3s ease;
+  }
+
+  .long-card:hover .card-icon {
+    color: white;
+  }
+
+  /* Transiciones de color suaves */
+  .card-number,
+  .card-label,
+  .card-icon {
+    transition: color 0.3s ease;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .card-main-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .card-label {
+      text-align: left;
+      justify-content: flex-start;
+    }
+
+    .card-icon-wrapper {
+      width: 4rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .long-card {
+      min-height: 10rem;
+    }
+
+    .card-number {
+      font-size: 3.5rem;
+    }
+
+    .card-label {
+      font-size: 1.125rem;
+    }
+  }

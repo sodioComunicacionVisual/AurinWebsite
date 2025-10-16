@@ -1,0 +1,99 @@
+
+.enterpriseMarquee {
+  background: var(--color-black-a);
+  padding: 10rem 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marqueeWrapper {
+  margin: 0 auto;
+  max-width: var(--maxWidth);
+  padding: 0 1.5rem;
+}
+
+.marqueeContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .marqueeContent {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.marqueeText {
+  flex-shrink: 0;
+  text-align: center;
+  max-width: 176px;
+}
+
+@media (min-width: 768px) {
+  .marqueeText {
+    text-align: right;
+    border-right: 1px solid var(--color-gray-b);
+    padding-right: 1.5rem;
+  }
+}
+
+.marqueeText p {
+  font-size: 0.875rem;
+  color: var(--color-gray-a);
+  font-family: var(--font-body);
+}
+
+.marqueeSlider {
+  width: 100%;
+  padding: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 80px, black calc(100% - 80px), transparent);
+}
+
+@media (min-width: 768px) {
+  .marqueeSlider {
+    flex: 1;
+  }
+}
+
+.sliderTrack {
+  display: flex;
+  gap: 56px;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+}
+
+.logoSeparator {
+  width: 1px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logoItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logoItem img {
+  filter: invert(1);
+  opacity: 0.7;
+  width: auto;
+  transform: scale(2.5);
+}

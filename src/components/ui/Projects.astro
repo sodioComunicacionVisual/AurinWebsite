@@ -1,0 +1,60 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import ButtonIsland from './ButtonIsland.astro';
+import ScrollReveal from './ScrollReveal.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+import styles from './Projects.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles.projects}>
+  <div class={styles.projectsContainer}>
+    <!-- Header section -->
+    <div class={styles.headerSection}>
+      <ScrollReveal 
+        text={t.projects.heading}
+        tag="h2"
+        textClass={styles.heading}
+        containerClass={styles.headingWrapper}
+        baseOpacity={0.15}
+        baseRotation={5}
+        blurStrength={6}
+        enableBlur={true}
+      />
+      
+      <ButtonIsland 
+        text={t.projects.buttonText}
+        href={currentLang === 'es' ? '/proyectos' : '/en/projects'}
+        variant="primary"
+      />
+    </div>
+    
+    <!-- Projects grid -->
+    <div class={styles.projectsGrid}>
+      <ProjectCard 
+        title="Galicia"
+        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
+        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectGalicia.webp"
+        href="/proyectos/galicia"
+      />
+      
+      <ProjectCard 
+        title="Sinfonica de<br/>Minería"
+        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
+        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSinfonica.webp"
+        href="/proyectos/sinfonica"
+      />
+      
+      <ProjectCard 
+        title="SAI Derecho y economía"
+        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
+        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSai.webp"
+        href="/proyectos/sai"
+      />
+    </div>
+  </div>
+</section>

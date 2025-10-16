@@ -429,9 +429,10 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
   import { animate, inView } from "motion";
 
   document.addEventListener('DOMContentLoaded', () => {
-    const splideElement = document.querySelector('.splide');
-    
-    if (splideElement) {
+    // Buscar todos los elementos splide con ID que empiece con "carousel-"
+    const splideElements = document.querySelectorAll('[id^="carousel-"]');
+
+    splideElements.forEach((splideElement) => {
       const splide = new Splide(splideElement as HTMLElement, {
         fixedWidth: '250px',
         perMove: 1,
@@ -466,9 +467,8 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 
       splide.mount();
 
-
-      // Animaciones con IntersectionObserver para las cards
-      const cards = document.querySelectorAll('.card');
+      // Animaciones con IntersectionObserver para las cards dentro de este splide específico
+      const cards = splideElement.querySelectorAll('.card');
 
       const observerOptions = {
         threshold: 0.2,
@@ -489,6 +489,6 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
         (card as HTMLElement).style.transitionDelay = `${index * 0.15}s`;
         observer.observe(card);
       });
-    }
+    });
   });
 </script>

@@ -1,0 +1,44 @@
+---
+import SecondaryButton from './SecondaryButton.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+import styles from './MainCat.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles.mainCatContainer}>
+  <div class={styles.mainCatWrapper} data-parallax-wrapper>
+    <div class={styles.mainCatContent}>
+      <div class={styles.mainCatText}>
+        <p class="body-0" set:html={t.mainCat.text}>
+        </p>
+      </div>
+      <div class={styles.buttonWrapper}>
+        <SecondaryButton text={t.mainCat.buttonText} href="/contacto" />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  import { scroll, animate } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.querySelector('[data-parallax-wrapper]') as HTMLElement;
+
+    if (wrapper) {
+      scroll(
+        animate(wrapper, { y: [0, -50] }),
+        {
+          target: wrapper,
+          offset: ['start end', 'end start']
+        }
+      );
+    }
+  });
+</script>
