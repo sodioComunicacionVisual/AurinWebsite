@@ -4,13 +4,28 @@ import Header from '../components/ui/Header.astro';
 import Footer from '../components/ui/Footer.astro';
 import Introduction from '../components/sections/projects/Introduction.astro';
 import ProjectCard from '../components/ui/ProjectCard.astro';
+import PayloadProjectCard from '../components/ui/PayloadProjectCard.astro';
 import MainCat from '../components/ui/MainCat.astro';
 import { getLangFromUrl } from '../i18n/utils.js';
 import { translations } from '../i18n/translations.js';
+import { PayloadAPI, getImageUrl, type PayloadProject } from '../lib/payload';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
+
+// Fetch projects from Payload CMS
+let projects: PayloadProject[] = [];
+let categories: any[] = [];
+
+try {
+  projects = await PayloadAPI.getProjects(currentLang);
+  categories = await PayloadAPI.getCategories(currentLang);
+  console.log('📦 Fetched projects from Payload:', projects.length);
+} catch (error) {
+  console.error('❌ Error fetching projects from Payload:', error);
+  // Fallback to empty arrays - we'll show static content if needed
+}
 
 // SEO optimizado para LLMs y motores de búsqueda
 const seoTitle = t.projects.seo.title;
@@ -91,53 +106,65 @@ const canonicalUrl = currentLang === 'es' ? "https://aurin.mx/proyectos" : "http
     <!-- Introduction Section -->
     <Introduction />
     
-    <!-- First Strip of Projects -->
-    <section class="projects-strip">
-      <div class="strip-container">
-        <ProjectCard
-          title={t.projects.projectTitles["proyecto-innovador-1"]}
-          tags={[t.projects.projectTags["Branding"], t.projects.projectTags["UI/UX"], t.projects.projectTags["Web"]]}
-          image="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["transformacion-digital"]}
-          tags={[t.projects.projectTags["Desarrollo"], t.projects.projectTags["Estrategia"]]}
-          image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["experiencia-usuario"]}
-          tags={[t.projects.projectTags["UX Research"], t.projects.projectTags["Design"]]}
-          image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-          href="#"
-        />
-      </div>
-    </section>
-    
-    <!-- Second Strip of Projects -->
-    <section class="projects-strip">
-      <div class="strip-container">
-        <ProjectCard
-          title={t.projects.projectTitles["identidad-visual"]}
-          tags={[t.projects.projectTags["Branding"], t.projects.projectTags["Diseño Gráfico"]]}
-          image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["plataforma-digital"]}
-          tags={[t.projects.projectTags["Web App"], t.projects.projectTags["Mobile"]]}
-          image="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["estrategia-marca"]}
-          tags={[t.projects.projectTags["Marketing"], t.projects.projectTags["Branding"]]}
-          image="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80"
-          href="#"
-        />
-      </div>
-    </section>
+    <!-- Projects from Payload CMS -->
+    {projects.length > 0 ? (
+      <section class="projects-strip">
+        <div class="strip-container">
+          {projects.map((project) => (
+            <PayloadProjectCard project={project} />
+          ))}
+        </div>
+      </section>
+    ) : (
+      <!-- Fallback: Static projects if Payload is not available -->
+      <>
+        <section class="projects-strip">
+          <div class="strip-container">
+            <ProjectCard
+              title={t.projects.projectTitles["proyecto-innovador-1"]}
+              tags={[t.projects.projectTags["Branding"], t.projects.projectTags["UI/UX"], t.projects.projectTags["Web"]]}
+              image="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80"
+              href="#"
+            />
+            <ProjectCard
+              title={t.projects.projectTitles["transformacion-digital"]}
+              tags={[t.projects.projectTags["Desarrollo"], t.projects.projectTags["Estrategia"]]}
+              image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+              href="#"
+            />
+            <ProjectCard
+              title={t.projects.projectTitles["experiencia-usuario"]}
+              tags={[t.projects.projectTags["UX Research"], t.projects.projectTags["Design"]]}
+              image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+              href="#"
+            />
+          </div>
+        </section>
+        
+        <section class="projects-strip">
+          <div class="strip-container">
+            <ProjectCard
+              title={t.projects.projectTitles["identidad-visual"]}
+              tags={[t.projects.projectTags["Branding"], t.projects.projectTags["Diseño Gráfico"]]}
+              image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
+              href="#"
+            />
+            <ProjectCard
+              title={t.projects.projectTitles["plataforma-digital"]}
+              tags={[t.projects.projectTags["Web App"], t.projects.projectTags["Mobile"]]}
+              image="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80"
+              href="#"
+            />
+            <ProjectCard
+              title={t.projects.projectTitles["estrategia-marca"]}
+              tags={[t.projects.projectTags["Marketing"], t.projects.projectTags["Branding"]]}
+              image="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80"
+              href="#"
+            />
+          </div>
+        </section>
+      </>
+    )}
     
     <!-- Call to Action -->
     <MainCat />

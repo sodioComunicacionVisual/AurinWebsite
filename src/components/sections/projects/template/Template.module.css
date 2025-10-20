@@ -3,7 +3,7 @@
   width: 100%;
   min-height: 100vh;
   background: linear-gradient(205deg, black 0%, rgba(0, 0, 0, 0.50) 20%, rgba(0, 0, 0, 0.50) 63%, black 100%), black;
-  overflow: hidden;
+  /* overflow: hidden; - REMOVED: This breaks sticky positioning */
   outline: 1px solid #0D0D0D;
   outline-offset: -0.5px;
   display: flex;

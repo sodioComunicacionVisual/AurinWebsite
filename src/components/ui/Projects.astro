@@ -4,11 +4,24 @@ import ButtonIsland from './ButtonIsland.astro';
 import ScrollReveal from './ScrollReveal.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
+import { PayloadAPI, getProjectUrl, getImageUrl } from '../../lib/payload';
 import styles from './Projects.module.css';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
+
+// Fetch projects from Payload CMS
+let projects = [];
+try {
+  // Get featured projects or first 3-6 projects
+  const allProjects = await PayloadAPI.getFeaturedProjects(currentLang);
+  projects = allProjects.length > 0 ? allProjects.slice(0, 6) : await PayloadAPI.getProjects(currentLang).then(p => p.slice(0, 6));
+} catch (error) {
+  console.error('Error fetching projects:', error);
+  // Fallback to empty array if CMS is not available
+  projects = [];
+}
 ---
 
 <section class={styles.projects}>
@@ -26,35 +39,52 @@ const t = translations[currentLang];
         enableBlur={true}
       />
       
-      <ButtonIsland 
+      <ButtonIsland
         text={t.projects.buttonText}
-        href={currentLang === 'es' ? '/proyectos' : '/en/projects'}
+        href={currentLang === 'es' ? '/proyectos-payload' : '/en/projects'}
         variant="primary"
       />
     </div>
-    
+
     <!-- Projects grid -->
     <div class={styles.projectsGrid}>
-      <ProjectCard 
-        title="Galicia"
-        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
-        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectGalicia.webp"
-        href="/proyectos/galicia"
-      />
-      
-      <ProjectCard 
-        title="Sinfonica de<br/>Minería"
-        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
-        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSinfonica.webp"
-        href="/proyectos/sinfonica"
-      />
-      
-      <ProjectCard 
-        title="SAI Derecho y economía"
-        tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
-        image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSai.webp"
-        href="/proyectos/sai"
-      />
+      {projects.length > 0 ? (
+        projects.map((project) => (
+          <ProjectCard
+            title={project.title}
+            tags={[
+              project.category.name,
+              ...(project.tags?.slice(0, 1).map(tag => tag.name) || [])
+            ]}
+            image={getImageUrl(project.hero.bannerImage?.url) || 'https://placehold.co/800x600?text=No+Image'}
+            href={getProjectUrl(project, currentLang)}
+          />
+        ))
+      ) : (
+        <!-- Fallback projects if CMS is not available -->
+        <>
+          <ProjectCard
+            title="Galicia"
+            tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
+            image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectGalicia.webp"
+            href="/proyectos/galicia"
+          />
+
+          <ProjectCard
+            title="Sinfonica de<br/>Minería"
+            tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
+            image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSinfonica.webp"
+            href="/proyectos/sinfonica"
+          />
+
+          <ProjectCard
+            title="SAI Derecho y economía"
+            tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
+            image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSai.webp"
+            href="/proyectos/sai"
+          />
+        </>
+      )}
     </div>
   </div>
 </section>

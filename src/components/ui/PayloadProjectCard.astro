@@ -1,0 +1,109 @@
+---
+import { ArrowUpRight } from 'lucide-astro';
+import styles from './ProjectCard.module.css';
+import { getImageUrl, type PayloadProject } from '../../lib/payload';
+
+interface Props {
+  project: PayloadProject;
+  class?: string;
+}
+
+const { 
+  project,
+  class: className = ''
+} = Astro.props;
+
+const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
+
+// Extract data from Payload project
+const title = project.title;
+const tags = project.hero.services.map((service: any) => service.name);
+const image = getImageUrl(project.hero.bannerImage?.url) || "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80";
+const href = `/proyecto-payload/${project.slug}`;
+---
+
+<a href={href} class={`${styles['project-card']} ${className}`} data-card-id={uniqueId}>
+  <div class={styles['card-content']}>
+    <!-- Image container -->
+    <div class={styles['image-container']}>
+      <div class={styles['image-wrapper']}>
+        <img src={image} alt={title} class={styles['project-image']} />
+        <div class={styles['image-overlay']}></div>
+      </div>
+    </div>
+    
+    <!-- Info section -->
+    <div class={styles['info-section']}>
+      <div class={styles['info-content']}>
+        <!-- Tags -->
+        <div class={styles['tags-container']}>
+          {tags.map((tag, index) => (
+            <>
+              {index > 0 && <div class={styles['tag-dot']}></div>}
+              <span class={styles['tag-text']}>{tag}</span>
+            </>
+          ))}
+        </div>
+        
+        <!-- Title -->
+        <h3 class={styles['project-title']} set:html={title}></h3>
+      </div>
+      
+      <!-- Arrow button -->
+      <div class={styles['arrow-button']} data-arrow-button>
+        <ArrowUpRight size={16.67} strokeWidth={2.5} />
+      </div>
+    </div>
+  </div>
+</a>
+
+<script is:inline>
+  (function() {
+    function initProjectCards() {
+      const cards = document.querySelectorAll('[data-card-id]');
+      
+      cards.forEach((card) => {
+        const arrowButton = card.querySelector('[data-arrow-button]');
+        
+        if (!arrowButton) return;
+        
+        // Sincronizar hover
+        const handleEnter = () => card.classList.add('is-hovering');
+        const handleLeave = () => card.classList.remove('is-hovering');
+        
+        arrowButton.addEventListener('mouseenter', handleEnter);
+        arrowButton.addEventListener('mouseleave', handleLeave);
+      });
+
+      // Animación de scroll con IntersectionObserver
+      const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      cards.forEach((card, index) => {
+        // Delay más rápido para mejor UX
+        card.style.transitionDelay = `${index * 0.08}s`;
+        observer.observe(card);
+      });
+    }
+    
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initProjectCards);
+    } else {
+      initProjectCards();
+    }
+    
+    // Soporte para view transitions de Astro
+    document.addEventListener('astro:page-load', initProjectCards);
+  })();
+</script>

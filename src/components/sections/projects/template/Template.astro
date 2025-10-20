@@ -30,7 +30,7 @@ interface ProjectTemplateProps {
 
   // Case Study Section
   caseStudyTitle: string;
-  caseStudyContent: string;
+  caseStudyContent?: string;
 
   // Image Grid Section
   images: ImageItem[];
@@ -41,7 +41,12 @@ interface ProjectTemplateProps {
 
   // Learning Section
   learningTitle: string;
-  learningContent: string;
+  learningContent?: string;
+
+  // Optional Payload fields
+  publishDate?: Date;
+  featured?: boolean;
+  status?: string;
 }
 
 interface Props {
@@ -68,7 +73,7 @@ const { projectData } = Astro.props;
   <!-- Strip 2: Case Study -->
   <CaseStudySection
     title={projectData.caseStudyTitle}
-    content={projectData.caseStudyContent}
+    content={projectData.caseStudyContent || "Contenido del caso de estudio no disponible."}
   />
 
   <!-- Strip 3: Image Grid -->
@@ -83,7 +88,7 @@ const { projectData } = Astro.props;
   <!-- Strip 5: Learning -->
   <LearningSection
     title={projectData.learningTitle}
-    content={projectData.learningContent}
+    content={projectData.learningContent || "Contenido de aprendizajes no disponible."}
   />
 </article>
 
