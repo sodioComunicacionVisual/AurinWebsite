@@ -1,0 +1,143 @@
+---
+import { translations } from '../../../i18n/translations';
+import styles from './T&C.module.css';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang].termsConditions;
+---
+
+<section class={styles.termsPage}>
+  <div class={styles.termsContainer}>
+    <header class={styles.termsHeader}>
+      <h1 class={styles.termsTitle}>{t.title}</h1>
+      <p class={styles.termsSubtitle}>{t.lastUpdated}</p>
+    </header>
+
+    <div class={styles.termsContent}>
+      <section class={styles.termsSection}>
+        <h2>{t.sections.acceptance.title}</h2>
+        <p>{t.sections.acceptance.content}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.services.title}</h2>
+        <p>{t.sections.services.intro}</p>
+        <ul>
+          {t.sections.services.servicesList.map((service) => (
+            <li>{service}</li>
+          ))}
+        </ul>
+        <p>{t.sections.services.conclusion}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.contracting.title}</h2>
+        <p>{t.sections.contracting.intro}</p>
+        <ul>
+          {t.sections.contracting.processList.map((step) => (
+            <li set:html={step}></li>
+          ))}
+        </ul>
+        <p>{t.sections.contracting.conclusion}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.clientResponsibilities.title}</h2>
+        <p>{t.sections.clientResponsibilities.intro}</p>
+        <ul>
+          {t.sections.clientResponsibilities.responsibilitiesList.map((responsibility) => (
+            <li>{responsibility}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.intellectualProperty.title}</h2>
+        <p>{t.sections.intellectualProperty.intro}</p>
+        <ul>
+          {t.sections.intellectualProperty.rightsList.map((right) => (
+            <li>{right}</li>
+          ))}
+        </ul>
+        <p>{t.sections.intellectualProperty.conclusion}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.payments.title}</h2>
+        <p>{t.sections.payments.intro}</p>
+        <ul>
+          {t.sections.payments.conditionsList.map((condition) => (
+            <li>{condition}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.revisions.title}</h2>
+        <p>{t.sections.revisions.content1}</p>
+        <p>{t.sections.revisions.content2}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.deliveryTimes.title}</h2>
+        <p>{t.sections.deliveryTimes.intro}</p>
+        <ul>
+          {t.sections.deliveryTimes.conditionsList.map((condition) => (
+            <li>{condition}</li>
+          ))}
+        </ul>
+        <p>{t.sections.deliveryTimes.conclusion}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.confidentiality.title}</h2>
+        <p>{t.sections.confidentiality.content}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.cancellation.title}</h2>
+        <p>{t.sections.cancellation.intro}</p>
+        <ul>
+          {t.sections.cancellation.conditionsList.map((condition) => (
+            <li>{condition}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.liability.title}</h2>
+        <p>{t.sections.liability.content1}</p>
+        <p>{t.sections.liability.content2}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.websiteUse.title}</h2>
+        <p>{t.sections.websiteUse.intro}</p>
+        <ul>
+          {t.sections.websiteUse.rulesList.map((rule) => (
+            <li>{rule}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.jurisdiction.title}</h2>
+        <p>{t.sections.jurisdiction.content}</p>
+      </section>
+
+      <section class={styles.termsSection}>
+        <h2>{t.sections.contact.title}</h2>
+        <p>{t.sections.contact.content}</p>
+        <p>
+          <strong>{t.sections.contact.emailLabel}</strong> <a href={`mailto:${t.contactEmail}`}>{t.contactEmail}</a><br>
+          <strong>{t.sections.contact.websiteLabel}</strong> <a href="https://aurin.mx">{t.sections.contact.websiteUrl}</a><br>
+          <strong>{t.sections.contact.locationLabel}</strong> {t.sections.contact.location}
+        </p>
+      </section>
+    </div>
+  </div>
+</section>

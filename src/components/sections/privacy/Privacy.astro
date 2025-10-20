@@ -1,0 +1,92 @@
+---
+import { translations } from '../../../i18n/translations';
+import styles from './Privacy.module.css';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = translations[lang].privacy;
+---
+
+<section class={styles.privacyPage}>
+  <div class={styles.privacyContainer}>
+    <header class={styles.privacyHeader}>
+      <h1 class={styles.privacyTitle}>{t.title}</h1>
+      <p class={styles.privacySubtitle}>{t.lastUpdated}</p>
+    </header>
+
+    <div class={styles.privacyContent}>
+      <section class={styles.privacySection}>
+        <h2>{t.sections.identity.title}</h2>
+        <p>{t.sections.identity.content}</p>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.dataCollection.title}</h2>
+        <p>{t.sections.dataCollection.intro}</p>
+        <p>{t.sections.dataCollection.directData}</p>
+        <ul>
+          {t.sections.dataCollection.dataTypes.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.purposes.title}</h2>
+        <p>{t.sections.purposes.intro}</p>
+        <ul>
+          {t.sections.purposes.purposesList.map((purpose) => (
+            <li>{purpose}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.dataTransfer.title}</h2>
+        <p>{t.sections.dataTransfer.content1}</p>
+        <p>{t.sections.dataTransfer.content2}</p>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.arcoRights.title}</h2>
+        <p>{t.sections.arcoRights.content}</p>
+        <p>
+          {t.sections.arcoRights.contact}
+          <a href={`mailto:${t.contactEmail}`}>{t.contactEmail}</a>.
+        </p>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.consentRevocation.title}</h2>
+        <p>
+          {t.sections.consentRevocation.content1}
+          <a href={`mailto:${t.contactEmail}`}>{t.contactEmail}</a>.
+          {t.sections.consentRevocation.content2}
+        </p>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.cookies.title}</h2>
+        <p>{t.sections.cookies.content1}</p>
+        <p>{t.sections.cookies.content2}</p>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.modifications.title}</h2>
+        <p>{t.sections.modifications.content}</p>
+      </section>
+
+      <section class={styles.privacySection}>
+        <h2>{t.sections.contact.title}</h2>
+        <p>{t.sections.contact.content}</p>
+        <p>
+          <strong>{t.sections.contact.emailLabel}</strong> <a href={`mailto:${t.contactEmail}`}>{t.contactEmail}</a><br>
+          <strong>{t.sections.contact.websiteLabel}</strong> <a href="https://aurin.mx">{t.sections.contact.websiteUrl}</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</section>
