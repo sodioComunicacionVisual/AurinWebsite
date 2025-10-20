@@ -1,0 +1,17 @@
+---
+import styles from './CaseStudySection.module.css';
+
+interface Props {
+  title: string;
+  content: string;
+}
+
+const { title, content } = Astro.props;
+---
+
+<section class={styles.caseStudy}>
+  <div class={styles.container}>
+    <h2 class={styles.title}>{title}</h2>
+    <p class={styles.content}>{content}</p>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+/* Mobile-first: Base styles for mobile */
+.learningSection {
+  width: 100%;
+  background: transparent;
+}
+
+.container {
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.title {
+  color: white;
+  font-size: clamp(40px, 8vw, 120px);
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+  text-align: right;
+  margin: 0;
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}
+
+.content {
+  color: white;
+  font-size: clamp(18px, 3.5vw, 32px);
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 600;
+  text-align: right;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Tablet: 768px and up */
+@media (min-width: 768px) {
+  .container {
+    padding: 80px 40px;
+    gap: 40px;
+  }
+}
+
+/* Desktop: 1024px and up */
+@media (min-width: 1024px) {
+  .container {
+    padding: 100px 50px;
+    gap: 50px;
+  }
+}

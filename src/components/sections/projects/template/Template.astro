@@ -1,0 +1,97 @@
+---
+import Header from '../../../ui/Header.astro';
+import MainCat from '../../../ui/MainCat.astro';
+import Projects from '../../../ui/Projects.astro';
+import Footer from '../../../ui/Footer.astro';
+import ProjectBanner from './atoms/ProjectBanner.astro';
+import CaseStudySection from './atoms/CaseStudySection.astro';
+import ImageGrid from './atoms/ImageGrid.astro';
+import ServicesSection from './atoms/ServicesSection.astro';
+import LearningSection from './atoms/LearningSection.astro';
+import styles from './Template.module.css';
+
+// TypeScript interfaces para props din�micas desde Strapi
+interface ImageItem {
+  src?: string;
+  alt: string;
+  placeholder?: string;
+}
+
+interface Service {
+  name: string;
+}
+
+interface ProjectTemplateProps {
+  // Banner Section
+  projectTitle: string;
+  projectCategories: string[];
+  projectDescription: string;
+  bannerImage?: string;
+
+  // Case Study Section
+  caseStudyTitle: string;
+  caseStudyContent: string;
+
+  // Image Grid Section
+  images: ImageItem[];
+
+  // Services Section
+  servicesTitle: string;
+  services: Service[];
+
+  // Learning Section
+  learningTitle: string;
+  learningContent: string;
+}
+
+interface Props {
+  projectData: ProjectTemplateProps;
+}
+
+const { projectData } = Astro.props;
+---
+
+<!-- Header Navigation -->
+<Header />
+
+
+
+<article class={styles.projectTemplate}>
+  <!-- Strip 1: Project Banner (Hero) -->
+  <ProjectBanner
+    title={projectData.projectTitle}
+    categories={projectData.projectCategories}
+    description={projectData.projectDescription}
+    bannerImage={projectData.bannerImage}
+  />
+
+  <!-- Strip 2: Case Study -->
+  <CaseStudySection
+    title={projectData.caseStudyTitle}
+    content={projectData.caseStudyContent}
+  />
+
+  <!-- Strip 3: Image Grid -->
+  <ImageGrid images={projectData.images} />
+
+  <!-- Strip 4: Services (Interactive Island) -->
+  <ServicesSection
+    title={projectData.servicesTitle}
+    services={projectData.services}
+  />
+
+  <!-- Strip 5: Learning -->
+  <LearningSection
+    title={projectData.learningTitle}
+    content={projectData.learningContent}
+  />
+</article>
+
+<!-- Projects Section -->
+<Projects />
+
+<!-- Main Category Navigation -->
+<MainCat />
+
+<!-- Footer -->
+<Footer />

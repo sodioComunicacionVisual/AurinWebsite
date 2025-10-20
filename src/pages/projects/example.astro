@@ -1,0 +1,79 @@
+---
+import Template from '../../components/sections/projects/Template.astro';
+
+// Datos de ejemplo para demostración
+// En producción, estos vendrán de Strapi usando:
+// import { fetchProjectBySlug, transformProjectData } from '../../lib/strapi';
+// const strapiData = await fetchProjectBySlug('example-project');
+// const projectData = transformProjectData(strapiData);
+
+const projectData = {
+  projectTitle: 'Nombre de proyecto',
+  projectCategories: [
+    'Categoria de Proyecto 1',
+    'Categoria de Proyecto 2',
+    'Categoria de Proyecto 3'
+  ],
+  projectDescription: 'Descripción de proyecto',
+  bannerImage: undefined, // Opcional: agregar URL de imagen
+
+  caseStudyTitle: 'Titulo de articulo',
+  caseStudyContent: 'Articulo ó caso de estudio',
+
+  images: [
+    { alt: 'Imagen de articulo', placeholder: 'Imagen de articulo' },
+    { alt: 'Imagen de articulo 2', placeholder: 'Imagen de articulo 2' },
+    { alt: 'Imagen de articulo 3', placeholder: 'Imagen de articulo 3' },
+    { alt: 'Imagen de articulo 4', placeholder: 'Imagen de articulo 4' }
+  ],
+
+  servicesTitle: 'Los servicios que ofrecimos:',
+  services: [
+    { name: 'Servicio 1' },
+    { name: 'Servicio 2' },
+    { name: 'Servicio 3' },
+    { name: 'Servicio 4' },
+    { name: 'Servicio 5' }
+  ],
+
+  learningTitle: 'Nuestro aprendizaje',
+  learningContent: 'Aprendizajes clave del proyecto'
+};
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{projectData.projectTitle}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;800&family=Titillium+Web:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Template projectData={projectData} />
+  </body>
+</html>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Titillium Web', sans-serif;
+    background: black;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

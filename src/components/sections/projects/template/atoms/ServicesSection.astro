@@ -1,0 +1,34 @@
+---
+import ServiceCard from './ServiceCard';
+import styles from './ServicesSection.module.css';
+
+interface Service {
+  name: string;
+}
+
+interface Props {
+  title: string;
+  services: Service[];
+}
+
+const { title, services } = Astro.props;
+---
+
+<section class={styles.servicesSection}>
+  <div class={styles.container}>
+    <div class={styles.headerWrapper}>
+      <h2 class={styles.title}>{title}</h2>
+
+    </div>
+
+    <div class={styles.servicesWrapper}>
+      {services.map((service, index) => (
+        <ServiceCard
+          client:visible
+          serviceName={service.name}
+          index={index}
+        />
+      ))}
+    </div>
+  </div>
+</section>

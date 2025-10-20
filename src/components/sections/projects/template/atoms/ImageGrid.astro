@@ -1,0 +1,67 @@
+---
+import styles from './ImageGrid.module.css';
+
+interface ImageItem {
+  src?: string;
+  alt: string;
+  placeholder?: string;
+}
+
+interface Props {
+  images: ImageItem[];
+}
+
+const { images } = Astro.props;
+
+// Ensure we have exactly 4 images
+const displayImages = images.slice(0, 4);
+while (displayImages.length < 4) {
+  displayImages.push({
+    alt: `Imagen de articulo ${displayImages.length + 1}`,
+    placeholder: `Imagen de articulo ${displayImages.length + 1}`
+  });
+}
+---
+
+<section class={styles.imageGrid}>
+  <div class={styles.container}>
+    <div class={styles.grid}>
+      <div class={styles.row}>
+        {displayImages.slice(0, 2).map((image) => (
+          <div class={styles.imageCard}>
+            {image.src ? (
+              <img
+                src={image.src}
+                alt={image.alt}
+                class={styles.image}
+                loading="lazy"
+              />
+            ) : (
+              <div class={styles.placeholder}>
+                <span>{image.placeholder || image.alt}</span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div class={styles.row}>
+        {displayImages.slice(2, 4).map((image) => (
+          <div class={styles.imageCard}>
+            {image.src ? (
+              <img
+                src={image.src}
+                alt={image.alt}
+                class={styles.image}
+                loading="lazy"
+              />
+            ) : (
+              <div class={styles.placeholder}>
+                <span>{image.placeholder || image.alt}</span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

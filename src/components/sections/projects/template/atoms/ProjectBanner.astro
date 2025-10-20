@@ -1,0 +1,51 @@
+---
+import styles from './ProjectBanner.module.css';
+
+interface Props {
+  title: string;
+  categories: string[];
+  description: string;
+  bannerImage?: string;
+}
+
+const { title, categories, description, bannerImage } = Astro.props;
+---
+
+<section class={styles.banner}>
+  <div class={styles.container}>
+    <div class={styles.content}>
+      <div class={styles.textSection}>
+        <h1 class={styles.title}>{title}</h1>
+        <div class={styles.categories}>
+          {categories.map((category) => (
+            <span class={styles.category}>{category}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class={styles.imageSection}>
+        {bannerImage ? (
+          <img
+            src={bannerImage}
+            alt={title}
+            class={styles.bannerImage}
+          />
+        ) : (
+          <div class={styles.placeholder}>
+            <span>Banner Imagen</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <div class={styles.descriptionWrapper}>
+      <p class={styles.description}>{description}</p>
+    </div>
+
+    <button class={styles.scrollButton} aria-label="Scroll down">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M2.09 8.09L12 18l9.91-9.91" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</section>

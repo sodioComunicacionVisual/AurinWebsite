@@ -1,0 +1,119 @@
+/* Mobile-first: Base styles for mobile */
+.serviceCard {
+  min-height: clamp(12.5rem, 20vw, 18.75rem);
+  background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #161616;
+  overflow: hidden;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+}
+
+.serviceCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(210deg, rgba(0, 0, 0, 0) 47%, #949E03 47%), #D0DF00;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.serviceCard:hover::before {
+  opacity: 1;
+}
+
+/* Main Content */
+.cardMainContent {
+  flex: 1;
+  align-self: stretch;
+  padding-inline: clamp(1.5rem, 5.5vw, 4.9375rem);
+  padding-top: clamp(5.5rem, 7vw, 6.5rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  overflow: visible;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  position: relative;
+  z-index: 1;
+}
+
+.serviceName {
+  max-width: clamp(15rem, 36vw, 32.9375rem);
+  color: #D0DF00;
+  font-size: clamp(2rem, 4vw, 6rem);
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+  transition: color 0.5s ease;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.serviceCard:hover .serviceName {
+  color: #0A0A0A !important;
+}
+
+/* Icon Wrapper */
+.cardIconWrapper {
+  width: clamp(3.25rem, 12.5vw, 12.5rem);
+  align-self: stretch;
+  padding: 0.625rem;
+  border-radius: 7.73px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.cardIcon {
+  width: clamp(2.5rem, 3.25vw, 3.26125rem);
+  height: clamp(2.5rem, 3.25vw, 3.26125rem);
+  position: relative;
+  background: #0A0A0A;
+  border-radius: 9.66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.serviceCard:hover .cardIcon {
+  color: white;
+}
+
+/* Transiciones de color suaves */
+.serviceName,
+.cardIcon {
+  transition: color 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cardMainContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .cardIconWrapper {
+    width: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .serviceCard {
+    min-height: 10rem;
+  }
+
+  .serviceName {
+    font-size: 2rem;
+  }
+}
