@@ -1,5 +1,6 @@
 ---
 import { ArrowUpRight } from 'lucide-astro';
+import styles from './ProjectCard.module.css';
 
 interface Props {
   title: string;
@@ -20,239 +21,42 @@ const {
 const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<a href={href} class={`project-card ${className}`} data-card-id={uniqueId}>
-  <div class="card-content">
+<a href={href} class={`${styles['project-card']} ${className}`} data-card-id={uniqueId}>
+  <div class={styles['card-content']}>
     <!-- Image container -->
-    <div class="image-container">
-      <div class="image-wrapper">
-        <img src={image} alt={title} class="project-image" />
-        <div class="image-overlay"></div>
+    <div class={styles['image-container']}>
+      <div class={styles['image-wrapper']}>
+        <img src={image} alt={title} class={styles['project-image']} />
+        <div class={styles['image-overlay']}></div>
       </div>
     </div>
     
     <!-- Info section -->
-    <div class="info-section">
-      <div class="info-content">
+    <div class={styles['info-section']}>
+      <div class={styles['info-content']}>
         <!-- Tags -->
-        <div class="tags-container">
+        <div class={styles['tags-container']}>
           {tags.map((tag, index) => (
             <>
-              {index > 0 && <div class="tag-dot"></div>}
-              <span class="tag-text">{tag}</span>
+              {index > 0 && <div class={styles['tag-dot']}></div>}
+              <span class={styles['tag-text']}>{tag}</span>
             </>
           ))}
         </div>
         
         <!-- Title -->
-        <h3 class="project-title" set:html={title}></h3>
+        <h3 class={styles['project-title']} set:html={title}></h3>
       </div>
       
       <!-- Arrow button -->
-      <div class="arrow-button" data-arrow-button>
+      <div class={styles['arrow-button']} data-arrow-button>
         <ArrowUpRight size={16.67} strokeWidth={2.5} />
       </div>
     </div>
   </div>
 </a>
 
-<style>
-  .project-card {
-    width: 100%;
-    height: 100%;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 26.15px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    opacity: 0;
-    transform: translateY(30px);
-  }
 
-  .project-card.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .card-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 26.15px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Image container */
-  .image-container {
-    align-self: stretch;
-    height: 395.32px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10.46px;
-  }
-
-  .image-wrapper {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    border-radius: 10.46px;
-    background: #18192C;
-  }
-
-  .project-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-  }
-
-
-  /* Info section */
-  .info-section {
-    align-self: stretch;
-    display: inline-flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    gap: 10.46px;
-  }
-
-  .info-content {
-    flex: 1;
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 13.60px;
-  }
-
-  /* Tags */
-  .tags-container {
-    align-self: stretch;
-    display: inline-flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .tag-dot {
-    width: 3.83px;
-    height: 3.83px;
-    background: var(--color-white);
-    border-radius: 9999px;
-  }
-
-  .tag-text {
-    color: var(--color-white);
-    font-size: 15px;
-    font-family: var(--font-body);
-    font-weight: 400;
-    word-wrap: break-word;
-  }
-
-  /* Title */
-  .project-title {
-    align-self: stretch;
-    color: var(--color-white);
-    font-size: 24px;
-    font-family: var(--font-body);
-    font-weight: 400;
-    word-wrap: break-word;
-    margin: 0;
-    transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Arrow button */
-  .arrow-button {
-    width: 40px;
-    height: 40px;
-    background: var(--color-black-b);
-    border-radius: 7.41px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0;
-  }
-
-  .arrow-button :global(svg) {
-    color: var(--color-white);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Hover state */
-  .project-card:hover .image-overlay {
-    background: transparent;
-  }
-
-  .project-card:hover .project-title {
-    color: var(--color-yellow);
-  }
-
-  .project-card:hover .arrow-button {
-    background: var(--color-yellow);
-    transform: translateY(-2px);
-  }
-
-  .project-card:hover .arrow-button :global(svg) {
-    color: var(--color-black-a);
-    transform: rotate(45deg);
-  }
-
-  .project-card:hover .project-image {
-    filter: grayscale(0%);
-  }
-
-  /* Active state */
-  .project-card:active .arrow-button {
-    transform: translateY(0);
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .image-container {
-      height: 300px;
-    }
-
-    .project-title {
-      font-size: 20px;
-    }
-
-    .tag-text {
-      font-size: 13px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .image-container {
-      height: 250px;
-    }
-
-    .tags-container {
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-  }
-</style>
 
 <script is:inline>
   (function() {
@@ -288,8 +92,8 @@ const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
       }, observerOptions);
 
       cards.forEach((card, index) => {
-        // Añadir delay escalonado para efecto cascada
-        card.style.transitionDelay = `${index * 0.15}s`;
+        // Delay más rápido para mejor UX
+        card.style.transitionDelay = `${index * 0.08}s`;
         observer.observe(card);
       });
     }

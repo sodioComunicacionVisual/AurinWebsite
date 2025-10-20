@@ -37,6 +37,15 @@
   margin: 0;
 }
 
+.body0 {
+  color: var(--color-black-a);
+  font-size: var(--body-0-size);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: var(--body-0-line-height);
+  margin: 0;
+}
+
 .buttonWrapper {
   position: static;
   transform: none;

@@ -70,13 +70,13 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     <div class={styles.header}>
       <div class={styles.headerContent}>
         <div class={styles.titleWrapper}>
-          <ScrollReveal 
+          <ScrollReveal
             text={`${titlePart1}\n${titlePart2}`}
             tag="h2"
-            textClass={styles.title}
-            baseOpacity={0.15}
-            baseRotation={5}
-            blurStrength={6}
+            textClass="title"
+            baseOpacity={0.7}
+            baseRotation={2}
+            blurStrength={2}
             enableBlur={true}
           />
         </div>
@@ -86,17 +86,17 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
   </div>
 
   <section class={styles.splide} id={uniqueId} aria-label="Herramientas carousel">
-    <div class={styles.splideTrack}>
-      <ul class={styles.splideList} role="list">
+    <div class="splide__track">
+      <ul class="splide__list" role="list">
         {items.map((item, index) => (
-          <li class={styles.splideSlide} role="listitem" aria-label={`${index + 1} de ${items.length}: ${item.title}`}>
-            <a href={item.href} class={styles.cardLink} aria-label={`Ver más sobre ${item.title}`}>
+          <li class="splide__slide" role="listitem" aria-label={`${index + 1} de ${items.length}: ${item.title}`}>
+            <a href={item.href} class={styles['card-link']} aria-label={`Ver más sobre ${item.title}`}>
               <div class={styles.card}>
-                <div class={styles.cardLetter} aria-hidden="true">
+                <div class={styles['card-letter']} aria-hidden="true">
                   {item.letter}
                 </div>
-                <div class={styles.cardContent}>
-                  <div class={styles.cardTitle}>
+                <div class={styles['card-content']}>
+                  <div class={styles['card-title']}>
                     {item.title}
                   </div>
                 </div>
@@ -109,16 +109,39 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
   </section>
 </section>
 
+<style>
+  :global(.title) {
+    margin: 0 !important;
+    opacity: 1 !important;
+  }
 
+  :global(.title .scroll-reveal-word:nth-child(1)),
+  :global(.title .scroll-reveal-word:nth-child(2)) {
+    color: var(--color-white) !important;
+    font-size: var(--heading-5-size) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-5-line-height) !important;
+    opacity: 1 !important;
+  }
+
+  :global(.title .scroll-reveal-word:nth-child(n+3)) {
+    color: var(--color-yellow) !important;
+    font-size: var(--heading-2-size) !important;
+    font-family: var(--font-heading) !important;
+    font-weight: 300 !important;
+    line-height: var(--heading-2-line-height) !important;
+    opacity: 1 !important;
+  }
+</style>
 
 <script>
   import Splide from '@splidejs/splide';
   import '@splidejs/splide/css/core';
-  import { animate, inView } from "motion";
 
   document.addEventListener('DOMContentLoaded', () => {
-    const splideElement = document.querySelector('.splide') as HTMLElement;
-    
+    const splideElement = document.querySelector('[id^="carousel-"]') as HTMLElement;
+
     if (splideElement) {
       const splide = new Splide(splideElement, {
         fixedWidth: '250px',
@@ -154,9 +177,8 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 
       splide.mount();
 
-
       // Animaciones con IntersectionObserver para las cards
-      const cards = document.querySelectorAll('.card');
+      const cards = splideElement.querySelectorAll('[class*="card"]:not([class*="card-"])');
 
       const observerOptions = {
         threshold: 0.2,
@@ -173,7 +195,6 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
       }, observerOptions);
 
       cards.forEach((card, index) => {
-        // Añadir delay escalonado
         (card as HTMLElement).style.transitionDelay = `${index * 0.15}s`;
         observer.observe(card);
       });

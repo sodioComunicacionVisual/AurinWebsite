@@ -1,0 +1,167 @@
+  .button-wrapper {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: auto;
+    height: auto;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .button-wrapper:global(.is-visible) {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .button-container {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .button-container:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .button-text {
+    height: 52.18px;
+    padding: 8.10px 16.20px;
+    border-radius: 9.66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16.20px;
+    transition: all 0.3s ease;
+  }
+
+  .button-text span {
+    font-size: clamp(14px, 4cqw, 18px);
+    font-family: var(--font-body);
+    font-weight: 600;
+    word-wrap: break-word;
+  }
+
+  .button-icon {
+    width: 67.18px;
+    height: 67.18px;
+    border-radius: 9.66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .button-icon :global(svg) {
+    transition: transform 0.3s ease;
+  }
+
+  /* Primary variant (yellow) */
+  .button-wrapper--primary .button-text {
+    background: var(--color-yellow);
+  }
+
+  .button-wrapper--primary .button-text span {
+    color: var(--color-black-a);
+  }
+
+  .button-wrapper--primary .button-icon {
+    background: var(--color-yellow);
+  }
+
+  .button-wrapper--primary .button-icon :global(svg) {
+    color: var(--color-black-a);
+  }
+
+  .button-wrapper--primary:hover .button-text,
+  .button-wrapper--primary:hover .button-icon,
+  .button-wrapper--primary:global(.is-hovering) .button-text,
+  .button-wrapper--primary:global(.is-hovering) .button-icon {
+    background: #BFD000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(208, 223, 0, 0.3);
+  }
+
+  /* Secondary variant (black) */
+  .button-wrapper--secondary .button-text {
+    background: var(--color-black-a);
+  }
+
+  .button-wrapper--secondary .button-text span {
+    color: var(--color-white);
+  }
+
+  .button-wrapper--secondary .button-icon {
+    background: var(--color-black-a);
+  }
+
+  .button-wrapper--secondary .button-icon :global(svg) {
+    color: var(--color-white);
+  }
+
+  .button-wrapper--secondary:hover .button-text,
+  .button-wrapper--secondary:hover .button-icon,
+  .button-wrapper--secondary:global(.is-hovering) .button-text,
+  .button-wrapper--secondary:global(.is-hovering) .button-icon {
+    background: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(10, 10, 10, 0.3);
+  }
+
+  /* Hover icon rotation for both variants */
+  .button-wrapper:hover .button-icon :global(svg),
+  .button-wrapper:global(.is-hovering) .button-icon :global(svg) {
+    transform: rotate(45deg);
+  }
+
+  /* Active state */
+  .button-wrapper:active .button-text,
+  .button-wrapper:active .button-icon {
+    transform: translateY(0);
+  }
+
+  .button-wrapper--primary:active .button-text,
+  .button-wrapper--primary:active .button-icon {
+    box-shadow: 0 2px 6px rgba(208, 223, 0, 0.2);
+  }
+
+  .button-wrapper--secondary:active .button-text,
+  .button-wrapper--secondary:active .button-icon {
+    box-shadow: 0 2px 6px rgba(10, 10, 10, 0.15);
+  }
+
+  /* Disabled state */
+  .button-container:disabled .button-text,
+  .button-container:disabled .button-icon {
+    opacity: 0.6;
+  }
+
+  .button-wrapper--primary:has(.button-container:disabled):hover .button-text,
+  .button-wrapper--primary:has(.button-container:disabled):hover .button-icon {
+    transform: none;
+    box-shadow: none;
+    background: var(--color-yellow);
+  }
+
+  .button-wrapper--secondary:has(.button-container:disabled):hover .button-text,
+  .button-wrapper--secondary:has(.button-container:disabled):hover .button-icon {
+    transform: none;
+    box-shadow: none;
+    background: var(--color-black-a);
+  }
+
+  /* Mobile responsive font size - 30% smaller */
+  @media (max-width: 768px) {
+    .button-text span {
+      font-size: clamp(10px, 3cqw, 13px);
+    }
+  }

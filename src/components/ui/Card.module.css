@@ -1,0 +1,139 @@
+.card {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #212224;
+	overflow: hidden;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	position: relative;
+	text-decoration: none;
+	cursor: pointer;
+	opacity: 0;
+	transform: translateY(30px);
+	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.card::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(200deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), var(--color-yellow);
+	border-radius: 10px;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	pointer-events: none;
+}
+
+.card:global(.is-visible) {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.card:hover::before {
+	opacity: 1;
+}
+
+.card-letter {
+	position: absolute;
+	top: -25px;
+	left: -5px;
+	color: var(--color-yellow);
+	font-size: 308.50px;
+	font-family: var(--font-heading);
+	font-weight: 600;
+	line-height: 1;
+	text-align: right;
+	width: 210px;
+	height: 250px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: color 0.3s ease;
+}
+
+.card:hover .card-letter {
+	color: var(--color-black-a);
+}
+
+.card-content {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 35px 25px;
+	display: flex;
+	align-items: flex-end;
+}
+
+.card-title {
+	color: var(--color-yellow);
+	font-size: 32px;
+	font-family: var(--font-heading);
+	font-weight: 300;
+	line-height: 35px;
+	max-width: 290px;
+	transition: color 0.3s ease;
+}
+
+.card:hover .card-title {
+	color: var(--color-black-a);
+}
+
+/* Responsive */
+@media (max-width: 1240px) and (min-width: 992px) {
+	.card-letter {
+		font-size: 120px;
+		top: 10px;
+		left: 10px;
+		width: 100px;
+		height: 100px;
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
+
+	.card-title {
+		font-size: 24px;
+		line-height: 30px;
+	}
+}
+
+@media (max-width: 768px) {
+	.card-letter {
+		font-size: 200px;
+		top: -15px;
+		left: 15px;
+		width: 150px;
+		height: 180px;
+	}
+
+	.card-title {
+		font-size: 24px;
+		line-height: 28px;
+	}
+
+	.card-content {
+		padding: 25px 20px;
+	}
+}
+
+@media (max-width: 480px) {
+	.card-letter {
+		font-size: 150px;
+		top: -10px;
+		left: 10px;
+		width: 120px;
+		height: 140px;
+	}
+
+	.card-title {
+		font-size: 20px;
+		line-height: 24px;
+	}
+
+	.card-content {
+		padding: 20px 15px;
+	}
+}

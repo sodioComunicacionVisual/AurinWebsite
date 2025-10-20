@@ -3,7 +3,7 @@ import MainButton from '../../ui/MainButton.astro';
 import Card from '../../ui/Card.astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
-import styles from './Especialidades.module.css';
+import styles from './Especialidades.module.css'; 
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -18,29 +18,29 @@ const t = translations[currentLang];
         <span class={styles.headingNormal}>{t.especialidades.heading}<br/></span>
         <span class={styles.headingHighlight}>{t.especialidades.headingHighlight}</span>
       </div>
-      
+
       <p class={styles.description}>
         Cada idea se convierte en un recorrido único, diseñado para inspirar y conectar.
       </p>
-      
-      <MainButton 
+
+      <MainButton
         text={t.especialidades.buttonText}
         href="/servicios"
       />
     </div>
-    
+
     <!-- Right cards section -->
     <div class={styles.cardsSection}>
       <div class={styles.cardsGrid}>
-        <Card 
+        <Card
           letter="M"
           title={t.especialidades.card1Title}
         />
-        <Card 
+        <Card
           letter="E"
           title={t.especialidades.card2Title}
         />
-        <Card 
+        <Card
           letter="D"
           title={t.especialidades.card3Title}
         />
@@ -49,11 +49,9 @@ const t = translations[currentLang];
   </div>
 </section>
 
-
-
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.especialidades .card');
+    const cards = document.querySelectorAll('[class*="card"]');
 
     const observerOptions = {
       threshold: 0.2,
@@ -69,9 +67,7 @@ const t = translations[currentLang];
       });
     }, observerOptions);
 
-    cards.forEach((card, index) => {
-      // Añadir delay escalonado
-      (card as HTMLElement).style.transitionDelay = `${index * 0.15}s`;
+    cards.forEach((card) => {
       observer.observe(card);
     });
   });

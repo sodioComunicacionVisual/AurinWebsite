@@ -1,4 +1,6 @@
 ---
+import styles from './Card.module.css';
+
 interface Props {
 	letter: string;
 	title: string;
@@ -12,163 +14,54 @@ const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
 
 <Tag
 	href={href}
-	class="card"
+	class={styles.card}
 	data-card-id={uniqueId}
 	target={href ? "_blank" : undefined}
 	rel={href ? "noopener noreferrer" : undefined}
 >
-	<div class="card-letter" data-card-letter>
+	<div class={styles['card-letter']} data-card-letter>
 		{letter}
 	</div>
-	<div class="card-content" data-card-content>
-		<div class="card-title" data-card-title>
+	<div class={styles['card-content']} data-card-content>
+		<div class={styles['card-title']} data-card-title>
 			{title}
 		</div>
 	</div>
 </Tag>
 
-<style>
-	.card {
-		width: 100%;
-		aspect-ratio: 1 / 1;
-		background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #212224;
-		overflow: hidden;
-		border-radius: 10px;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: flex-start;
-		position: relative;
-		text-decoration: none;
-		cursor: pointer;
-		opacity: 0;
-		transform: translateY(30px);
-		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-	}
+<script is:inline>
+  (function() {
+    function initCards() {
+      const cards = document.querySelectorAll('[data-card-id]');
 
-	.card::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(200deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), var(--color-yellow);
-		border-radius: 10px;
-		opacity: 0;
-		transition: opacity 0.3s ease;
-		pointer-events: none;
-	}
+      const observerOptions = {
+        threshold: 0.05,
+        rootMargin: '100px 0px 0px 0px'
+      };
 
-	.card.is-visible {
-		opacity: 1;
-		transform: translateY(0);
-	}
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
 
-	.card:hover::before {
-		opacity: 1;
-	}
-	
-	.card-letter {
-		position: absolute;
-		top: -25px;
-		left: -5px;
-		color: var(--color-yellow);
-		font-size: 308.50px;
-		font-family: var(--font-heading);
-		font-weight: 600;
-		line-height: 1;
-		text-align: right;
-		width: 210px;
-		height: 250px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+      cards.forEach((card, index) => {
+        card.style.transitionDelay = `${index * 0.08}s`;
+        observer.observe(card);
+      });
+    }
 
-	.card:hover .card-letter {
-		color: var(--color-black-a);
-	}
-	
-	.card-content {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		padding: 35px 25px;
-		display: flex;
-		align-items: flex-end;
-	}
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCards);
+    } else {
+      initCards();
+    }
 
-	.card-title {
-		color: var(--color-yellow);
-		font-size: 32px;
-		font-family: var(--font-heading);
-		font-weight: 300;
-		line-height: 35px;
-		max-width: 290px;
-	}
+    document.addEventListener('astro:page-load', initCards);
+  })();
+</script>
 
-	.card:hover .card-title {
-		color: var(--color-black-a);
-	}
 
-	/* Responsive */
-	@media (max-width: 1240px) and (min-width: 992px) {
-		.card-letter {
-			font-size: 120px;
-			top: 10px;
-			left: 10px;
-			width: 100px;
-			height: 100px;
-			justify-content: flex-start;
-			align-items: flex-start;
-		}
-
-		.card-title {
-			font-size: 24px;
-			line-height: 30px;
-		}
-	}
-
-	@media (max-width: 768px) {
-		.card-letter {
-			font-size: 200px;
-			top: -15px;
-			left: 15px;
-			width: 150px;
-			height: 180px;
-		}
-
-		.card-title {
-			font-size: 24px;
-			line-height: 28px;
-		}
-
-		.card-content {
-			padding: 25px 20px;
-		}
-	}
-
-	@media (max-width: 480px) {
-		.card-letter {
-			font-size: 150px;
-			top: -10px;
-			left: 10px;
-			width: 120px;
-			height: 140px;
-		}
-
-		.card-title {
-			font-size: 20px;
-			line-height: 24px;
-		}
-
-		.card-content {
-			padding: 20px 15px;
-		}
-	}
-
-	/* Transiciones de color suaves */
-	.card-letter,
-	.card-title {
-		transition: color 0.3s ease;
-	}
-</style>

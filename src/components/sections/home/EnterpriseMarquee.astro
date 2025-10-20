@@ -18,11 +18,22 @@ const LOGOS = [
 <section class={styles.enterpriseMarquee}>
   <div class={styles.marqueeWrapper}>
     <div class={styles.marqueeContent}>
-
-      
       <!-- Slider section -->
       <div class={styles.marqueeSlider} id="marquee-slider">
         <div class={styles.sliderTrack} id="slider-track">
+          {LOGOS.map((logo, index) => (
+            <>
+              <div class={styles.logoItem}>
+                <img
+                  src={logo.src}
+                  alt={logo.alt}
+                  style={`height: ${logo.height}px`}
+                  width="auto"
+                />
+              </div>
+              {index < LOGOS.length - 1 && <div class={styles.logoSeparator}></div>}
+            </>
+          ))}
           {LOGOS.map((logo, index) => (
             <>
               <div class={styles.logoItem}>
@@ -42,24 +53,3 @@ const LOGOS = [
   </div>
 </section>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const sliderTrack = document.getElementById('slider-track');
-    
-    if (sliderTrack) {
-      // Clone all logo items to create seamless infinite scroll
-      const logoItems = sliderTrack.children;
-      const itemsArray = Array.from(logoItems);
-      
-      // Duplicate the items for seamless loop
-      itemsArray.forEach(item => {
-        const clone = item.cloneNode(true);
-        sliderTrack.appendChild(clone);
-      });
-      
-      // Set up the animation
-      const totalWidth = sliderTrack.scrollWidth / 2; // Half because we duplicated
-      sliderTrack.style.setProperty('--scroll-width', `${totalWidth}px`);
-    }
-  });
-</script>

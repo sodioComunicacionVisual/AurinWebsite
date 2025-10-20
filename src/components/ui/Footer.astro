@@ -1,5 +1,6 @@
 ---
 // Footer component
+import styles from './Footer.module.css';
 import LampLight from './LampLight.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
@@ -9,255 +10,67 @@ const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 ---
 
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-content">
+<footer class={styles.footer}>
+  <div class={styles['footer-container']}>
+    <div class={styles['footer-content']}>
       <!-- Lámpara decorativa en el lado izquierdo -->
-      <div class="lamp-decoration">
+      <div class={styles['lamp-decoration']}>
         <LampLight lightColor="#fcffbb" intensity="medium" />
       </div>
       <img
-        class="footer-logo"
+        class={`${styles['footer-logo']} footer-logo`}
         src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
         alt="Aurin Logo"
       />
 
-      <div class="footer-columns">
+      <div class={styles['footer-columns']}>
         <!-- Column 1: Oficinas y Contacto -->
-        <div class="footer-column">
-          <div class="footer-section">
-            <h3 class="footer-title">{t.footer.offices}</h3>
-            <div class="footer-link-container">
-              <div class="footer-line"></div>
-              <a href="https://aldeacreativa.mx/" target="_blank" rel="noopener noreferrer" class="footer-link">{t.footer.officesLink}</a>
+        <div class={`${styles['footer-column']} footer-column`}>
+          <div class={styles['footer-section']}>
+            <h3 class={styles['footer-title']}>{t.footer.offices}</h3>
+            <div class={styles['footer-link-container']}>
+              <div class={styles['footer-line']}></div>
+              <a href="https://aldeacreativa.mx/" target="_blank" rel="noopener noreferrer" class={styles['footer-link']}>{t.footer.officesLink}</a>
             </div>
           </div>
 
-          <div class="footer-section">
-            <h3 class="footer-title">{t.footer.contact}</h3>
-            <div class="footer-link-container">
-              <div class="footer-line"></div>
-              <a href="mailto:hey@aurin.mx" class="footer-link">hey@aurin.mx</a>
+          <div class={styles['footer-section']}>
+            <h3 class={styles['footer-title']}>{t.footer.contact}</h3>
+            <div class={styles['footer-link-container']}>
+              <div class={styles['footer-line']}></div>
+              <a href="mailto:hey@aurin.mx" class={styles['footer-link']}>hey@aurin.mx</a>
             </div>
           </div>
         </div>
 
         <!-- Column 2: Legales -->
-        <div class="footer-column">
-          <div class="footer-section">
-            <h3 class="footer-title">{t.footer.legal}</h3>
-            <div class="footer-link-container">
-              <div class="footer-line"></div>
-              <a href="/privacidad" class="footer-link">{t.footer.privacyPolicy}</a>
+        <div class={`${styles['footer-column']} footer-column`}>
+          <div class={styles['footer-section']}>
+            <h3 class={styles['footer-title']}>{t.footer.legal}</h3>
+            <div class={styles['footer-link-container']}>
+              <div class={styles['footer-line']}></div>
+              <a href="/privacidad" class={styles['footer-link']}>{t.footer.privacyPolicy}</a>
             </div>
-            <div class="footer-link-container">
-              <div class="footer-line"></div>
-              <a href="/terminosycondiciones" class="footer-link">{t.footer.termsConditions}</a>
+            <div class={styles['footer-link-container']}>
+              <div class={styles['footer-line']}></div>
+              <a href="/terminosycondiciones" class={styles['footer-link']}>{t.footer.termsConditions}</a>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="footer-copyright">
+    <div class={styles['footer-copyright']}>
       <p>{t.footer.copyright}</p>
     </div>
   </div>
 </footer>
 
-<style>
-  .footer {
-    width: 100%;
-    background: #0A0A0A;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/FooterLight.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.6;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .footer-container {
-    max-width: var(--maxWidth);
-    margin: 0 auto;
-    padding: 49px 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 62px;
-  }
-
-  .footer-content {
-    display: flex;
-    padding-top: 80px;
-    align-items: center;
-    gap: 36px;
-    position: relative;
-  }
-
-  .lamp-decoration {
-    position: absolute;
-    left: -100px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-  }
-
-  @media (min-width: 1501px) {
-    .lamp-decoration {
-      display: none;
-    }
-  }
-
-  .footer-logo {
-    width: 468px;
-    height: 146.82px;
-    flex-shrink: 0;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .footer-logo.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .footer-columns {
-    display: flex;
-    gap: 20px;
-    flex: 1;
-  }
-
-  .footer-column {
-    width: 442.02px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .footer-column.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .footer-section {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .footer-link-container {
-    display: flex;
-    align-items: flex-end;
-    gap: 0;
-  }
-
-  .footer-line {
-    width: 100%;
-    max-width: 20px;
-    height: 100%;
-    border-bottom: 1.07px solid #282828;
-  }
-
-  .footer-title {
-    color: white;
-    font-size: 16px;
-    font-family: 'Titillium Web', sans-serif;
-    font-weight: 700;
-    line-height: 16px;
-    margin: 0;
-  }
-
-  .footer-link {
-    color: #A0A0A0; /* Improved contrast from #7D7F79 */
-    font-size: 20px;
-    font-family: 'Urbanist', sans-serif;
-    font-weight: 400;
-    line-height: 22px;
-    background: none;
-    border: none;
-    padding: 0;
-    text-align: left;
-    cursor: pointer;
-    transition: color 0.3s ease;
-  }
-
-  .footer-link:hover {
-    color: white;
-  }
-
-  .footer-copyright {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .footer-copyright p {
-    color: white;
-    font-size: 14px;
-    font-family: 'Instrument Sans', sans-serif;
-    font-weight: 400;
-    text-decoration: underline;
-    line-height: 14px;
-    margin: 0;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 1200px) {
-    .footer-content {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .footer-columns {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .footer-container {
-      padding: 60px 24px;
-    }
-
-    .footer-logo {
-      width: 100%;
-      height: auto;
-      max-width: 300px;
-    }
-
-    .footer-columns {
-      flex-direction: column;
-    }
-
-    .footer-column {
-      width: 100%;
-    }
-
-    .footer-copyright p {
-      width: 100%;
-    }
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const footerLogo = document.querySelector('.footer .footer-logo') as HTMLElement;
-    const footerColumns = document.querySelectorAll('.footer .footer-column');
+    const footerLogo = document.querySelector('.footer-logo') as HTMLElement;
+    const footerColumns = document.querySelectorAll('.footer-column');
 
     const observerOptions = {
       threshold: 0.2,

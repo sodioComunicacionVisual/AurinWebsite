@@ -73,9 +73,9 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
             text={`${titlePart1}\n${titlePart2}`}
             tag="h2"
             textClass="title"
-            baseOpacity={0.15}
-            baseRotation={5}
-            blurStrength={6}
+            baseOpacity={0.7}
+            baseRotation={2}
+            blurStrength={2}
             enableBlur={true}
           />
         </div>
@@ -150,6 +150,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
 
   :global(.title) {
     margin: 0 !important;
+    opacity: 1 !important;
   }
 
   :global(.title .scroll-reveal-word:nth-child(1)),
@@ -159,6 +160,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     font-family: var(--font-heading) !important;
     font-weight: 300 !important;
     line-height: var(--heading-5-line-height) !important;
+    opacity: 1 !important;
   }
 
   :global(.title .scroll-reveal-word:nth-child(n+3)) {
@@ -167,6 +169,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     font-family: var(--font-heading) !important;
     font-weight: 300 !important;
     line-height: var(--heading-2-line-height) !important;
+    opacity: 1 !important;
   }
 
   .description {

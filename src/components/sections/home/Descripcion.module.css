@@ -40,7 +40,7 @@
   margin: 0 !important;
 }
 
-.headingHighlight :global(.scroll-reveal-word) {
+.headingHighlight :global([data-word]) {
   color: var(--color-yellow) !important;
 }
 

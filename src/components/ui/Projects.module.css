@@ -33,12 +33,12 @@
   margin: 0 !important;
 }
 
-.heading :global(.scroll-reveal-word:nth-child(1)),
-.heading :global(.scroll-reveal-word:nth-child(2)),
-.heading :global(.scroll-reveal-word:nth-child(3)),
-.heading :global(.scroll-reveal-word:nth-child(4)),
-.heading :global(.scroll-reveal-word:nth-child(5)),
-.heading :global(.scroll-reveal-word:nth-child(6)) {
+.heading :global([data-word]:nth-child(1)),
+.heading :global([data-word]:nth-child(2)),
+.heading :global([data-word]:nth-child(3)),
+.heading :global([data-word]:nth-child(4)),
+.heading :global([data-word]:nth-child(5)),
+.heading :global([data-word]:nth-child(6)) {
   color: var(--color-white) !important;
   font-size: var(--heading-5-size) !important;
   font-family: var(--font-heading) !important;
@@ -46,7 +46,7 @@
   line-height: var(--heading-5-line-height) !important;
 }
 
-.heading :global(.scroll-reveal-word:nth-child(n+7)) {
+.heading :global([data-word]:nth-child(n+7)) {
   color: var(--color-yellow) !important;
   font-size: var(--heading-2-size) !important;
   font-family: var(--font-heading) !important;
@@ -63,7 +63,7 @@
   justify-items: stretch;
 }
 
-.projectsGrid :global(.project-card) {
+.projectsGrid > * {
   width: 100%;
   height: auto;
 }

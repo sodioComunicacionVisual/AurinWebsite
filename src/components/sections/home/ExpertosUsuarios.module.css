@@ -76,7 +76,7 @@
   margin: 0 !important;
 }
 
-.mainTitle :global(.scroll-reveal-word) {
+.mainTitle :global([data-word]) {
   color: var(--color-yellow) !important;
 }
 
