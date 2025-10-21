@@ -1,0 +1,26 @@
+---
+import ProjectsGrid from '../ui/ProjectsGrid.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+import styles from './AllProjectsSection.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles.allProjectsSection}>
+  <div class={styles.container}>
+    <div class={styles.headerContent}>
+      <h1 class={styles.mainTitle}>
+        {t.projects?.allProjectsTitle || 'Todos nuestros proyectos'}
+      </h1>
+      <p class={styles.description}>
+        {t.projects?.allProjectsDescription || 'Explora nuestra colección completa de proyectos y descubre cómo transformamos ideas en experiencias digitales excepcionales.'}
+      </p>
+    </div>
+    
+    <!-- Grid that automatically populates with all projects from Payload -->
+    <ProjectsGrid />
+  </div>
+</section>
