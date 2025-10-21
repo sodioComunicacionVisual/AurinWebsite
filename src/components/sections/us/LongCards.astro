@@ -3,10 +3,13 @@
 import { ArrowUpRight } from 'lucide-astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
+import CounterContainer from '../../ui/CounterContainer.astro';
 import styles from './LongCards.module.css';
 
 interface CardData {
   number: string;
+  targetValue: number;
+  suffix: string;
   label: string;
 }
 
@@ -15,9 +18,24 @@ const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 
 const cards: CardData[] = [
-  { number: "600+", label: t.about.longCards.clients },
-  { number: "26+", label: t.about.longCards.years },
-  { number: "16+", label: t.about.longCards.countries }
+  { 
+    number: "600+", 
+    targetValue: 600, 
+    suffix: "+", 
+    label: t.about.longCards.clients 
+  },
+  { 
+    number: "26+", 
+    targetValue: 26, 
+    suffix: "+", 
+    label: t.about.longCards.years 
+  },
+  { 
+    number: "16+", 
+    targetValue: 16, 
+    suffix: "+", 
+    label: t.about.longCards.countries 
+  }
 ];
 ---
 
@@ -30,7 +48,17 @@ const cards: CardData[] = [
         data-motion-id={`long-card-${index}`}
       >
         <div class={styles['card-main-content']}>
-          <div class={styles['card-number']}>{card.number}</div>
+          <div class={styles['card-number']}>
+            <CounterContainer
+              targetValue={card.targetValue}
+              suffix={card.suffix}
+              fontSize={200}
+              textColor="#D0DF00"
+              fontWeight={400}
+              startOffset={15}
+              className={styles['animated-counter']}
+            />
+          </div>
           <div class={styles['card-label']}>{card.label}</div>
         </div>
         <div class={styles['card-icon-wrapper']}>

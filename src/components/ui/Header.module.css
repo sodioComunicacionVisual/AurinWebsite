@@ -1,7 +1,6 @@
   .header {
     width: 100%;
-    background: rgba(10, 10, 10, 0.30);
-    backdrop-filter: blur(10px);
+    background: black;
     position: fixed;
     top: 0;
     left: 0;

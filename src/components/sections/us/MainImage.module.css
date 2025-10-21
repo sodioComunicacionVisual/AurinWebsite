@@ -2,16 +2,20 @@
   width: 100%;
   position: relative;
   overflow: hidden;
+  /* Ensure proper height for parallax effect */
+  min-height: 60vh;
 }
 
 .image-wrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: 500px;
+  max-height: 800px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* Ukiyo compatibility */
+  overflow: hidden;
 }
 
 .image-wrapper::before {

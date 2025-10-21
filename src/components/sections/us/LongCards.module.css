@@ -68,6 +68,11 @@
     z-index: 2;
   }
 
+  .animated-counter {
+    font-family: var(--font-body);
+    font-size: clamp(4rem, 15.5vw, 12.5rem) !important;
+  }
+
   .long-card:hover .card-number {
     color: #0A0A0A !important;
   }

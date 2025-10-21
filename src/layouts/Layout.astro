@@ -5,6 +5,7 @@ import AdvancedSEO from '../components/modules/seo/AdvancedSEO.astro';
 import PageLoader from '../components/ui/PageLoader.astro';
 import ChatbotContainer from '../components/modules/chatbot/ChatbotContainer.astro';
 import SpotlightCursorContainer from '../components/ui/SpotlightCursorContainer.astro';
+import Vignette from '../components/ui/Vignette.astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
 import Analytics from '@vercel/analytics/astro';
 
@@ -19,6 +20,9 @@ interface Props {
 	keywords?: string;
 	author?: string;
 	twitterCard?: string;
+	vignetteIntensity?: 'light' | 'medium' | 'strong';
+	vignetteColor?: string;
+	showVignette?: boolean;
 }
 
 const { 
@@ -31,7 +35,10 @@ const {
 	speakable,
 	keywords,
 	author,
-	twitterCard
+	twitterCard,
+	vignetteIntensity = 'medium',
+	vignetteColor,
+	showVignette = false
 } = Astro.props;
 ---
 
@@ -70,6 +77,12 @@ const {
 		<PageLoader />
 		<MegaMenu />
 		<slot />
+		{showVignette && (
+			<Vignette 
+				intensity={vignetteIntensity}
+				color={vignetteColor}
+			/>
+		)}
 		<ChatbotContainer />
 		<SpeedInsights />
 		<Analytics />

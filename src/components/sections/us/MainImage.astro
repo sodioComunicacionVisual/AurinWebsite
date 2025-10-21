@@ -14,9 +14,25 @@ const t = translations[currentLang];
     <img
       src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/NosotrosImage.webp"
       alt={t.about.mainImage.alt}
-      class={styles['main-image']}
+      class={`${styles['main-image']} ukiyo`}
       loading="lazy"
       decoding="async"
+      data-u-speed="1.5"
+      data-u-scale="1.2"
     />
   </div>
 </section>
+
+<script>
+  import Ukiyo from 'ukiyojs';
+  
+  // Initialize Ukiyo parallax effect when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new Ukiyo('.ukiyo', {
+      speed: 1.5,
+      scale: 1.2,
+      wrapperClass: 'ukiyo-wrapper',
+      willChange: true
+    });
+  });
+</script>

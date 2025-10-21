@@ -51,7 +51,7 @@
 
 .lampDecoration {
   position: absolute;
-  left: -100px;
+  left: -300px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;

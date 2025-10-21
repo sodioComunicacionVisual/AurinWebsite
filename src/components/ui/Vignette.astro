@@ -1,0 +1,26 @@
+---
+// Componente Vignette para efecto de viñetado
+// Siguiendo las mejores prácticas de Astro con CSS modules
+import styles from './Vignette.module.css';
+
+export interface Props {
+  intensity?: 'light' | 'medium' | 'strong';
+  color?: string;
+  className?: string;
+}
+
+const { 
+  intensity = 'medium',
+  color = 'rgba(0,0,0,0.9)',
+  className = ''
+} = Astro.props;
+
+// Generar clase CSS basada en la intensidad
+const intensityClass = styles[`vignette--${intensity}`] || styles['vignette--medium'];
+---
+
+<div 
+  class={`${styles.vignette} ${intensityClass} ${className}`}
+  style={color !== 'rgba(0,0,0,0.9)' ? `--vignette-color: ${color}` : ''}
+>
+</div>

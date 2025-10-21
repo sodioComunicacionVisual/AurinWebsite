@@ -2,6 +2,7 @@
 // Alianzas.astro
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
+import ScrollAnimationContainer from '../../ui/ScrollAnimationContainer.astro';
 import styles from './Alianzas.module.css';
 
 // Detect current language
@@ -11,37 +12,58 @@ const t = translations[currentLang];
 
 <section class={styles.alianzas}>
   <div class={styles['alianzas-container']}>
-    <div class={styles['heading-column']}>
-      <h3 class={styles['heading-white']}>{t.about.alianzas.headingWhite}</h3>
-      <h2 class={styles['heading-yellow']}>{t.about.alianzas.headingYellow}</h2>
-    </div>
+    <ScrollAnimationContainer 
+      opacity={0}
+      y={40}
+      duration={0.8}
+      delay={0.1}
+    >
+      <div class={styles['heading-column']}>
+        <h3 class={styles['heading-white']}>{t.about.alianzas.headingWhite}</h3>
+        <h2 class={styles['heading-yellow']}>{t.about.alianzas.headingYellow}</h2>
+      </div>
+    </ScrollAnimationContainer>
 
     <div class={styles['content-column']}>
-      <div class={styles['text-content']}>
-        <p class={styles['body-text']} set:html={t.about.alianzas.description}>
-        </p>
-      </div>
+      <ScrollAnimationContainer 
+        opacity={0}
+        y={30}
+        duration={0.7}
+        delay={0.3}
+      >
+        <div class={styles['text-content']}>
+          <p class={styles['body-text']} set:html={t.about.alianzas.description}>
+          </p>
+        </div>
+      </ScrollAnimationContainer>
 
-      <div class={styles['logos-container']}>
-        <img
-          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AncientGreen.svg"
-          alt="Ancient Technologies"
-          class={styles['partner-logo']}
-          loading="lazy"
-        />
-        <img
-          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/IdeogramaGreen.svg"
-          alt="Ideograma"
-          class={styles['partner-logo']}
-          loading="lazy"
-        />
-        <img
-          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/TopDesignGreen.svg"
-          alt="TopDesign"
-          class={styles['partner-logo']}
-          loading="lazy"
-        />
-      </div>
+      <ScrollAnimationContainer 
+        opacity={0}
+        y={20}
+        duration={0.8}
+        delay={0.5}
+      >
+        <div class={styles['logos-container']}>
+          <img
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AncientGreen.svg"
+            alt="Ancient Technologies"
+            class={styles['partner-logo']}
+            loading="lazy"
+          />
+          <img
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/IdeogramaGreen.svg"
+            alt="Ideograma"
+            class={styles['partner-logo']}
+            loading="lazy"
+          />
+          <img
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/TopDesignGreen.svg"
+            alt="TopDesign"
+            class={styles['partner-logo']}
+            loading="lazy"
+          />
+        </div>
+      </ScrollAnimationContainer>
     </div>
   </div>
 </section>

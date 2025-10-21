@@ -1,0 +1,78 @@
+/* Vignette Effect Component Styles */
+/* Siguiendo las mejores prácticas de CSS modules del proyecto */
+
+.vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  --vignette-color: rgba(0, 0, 0, 0.98);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Intensidades del efecto viñeta */
+.vignette--light {
+  box-shadow: 0 0 180px var(--vignette-color) inset;
+}
+
+.vignette--medium {
+  box-shadow: 0 0 80px var(--vignette-color) inset;
+}
+
+.vignette--strong {
+  box-shadow: 0 0 50px var(--vignette-color) inset;
+}
+
+/* Variantes adicionales para diferentes efectos */
+.vignette--subtle {
+  box-shadow: 0 0 400px rgba(0, 0, 0, 0.5) inset;
+}
+
+.vignette--dramatic {
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.95) inset;
+}
+
+/* Soporte para modo oscuro y claro */
+@media (prefers-color-scheme: dark) {
+  .vignette {
+    --vignette-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .vignette {
+    --vignette-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Animación suave para transiciones */
+.vignette {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Soporte para usuarios que prefieren movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .vignette {
+    transition: none;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .vignette--light {
+    box-shadow: 0 0 250px var(--vignette-color) inset;
+  }
+  
+  .vignette--medium {
+    box-shadow: 0 0 180px var(--vignette-color) inset;
+  }
+  
+  .vignette--strong {
+    box-shadow: 0 0 120px var(--vignette-color) inset;
+  }
+}

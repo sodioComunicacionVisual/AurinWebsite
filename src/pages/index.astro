@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/ui/Header.astro';
 import MegaMenu from '../components/ui/MegaMenu.astro';
 import InteractiveBackground from '../components/ui/InteractiveBackground.astro';
+import Vignette from '../components/ui/Vignette.astro';
 import Banner from '../components/sections/home/Banner.astro';
 import Descripcion from '../components/sections/home/Descripcion.astro';
 import ExpertosUsuarios from '../components/sections/home/ExpertosUsuarios.astro';
@@ -62,6 +63,7 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 	ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
 	<InteractiveBackground />
+	<Vignette intensity="medium" />
 	<Header />
 	<MegaMenu />
 	<main>

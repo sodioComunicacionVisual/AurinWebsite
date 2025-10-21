@@ -1,0 +1,49 @@
+---
+import AnimatedCounter from './AnimatedCounter.tsx';
+import ScrollAnimationContainer from './ScrollAnimationContainer.astro';
+
+export interface Props {
+  targetValue: number;
+  fontSize?: number;
+  padding?: number;
+  gap?: number;
+  textColor?: string;
+  fontWeight?: string | number;
+  suffix?: string;
+  className?: string;
+  startOffset?: number;
+}
+
+const {
+  targetValue,
+  fontSize = 100,
+  padding = 0,
+  gap = 8,
+  textColor = '#D0DF00',
+  fontWeight = 600,
+  suffix = '',
+  className = '',
+  startOffset = 15
+} = Astro.props;
+---
+
+<ScrollAnimationContainer 
+  opacity={0}
+  y={30}
+  duration={0.8}
+  delay={0.1}
+  blur={2}
+>
+  <AnimatedCounter 
+    targetValue={targetValue}
+    fontSize={fontSize}
+    padding={padding}
+    gap={gap}
+    textColor={textColor}
+    fontWeight={fontWeight}
+    suffix={suffix}
+    className={className}
+    startOffset={startOffset}
+    client:load
+  />
+</ScrollAnimationContainer>
