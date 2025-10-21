@@ -5,30 +5,20 @@ import { PayloadAPI, type PayloadProject, getImageUrl } from '../../lib/payload'
 import { getLangFromUrl } from '../../i18n/utils';
 import { translations } from '../../i18n/translations';
 
-export const prerender = true;
+export const prerender = false;
 
-export async function getStaticPaths() {
-  try {
-    const projects = await PayloadAPI.getProjects('es');
-
-    console.log('📦 Generating static paths for projects:', projects.map(p => p.slug));
-
-    const paths = projects.map((project) => ({
-      params: { slug: project.slug },
-      props: { project, locale: 'es' },
-    }));
-
-    return paths;
-  } catch (error) {
-    console.error('❌ Error in getStaticPaths:', error);
-    return [];
-  }
-}
-
-const { project, locale } = Astro.props as { project: PayloadProject; locale: string };
+// Fetch project dynamically on each request
 const { slug } = Astro.params;
+let project: PayloadProject | null = null;
+const locale = 'es';
 
-console.log('🔍 Rendering project:', slug, 'Found:', project ? 'YES' : 'NO');
+try {
+  const projects = await PayloadAPI.getProjects('es');
+  project = projects.find(p => p.slug === slug) || null;
+  console.log('🔍 Dynamic fetch for slug:', slug, 'Found:', project ? 'YES' : 'NO');
+} catch (error) {
+  console.error('❌ Error fetching project:', error);
+}
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url) || locale;
