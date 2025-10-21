@@ -31,28 +31,16 @@
 
   /* Image container */
   .image-container {
-    align-self: stretch;
-    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* This creates a 1:1 aspect ratio */
     position: relative;
     overflow: hidden;
     border-radius: 10.46px;
-  }
-
-  .image-wrapper {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    border-radius: 10.46px;
-    background: #18192C;
-  }
-
-  .project-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #18192C;
     filter: grayscale(100%);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -160,7 +148,7 @@
     transform: rotate(45deg);
   }
 
-  .project-card:hover .project-image {
+  .project-card:hover .image-container {
     filter: grayscale(0%);
   }
 

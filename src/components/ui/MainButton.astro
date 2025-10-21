@@ -1,5 +1,6 @@
 ---
 import ButtonIsland from './ButtonIsland.astro';
+import { Tilt } from './Tilt';
 
 interface Props {
   text?: string;
@@ -13,4 +14,10 @@ interface Props {
 const props = Astro.props;
 ---
 
-<ButtonIsland {...props} variant="primary" />
+<Tilt 
+  client:visible
+  rotationFactor={1.5}
+  style={{ transformOrigin: 'center center' }}
+>
+  <ButtonIsland {...props} variant="primary" />
+</Tilt>

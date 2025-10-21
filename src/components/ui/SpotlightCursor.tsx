@@ -82,7 +82,7 @@ export const SpotlightCursor = ({
           currentMouseX, currentMouseY, config.radius || 300
         );
         const rgbColor = hexToRgb(config.color || '#ffffff');
-        gradient.addColorStop(0, `rgba(${rgbColor}, ${config.brightness || 0.15})`);
+        gradient.addColorStop(0, `rgba(${rgbColor}, ${config.brightness || 0.10})`);
         gradient.addColorStop(1, 'rgba(0,0,0,0)');
 
         ctx.fillStyle = gradient;

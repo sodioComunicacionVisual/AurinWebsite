@@ -3,6 +3,7 @@ import SecondaryButton from './SecondaryButton.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 import styles from './MainCat.module.css';
+import { Tilt } from './Tilt';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -10,17 +11,24 @@ const t = translations[currentLang];
 ---
 
 <section class={styles.mainCatContainer}>
-  <div class={styles.mainCatWrapper} data-parallax-wrapper>
-    <div class={styles.mainCatContent}>
-      <div class={styles.mainCatText}>
-        <p class={styles.body0} set:html={t.mainCat.text}>
-        </p>
-      </div>
-      <div class={styles.buttonWrapper}>
-        <SecondaryButton text={t.mainCat.buttonText} href="/contacto" />
+  <Tilt 
+    client:visible
+    rotationFactor={1.5}
+    className="w-full"
+    style={{ transformOrigin: 'center center' }}
+  >
+    <div class={styles.mainCatWrapper} data-parallax-wrapper>
+      <div class={styles.mainCatContent}>
+        <div class={styles.mainCatText}>
+          <p class={styles.body0} set:html={t.mainCat.text}>
+          </p>
+        </div>
+        <div class={styles.buttonWrapper}>
+          <SecondaryButton text={t.mainCat.buttonText} href="/contacto" />
+        </div>
       </div>
     </div>
-  </div>
+  </Tilt>
 </section>
 
 

@@ -1,0 +1,41 @@
+---
+import { TiltSpotlight } from './TiltSpotlight';
+
+interface Props {
+  rotationFactor?: number;
+  isReverse?: boolean;
+  spotlightSize?: number;
+  className?: string;
+  spotlightClassName?: string;
+  springOptions?: {
+    stiffness?: number;
+    damping?: number;
+    mass?: number;
+  };
+}
+
+const {
+  rotationFactor = 6,
+  isReverse = false,
+  spotlightSize = 248,
+  className = '',
+  spotlightClassName = 'z-10 blur-2xl',
+  springOptions = {
+    stiffness: 26.7,
+    damping: 4.1,
+    mass: 0.2,
+  }
+} = Astro.props;
+---
+
+<TiltSpotlight
+  client:visible
+  rotationFactor={rotationFactor}
+  isReverse={isReverse}
+  spotlightSize={spotlightSize}
+  className={className}
+  spotlightClassName={spotlightClassName}
+  springOptions={springOptions}
+>
+  <slot />
+</TiltSpotlight>
