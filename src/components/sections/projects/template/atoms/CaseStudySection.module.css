@@ -11,17 +11,25 @@
   gap: 30px;
 }
 
+
 .title {
   color: #D0DF00;
-  font-size: clamp(40px, 8vw, 120px);
+  font-size: clamp(42px, 5vw, 84px);
   font-family: 'Urbanist', sans-serif;
   font-weight: 800;
-  text-transform: uppercase;
+  text-align: end;
   line-height: 1;
-  text-align: right;
+  padding: 50px 100px 0px 100px;
   margin: 0;
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
+}
+
+/* Remove side padding for viewports smaller than 910px */
+@media (max-width: 909px) {
+  .title {
+    padding: 50px 0px 0px 0px;
+  }
 }
 
 .content {
@@ -31,7 +39,14 @@
   font-weight: 600;
   text-align: right;
   margin: 0;
+  padding: 0px 100px 0px 100px;
   line-height: 1.4;
+}
+
+@media (max-width: 909px) {
+  .content {
+    padding: 0px 0px 0px 0px;
+  }
 }
 
 /* Tablet: 768px and up */

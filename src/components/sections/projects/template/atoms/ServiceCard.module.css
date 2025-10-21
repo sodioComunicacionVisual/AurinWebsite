@@ -1,6 +1,6 @@
 /* Mobile-first: Base styles for mobile */
 .serviceCard {
-  min-height: clamp(12.5rem, 20vw, 18.75rem);
+  min-height: clamp(6.5rem, 10vw, 9.75rem);
   background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #161616;
   overflow: hidden;
   border-radius: 10px;
@@ -9,6 +9,15 @@
   align-items: flex-start;
   position: relative;
   cursor: pointer;
+  padding: 50px 50px 50px 50px;
+
+}
+
+/* Remove side padding for viewports smaller than 910px */
+@media (max-width: 909px) {
+  .serviceCard {
+    padding: 50px 0px 50px 0px;
+  }
 }
 
 .serviceCard::before {
@@ -30,9 +39,7 @@
 .cardMainContent {
   flex: 1;
   align-self: stretch;
-  padding-inline: clamp(1.5rem, 5.5vw, 4.9375rem);
-  padding-top: clamp(5.5rem, 7vw, 6.5rem);
-  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+
   overflow: visible;
   display: flex;
   justify-content: space-between;
@@ -43,7 +50,6 @@
 }
 
 .serviceName {
-  max-width: clamp(15rem, 36vw, 32.9375rem);
   color: #D0DF00;
   font-size: clamp(2rem, 4vw, 6rem);
   font-family: 'Urbanist', sans-serif;
@@ -64,7 +70,6 @@
 .cardIconWrapper {
   width: clamp(3.25rem, 12.5vw, 12.5rem);
   align-self: stretch;
-  padding: 0.625rem;
   border-radius: 7.73px;
   display: flex;
   justify-content: flex-end;
