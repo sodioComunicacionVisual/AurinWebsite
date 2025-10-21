@@ -1,0 +1,26 @@
+---
+import { BGPattern } from './bg-pattern.tsx';
+---
+
+<div class="bg-container">
+  <BGPattern 
+    client:load
+    variant="vertical-lines"
+    mask="none"
+    size={32}
+    fill="rgba(192, 192, 192, 0.05)"
+  />
+</div>
+
+<style>
+  .bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #000000;
+  }
+</style>

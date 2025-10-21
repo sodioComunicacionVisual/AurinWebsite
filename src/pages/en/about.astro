@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/ui/Header.astro';
+import InteractiveBackground from '../../components/ui/InteractiveBackground.astro';
 import UsBanner from '../../components/sections/us/UsBanner.astro';
 import MainImage from '../../components/sections/us/MainImage.astro';
 import RutasInexploradas from '../../components/sections/us/RutasInexploradas.astro';
@@ -67,6 +68,7 @@ const speakable = [".us-banner", ".rutas-inexploradas", ".como-llegamos", ".dise
   canonical="https://aurin.mx/en/about"
   ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
+  <InteractiveBackground />
   <Header />
   <main>
     <UsBanner />
@@ -84,6 +86,5 @@ const speakable = [".us-banner", ".rutas-inexploradas", ".como-llegamos", ".dise
 <style>
   main {
     width: 100%;
-    background: var(--color-black-a);
   }
 </style>

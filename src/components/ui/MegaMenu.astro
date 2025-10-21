@@ -62,18 +62,10 @@ const menuItems = [
 <script>
   // Mega Menu functionality
   function initMegaMenu() {
-    console.log('[MegaMenu] Initializing MegaMenu');
     const megaMenu = document.querySelector('[data-mega-menu]') as HTMLElement;
     const closeButton = document.querySelector('[data-close-menu]') as HTMLButtonElement;
     const overlay = document.querySelector('[data-menu-overlay]') as HTMLElement;
     const menuLinks = document.querySelectorAll('.menu-link');
-
-    console.log('[MegaMenu] Elements found:', {
-      megaMenu: !!megaMenu,
-      closeButton: !!closeButton,
-      overlay: !!overlay,
-      menuLinksCount: menuLinks.length
-    });
 
     if (!megaMenu) {
       console.error('[MegaMenu] MegaMenu element not found!');
@@ -82,16 +74,12 @@ const menuItems = [
 
     // Listen for custom event to open menu
     document.addEventListener('toggle-mega-menu', () => {
-      console.log('[MegaMenu] toggle-mega-menu event received');
       const isOpen = megaMenu.getAttribute('data-open') === 'true';
-      console.log('[MegaMenu] Current state - isOpen:', isOpen);
 
       if (isOpen) {
-        console.log('[MegaMenu] Closing menu');
         megaMenu.setAttribute('data-open', 'false');
         document.body.style.overflow = '';
       } else {
-        console.log('[MegaMenu] Opening menu');
         megaMenu.setAttribute('data-open', 'true');
         document.body.style.overflow = 'hidden';
       }
@@ -99,14 +87,12 @@ const menuItems = [
 
     // Close button
     closeButton?.addEventListener('click', () => {
-      console.log('[MegaMenu] Close button clicked');
       megaMenu.setAttribute('data-open', 'false');
       document.body.style.overflow = '';
     });
 
     // Close on overlay click
     overlay?.addEventListener('click', () => {
-      console.log('[MegaMenu] Overlay clicked');
       megaMenu.setAttribute('data-open', 'false');
       document.body.style.overflow = '';
     });
@@ -114,7 +100,6 @@ const menuItems = [
     // Close on link click
     menuLinks.forEach(link => {
       link.addEventListener('click', () => {
-        console.log('[MegaMenu] Menu link clicked');
         megaMenu.setAttribute('data-open', 'false');
         document.body.style.overflow = '';
       });
@@ -123,7 +108,6 @@ const menuItems = [
     // Close on ESC key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && megaMenu.getAttribute('data-open') === 'true') {
-        console.log('[MegaMenu] ESC key pressed, closing menu');
         megaMenu.setAttribute('data-open', 'false');
         document.body.style.overflow = '';
       }

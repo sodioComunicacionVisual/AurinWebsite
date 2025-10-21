@@ -1,6 +1,5 @@
 .especialidades {
   width: 100%;
-  background: var(--color-black-a);
   overflow-x: hidden;
 }
 
@@ -20,7 +19,6 @@
   flex: 0 0 auto;
   height: auto;
   padding: clamp(30px, 10vw, 50px) clamp(40px, 5vw, 100px);
-  background: var(--color-black-a);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -75,7 +73,6 @@
   flex: 1;
   min-width: 0;
   padding: clamp(30px, 5vw, 50px) clamp(20px, 3vw, 40px);
-  background: var(--color-black-a);
   overflow: hidden;
   display: flex;
   flex-direction: column;

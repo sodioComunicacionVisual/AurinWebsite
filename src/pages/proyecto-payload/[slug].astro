@@ -15,7 +15,6 @@ const locale = 'es';
 try {
   const projects = await PayloadAPI.getProjects('es');
   project = projects.find(p => p.slug === slug) || null;
-  console.log('🔍 Dynamic fetch for slug:', slug, 'Found:', project ? 'YES' : 'NO');
 } catch (error) {
   console.error('❌ Error fetching project:', error);
 }

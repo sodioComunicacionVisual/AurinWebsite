@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--color-black-a);
   padding: 100px 20px;
 }
 

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/ui/Header.astro';
+import InteractiveBackground from '../../components/ui/InteractiveBackground.astro';
 import Footer from '../../components/ui/Footer.astro';
 import Form from '../../components/modules/contact/Form.astro';
 import Toast from '../../components/ui/Toast.astro';
@@ -53,6 +54,7 @@ const speakable = [".contact-form", ".contact-info"];
   canonical="https://aurin.mx/en/contact"
   ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
+  <InteractiveBackground />
   <Header />
   <main>
     <Form />
@@ -65,7 +67,6 @@ const speakable = [".contact-form", ".contact-info"];
   body {
     margin: 0;
     padding: 0;
-    background: var(--color-black-a);
     overflow-x: hidden;
   }
 

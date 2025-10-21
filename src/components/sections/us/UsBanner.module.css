@@ -1,6 +1,5 @@
 .us-banner {
   width: 100%;
-  background: var(--color-black-a);
   padding-block-start: clamp(5rem, 10vh, 8rem);
   padding:200px 0px 100px 0px;
 

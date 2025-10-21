@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/ui/Header.astro';
+import InteractiveBackground from '../components/ui/InteractiveBackground.astro';
 import Footer from '../components/ui/Footer.astro';
 import Introduction from '../components/sections/projects/Introduction.astro';
 import ProjectCard from '../components/ui/ProjectCard.astro';
@@ -100,6 +101,7 @@ const canonicalUrl = currentLang === 'es' ? "https://aurin.mx/proyectos" : "http
   canonical={canonicalUrl}
   ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
+  <InteractiveBackground />
   <Header />
   
   <main class="proyectos-page">
@@ -176,7 +178,6 @@ const canonicalUrl = currentLang === 'es' ? "https://aurin.mx/proyectos" : "http
 <style>
   .proyectos-page {
     width: 100%;
-    background: var(--color-black-a);
     min-height: 100vh;
     padding-top: 80px;
   }
@@ -185,7 +186,6 @@ const canonicalUrl = currentLang === 'es' ? "https://aurin.mx/proyectos" : "http
   .projects-strip {
     width: 100%;
     padding: 60px 0;
-    background: var(--color-black-a);
   }
   
   .strip-container {

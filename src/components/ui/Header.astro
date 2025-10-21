@@ -95,11 +95,9 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
 
     // Menu button functionality
     const menuButtons = document.querySelectorAll('[data-menu-trigger]');
-    console.log('[Header] Found menu buttons:', menuButtons.length);
 
     menuButtons.forEach(button => {
       button.addEventListener('click', () => {
-        console.log('[Header] Menu button clicked, dispatching toggle-mega-menu event');
         document.dispatchEvent(new CustomEvent('toggle-mega-menu'));
       });
     });
@@ -109,7 +107,6 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
     
     langButtons.forEach(button => {
       button.addEventListener('click', () => {
-        console.log('Language button clicked - switch to English');
         // window.location.href = '/en';
       });
     });

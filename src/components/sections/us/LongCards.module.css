@@ -1,5 +1,4 @@
   .long-cards {
-    background: var(--color-black-a);
     padding-block: clamp(3rem, 6.25vw, 6.25rem);
     padding-inline: clamp(1.25rem, 3.125vw, 3.125rem);
   }
@@ -110,7 +109,6 @@
     width: clamp(2.5rem, 3.25vw, 3.26125rem);
     height: clamp(2.5rem, 3.25vw, 3.26125rem);
     position: relative;
-    background: #0A0A0A;
     border-radius: 9.66px;
     display: flex;
     align-items: center;

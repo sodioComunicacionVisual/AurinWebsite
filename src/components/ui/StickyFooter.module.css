@@ -1,0 +1,278 @@
+/* Sticky Footer Effect - Method 1 from documentation */
+.stickyFooter {
+  position: relative;
+  height: 720px;
+  width: 100%;
+  clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
+}
+
+.stickyContainer {
+  position: fixed;
+  bottom: 0;
+  height: 720px;
+  width: 100%;
+}
+
+.footerContent {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.footerContent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/FooterLight.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footerContainer {
+  max-width: var(--maxWidth);
+  margin: 0 auto;
+  padding: 49px 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 62px;
+}
+
+.footerContentInner {
+  display: flex;
+  padding-top: 80px;
+  align-items: center;
+  gap: 36px;
+  position: relative;
+}
+
+.lampDecoration {
+  position: absolute;
+  left: -100px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.footerLogo {
+  width: 468px;
+  height: 146.82px;
+  flex-shrink: 0;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.footerLogo.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footerColumns {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.footerColumn {
+  width: 442.02px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.footerColumn.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.footerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.footerLinkContainer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.footerLine {
+  width: 100%;
+  max-width: 20px;
+  height: 100%;
+  border-bottom: 1.07px solid #282828;
+}
+
+.footerTitle {
+  color: white;
+  font-size: 16px;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 700;
+  line-height: 16px;
+  margin: 0;
+}
+
+.footerLink {
+  color: #A0A0A0;
+  font-size: 20px;
+  font-family: 'Urbanist', sans-serif;
+  font-weight: 400;
+  line-height: 22px;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  color: white;
+}
+
+.footerCopyright {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footerCopyright p {
+  color: white;
+  font-size: 14px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 400;
+  text-decoration: underline;
+  line-height: 14px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (min-width: 1501px) {
+  .lampDecoration {
+    display: none;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .footerContentInner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footerColumns {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footerContainer {
+    padding: 60px 24px;
+  }
+
+  .footerLogo {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+  }
+
+  .footerColumns {
+    flex-direction: column;
+  }
+
+  .footerColumn {
+    width: 100%;
+  }
+
+  .footerCopyright p {
+    width: 100%;
+  }
+}
+
+@media (max-width: 968px) {
+  .stickyFooter {
+    height: 600px;
+  }
+  
+  .stickyContainer {
+    height: 600px;
+  }
+  
+  .footerContentInner {
+    padding-top: 40px;
+  }
+  
+  .footerColumns {
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .footerColumn {
+    width: 100%;
+  }
+
+  .lampDecoration {
+    left: -50px;
+  }
+}
+
+@media (max-width: 640px) {
+  .stickyFooter {
+    height: 500px;
+  }
+  
+  .stickyContainer {
+    height: 500px;
+  }
+  
+  .footerContainer {
+    padding: 30px 20px;
+  }
+
+  .footerContentInner {
+    padding-top: 20px;
+  }
+  
+  .lampDecoration {
+    left: -30px;
+    top: 30%;
+  }
+  
+  .footerLogo {
+    max-width: 250px;
+  }
+
+  .footerColumns {
+    gap: 30px;
+  }
+
+  .footerSection {
+    gap: 20px;
+  }
+
+  .footerTitle {
+    font-size: 14px;
+  }
+
+  .footerLink {
+    font-size: 18px;
+  }
+
+  .footerCopyright p {
+    font-size: 12px;
+    text-align: center;
+  }
+}

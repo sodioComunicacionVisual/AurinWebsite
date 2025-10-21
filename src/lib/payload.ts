@@ -1,6 +1,6 @@
 // Payload CMS API Helper for Astro
-const PAYLOAD_API_URL = import.meta.env.PAYLOAD_API_URL || 'http://localhost:3000/api';
-const PAYLOAD_SERVER_URL = import.meta.env.PAYLOAD_SERVER_URL || 'http://localhost:3000';
+const PAYLOAD_API_URL = import.meta.env.PAYLOAD_API_URL || 'https://aurin-payload-cms.vercel.app/api';
+const PAYLOAD_SERVER_URL = import.meta.env.PAYLOAD_SERVER_URL || 'https://aurin-payload-cms.vercel.app';
 
 export interface PayloadProject {
   id: string;

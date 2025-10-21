@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/ui/Header.astro';
 import MegaMenu from '../components/ui/MegaMenu.astro';
+import InteractiveBackground from '../components/ui/InteractiveBackground.astro';
 import Banner from '../components/sections/home/Banner.astro';
 import Descripcion from '../components/sections/home/Descripcion.astro';
 import ExpertosUsuarios from '../components/sections/home/ExpertosUsuarios.astro';
@@ -10,7 +11,7 @@ import Especialidades from '../components/sections/home/Especialidades.astro';
 import MainCat from '../components/ui/MainCat.astro';
 import HerramientasVariant from '../components/sections/services/HerramientasVariant.astro';
 import DynamicProjects from '../components/ui/DynamicProjects.astro';
-import Footer from '../components/ui/Footer.astro';
+import StickyFooter from '../components/ui/StickyFooter.astro';
 import { translations } from '../i18n/translations.js';
 
 // Get Spanish translations (default)
@@ -60,6 +61,7 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 	canonical="https://aurin.mx/"
 	ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
+	<InteractiveBackground />
 	<Header />
 	<MegaMenu />
 	<main>
@@ -71,7 +73,7 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 		<HerramientasVariant />
 		<DynamicProjects />
     <MainCat/>
-		<Footer />
+		<StickyFooter />
 	</main>
 </Layout>
 

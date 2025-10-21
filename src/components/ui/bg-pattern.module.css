@@ -1,0 +1,45 @@
+.bgPattern {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+/* Mask variants */
+.fadeEdges {
+  mask-image: radial-gradient(ellipse at center, #000000, transparent);
+}
+
+.fadeCenter {
+  mask-image: radial-gradient(ellipse at center, transparent, #000000);
+}
+
+.fadeTop {
+  mask-image: linear-gradient(to bottom, transparent, #000000);
+}
+
+.fadeBottom {
+  mask-image: linear-gradient(to bottom, #000000, transparent);
+}
+
+.fadeLeft {
+  mask-image: linear-gradient(to right, transparent, #000000);
+}
+
+.fadeRight {
+  mask-image: linear-gradient(to right, #000000, transparent);
+}
+
+.fadeX {
+  mask-image: linear-gradient(to right, transparent, #000000, transparent);
+}
+
+.fadeY {
+  mask-image: linear-gradient(to bottom, transparent, #000000, transparent);
+}
+
+.none {
+  mask-image: none;
+}

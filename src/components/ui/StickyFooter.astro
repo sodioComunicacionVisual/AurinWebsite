@@ -1,0 +1,112 @@
+---
+// StickyFooter component - replica with sticky effect
+import styles from './StickyFooter.module.css';
+import LampLight from './LampLight.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<footer class={styles.stickyFooter}>
+  <div class={styles.stickyContainer}>
+    <div class={styles.footerContent}>
+      <div class={styles.footerContainer}>
+        <div class={styles.footerContentInner}>
+          <!-- Lámpara decorativa en el lado izquierdo -->
+          <div class={styles.lampDecoration}>
+            <LampLight lightColor="#fcffbb" intensity="medium" />
+          </div>
+          
+          <img
+            class={`${styles.footerLogo} footer-logo`}
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+            alt="Aurin Logo"
+          />
+
+          <div class={styles.footerColumns}>
+            <!-- Column 1: Oficinas y Contacto -->
+            <div class={`${styles.footerColumn} footer-column`}>
+              <div class={styles.footerSection}>
+                <h3 class={styles.footerTitle}>{t.footer.offices}</h3>
+                <div class={styles.footerLinkContainer}>
+                  <div class={styles.footerLine}></div>
+                  <a href="https://aldeacreativa.mx/" target="_blank" rel="noopener noreferrer" class={styles.footerLink}>{t.footer.officesLink}</a>
+                </div>
+              </div>
+
+              <div class={styles.footerSection}>
+                <h3 class={styles.footerTitle}>{t.footer.contact}</h3>
+                <div class={styles.footerLinkContainer}>
+                  <div class={styles.footerLine}></div>
+                  <a href="mailto:hey@aurin.mx" class={styles.footerLink}>hey@aurin.mx</a>
+                </div>
+              </div>
+
+              <div class={styles.footerSection}>
+                <div class={styles.footerLinkContainer}>
+                  <div class={styles.footerLine}></div>
+                  <a href="https://aurin-payload-cms.vercel.app/admin/" target="_blank" rel="noopener noreferrer" class={styles.footerLink}>Acceder</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: Legales -->
+            <div class={`${styles.footerColumn} footer-column`}>
+              <div class={styles.footerSection}>
+                <h3 class={styles.footerTitle}>{t.footer.legal}</h3>
+                <div class={styles.footerLinkContainer}>
+                  <div class={styles.footerLine}></div>
+                  <a href="/privacidad" class={styles.footerLink}>{t.footer.privacyPolicy}</a>
+                </div>
+                <div class={styles.footerLinkContainer}>
+                  <div class={styles.footerLine}></div>
+                  <a href="/terminosycondiciones" class={styles.footerLink}>{t.footer.termsConditions}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class={styles.footerCopyright}>
+          <p>{t.footer.copyright}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const footerLogo = document.querySelector('.footer-logo') as HTMLElement;
+    const footerColumns = document.querySelectorAll('.footer-column');
+
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Animar el logo
+    if (footerLogo) {
+      footerLogo.style.transitionDelay = '0.2s';
+      observer.observe(footerLogo);
+    }
+
+    // Animar las columnas con delay escalonado
+    footerColumns.forEach((column, index) => {
+      (column as HTMLElement).style.transitionDelay = `${0.3 + index * 0.15}s`;
+      observer.observe(column);
+    });
+  });
+</script>
