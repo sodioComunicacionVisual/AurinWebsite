@@ -42,10 +42,39 @@ const { title, categories, description, bannerImage } = Astro.props;
       <p class={styles.description}>{description}</p>
     </div>
 
-    <button class={styles.scrollButton} aria-label="Scroll down">
+    <button class={styles.scrollButton} aria-label="Scroll down" id="scrollDownButton">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M2.09 8.09L12 18l9.91-9.91" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </button>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollButton = document.getElementById('scrollDownButton');
+    
+    if (scrollButton) {
+      scrollButton.addEventListener('click', () => {
+        // Find the first section after the banner (case study section)
+        const caseStudySection = document.querySelector('[class*="caseStudy"]');
+        
+        if (caseStudySection) {
+          caseStudySection.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        } else {
+          // If no case study, scroll to next available section
+          const nextSection = document.querySelector('article > section:nth-child(2)');
+          if (nextSection) {
+            nextSection.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+      });
+    }
+  });
+</script>

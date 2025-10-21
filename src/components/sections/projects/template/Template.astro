@@ -71,25 +71,33 @@ const { projectData } = Astro.props;
   />
 
   <!-- Strip 2: Case Study -->
-  <CaseStudySection
-    title={projectData.caseStudyTitle}
-    content={projectData.caseStudyContent || "Contenido del caso de estudio no disponible."}
-  />
+  {projectData.caseStudyContent && (
+    <CaseStudySection
+      title={projectData.caseStudyTitle}
+      content={projectData.caseStudyContent}
+    />
+  )}
 
   <!-- Strip 3: Image Grid -->
-  <ImageGrid images={projectData.images} />
+  {projectData.images && projectData.images.length > 0 && (
+    <ImageGrid images={projectData.images} />
+  )}
 
   <!-- Strip 4: Services (Interactive Island) -->
-  <ServicesSection
-    title={projectData.servicesTitle}
-    services={projectData.services}
-  />
+  {projectData.services && projectData.services.length > 0 && (
+    <ServicesSection
+      title={projectData.servicesTitle}
+      services={projectData.services}
+    />
+  )}
 
   <!-- Strip 5: Learning -->
-  <LearningSection
-    title={projectData.learningTitle}
-    content={projectData.learningContent || "Contenido de aprendizajes no disponible."}
-  />
+  {projectData.learningContent && (
+    <LearningSection
+      title={projectData.learningTitle}
+      content={projectData.learningContent}
+    />
+  )}
 </article>
 
 <!-- Projects Section -->
