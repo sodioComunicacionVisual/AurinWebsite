@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/ui/Header.astro';
-import Footer from '../components/ui/Footer.astro';
+import StickyFooter from '../components/ui/StickyFooter.astro';
 import MainCat from '../components/ui/MainCat.astro';
 import TermsConditions from '../components/sections/t&c/TermsConditions.astro';
 import { getLangFromUrl } from '../i18n/utils';
@@ -23,5 +23,5 @@ const t = translations[currentLang].termsConditions;
     <MainCat />
   </main>
 
-  <Footer />
+  <StickyFooter />
 </Layout>

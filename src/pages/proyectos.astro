@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/ui/Header.astro';
 import InteractiveBackground from '../components/ui/InteractiveBackground.astro';
-import Footer from '../components/ui/Footer.astro';
+import StickyFooter from '../components/ui/StickyFooter.astro';
 import Introduction from '../components/sections/projects/Introduction.astro';
 import ProjectCard from '../components/ui/ProjectCard.astro';
 import PayloadProjectCard from '../components/ui/PayloadProjectCard.astro';
@@ -172,7 +172,7 @@ const canonicalUrl = currentLang === 'es' ? "https://aurin.mx/proyectos" : "http
     <MainCat />
   </main>
   
-  <Footer />
+  <StickyFooter />
 </Layout>
 
 <style>

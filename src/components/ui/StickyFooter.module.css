@@ -27,10 +27,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/FooterLight.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   opacity: 0.6;
   pointer-events: none;
   z-index: 0;
@@ -58,6 +54,14 @@
   left: -100px;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 1;
+}
+
+.lampDecorationLarge {
+  position: absolute;
+  left: -300px;
+  top: 50%;
+  transform: translateY(-50%) scaleX(2) scaleY(1.5);
   z-index: 1;
 }
 

@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/ui/Header.astro';
 import InteractiveBackground from '../../components/ui/InteractiveBackground.astro';
-import Footer from '../../components/ui/Footer.astro';
+import StickyFooter from '../../components/ui/StickyFooter.astro';
 import Form from '../../components/modules/contact/Form.astro';
 import Toast from '../../components/ui/Toast.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
@@ -59,7 +59,7 @@ const speakable = [".contact-form", ".contact-info"];
   <main>
     <Form />
   </main>
-  <Footer />
+  <StickyFooter />
   <Toast />
 </Layout>
 

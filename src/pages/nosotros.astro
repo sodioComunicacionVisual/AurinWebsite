@@ -10,7 +10,7 @@ import ComoLlegamos from '../components/sections/us/ComoLlegamos.astro';
 import DisenoColaboracion from '../components/sections/us/DisenoColaboracion.astro';
 import Alianzas from '../components/sections/us/Alianzas.astro';
 import DynamicProjects from '../components/ui/DynamicProjects.astro';
-import Footer from '../components/ui/Footer.astro';
+import StickyFooter from '../components/ui/StickyFooter.astro';
 import { getLangFromUrl } from '../i18n/utils.js';
 import { translations } from '../i18n/translations.js';
 
@@ -80,7 +80,7 @@ const speakable = [".us-banner", ".rutas-inexploradas", ".como-llegamos", ".dise
     <Alianzas />
     <DynamicProjects />
   </main>
-  <Footer />
+  <StickyFooter />
 </Layout>
 
 <style>
