@@ -1,6 +1,5 @@
 /* Mobile-first: Base styles for mobile */
 .serviceCard {
-  min-height: clamp(6.5rem, 10vw, 9.75rem);
   background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #161616;
   overflow: hidden;
   border-radius: 10px;
