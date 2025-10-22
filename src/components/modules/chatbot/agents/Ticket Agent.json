@@ -1,0 +1,145 @@
+{
+  "name": "Ticket Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d6a047b5-628a-45bd-b9ce-2302d7f5d241",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        544,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Ticket Data - Extrae datos del JSON del agente\n\nconst ticketDataRaw = $input.item.json.ticketData || $input.item.json.query || '';\nlet fileUrl = $input.item.json.fileUrl || null;\n\nconsole.log('=== RAW INPUT ===');\nconsole.log('ticketDataRaw type:', typeof ticketDataRaw);\nconsole.log('ticketDataRaw length:', ticketDataRaw.length);\nconsole.log('ticketDataRaw value:', ticketDataRaw);\nconsole.log('ticketDataRaw first 50 chars:', ticketDataRaw.substring(0, 50));\nconsole.log('fileUrl from input:', fileUrl);\n\nlet parsed;\ntry {\n  console.log('Attempting JSON.parse...');\n  parsed = JSON.parse(ticketDataRaw);\n  console.log('✅ JSON parsed successfully');\n  console.log('Parsed object keys:', Object.keys(parsed));\n  console.log('Parsed object:', parsed);\n} catch (e) {\n  console.error('❌ JSON parse failed:', e.message);\n  return {\n    json: {\n      name: 'Error parsing',\n      email: 'Error parsing',\n      company: 'No especificado',\n      service: 'No especificado',\n      subject: 'Error parsing ticket',\n      description: ticketDataRaw,\n      ticketId: `AURIN-${Date.now()}`,\n      createdAt: new Date().toISOString(),\n      fileUrl: null\n    }\n  };\n}\n\n// Extraer campos con nullish coalescing\nconst name = parsed.nombre_completo ?? parsed.nombre ?? parsed.name ?? 'No proporcionado';\nconst email = parsed.email ?? parsed.correo ?? 'No proporcionado';\n\n// Validación segura con type checking antes de .trim()\nlet company = parsed.empresa ?? parsed.company ?? '';\nif (!company || company === 'null' || (typeof company === 'string' && company.trim() === '')) {\n  company = 'No especificado';\n}\n\nlet service = parsed.servicio_especifico ?? parsed.servicio ?? parsed.service ?? '';\nif (!service || service === 'null' || (typeof service === 'string' && service.trim() === '')) {\n  service = 'No especificado';\n}\n\nlet subject = parsed.asunto ?? parsed.subject ?? '';\nif (!subject || subject === 'null' || (typeof subject === 'string' && subject.trim() === '')) {\n  subject = 'Consulta general';\n}\n\nconst description = parsed.descripcion ?? parsed.description ?? 'Sin descripción';\n\n// Archivo adjunto: buscar en múltiples campos con validación segura\nconst jsonFileUrl = parsed.archivo_adjunto ?? parsed.archivoAdjunto ?? parsed.fileUrl ?? '';\nif (jsonFileUrl && typeof jsonFileUrl === 'string' && jsonFileUrl !== 'null' && jsonFileUrl.trim() !== '' && jsonFileUrl.startsWith('http')) {\n  fileUrl = jsonFileUrl.trim();\n  console.log('✅ FileUrl extraído del JSON:', fileUrl);\n} else {\n  console.log('ℹ️ No fileUrl en JSON, usando fileUrl del input:', fileUrl);\n}\n\nconst ticketId = `AURIN-${Date.now()}`;\nconst createdAt = new Date().toISOString();\n\nconsole.log('=== EXTRACTED ===');\nconsole.log('Name:', name);\nconsole.log('Email:', email);\nconsole.log('Company:', company);\nconsole.log('Service:', service);\nconsole.log('Subject:', subject);\nconsole.log('Description:', description);\nconsole.log('FileUrl FINAL:', fileUrl);\n\nreturn {\n  json: {\n    name,\n    email,\n    company,\n    service,\n    subject,\n    description,\n    ticketId,\n    createdAt,\n    fileUrl\n  }\n};"
+      },
+      "id": "16d907b3-fc8a-4859-816c-a3fec5c2c7a1",
+      "name": "Parse Ticket Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aurin.mx/api/send-ticket",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "name": "company",
+              "value": "={{ $json.company }}"
+            },
+            {
+              "name": "service",
+              "value": "={{ $json.service }}"
+            },
+            {
+              "name": "subject",
+              "value": "={{ $json.subject }}"
+            },
+            {
+              "name": "description",
+              "value": "={{ $json.description }}"
+            },
+            {
+              "name": "ticketId",
+              "value": "={{ $json.ticketId }}"
+            },
+            {
+              "name": "createdAt",
+              "value": "={{ $json.createdAt }}"
+            },
+            {
+              "name": "fileUrl",
+              "value": "={{ $json.fileUrl }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a5963315-f075-4c13-874e-6d25b38b67e3",
+      "name": "Send Ticket to API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        992,
+        -16
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const apiResponse = $input.item.json;\n\nif (apiResponse.output) {\n  return {\n    json: {\n      output: apiResponse.output,\n      success: apiResponse.success,\n      ticketId: apiResponse.ticketId,\n      emailSent: apiResponse.emailSent\n    }\n  };\n}\n\nconst ticketData = $('Parse Ticket Data').item.json;\nconst hasFile = ticketData.fileUrl ? ' Tu archivo adjunto ha sido incluido.' : '';\nconst serviceInfo = ticketData.service && ticketData.service !== 'No especificado' ? `\\n- Servicio: **${ticketData.service}**` : '';\n\nreturn {\n  json: {\n    output: `✅ **Perfecto, ${ticketData.name}!**\\n\\nHe creado un ticket de soporte y nuestro equipo te contactará a **${ticketData.email}** muy pronto.${hasFile}\\n\\n**📋 Detalles de tu ticket:**\\n- Número de ticket: **${ticketData.ticketId}**\\n- Asunto: **${ticketData.subject}**${serviceInfo}\\n- Estado: En proceso\\n- Tiempo estimado de respuesta: 24 horas\\n\\n**📧 Email de contacto:** [hey@aurin.mx](mailto:hey@aurin.mx)\\n\\nNos pondremos en contacto contigo dentro de las próximas 24 horas para atender tu solicitud personalmente.\\n\\n¿Hay algo más en lo que pueda ayudarte mientras tanto?`,\n    success: true,\n    ticketId: ticketData.ticketId,\n    emailSent: true,\n    customerName: ticketData.name,\n    customerEmail: ticketData.email,\n    customerService: ticketData.service,\n    customerSubject: ticketData.subject,\n    fileAttached: !!ticketData.fileUrl\n  }\n};"
+      },
+      "id": "4a31d63d-3998-4cc3-a6d3-cb5be2491d21",
+      "name": "Format Response for Bot",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        -16
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Ticket Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Ticket Data": {
+      "main": [
+        [
+          {
+            "node": "Send Ticket to API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Ticket to API": {
+      "main": [
+        [
+          {
+            "node": "Format Response for Bot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f86eb132-1d3c-47a8-9db5-d9eccd6d1802",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  },
+  "id": "xofJhOkiHd6ietuS",
+  "tags": []
+}
