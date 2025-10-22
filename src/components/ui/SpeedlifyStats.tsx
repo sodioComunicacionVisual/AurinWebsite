@@ -97,7 +97,7 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
   useEffect(() => {
     const fetchSpeedlifyData = async () => {
       try {
-        const LIGHTHOUSE_API = '/api/lighthouse.json';
+        const LIGHTHOUSE_API = '/api/pagespeed.json';
 
         const response = await fetch(LIGHTHOUSE_API);
         if (!response.ok) {
