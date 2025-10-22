@@ -78,7 +78,7 @@ const t = translations[currentLang];
 
         <!-- Speedlify Stats Section -->
         <div class={styles.speedlifySection}>
-          <SpeedlifyStats client:load />
+          <SpeedlifyStats client:load lang={currentLang} />
         </div>
 
         <div class={styles.footerCopyright}>

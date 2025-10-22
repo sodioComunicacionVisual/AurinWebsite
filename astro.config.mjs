@@ -9,6 +9,9 @@ export default defineConfig({
   output: 'server',
   adapter: vercel(),
   integrations: [lenis(), react()],
+  vite: {
+    // Configuraciones de Vite si las necesitas
+  },
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],

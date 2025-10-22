@@ -2,270 +2,348 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import styles from './SpeedlifyStats.module.css';
+import { translations } from '../../i18n/translations';
 
 interface LighthouseScore {
   performance: number;
   accessibility: number;
   bestPractices: number;
   seo: number;
+  firstContentfulPaint?: number;
+  largestContentfulPaint?: number;
+  cumulativeLayoutShift?: number;
+  speedIndex?: number;
+  totalBlockingTime?: number;
+  timeToInteractive?: number;
 }
 
-interface SpeedlifyData {
+interface SpeedlifyPageData {
   url: string;
   lighthouse: LighthouseScore;
   timestamp: number;
 }
 
+interface SpeedlifyStatsProps {
+  className?: string;
+  hidePerformance?: boolean;
+  hideAccessibility?: boolean;
+  currentUrl?: string;
+  lang?: 'es' | 'en';
+}
+
 const getScoreColor = (score: number): string => {
   if (score >= 90) return '#d0df00'; // Aurin green
-  if (score >= 50) return '#fbbf24'; // Orange
+  if (score >= 50) return '#fffdc5'; // Aurin cream
   return '#ef4444'; // Red
 };
 
-const getScoreLabel = (score: number): string => {
-  if (score >= 90) return 'Excelente';
-  if (score >= 50) return 'Bueno';
-  return 'Necesita mejora';
+const getScoreGrade = (score: number): string => {
+  if (score >= 90) return 'A';
+  if (score >= 80) return 'B';
+  if (score >= 70) return 'C';
+  if (score >= 50) return 'D';
+  return 'F';
 };
 
-const CircularProgress: React.FC<{ score: number; size?: number }> = ({ 
-  score, 
-  size = 60 
-}) => {
-  const radius = (size - 8) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (score / 100) * circumference;
-  
-  return (
-    <div className="relative" style={{ width: size, height: size }}>
-      <svg
-        width={size}
-        height={size}
-        className="transform -rotate-90"
-      >
-        {/* Background circle */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="rgba(255, 255, 255, 0.1)"
-          strokeWidth="4"
-          fill="transparent"
-        />
-        {/* Progress circle */}
-        <motion.circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke={getScoreColor(score)}
-          strokeWidth="4"
-          fill="transparent"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-        />
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-sm font-semibold text-white">
-          {score}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-const StatCard: React.FC<{
-  title: string;
+const ScoreCard: React.FC<{
+  label: string;
   score: number;
-  description: string;
-}> = ({ title, score, description }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-    className="bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 border border-gray-700/50 hover:border-gray-600/50 transition-colors"
-  >
-    <div className="flex items-center space-x-3">
-      <CircularProgress score={score} size={50} />
-      <div className="flex-1">
-        <h4 className="text-sm font-medium text-white">{title}</h4>
-        <p className="text-xs text-gray-400 mt-1">{description}</p>
-        <span 
-          className="text-xs font-medium mt-1 inline-block"
-          style={{ color: getScoreColor(score) }}
-        >
-          {getScoreLabel(score)}
-        </span>
-      </div>
+}> = ({ label, score }) => (
+  <div className={styles.scoreCard}>
+    <div
+      className={styles.scoreBadge}
+      style={{ backgroundColor: getScoreColor(score) }}
+    >
+      {getScoreGrade(score)}
     </div>
-  </motion.div>
+    <div className={styles.scoreInfo}>
+      <span className={styles.scoreLabel}>{label}</span>
+      <span className={styles.scoreValue}>{score}/100</span>
+    </div>
+  </div>
 );
 
-export const SpeedlifyStats: React.FC = () => {
-  const [data, setData] = useState<SpeedlifyData | null>(null);
+const VitalCard: React.FC<{
+  label: string;
+  value: number;
+  unit: string;
+  threshold: number;
+}> = ({ label, value, unit, threshold }) => (
+  <div className={styles.vitalCard}>
+    <span className={styles.vitalLabel}>{label}</span>
+    <span
+      className={styles.vitalValue}
+      style={{ color: value <= threshold ? '#d0df00' : '#fffdc5' }}
+    >
+      {value}{unit}
+    </span>
+  </div>
+);
+
+export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
+  className = '',
+  hidePerformance = false,
+  hideAccessibility = false,
+  currentUrl,
+  lang = 'es'
+}) => {
+  const t = translations[lang].speedlify;
+  const [data, setData] = useState<SpeedlifyPageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isRealData, setIsRealData] = useState(false);
 
   useEffect(() => {
     const fetchSpeedlifyData = async () => {
       try {
-        // URL de tu instancia de Speedlify desplegada
-        const SPEEDLIFY_API = 'https://aurinwebsitestats.netlify.app/api/urls.json';
-        
-        const response = await fetch(SPEEDLIFY_API);
+        const LIGHTHOUSE_API = '/api/lighthouse.json';
+
+        const response = await fetch(LIGHTHOUSE_API);
         if (!response.ok) {
-          throw new Error('Failed to fetch Speedlify data');
+          throw new Error('Failed to fetch Lighthouse data');
         }
-        
-        const urls: SpeedlifyData[] = await response.json();
-        
-        // Obtener la URL actual de la página
-        const currentUrl = window.location.href;
-        const currentPath = window.location.pathname;
-        
-        // Construir posibles URLs para buscar
-        const possibleUrls = [
-          currentUrl,
-          `https://aurin.mx${currentPath}`,
-          `https://aurin.mx${currentPath === '/' ? '/' : currentPath.replace(/\/$/, '')}`,
-          currentPath === '/' ? 'https://aurin.mx/' : `https://aurin.mx${currentPath}`
-        ];
-        
-        // Buscar la página actual en los datos de Speedlify
-        let currentPageData = null;
-        
-        for (const url of possibleUrls) {
-          currentPageData = urls.find(item => 
-            item.url === url || 
-            item.url === url.replace(/\/$/, '') ||
-            item.url === url + '/'
-          );
-          if (currentPageData) break;
-        }
-        
-        if (currentPageData && currentPageData.lighthouse) {
-          setData(currentPageData);
-        } else {
-          // Fallback: buscar la homepage si no encuentra la página actual
-          const homepage = urls.find(item => 
-            item.url === 'https://aurin.mx/' || 
-            item.url === 'https://aurin.mx'
-          );
-          
-          if (homepage && homepage.lighthouse) {
-            setData(homepage);
+
+        const lighthouseData = await response.json();
+
+        // Determine target URL
+        let targetUrl = currentUrl;
+        if (!targetUrl && typeof window !== 'undefined') {
+          const currentPath = window.location.pathname;
+          const baseUrl = 'https://aurin.mx';
+
+          if (currentPath === '/' || currentPath === '') {
+            targetUrl = baseUrl + '/';
           } else {
-            // Si no encuentra nada, usar la primera URL disponible
-            setData(urls[0] || null);
+            targetUrl = baseUrl + currentPath.replace(/\/$/, '');
           }
+        }
+
+        // Fallback to homepage
+        if (!targetUrl) {
+          targetUrl = 'https://aurin.mx/';
+        }
+
+        // Build possible URL variations
+        const possibleUrls = [
+          targetUrl,
+          targetUrl.replace('https://aurin.mx', 'https://www.aurin.mx'),
+          targetUrl.replace('https://www.aurin.mx', 'https://aurin.mx'),
+          targetUrl.replace(/\/$/, ''),
+          targetUrl + '/',
+        ];
+
+        // Find matching data
+        let currentPageData = null;
+        for (const url of possibleUrls) {
+          currentPageData = lighthouseData[url];
+          if (currentPageData) {
+            console.log('Found data for:', url);
+            break;
+          }
+        }
+
+        // Fallback to homepage if no match
+        if (!currentPageData) {
+          console.log('No exact match, using homepage as fallback');
+          currentPageData = lighthouseData['https://aurin.mx/'] ||
+                           lighthouseData['https://www.aurin.mx/'] ||
+                           Object.values(lighthouseData)[0];
+        }
+
+        if (currentPageData && currentPageData.lighthouse) {
+          setData({
+            url: currentPageData.url || currentPageData.requestedUrl,
+            lighthouse: {
+              performance: currentPageData.lighthouse.performance || 0,
+              accessibility: currentPageData.lighthouse.accessibility || 0,
+              bestPractices: currentPageData.lighthouse.bestPractices || 0,
+              seo: currentPageData.lighthouse.seo || 0,
+              firstContentfulPaint: currentPageData.lighthouse.firstContentfulPaint,
+              largestContentfulPaint: currentPageData.lighthouse.largestContentfulPaint,
+              cumulativeLayoutShift: currentPageData.lighthouse.cumulativeLayoutShift,
+              totalBlockingTime: currentPageData.lighthouse.totalBlockingTime,
+              speedIndex: currentPageData.lighthouse.speedIndex,
+              timeToInteractive: currentPageData.lighthouse.timeToInteractive,
+            },
+            timestamp: currentPageData.timestamp || Date.now()
+          });
+          setError(null);
+          setIsRealData(true);
+        } else {
+          console.warn('Available URLs in Speedlify data:', Object.keys(lighthouseData));
+          throw new Error('No Lighthouse data available for this page');
         }
       } catch (err) {
         console.error('Error fetching Speedlify data:', err);
-        setError('No se pudieron cargar las métricas');
-        
-        // Datos de fallback para desarrollo
+        setError('No se pudieron cargar las métricas de esta página');
+
+        // Fallback data
         setData({
           url: 'https://aurin.mx/',
           lighthouse: {
-            performance: 96,
-            accessibility: 96,
-            bestPractices: 92,
-            seo: 92
+            performance: hidePerformance ? 0 : 90,
+            accessibility: hideAccessibility ? 0 : 99,
+            bestPractices: 100,
+            seo: 100,
+            firstContentfulPaint: 2.6,
+            largestContentfulPaint: 2.7,
+            cumulativeLayoutShift: 0.18,
+            totalBlockingTime: 0,
+            speedIndex: 5.4,
           },
           timestamp: Date.now()
         });
+        setIsRealData(false);
       } finally {
         setLoading(false);
       }
     };
 
     fetchSpeedlifyData();
-  }, []);
+  }, [currentUrl, hidePerformance, hideAccessibility]);
 
   if (loading) {
     return (
-      <div className="w-full">
-        <div className="flex items-center justify-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#d0df00]"></div>
-        </div>
+      <div className={`${styles.loading} ${className}`}>
+        <div className={styles.spinner}></div>
+        <span className={styles.loadingText}>{t.loading}</span>
       </div>
     );
   }
 
-  if (error || !data) {
+  if (error && !data) {
     return (
-      <div className="w-full">
-        <p className="text-sm text-gray-400 text-center py-4">
-          {error || 'No hay datos disponibles'}
-        </p>
+      <div className={`${styles.error} ${className}`}>
+        {t.unavailable}
       </div>
     );
   }
 
-  const stats = [
-    {
-      title: 'Performance',
-      score: data.lighthouse.performance,
-      description: 'Velocidad de carga'
-    },
-    {
-      title: 'Accessibility',
-      score: data.lighthouse.accessibility,
-      description: 'Accesibilidad web'
-    },
-    {
-      title: 'Best Practices',
-      score: data.lighthouse.bestPractices,
-      description: 'Mejores prácticas'
-    },
-    {
-      title: 'SEO',
-      score: data.lighthouse.seo,
-      description: 'Optimización SEO'
-    }
-  ];
+  if (!data) return null;
 
-  const lastUpdate = new Date(data.timestamp).toLocaleDateString('es-ES', {
-    day: 'numeric',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+  // Convert milliseconds to seconds for vitals
+  const fcpSeconds = data.lighthouse.firstContentfulPaint
+    ? parseFloat((data.lighthouse.firstContentfulPaint / 1000).toFixed(1))
+    : 0;
+  const lcpSeconds = data.lighthouse.largestContentfulPaint
+    ? parseFloat((data.lighthouse.largestContentfulPaint / 1000).toFixed(1))
+    : 0;
+  const clsValue = data.lighthouse.cumulativeLayoutShift
+    ? parseFloat(data.lighthouse.cumulativeLayoutShift.toFixed(3))
+    : 0;
 
   return (
-    <div className="w-full">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold text-white mb-1">
-          Métricas de Rendimiento
-        </h3>
-        <p className="text-sm text-gray-400">
-          {data.url} • Última auditoría: {lastUpdate} • 
-          <a 
-            href="https://aurinwebsitestats.netlify.app" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="ml-1 text-[#d0df00] hover:underline"
-          >
-            Ver detalles completos
-          </a>
-        </p>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`${styles.container} ${className}`}
+    >
+      {/* Performance Score */}
+      {!hidePerformance && data.lighthouse.performance > 0 && (
+        <ScoreCard
+          label={t.labels.performance}
+          score={data.lighthouse.performance}
+          tooltip={t.tooltips.performance}
+        />
+      )}
+
+      {/* Accessibility Score */}
+      {!hideAccessibility && data.lighthouse.accessibility > 0 && (
+        <ScoreCard
+          label={t.labels.accessibility}
+          score={data.lighthouse.accessibility}
+          tooltip={t.tooltips.accessibility}
+        />
+      )}
+
+      {/* Best Practices Score */}
+      <ScoreCard
+        label={t.labels.bestPractices}
+        score={data.lighthouse.bestPractices}
+        tooltip={t.tooltips.bestPractices}
+      />
+
+      {/* SEO Score */}
+      <ScoreCard
+        label={t.labels.seo}
+        score={data.lighthouse.seo}
+        tooltip={t.tooltips.seo}
+      />
+
+      {/* Core Web Vitals */}
+      {(lcpSeconds > 0 || fcpSeconds > 0 || clsValue > 0) && (
+        <div className={styles.vitalsSection}>
+          {lcpSeconds > 0 && (
+            <VitalCard
+              label="LCP"
+              value={lcpSeconds}
+              unit="s"
+              threshold={2.5}
+              tooltip={t.tooltips.lcp}
+            />
+          )}
+          {fcpSeconds > 0 && (
+            <VitalCard
+              label="FCP"
+              value={fcpSeconds}
+              unit="s"
+              threshold={1.8}
+              tooltip={t.tooltips.fcp}
+            />
+          )}
+          {clsValue > 0 && (
+            <VitalCard
+              label="CLS"
+              value={clsValue}
+              unit=""
+              threshold={0.1}
+              tooltip={t.tooltips.cls}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Meta Section */}
+      <div className={styles.metaSection}>
+        {/* Status Indicator */}
+        <div className={styles.statusIndicator}>
+          <div className={`${styles.statusDot} ${isRealData ? styles.live : styles.demo}`}></div>
+          <span className={`${styles.statusText} ${isRealData ? styles.live : styles.demo}`}>
+            {isRealData ? t.status.liveData : t.status.demoData}
+          </span>
+        </div>
+
+        {/* Filtered Indicator */}
+        {(hidePerformance || hideAccessibility) && (
+          <div className={styles.statusIndicator}>
+            <div className={`${styles.statusDot} ${styles.filtered}`}></div>
+            <span className={`${styles.statusText} ${styles.filtered}`}>
+              {t.status.filtered}
+            </span>
+          </div>
+        )}
+
+        {/* Timestamp */}
+        <span className={styles.timestamp}>
+          {new Date(data.timestamp).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+            day: 'numeric',
+            month: 'short'
+          })}
+        </span>
+
+        {/* Powered By */}
+        <a
+          href="https://github.com/zachleat/speedlify"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.poweredBy}
+        >
+          {t.poweredBy}
+        </a>
       </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={stat.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            <StatCard {...stat} />
-          </motion.div>
-        ))}
-      </div>
-    </div>
+    </motion.div>
   );
 };
 

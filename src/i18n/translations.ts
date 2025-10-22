@@ -486,6 +486,31 @@ export const translations = {
         "UX/UI Design"
       ]
     },
+    speedlify: {
+      loading: "Loading performance stats...",
+      unavailable: "Performance stats unavailable",
+      labels: {
+        performance: "Performance",
+        accessibility: "Accessibility",
+        bestPractices: "Best Practices",
+        seo: "SEO"
+      },
+      tooltips: {
+        performance: "Performance score from Speedlify (may differ from PageSpeed Insights)",
+        accessibility: "Accessibility score from Axe audit",
+        bestPractices: "How well the site follows web standards",
+        seo: "How easy it is to find this site on Google",
+        lcp: "Largest Contentful Paint - Time to load main content (lower is better)",
+        fcp: "First Contentful Paint - Time to show first text or image (lower is better)",
+        cls: "Cumulative Layout Shift - How much the page jumps while loading (lower is better)"
+      },
+      status: {
+        liveData: "Live Data",
+        demoData: "Demo Data",
+        filtered: "Filtered"
+      },
+      poweredBy: "Powered by Speedlify"
+    },
     about: {
       seo: {
         title: "About Us - Aurin | Visual Communication and Design Agency Mexico",
@@ -1036,6 +1061,31 @@ export const translations = {
         "Estrategia Digital",
         "Diseño UX/UI"
       ]
+    },
+    speedlify: {
+      loading: "Cargando métricas de rendimiento...",
+      unavailable: "Métricas de rendimiento no disponibles",
+      labels: {
+        performance: "Rendimiento",
+        accessibility: "Accesibilidad",
+        bestPractices: "Mejores Prácticas",
+        seo: "SEO"
+      },
+      tooltips: {
+        performance: "Score de rendimiento desde Speedlify (puede diferir de PageSpeed Insights)",
+        accessibility: "Score de accesibilidad desde auditoría Axe",
+        bestPractices: "Qué tan bien el sitio sigue estándares web",
+        seo: "Qué tan fácil es encontrar este sitio en Google",
+        lcp: "Largest Contentful Paint - Tiempo de carga del contenido principal (menor es mejor)",
+        fcp: "First Contentful Paint - Tiempo en mostrar primer texto o imagen (menor es mejor)",
+        cls: "Cumulative Layout Shift - Cuánto salta la página mientras carga (menor es mejor)"
+      },
+      status: {
+        liveData: "Datos en Vivo",
+        demoData: "Datos de Demostración",
+        filtered: "Filtrado"
+      },
+      poweredBy: "Desarrollado con Speedlify"
     },
     about: {
       seo: {
