@@ -937,6 +937,18 @@ Configurar en Vercel Dashboard todas las variables del `.env`.
 
 ---
 
+## Desarrollo
+
+Este proyecto fue desarrollado completamente por **[Karen Ortiz](https://github.com/karenrebecag)**.
+
+### Stack Tecnológico Implementado
+- Arquitectura SSR con Astro
+- Sistema de chatbot multi-agente con n8n y OpenAI
+- Integración Payload CMS headless
+- Sistema i18n bilingüe (ES/EN)
+- Monitoreo de performance con Speedlify
+- Más de 60 componentes UI reutilizables
+
 ## Agradecimientos
 
 - **Aldea Creativa** - Espacio de trabajo colaborativo
