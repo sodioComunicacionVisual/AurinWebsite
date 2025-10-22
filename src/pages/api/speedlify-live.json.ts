@@ -4,7 +4,8 @@ import type { APIRoute } from 'astro';
 export const GET: APIRoute = async () => {
   try {
     // URL de tu despliegue de Speedlify en Netlify
-    const SPEEDLIFY_NETLIFY_URL = 'https://aurin-stats.netlify.app/api/urls.json';
+    const SPEEDLIFY_BASE_URL = import.meta.env.SPEEDLIFY_URL || 'https://voluble-lokum-f26e16.netlify.app';
+    const SPEEDLIFY_NETLIFY_URL = `${SPEEDLIFY_BASE_URL}/api/urls.json`;
 
     const response = await fetch(SPEEDLIFY_NETLIFY_URL, {
       headers: {
@@ -27,7 +28,7 @@ export const GET: APIRoute = async () => {
 
       try {
         const hashResponse = await fetch(
-          `https://aurin-stats.netlify.app/api/${hash}.json`,
+          `${SPEEDLIFY_BASE_URL}/api/${hash}.json`,
           { headers: { 'Accept': 'application/json' } }
         );
 

@@ -245,7 +245,6 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
         <ScoreCard
           label={t.labels.performance}
           score={data.lighthouse.performance}
-          tooltip={t.tooltips.performance}
         />
       )}
 
@@ -254,7 +253,6 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
         <ScoreCard
           label={t.labels.accessibility}
           score={data.lighthouse.accessibility}
-          tooltip={t.tooltips.accessibility}
         />
       )}
 
@@ -262,14 +260,12 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
       <ScoreCard
         label={t.labels.bestPractices}
         score={data.lighthouse.bestPractices}
-        tooltip={t.tooltips.bestPractices}
       />
 
       {/* SEO Score */}
       <ScoreCard
         label={t.labels.seo}
         score={data.lighthouse.seo}
-        tooltip={t.tooltips.seo}
       />
 
       {/* Core Web Vitals */}
@@ -281,7 +277,6 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
               value={lcpSeconds}
               unit="s"
               threshold={2.5}
-              tooltip={t.tooltips.lcp}
             />
           )}
           {fcpSeconds > 0 && (
@@ -290,7 +285,6 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
               value={fcpSeconds}
               unit="s"
               threshold={1.8}
-              tooltip={t.tooltips.fcp}
             />
           )}
           {clsValue > 0 && (
@@ -299,7 +293,6 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
               value={clsValue}
               unit=""
               threshold={0.1}
-              tooltip={t.tooltips.cls}
             />
           )}
         </div>

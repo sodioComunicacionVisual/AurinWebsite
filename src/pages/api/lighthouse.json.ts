@@ -4,48 +4,114 @@ import { join } from 'path';
 
 export const GET: APIRoute = async () => {
   try {
-    const speedlifyApiPath = join(process.cwd(), 'src/components/modules/speedlify/_site/api');
+    // En producción, usar datos en vivo desde Netlify
+    // En desarrollo, intentar usar archivos locales primero
+    const isDev = import.meta.env.DEV;
+    const SPEEDLIFY_NETLIFY_URL = import.meta.env.SPEEDLIFY_URL || 'https://voluble-lokum-f26e16.netlify.app';
 
-    // Leer el archivo urls.json para obtener el mapeo
-    const urlsPath = join(speedlifyApiPath, 'urls.json');
-    if (!existsSync(urlsPath)) {
-      return new Response(JSON.stringify({ error: 'Speedlify data not found' }), {
-        status: 404,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    let urlsData: any;
+    let lighthouseData: Record<string, any> = {};
+
+    if (isDev) {
+      // Intentar leer archivos locales en desarrollo
+      try {
+        const speedlifyApiPath = join(process.cwd(), 'src/components/modules/speedlify/_site/api');
+        const urlsPath = join(speedlifyApiPath, 'urls.json');
+
+        if (existsSync(urlsPath)) {
+          urlsData = JSON.parse(readFileSync(urlsPath, 'utf-8'));
+
+          // Construir datos desde archivos locales
+          for (const [url, metadata] of Object.entries(urlsData)) {
+            const hashFile = join(speedlifyApiPath, `${(metadata as any).hash}.json`);
+
+            if (existsSync(hashFile)) {
+              const pageData = JSON.parse(readFileSync(hashFile, 'utf-8'));
+
+              lighthouseData[url] = {
+                url: pageData.url,
+                requestedUrl: pageData.requestedUrl,
+                timestamp: pageData.timestamp,
+                lighthouse: {
+                  performance: Math.round((pageData.lighthouse?.performance || 0) * 100),
+                  accessibility: Math.round((pageData.lighthouse?.accessibility || 0) * 100),
+                  bestPractices: Math.round((pageData.lighthouse?.bestPractices || 0) * 100),
+                  seo: Math.round((pageData.lighthouse?.seo || 0) * 100),
+                  firstContentfulPaint: pageData.firstContentfulPaint,
+                  largestContentfulPaint: pageData.largestContentfulPaint,
+                  cumulativeLayoutShift: pageData.cumulativeLayoutShift,
+                  speedIndex: pageData.speedIndex,
+                  totalBlockingTime: pageData.totalBlockingTime,
+                  timeToInteractive: pageData.timeToInteractive,
+                },
+                weight: pageData.weight,
+                axe: pageData.axe
+              };
+            }
+          }
+
+          // Si tenemos datos locales, retornarlos
+          if (Object.keys(lighthouseData).length > 0) {
+            return new Response(JSON.stringify(lighthouseData, null, 2), {
+              status: 200,
+              headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'public, max-age=3600'
+              }
+            });
+          }
+        }
+      } catch (localError) {
+        console.log('Local files not available, falling back to live data');
+      }
     }
 
-    const urlsData = JSON.parse(readFileSync(urlsPath, 'utf-8'));
+    // Fallback a datos en vivo (producción o si fallan archivos locales)
+    const response = await fetch(`${SPEEDLIFY_NETLIFY_URL}/api/urls.json`, {
+      headers: { 'Accept': 'application/json' },
+    });
 
-    // Construir el objeto de datos de lighthouse con datos completos
-    const lighthouseData: Record<string, any> = {};
+    if (!response.ok) {
+      throw new Error(`Speedlify API responded with status: ${response.status}`);
+    }
 
+    urlsData = await response.json();
+
+    // Fetch datos individuales desde Netlify
     for (const [url, metadata] of Object.entries(urlsData)) {
-      const hashFile = join(speedlifyApiPath, `${(metadata as any).hash}.json`);
+      const hash = (metadata as any).hash;
 
-      if (existsSync(hashFile)) {
-        const pageData = JSON.parse(readFileSync(hashFile, 'utf-8'));
+      try {
+        const hashResponse = await fetch(
+          `${SPEEDLIFY_NETLIFY_URL}/api/${hash}.json`,
+          { headers: { 'Accept': 'application/json' } }
+        );
 
-        // Formatear los scores de lighthouse (están en decimal 0-1, convertir a 0-100)
-        lighthouseData[url] = {
-          url: pageData.url,
-          requestedUrl: pageData.requestedUrl,
-          timestamp: pageData.timestamp,
-          lighthouse: {
-            performance: Math.round((pageData.lighthouse?.performance || 0) * 100),
-            accessibility: Math.round((pageData.lighthouse?.accessibility || 0) * 100),
-            bestPractices: Math.round((pageData.lighthouse?.bestPractices || 0) * 100),
-            seo: Math.round((pageData.lighthouse?.seo || 0) * 100),
-            firstContentfulPaint: pageData.firstContentfulPaint,
-            largestContentfulPaint: pageData.largestContentfulPaint,
-            cumulativeLayoutShift: pageData.cumulativeLayoutShift,
-            speedIndex: pageData.speedIndex,
-            totalBlockingTime: pageData.totalBlockingTime,
-            timeToInteractive: pageData.timeToInteractive,
-          },
-          weight: pageData.weight,
-          axe: pageData.axe
-        };
+        if (hashResponse.ok) {
+          const pageData = await hashResponse.json();
+
+          lighthouseData[url] = {
+            url: pageData.url,
+            requestedUrl: pageData.requestedUrl,
+            timestamp: pageData.timestamp,
+            lighthouse: {
+              performance: Math.round((pageData.lighthouse?.performance || 0) * 100),
+              accessibility: Math.round((pageData.lighthouse?.accessibility || 0) * 100),
+              bestPractices: Math.round((pageData.lighthouse?.bestPractices || 0) * 100),
+              seo: Math.round((pageData.lighthouse?.seo || 0) * 100),
+              firstContentfulPaint: pageData.firstContentfulPaint,
+              largestContentfulPaint: pageData.largestContentfulPaint,
+              cumulativeLayoutShift: pageData.cumulativeLayoutShift,
+              speedIndex: pageData.speedIndex,
+              totalBlockingTime: pageData.totalBlockingTime,
+              timeToInteractive: pageData.timeToInteractive,
+            },
+            weight: pageData.weight,
+            axe: pageData.axe
+          };
+        }
+      } catch (err) {
+        console.warn(`Failed to fetch data for ${hash}:`, err);
       }
     }
 
