@@ -47,6 +47,7 @@
   align-items: center;
   gap: 36px;
   position: relative;
+  z-index: 2;
 }
 
 .lampDecoration {
