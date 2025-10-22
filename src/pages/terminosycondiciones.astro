@@ -4,6 +4,8 @@ import Header from '../components/ui/Header.astro';
 import StickyFooter from '../components/ui/StickyFooter.astro';
 import MainCat from '../components/ui/MainCat.astro';
 import TermsConditions from '../components/sections/t&c/TermsConditions.astro';
+import InteractiveBackground from '../components/ui/InteractiveBackground.astro';
+import Vignette from '../components/ui/Vignette.astro';
 import { getLangFromUrl } from '../i18n/utils';
 import { translations } from '../i18n/translations';
 
@@ -16,6 +18,8 @@ const t = translations[currentLang].termsConditions;
   description={t.seo.description}
   keywords={t.seo.keywords}
 >
+  <InteractiveBackground />
+  <Vignette intensity="medium" />
   <Header />
 
   <main>
