@@ -147,6 +147,14 @@
   color: white;
 }
 
+.speedlifySection {
+  width: 100%;
+  padding: 40px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 20px 0;
+}
+
 .footerCopyright {
   display: flex;
   flex-direction: column;

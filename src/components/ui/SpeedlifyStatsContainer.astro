@@ -1,0 +1,34 @@
+---
+// Astro wrapper for the SpeedlifyStats React component
+---
+
+<div id="speedlify-stats-container" class="speedlify-stats-wrapper">
+  <div id="speedlify-stats-mount"></div>
+</div>
+
+<script>
+  import SpeedlifyStats from './SpeedlifyStats.tsx';
+  import { createRoot } from 'react-dom/client';
+  import React from 'react';
+
+  // Mount the React component when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('speedlify-stats-mount');
+    if (container) {
+      const root = createRoot(container);
+      root.render(React.createElement(SpeedlifyStats));
+    }
+  });
+</script>
+
+<style>
+  .speedlify-stats-wrapper {
+    width: 100%;
+    margin: 2rem 0;
+  }
+  
+  /* Ensure proper styling for the React component */
+  #speedlify-stats-mount {
+    width: 100%;
+  }
+</style>

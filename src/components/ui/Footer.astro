@@ -2,7 +2,7 @@
 // Footer component
 import styles from './Footer.module.css';
 import LampLight from './LampLight.astro';
-import SpeedlifyStats from './SpeedlifyStats.astro';
+import SpeedlifyStats from './SpeedlifyStats.tsx';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 
@@ -68,9 +68,13 @@ const t = translations[currentLang];
       </div>
     </div>
 
+    <!-- Speedlify Stats Section -->
+    <div class={styles['speedlify-section']}>
+      <SpeedlifyStats client:load />
+    </div>
+
     <div class={styles['footer-copyright']}>
       <p>{t.footer.copyright}</p>
-      <SpeedlifyStats class="footer-speedlify" />
     </div>
   </div>
 </footer>
