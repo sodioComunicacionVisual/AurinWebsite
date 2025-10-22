@@ -1,0 +1,56 @@
+---
+import styles from './TallCard.module.css';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+interface Props {
+  letter: string;
+  title: string;
+  href?: string;
+  className?: string;
+}
+
+const { letter, title, href = "#", className = "" } = Astro.props;
+
+// Get current language for tooltip
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<a 
+  href={href} 
+  class={`${styles['card-link']} ${className}`} 
+  aria-label={`Ver más sobre ${title}`}
+  data-tooltip-text={t.herramientas.viewServices}
+>
+  <div class={`${styles.card} ${styles.light}`}>
+    <div class={styles['card-letter']} aria-hidden="true">
+      {letter}
+    </div>
+    <div class={styles['card-content']}>
+      <div class={styles['card-title']}>
+        {title}
+      </div>
+    </div>
+  </div>
+</a>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cardLinks = document.querySelectorAll('[data-tooltip-text]');
+    
+    cardLinks.forEach(link => {
+      const tooltipText = link.getAttribute('data-tooltip-text');
+      
+      link.addEventListener('mouseenter', () => {
+        window.dispatchEvent(new CustomEvent('showCursorTooltip', {
+          detail: { text: tooltipText }
+        }));
+      });
+      
+      link.addEventListener('mouseleave', () => {
+        window.dispatchEvent(new CustomEvent('hideCursorTooltip'));
+      });
+    });
+  });
+</script>

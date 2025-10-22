@@ -1,0 +1,195 @@
+---
+// Componente para mostrar estadísticas de Speedlify en el footer
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+// URL de la API de Speedlify (configurar después del despliegue)
+const SPEEDLIFY_API = 'https://aurin-stats.netlify.app/api/page-stats.json';
+
+let pageStats = null;
+let error = null;
+
+try {
+  // Obtener el path actual
+  const currentPath = Astro.url.pathname;
+  
+  // Fetch stats from Speedlify API
+  const response = await fetch(SPEEDLIFY_API, {
+    headers: {
+      'Accept': 'application/json',
+    }
+  });
+  
+  if (response.ok) {
+    const data = await response.json();
+    pageStats = data[currentPath] || null;
+  } else {
+    error = `API response: ${response.status}`;
+  }
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Unknown error';
+  console.warn('Speedlify stats not available:', error);
+}
+---
+
+{pageStats && pageStats.lighthouse && (
+  <div class={`speedlify-stats ${className || ''}`}>
+    <div class="stats-header">
+      <span class="stats-title">⚡ Performance</span>
+      <span class="stats-timestamp">
+        {pageStats.timestamp && new Date(pageStats.timestamp).toLocaleDateString('es-ES')}
+      </span>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-item performance">
+        <span class="stat-value">{pageStats.lighthouse.performance || '--'}</span>
+        <span class="stat-label">Performance</span>
+      </div>
+      <div class="stat-item accessibility">
+        <span class="stat-value">{pageStats.lighthouse.accessibility || '--'}</span>
+        <span class="stat-label">Accessibility</span>
+      </div>
+      <div class="stat-item seo">
+        <span class="stat-value">{pageStats.lighthouse.seo || '--'}</span>
+        <span class="stat-label">SEO</span>
+      </div>
+      <div class="stat-item best-practices">
+        <span class="stat-value">{pageStats.lighthouse.bestPractices || '--'}</span>
+        <span class="stat-label">Best Practices</span>
+      </div>
+    </div>
+    {pageStats.lighthouse.firstContentfulPaint && (
+      <div class="core-vitals">
+        <span class="vital">
+          FCP: {Math.round(pageStats.lighthouse.firstContentfulPaint)}ms
+        </span>
+        {pageStats.lighthouse.largestContentfulPaint && (
+          <span class="vital">
+            LCP: {Math.round(pageStats.lighthouse.largestContentfulPaint)}ms
+          </span>
+        )}
+        {pageStats.lighthouse.cumulativeLayoutShift && (
+          <span class="vital">
+            CLS: {pageStats.lighthouse.cumulativeLayoutShift.toFixed(3)}
+          </span>
+        )}
+      </div>
+    )}
+  </div>
+)}
+
+<style>
+.speedlify-stats {
+  background: rgba(208, 223, 0, 0.1);
+  border: 1px solid rgba(208, 223, 0, 0.2);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.stats-title {
+  font-weight: 600;
+  color: #d0df00;
+}
+
+.stats-timestamp {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 0.5rem;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 6px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+}
+
+/* Score colors */
+.stat-item.performance .stat-value {
+  color: #10b981;
+}
+
+.stat-item.accessibility .stat-value {
+  color: #d0df00;
+}
+
+.stat-item.seo .stat-value {
+  color: #d0df00;
+}
+
+.stat-item.best-practices .stat-value {
+  color: #10b981;
+}
+
+.core-vitals {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(208, 223, 0, 0.2);
+}
+
+.vital {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: rgba(30, 41, 59, 0.3);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .core-vitals {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .vital {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-header {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+</style>

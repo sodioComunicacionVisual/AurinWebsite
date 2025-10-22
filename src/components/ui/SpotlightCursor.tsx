@@ -1,6 +1,6 @@
 'use client';
-import { useRef, useEffect } from 'react';
-import { useMotionValue, useSpring } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
+import { useMotionValue, useSpring, motion, AnimatePresence } from 'framer-motion';
 
 interface SpotlightConfig {
   radius?: number;
@@ -17,6 +17,25 @@ export const SpotlightCursor = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
+  const [tooltip, setTooltip] = useState<{ text: string; visible: boolean }>({
+    text: '',
+    visible: false
+  });
+
+  // Smooth tooltip position with spring physics
+  const tooltipX = useMotionValue(0);
+  const tooltipY = useMotionValue(0);
+  
+  const smoothTooltipX = useSpring(tooltipX, { 
+    stiffness: 500, 
+    damping: 50, 
+    bounce: 0 
+  });
+  const smoothTooltipY = useSpring(tooltipY, { 
+    stiffness: 500, 
+    damping: 50, 
+    bounce: 0 
+  });
   
   // Smooth mouse position with spring physics
   const smoothMouseX = useSpring(mouseX, { 
@@ -49,11 +68,25 @@ export const SpotlightCursor = ({
     const handleMouseMove = (event: MouseEvent) => {
       mouseX.set(event.clientX);
       mouseY.set(event.clientY);
+      
+      // Update tooltip position with offset
+      tooltipX.set(event.clientX + 20);
+      tooltipY.set(event.clientY - 40);
     };
 
     const handleMouseLeave = () => {
       mouseX.set(-1000);
       mouseY.set(-1000);
+      setTooltip({ text: '', visible: false });
+    };
+
+    // Listen for custom tooltip events
+    const handleShowTooltip = (event: CustomEvent) => {
+      setTooltip({ text: event.detail.text, visible: true });
+    };
+
+    const handleHideTooltip = () => {
+      setTooltip({ text: '', visible: false });
     };
 
     // Subscribe to smooth mouse position changes
@@ -96,12 +129,16 @@ export const SpotlightCursor = ({
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('showCursorTooltip', handleShowTooltip as EventListener);
+    window.addEventListener('hideCursorTooltip', handleHideTooltip);
     animationFrameId = requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('showCursorTooltip', handleShowTooltip as EventListener);
+      window.removeEventListener('hideCursorTooltip', handleHideTooltip);
       cancelAnimationFrame(animationFrameId);
       unsubscribeX();
       unsubscribeY();
@@ -109,17 +146,53 @@ export const SpotlightCursor = ({
   }, [config.radius, config.brightness, config.color, config.smoothing, mouseX, mouseY, smoothMouseX, smoothMouseY]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-        zIndex: 9999,
-      }}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 9999,
+        }}
+      />
+      <AnimatePresence>
+        {tooltip.visible && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: -10 }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 600, 
+              damping: 30,
+              bounce: 0.1
+            }}
+            style={{
+              position: 'fixed',
+              left: smoothTooltipX,
+              top: smoothTooltipY,
+              backgroundColor: 'var(--color-yellow)',
+              color: '#0A0A0A',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              fontSize: '14px',
+              fontFamily: 'var(--font-body)',
+              fontWeight: '500',
+              pointerEvents: 'none',
+              zIndex: 10000,
+              whiteSpace: 'nowrap',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            {tooltip.text}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

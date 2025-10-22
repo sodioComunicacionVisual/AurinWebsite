@@ -5,9 +5,24 @@ import { translations } from '../../i18n/translations.js';
 import styles from './MainCat.module.css';
 import { Tilt } from './Tilt';
 
-// Detect current language
+// Detect current language and page context
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
+
+// Determine page context based on URL pathname
+const pathname = Astro.url.pathname;
+let pageContext = 'home';
+
+if (pathname.includes('/nosotros') || pathname.includes('/us')) {
+  pageContext = 'us';
+} else if (pathname.includes('/servicios') || pathname.includes('/services')) {
+  pageContext = 'services';
+} else if (pathname.includes('/proyectos') || pathname.includes('/projects') || pathname.includes('/proyecto/')) {
+  pageContext = 'projects';
+}
+
+// Get context-specific content
+const mainCatContent = (t.mainCat as any)[pageContext] || (t.mainCat as any).home;
 ---
 
 <section class={styles.mainCatContainer}>
@@ -20,11 +35,11 @@ const t = translations[currentLang];
     <div class={styles.mainCatWrapper} data-parallax-wrapper>
       <div class={styles.mainCatContent}>
         <div class={styles.mainCatText}>
-          <p class={styles.body0} set:html={t.mainCat.text}>
+          <p class={styles.body0} set:html={mainCatContent.text}>
           </p>
         </div>
         <div class={styles.buttonWrapper}>
-          <SecondaryButton text={t.mainCat.buttonText} href="/contacto" />
+          <SecondaryButton text={mainCatContent.buttonText} href="/contacto" />
         </div>
       </div>
     </div>
