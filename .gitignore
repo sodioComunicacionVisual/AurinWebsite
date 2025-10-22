@@ -26,5 +26,6 @@ pnpm-debug.log*
 .astro/
 .vercel
 
-# Speedlify module - deployed separately
+# Speedlify modules - deployed separately
 src/components/modules/speedlify/
+src/components/modules/original-speedlify/

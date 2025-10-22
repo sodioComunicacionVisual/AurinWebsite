@@ -121,17 +121,45 @@ export const SpeedlifyStats: React.FC = () => {
         
         const urls: SpeedlifyData[] = await response.json();
         
-        // Buscar la página principal
-        const homepage = urls.find(item => 
-          item.url === 'https://aurin.mx/' || 
-          item.url === 'https://aurin.mx'
-        );
+        // Obtener la URL actual de la página
+        const currentUrl = window.location.href;
+        const currentPath = window.location.pathname;
         
-        if (homepage && homepage.lighthouse) {
-          setData(homepage);
+        // Construir posibles URLs para buscar
+        const possibleUrls = [
+          currentUrl,
+          `https://aurin.mx${currentPath}`,
+          `https://aurin.mx${currentPath === '/' ? '/' : currentPath.replace(/\/$/, '')}`,
+          currentPath === '/' ? 'https://aurin.mx/' : `https://aurin.mx${currentPath}`
+        ];
+        
+        // Buscar la página actual en los datos de Speedlify
+        let currentPageData = null;
+        
+        for (const url of possibleUrls) {
+          currentPageData = urls.find(item => 
+            item.url === url || 
+            item.url === url.replace(/\/$/, '') ||
+            item.url === url + '/'
+          );
+          if (currentPageData) break;
+        }
+        
+        if (currentPageData && currentPageData.lighthouse) {
+          setData(currentPageData);
         } else {
-          // Si no encuentra la homepage, usar la primera URL disponible
-          setData(urls[0] || null);
+          // Fallback: buscar la homepage si no encuentra la página actual
+          const homepage = urls.find(item => 
+            item.url === 'https://aurin.mx/' || 
+            item.url === 'https://aurin.mx'
+          );
+          
+          if (homepage && homepage.lighthouse) {
+            setData(homepage);
+          } else {
+            // Si no encuentra nada, usar la primera URL disponible
+            setData(urls[0] || null);
+          }
         }
       } catch (err) {
         console.error('Error fetching Speedlify data:', err);
@@ -213,7 +241,7 @@ export const SpeedlifyStats: React.FC = () => {
           Métricas de Rendimiento
         </h3>
         <p className="text-sm text-gray-400">
-          Última auditoría: {lastUpdate} • 
+          {data.url} • Última auditoría: {lastUpdate} • 
           <a 
             href="https://aurinwebsitestats.netlify.app" 
             target="_blank" 
