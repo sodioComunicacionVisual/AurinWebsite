@@ -1,0 +1,211 @@
+---
+// AnimatedLogo.astro - Componente para animar el logo Aurin con GSAP DrawSVG
+import styles from './AnimatedLogo.module.css';
+---
+
+<div class={styles.logoContainer} id="animated-logo">
+  <svg 
+    width="115" 
+    height="35" 
+    viewBox="0 0 115 35" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    class={styles.logo}
+  >
+    <path 
+      id="path-1"
+      d="M0.86206 17.5045C0.287353 18.9858 0 20.5819 0 22.2927C0 24.0035 0.287353 25.6417 0.86206 27.1163C1.43677 28.5909 2.23007 29.8344 3.24374 30.8517C4.25741 31.8674 5.47029 32.657 6.88238 33.2222C8.29446 33.7874 9.8229 34.0692 11.4677 34.0692C14.5316 34.0692 16.9186 33.0147 18.6251 30.9074H18.745V33.6794H24.8499V12.0347L1.03482 17.0827C0.974885 17.221 0.91671 17.3594 0.86206 17.5028V17.5045ZM8.08644 17.6631C9.25877 16.4871 10.7237 15.8983 12.4796 15.8983C14.2354 15.8983 15.6599 16.5091 16.8005 17.7323C17.9411 18.9538 18.5123 20.4823 18.5123 22.3146C18.5123 24.1469 17.9305 25.667 16.7652 26.8278C15.5999 27.9886 14.1632 28.569 12.4567 28.569C10.6532 28.569 9.1812 27.9886 8.0406 26.8278C6.90001 25.667 6.32882 24.1621 6.32882 22.3146C6.32882 20.4672 6.91587 18.839 8.0882 17.6631H8.08644Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-2"
+      d="M18.4342 10.7674V13.3961H18.3408C16.5532 11.4103 14.1962 10.3794 11.2768 10.3794C9.69728 10.3794 8.20763 10.678 6.81141 11.2736C5.41519 11.8692 4.21818 12.6858 3.22037 13.7251C2.31953 14.6631 1.59145 15.7851 1.03613 17.0859L24.8512 12.0379V10.7691H18.436L18.4342 10.7674Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-3"
+      d="M38.2435 27.2985C37.5806 26.4667 37.2492 25.0191 37.2492 22.9574V10.7676H30.834V24.5602C30.834 26.271 31.0455 27.7456 31.4686 28.9823C31.6449 29.4969 31.8565 29.9659 32.098 30.3928L38.4374 27.5145C38.3704 27.4453 38.3052 27.3744 38.2435 27.2985Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-4"
+      d="M45.3185 26.8062C44.2977 27.9669 43.0355 28.5473 41.5353 28.5473C40.1426 28.5473 39.1113 28.2031 38.4361 27.5148L32.0967 30.3931C32.4369 30.9937 32.8406 31.51 33.3113 31.9385C34.117 32.6725 35.039 33.2107 36.0773 33.5532C37.1139 33.8973 38.3039 34.0694 39.6437 34.0694C40.9835 34.0694 42.3127 33.7978 43.5344 33.2562C44.7561 32.7146 45.8279 31.9233 46.7552 30.8857H46.8504V33.6814H53.2656V20.7812L46.6935 23.7659C46.4714 25.0026 46.013 26.0166 45.3185 26.8078V26.8062Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-5"
+      d="M46.8512 10.7676V21.8793C46.8512 22.5559 46.7983 23.1852 46.6943 23.7639L53.2664 20.7793V10.7676H46.8512Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-6"
+      d="M73.4715 10.4001C73.3763 10.3849 73.2089 10.3765 72.9691 10.3765C71.5482 10.3765 70.2154 10.7004 68.9708 11.35C67.7262 11.9995 66.6491 12.9275 65.7394 14.1338H65.6672V10.7662H59.252V18.0599L73.4715 11.6014V10.4001Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-7"
+      d="M59.252 18.0613V33.6795H65.6672V23.0486C65.6672 21.2922 66.2048 19.8565 67.2837 18.7412C68.3609 17.626 69.8576 17.0692 71.7721 17.0692C72.2675 17.0692 72.8334 17.0929 73.4715 17.1384V11.6045L59.252 18.063V18.0613Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-8"
+      d="M78.1287 3.64767C78.1287 4.31916 78.2997 4.9333 78.6435 5.49344C78.9873 6.05358 79.4579 6.49731 80.0573 6.82462C80.6567 7.15193 81.3072 7.31727 82.0089 7.31727C83.0684 7.31727 83.9798 6.95959 84.7449 6.24254C85.5082 5.52718 85.8908 4.66166 85.8908 3.64767C85.8908 2.63368 85.5082 1.79009 84.7449 1.07473C83.9816 0.359367 83.0701 0 82.0089 0C81.8061 0 81.6105 0.0168717 81.4183 0.0421794L80.796 0.173779C80.2266 0.34587 79.7153 0.644501 79.2605 1.07304C78.5042 1.7884 78.127 2.64718 78.127 3.64598L78.1287 3.64767Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-9"
+      d="M85.2111 10.7676H78.7959V33.6794H85.2111V10.7676Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+    <path 
+      id="path-10"
+      d="M111.63 12.578C110.84 11.8289 109.931 11.2755 108.901 10.9161C107.872 10.5568 106.694 10.3779 105.37 10.3779C103.886 10.3779 102.477 10.6647 101.144 11.2367C99.8116 11.8103 98.6587 12.6387 97.6855 13.7219H97.6133V10.766H91.1963V33.6778H97.6133V22.1527C97.6133 20.1517 98.1033 18.6097 99.0853 17.5248C100.067 16.4399 101.388 15.8984 103.048 15.8984C104.612 15.8984 105.77 16.3269 106.519 17.1823C107.27 18.0377 107.644 19.519 107.644 21.628V33.7031H114.059V20.0944C114.059 18.3684 113.851 16.8719 113.437 15.6031C113.023 14.336 112.42 13.3271 111.63 12.5797V12.578Z" 
+      fill="#D0DF00"
+      stroke="#D0DF00"
+      stroke-width="0.5"
+    />
+  </svg>
+</div>
+
+<script>
+  import { gsap } from 'gsap';
+  
+  // Función para animación en dos fases: noLight → Aurin iluminado
+  function drawSVGAnimation() {
+    const paths = document.querySelectorAll('#animated-logo path');
+    
+    if (paths.length === 0) return;
+    
+    // Colores finales iluminados basados en Aurin.svg
+    const aurinColors = [
+      '#D0DF00', // path 1
+      'white',    // path 2
+      '#D0DF00',  // path 3
+      'white',    // path 4
+      '#D0DF00',  // path 5
+      'white',    // path 6
+      '#D0DF00',  // path 7
+      'white',    // path 8
+      '#D0DF00',  // path 9
+      '#D0DF00'   // path 10
+    ];
+    
+    // Color gris oscuro para la fase inicial (noLight)
+    const darkGray = '#3a3a3a';
+    
+    // Timeline principal
+    const mainTl = gsap.timeline({
+      delay: 0.5
+    });
+    
+    // FASE 1: Dibujar en gris oscuro (noLight)
+    const drawTl = gsap.timeline();
+    
+    // Preparar paths para animación inicial
+    paths.forEach((path, index) => {
+      const pathElement = path as SVGPathElement;
+      const pathLength = pathElement.getTotalLength();
+      
+      // Configurar estado inicial
+      gsap.set(path, {
+        strokeDasharray: pathLength,
+        strokeDashoffset: pathLength,
+        fill: 'transparent',
+        stroke: darkGray,
+        strokeWidth: 2,
+        opacity: 1
+      });
+      
+      // Animar el dibujo del stroke en gris
+      drawTl.to(path, {
+        strokeDashoffset: 0,
+        duration: 1.0,
+        ease: "power1.inOut"
+      }, index * 0.12);
+      
+      // Animar el fill en gris
+      drawTl.to(path, {
+        fill: darkGray,
+        duration: 0.5,
+        ease: "power2.inOut"
+      }, index * 0.12 + 0.8);
+    });
+    
+    // FASE 2: Transformación súbita a colores iluminados
+    const lightUpTl = gsap.timeline();
+    
+    // Efecto de iluminación súbita
+    paths.forEach((path, index) => {
+      // Cambio instantáneo de colores + efecto de brillo
+      lightUpTl.to(path, {
+        fill: aurinColors[index],
+        stroke: aurinColors[index],
+        duration: 0.1,
+        ease: "power2.out"
+      }, 0);
+      
+      // Efecto de opacity para simular encendido
+      lightUpTl.fromTo(path, 
+        { opacity: 0.3 },
+        { 
+          opacity: index === 0 ? 0.3 : 1, // Primera path mantiene opacity 0.3
+          duration: 0.3,
+          ease: "power2.out"
+        }, 0.1
+      );
+    });
+    
+    // Animación de entrada del contenedor
+    mainTl.fromTo('#animated-logo', 
+      {
+        opacity: 0,
+        scale: 0.6,
+        y: 50
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.7,
+        ease: "back.out(1.2)"
+      }, 0
+    );
+    
+    // Secuencia: entrada → dibujo gris → pausa → iluminación
+    mainTl.add(drawTl, 0.3);
+    mainTl.add(lightUpTl, "+=0.5"); // Pausa de 0.5s antes de iluminar
+  }
+  
+  // Ejecutar cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    // Pequeño delay para asegurar que todo esté cargado
+    setTimeout(drawSVGAnimation, 100);
+  });
+  
+  // Fallback para Astro
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(drawSVGAnimation, 100);
+    });
+  } else {
+    setTimeout(drawSVGAnimation, 100);
+  }
+</script>

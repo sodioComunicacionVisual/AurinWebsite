@@ -1,0 +1,110 @@
+---
+import styles from './TopLayer.module.css';
+---
+
+<div class={styles.topLayer}>
+  <div class={styles.socialSection}>
+    <div class={styles.socialContainer}>
+      <a href="https://instagram.com/aurin.mx" target="_blank" rel="noopener noreferrer" class={styles.socialButton} data-social="instagram">
+        <div class={styles.buttonWrapper}>
+          <div class={styles.iconContainer}>
+            <!-- Instagram Icon -->
+            <svg width="11.52" height="11.52" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="white" stroke-width="2"/>
+              <path d="m16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0" stroke="white" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.5" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class={styles.cornerDots}>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+        </div>
+      </a>
+      
+      <a href="https://linkedin.com/company/aurin" target="_blank" rel="noopener noreferrer" class={styles.socialButton} data-social="linkedin">
+        <div class={styles.buttonWrapper}>
+          <div class={styles.iconContainer}>
+            <!-- LinkedIn Icon -->
+            <svg width="11.52" height="11.52" viewBox="0 0 24 24" fill="none">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="white" stroke-width="2"/>
+              <rect x="2" y="9" width="4" height="12" stroke="white" stroke-width="2"/>
+              <circle cx="4" cy="4" r="2" stroke="white" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+        <div class={styles.cornerDots}>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+        </div>
+      </a>
+      
+      <a href="https://facebook.com/aurin.mx" target="_blank" rel="noopener noreferrer" class={styles.socialButton} data-social="facebook">
+        <div class={styles.buttonWrapper}>
+          <div class={styles.iconContainer}>
+            <!-- Facebook Icon -->
+            <svg width="11.52" height="11.52" viewBox="0 0 24 24" fill="none">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="white" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+        <div class={styles.cornerDots}>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+          <div class={styles.dot}></div>
+        </div>
+      </a>
+    </div>
+  </div>
+  
+  <div class={styles.scrollSection}>
+    <button class={styles.scrollButton} id="scrollDownBtn">
+      <div class={styles.scrollIcon}>
+        <!-- Scroll Down Arrow -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M7 13l5 5 5-5M7 6l5 5 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll functionality for scroll down button
+    const scrollBtn = document.getElementById('scrollDownBtn');
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', function() {
+        const nextSection = document.querySelector('section:nth-of-type(2)');
+        if (nextSection) {
+          nextSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        } else {
+          // Fallback: scroll down by viewport height
+          window.scrollBy({
+            top: window.innerHeight,
+            behavior: 'smooth'
+          });
+        }
+      });
+    }
+
+    // Add analytics tracking for social media clicks
+    const socialButtons = document.querySelectorAll('[data-social]');
+    socialButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        const target = event.currentTarget as HTMLElement;
+        const platform = target.getAttribute('data-social');
+        // Track social media clicks (can be integrated with analytics)
+        console.log(`Social media click: ${platform}`);
+      });
+    });
+  });
+</script>

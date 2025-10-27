@@ -121,20 +121,26 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
     const updateHeader = () => {
       const currentScrollY = window.scrollY;
       
-      // Show header at top of page
+      // Apply top0 class when at top of page (transparent background)
       if (currentScrollY <= 0) {
+        header.classList.add('top0');
         header.classList.remove('header-hidden');
         header.classList.add('header-visible');
       }
-      // Hide header when scrolling down
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        header.classList.add('header-hidden');
-        header.classList.remove('header-visible');
-      }
-      // Show header when scrolling up
-      else if (currentScrollY < lastScrollY) {
-        header.classList.remove('header-hidden');
-        header.classList.add('header-visible');
+      // Remove top0 class when scrolled (solid background)
+      else {
+        header.classList.remove('top0');
+        
+        // Hide header when scrolling down
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          header.classList.add('header-hidden');
+          header.classList.remove('header-visible');
+        }
+        // Show header when scrolling up
+        else if (currentScrollY < lastScrollY) {
+          header.classList.remove('header-hidden');
+          header.classList.add('header-visible');
+        }
       }
 
       lastScrollY = currentScrollY;
@@ -149,6 +155,9 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    
+    // Set initial header state on load
+    updateHeader();
   }
 
   // Initialize on page load

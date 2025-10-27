@@ -1,0 +1,33 @@
+---
+import { BGPattern } from '../../ui/bg-pattern';
+import styles from './BackLayer.module.css';
+
+interface Props {
+  noiseOpacity?: number;
+  noiseBlendMode?: string;
+}
+
+const { noiseOpacity = 0.1, noiseBlendMode = 'soft-light' } = Astro.props;
+---
+
+<div class={styles.backLayer}>
+  <!-- Noise overlay -->
+  <div 
+    class={styles.noiseOverlay}
+    style={`opacity: ${noiseOpacity}; mix-blend-mode: ${noiseBlendMode}`}
+  ></div>
+  
+  <!-- Grid pattern background -->
+  <div class={styles.gridBackground}>
+    <BGPattern 
+      variant="grid" 
+      mask="fade-center" 
+      size={35} 
+      fill="#4f4f4f2e"
+      client:load
+    />
+  </div>
+  
+  <!-- Gradient background -->
+  <div class={styles.gradientBackground}></div>
+</div>

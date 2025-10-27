@@ -1,0 +1,64 @@
+/* AnimatedLogo.module.css - Estilos para el logo animado de Aurin */
+
+.logoContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.logo {
+  width: 95vw;
+  max-width: 1400px;
+  min-width: 600px;
+  height: auto;
+  transition: filter 0.3s ease;
+  overflow: visible;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 12px 36px rgba(208, 223, 0, 0.6));
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .logo {
+    width: 90vw;
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 95vw;
+    max-width: 900px;
+    min-width: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 98vw;
+    max-width: 700px;
+    min-width: 400px;
+  }
+}
+
+/* Animation states */
+.logoContainer.animating {
+  opacity: 1;
+}
+
+.logoContainer.completed {
+  opacity: 1;
+  pointer-events: auto;
+}

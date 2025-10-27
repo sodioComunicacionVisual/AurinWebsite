@@ -2,7 +2,9 @@
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
 import styles from './Banner.module.css';
-
+import TopLayer from '../../modules/banner/TopLayer.astro';
+import BackLayer from '../../modules/banner/BackLayer.astro';
+import AnimatedLogo from '../../modules/banner/AnimatedLogo.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -11,8 +13,9 @@ const t = translations[currentLang];
 
 <section class={styles.banner}>
   <div class={styles.bannerContainer}>
-    <div class={styles.bannerPlaceholder}>
-      <h2>{t.banner.title}</h2>
-    </div>
+    <BackLayer noiseOpacity={0.01} />
+
+    <AnimatedLogo />
+    <TopLayer />
   </div>
 </section>
