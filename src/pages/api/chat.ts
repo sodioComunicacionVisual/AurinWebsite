@@ -31,7 +31,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     try {
       // Llamar al webhook de n8n
-      const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'https://aurinmx-n8n-xxx.traefik.me/webhook/chatbot';
+      const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'http://aurinmx-n8n-d7c3b1-213-210-13-193.traefik.me/webhook/chatbot';
 
       console.log('Sending to n8n:', { url: n8nWebhookUrl, payload: n8nPayload });
 
