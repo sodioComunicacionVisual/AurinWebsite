@@ -30,15 +30,17 @@ export const POST: APIRoute = async ({ request }) => {
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
     try {
-      // Llamar al webhook de n8n
-      const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'http://aurinmx-n8n-d7c3b1-213-210-13-193.traefik.me/webhook/chatbot';
+      // Llamar al webhook de n8n con CORS habilitado
+      // IMPORTANTE: El workflow debe estar ACTIVO en n8n y configurado para POST
+      const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'http://213.210.13.193:5678/webhook/chatbot';
 
-      console.log('Sending to n8n:', { url: n8nWebhookUrl, payload: n8nPayload });
+      console.log('🔗 Sending to n8n webhook:', { url: n8nWebhookUrl, payload: n8nPayload });
 
       const response = await fetch(n8nWebhookUrl, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(n8nPayload),
         signal: controller.signal
@@ -48,17 +50,23 @@ export const POST: APIRoute = async ({ request }) => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error(`N8N webhook error: ${response.status} - ${errorText}`);
+        console.error(`❌ N8N webhook error: ${response.status} - ${errorText}`);
+        
+        // Si es 404, el workflow probablemente no está activo
+        if (response.status === 404) {
+          throw new Error('Webhook not found. Please ensure the n8n workflow is ACTIVE.');
+        }
+        
         throw new Error(`N8N webhook error: ${response.status}`);
       }
 
       const data = await response.json();
       console.log('Response from n8n:', data);
 
-      // El webhook de n8n devuelve: { success: true, output: "respuesta", sessionId: "..." }
+      // El webhook de n8n devuelve: { success: true, output: "respuesta", sessionId: "...", metadata: {...} }
       const botResponse = data.output || data.response || data.message || 'Respuesta recibida';
 
-      // Respuesta exitosa
+      // Respuesta exitosa con metadata de Calendar si existe
       return new Response(JSON.stringify({
         success: true,
         output: botResponse,
@@ -67,7 +75,14 @@ export const POST: APIRoute = async ({ request }) => {
         timestamp: new Date().toISOString(),
         metadata: {
           model: 'gpt-4o-mini',
-          responseTime: null
+          responseTime: null,
+          // Incluir metadata de Calendar para seguimiento de estado
+          ...(data.metadata && {
+            customerEmail: data.metadata.customerEmail,
+            pendingBooking: data.metadata.pendingBooking,
+            customerData: data.metadata.customerData,
+            requiresConfirmation: data.metadata.requiresConfirmation
+          })
         }
       }), {
         status: 200,
