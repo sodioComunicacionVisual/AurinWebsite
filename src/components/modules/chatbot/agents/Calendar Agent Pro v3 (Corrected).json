@@ -1,0 +1,407 @@
+{
+  "name": "Calendar Agent Pro v3 (Corrected)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "8a62be20-e830-4eec-96f4-a2b995ad8bb7",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1184,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// === PARSEAR SOLICITUD v3 ===\nconst query = ($input.item.json.query || '').toLowerCase();\nconst customerEmail = $input.item.json.customerEmail || '';\nconst pendingBookingIn = $input.item.json.pendingBooking || null;\nconst customerData = $input.item.json.customerData || null;\n\n// Acciones\nconst isBooking = /(agendar|reservar|programar|book|cita)/i.test(query);\nconst isCancel = /(cancelar|eliminar|quitar)/i.test(query);\nconst isCheck = /(disponible|horario|cuando|available)/i.test(query);\nconst isConfirm = /(confirmar|confirmo|si confirmo|confirm|yes)/i.test(query);\n\nlet action = 'check';\nif (isBooking) action = 'book';\nif (isCancel) action = 'cancel';\nif (isConfirm) action = 'confirm';\n\n// Detectar si el usuario está respondiendo a la petición de datos para agendar\nif (pendingBookingIn && customerData && !isCancel && !isConfirm) {\n  action = 'create_event';\n}\n\n// Extraer día y hora (solo para 'book')\nlet targetDate = null;\nlet targetTime = null;\nif (action === 'book') {\n  const daysEs = ['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];\n  const daysEn = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];\n  for (let i = 0; i < 7; i++) {\n    const d = new Date();\n    const diff = (i + 7 - d.getDay() + 1) % 7 || 7;\n    d.setDate(d.getDate() + diff);\n    if (query.includes(daysEs[i]) || query.includes(daysEn[i])) {\n      targetDate = d.toISOString().split('T')[0];\n      break;\n    }\n  }\n  const timeMatch = query.match(/(\\d{1,2})(?::(\\d{2}))?\\s?(am|pm)?/i);\n  if (timeMatch) {\n    let [_, h, m, p] = timeMatch;\n    let hours = parseInt(h);\n    const minutes = m || '00';\n    if (p) {\n      if (p.toLowerCase() === 'pm' && hours !== 12) hours += 12;\n      if (p.toLowerCase() === 'am' && hours === 12) hours = 0;\n    }\n    targetTime = `${hours.toString().padStart(2,'0')}:${minutes}`;\n  }\n}\n\nreturn [{\n  json: {\n    query,\n    action,\n    targetDate,\n    targetTime,\n    customerEmail,\n    customerData,\n    pendingBookingIn\n  }\n}];"
+      },
+      "id": "750952f7-e985-4c1c-b206-45ff8e7720bd",
+      "name": "Parse Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -960,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "limit": 100,
+        "options": {
+          "orderBy": "startTime"
+        }
+      },
+      "id": "83fa6ec2-f2c2-4882-a6ab-446d4ca3480d",
+      "name": "Get Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -736,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// === PROCESAR ACCIÓN v3 ===\nconst { action, targetDate, targetTime, customerEmail, customerData, pendingBookingIn } = $json;\nconst events = $input.all().filter(i => i.json.id).map(i => i.json);\n\nconst allowedTimes = ['09:00','10:00','11:00','14:00','15:00','16:00','17:00'];\n\nlet response = '';\nlet needsData = false;\nlet pendingBooking = null;\nlet cancelEventId = null;\nlet pendingUpdate = null;\nlet shouldCreateEvent = false;\nlet shouldDeleteEvent = false;\nlet shouldUpdateEvent = false;\n\nif (action === 'check') {\n  response = `📅 **Disponibilidad esta semana (CDMX, GMT-6)**\\n\\n`;\n  const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];\n  for (let i = 0; i < 7; i++) {\n    const d = new Date();\n    d.setDate(d.getDate() + i);\n    if (d.getDay() === 0 || d.getDay() === 6) continue;\n    const dateStr = d.toISOString().split('T')[0];\n    const dayEvents = events.filter(e => e.start?.dateTime?.startsWith(dateStr));\n    const busy = dayEvents.map(e => new Date(e.start.dateTime).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit',hour12:false}));\n    const free = allowedTimes.filter(t => !busy.includes(t));\n    if (free.length > 0) {\n      response += `**${days[d.getDay()]}**: ${free.join(', ')}\\n`;\n    }\n  }\n  response += `\\n¿Qué día y hora prefieres? (Ej: \"Jueves a las 3 PM\")`;\n\n} else if (action === 'book') {\n  if (!targetDate || !targetTime || !allowedTimes.includes(targetTime)) {\n    response = `⏰ Necesito un horario válido. Ejemplo: \"Martes a las 10 AM\"\\n\\nHorarios disponibles: 9-11 AM y 2-5 PM`;\n  } else {\n    const startISO = `${targetDate}T${targetTime}:00-06:00`;\n    const endISO = new Date(new Date(startISO).getTime() + 45*60*1000).toISOString();\n    const conflict = events.some(e => {\n      const s1 = new Date(e.start.dateTime); const e1 = new Date(e.end.dateTime);\n      const s2 = new Date(startISO); const e2 = new Date(endISO);\n      return s1 < e2 && s2 < e1;\n    });\n    if (conflict) {\n      response = `❌ Lo siento, ese horario ya está ocupado. ¿Otro horario?`;\n    } else {\n      response = `✅ ¡Perfecto! Confirmemos tu cita:\\n\\n📅 **${new Date(startISO).toLocaleString('es-MX',{weekday:'long',month:'long',day:'numeric',hour:'numeric',minute:'numeric'})}**\\n⏱️ Duración: 45 min\\n\\nPara confirmar, necesito:\\n1. Nombre completo\\n2. Email\\n3. Empresa (opcional)\\n4. ¿De qué trata tu proyecto?\\n\\n_Responde con esta info y agendaré tu cita._`;\n      needsData = true;\n      pendingBooking = { start: startISO, end: endISO };\n    }\n  }\n\n} else if (action === 'create_event') {\n  response = `Creando evento...`;\n  shouldCreateEvent = true;\n\n} else if (action === 'cancel') {\n  if (!customerEmail) {\n    response = `Para cancelar, necesito el email con el que agendaste.`;\n  } else {\n    const pending = events.find(e => \n      e.attendees?.some(a => a.email === customerEmail) && \n      !e.summary.includes('[CANCELADO]')\n    );\n    if (pending) {\n      cancelEventId = pending.id;\n      shouldDeleteEvent = true;\n      response = `Cancelando tu cita...`;\n    } else {\n      response = `No encontré ninguna cita pendiente con tu email **${customerEmail}**.`;\n    }\n  }\n\n} else if (action === 'confirm') {\n  if (!customerEmail) {\n    response = `Para confirmar, necesito el email con el que agendaste.`;\n  } else {\n    const eventToConfirm = events.find(e => \n      e.attendees?.some(a => a.email === customerEmail) && \n      e.summary.includes('[PENDIENTE CONFIRMACIÓN]')\n    );\n    if (eventToConfirm) {\n      pendingUpdate = {\n        id: eventToConfirm.id,\n        summary: eventToConfirm.summary.replace('[PENDIENTE CONFIRMACIÓN]', '[CONFIRMADA]'),\n        description: (eventToConfirm.description || '').replace('Pendiente de confirmación (24h).', 'Cita confirmada por el usuario.')\n      };\n      shouldUpdateEvent = true;\n      response = `Confirmando cita...`;\n    } else {\n      response = `No encontré ninguna cita pendiente de confirmación con tu email. ¿Quizás ya la habías confirmado?`;\n    }\n  }\n}\n\nreturn [{\n  json: {\n    output: response,\n    needsData,\n    pendingBooking,\n    cancelEventId,\n    pendingUpdate,\n    action,\n    customerData: $json.customerData,\n    pendingBookingIn: $json.pendingBookingIn,\n    shouldCreateEvent,\n    shouldDeleteEvent,\n    shouldUpdateEvent\n  }\n}];"
+      },
+      "id": "1a97608a-cc21-4dcb-b20a-c3a8b3f525c0",
+      "name": "Process Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -512,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.shouldCreateEvent }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "8a80e532-f1b3-42e0-922f-2d9c0b070b5b",
+      "name": "IF Create Event",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "start": "={{ $json.pendingBookingIn.start }}",
+        "end": "={{ $json.pendingBookingIn.end }}",
+        "useDefaultReminders": false,
+        "additionalFields": {}
+      },
+      "id": "8f24a88a-de83-40e8-8bdb-0cd87061b6d9",
+      "name": "Create Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "hey@aurin.mx",
+        "toEmail": "={{ $json.customerData.email }}",
+        "subject": "Confirma tu cita con Aurin - {{ new Date($json.pendingBookingIn.start).toLocaleString('es-MX') }}",
+        "text": "Hola {{ $json.customerData.name }},\n\n¡Gracias por agendar una cita con Aurin!\n\nDetalles:\n- Fecha y hora: {{ new Date($json.pendingBookingIn.start).toLocaleString('es-MX') }}\n- Duración: 45 minutos\n- Enlace Meet: {{ $('Create Event').item.json.hangoutLink }}\n\n**IMPORTANTE:** Esta cita se cancelará automáticamente si no la confirmas en las próximas 24 horas.\n\nConfirma tu cita respondiendo en el chat con la palabra: **CONFIRMAR**\n\n¡Nos vemos pronto!\nEquipo Aurin",
+        "options": {}
+      },
+      "id": "35d9e6cd-3ae1-4461-bca8-6b1a408431e7",
+      "name": "Send Confirm Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        160,
+        -80
+      ],
+      "webhookId": "664b0a52-6c59-4d91-b2a3-8d7a910c9bd6"
+    },
+    {
+      "parameters": {
+        "jsCode": "const event = $('Create Event').item.json;\nconst customerData = $('Process Action').item.json.customerData;\nconst pendingBookingIn = $('Process Action').item.json.pendingBookingIn;\n\nif (!event || !event.hangoutLink) {\n  return [{ json: { output: 'Error al crear evento.' } }];\n}\n\nreturn [{\n  json: {\n    output: `¡Cita agendada!\\n\\n**${new Date(event.start.dateTime).toLocaleString('es-MX')}**\\n🔗 Enlace Meet: ${event.hangoutLink}\\n📅 Ver en calendario: ${event.htmlLink}\\n\\nTe enviamos un email de confirmación. \\n**IMPORTANTE: Responde 'CONFIRMAR' en el chat en las próximas 24h o la cita se cancelará.**\\n\\n¿Algo más?`,\n    eventId: event.id,\n    meetLink: event.hangoutLink,\n    calendarLink: event.htmlLink,\n    requiresConfirmation: true,\n    customerEmail: customerData.email,\n    pendingBooking: null\n  }\n}];"
+      },
+      "id": "194b6132-8995-45c9-9533-387922149621",
+      "name": "Final Booking Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.shouldDeleteEvent }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "d170a179-8673-4ad4-9662-3f15f367008f",
+      "name": "IF Delete Event",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "eventId": "={{ $json.cancelEventId }}",
+        "options": {
+          "sendUpdates": "all"
+        }
+      },
+      "id": "5a520813-f661-49ba-9341-fb10d41a3044",
+      "name": "Delete Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { \n  output: `Cita cancelada exitosamente.\\n\\n¿Deseas agendar una nueva?`,\n  customerEmail: null,\n  pendingBooking: null\n} }];"
+      },
+      "id": "8273e9fb-2e09-467e-80c0-49143412725c",
+      "name": "Cancel Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.shouldUpdateEvent }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "fbeb2af5-95c3-452d-8ec4-735dac9d8882",
+      "name": "IF Update Event",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "eventId": "={{ $json.pendingUpdate.id }}",
+        "useDefaultReminders": false,
+        "updateFields": {}
+      },
+      "id": "509691c0-cb50-453f-9260-d466bf513312",
+      "name": "Update Event (Confirm)",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -64,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const event = $('Update Event (Confirm)').item.json;\nconst customerEmail = $('Process Action').item.json.customerEmail;\n\nreturn [{\n  json: {\n    output: `✅ **¡Cita confirmada!**\\n\\nTu cita para el **${new Date(event.start.dateTime).toLocaleString('es-MX')}** está 100% asegurada.\\n\\n🔗 Enlace Meet: ${event.hangoutLink}\\n📅 Ver en calendario: ${event.htmlLink}\\n\\n¡Nos vemos pronto!\\n\\n¿Algo más en lo que te pueda ayudar?`,\n    success: true,\n    eventConfirmed: true,\n    customerEmail: customerEmail,\n    pendingBooking: null\n  }\n}];"
+      },
+      "id": "49e116ae-9f18-4ca5-8562-a9e8125ea2df",
+      "name": "Confirm Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pasar respuesta directa si no se ejecutan operaciones de Google Calendar\nreturn [$json];"
+      },
+      "id": "737a8d80-cb0e-4249-97f9-1412429e5764",
+      "name": "Passthrough Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        160
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Parse Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Request": {
+      "main": [
+        [
+          {
+            "node": "Get Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Events": {
+      "main": [
+        [
+          {
+            "node": "Process Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Action": {
+      "main": [
+        [
+          {
+            "node": "IF Create Event",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF Delete Event",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF Update Event",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Passthrough Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Create Event": {
+      "main": [
+        [
+          {
+            "node": "Create Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event": {
+      "main": [
+        [
+          {
+            "node": "Send Confirm Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirm Email": {
+      "main": [
+        [
+          {
+            "node": "Final Booking Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Delete Event": {
+      "main": [
+        [
+          {
+            "node": "Delete Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "main": [
+        [
+          {
+            "node": "Cancel Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Update Event": {
+      "main": [
+        [
+          {
+            "node": "Update Event (Confirm)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event (Confirm)": {
+      "main": [
+        [
+          {
+            "node": "Confirm Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d556664f-d097-4190-9fab-b1937674c7cc",
+  "meta": {
+    "instanceId": "db2c5968277b4288cf1a8381d1c27435aa3685422063464e1fce28aecf0339d7"
+  },
+  "id": "pgF8FnVC5RyNZd90",
+  "tags": []
+}

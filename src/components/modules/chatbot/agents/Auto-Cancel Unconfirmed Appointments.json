@@ -1,0 +1,241 @@
+{
+  "name": "Auto-Cancel Unconfirmed Appointments",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "id": "8683f9dc-a53c-4a3f-87f1-91397bf9633e",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -896,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "returnAll": true,
+        "options": {
+          "query": "[PENDIENTE CONFIRMACIÓN]"
+        }
+      },
+      "id": "3abe3ffb-4ea2-4f2d-bc67-6e315757f985",
+      "name": "Get Pending Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -672,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Filtrar eventos creados hace más de 24 horas\nconst items = $input.all();\nconst now = new Date();\nconst twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);\n\nconst oldEvents = items\n  .filter(item => {\n    if (!item.json.created) return false;\n    const createdDate = new Date(item.json.created);\n    return createdDate < twentyFourHoursAgo;\n  })\n  .map(item => ({\n    json: {\n      id: item.json.id,\n      summary: item.json.summary,\n      created: item.json.created,\n      startTime: item.json.start?.dateTime || item.json.start?.date,\n      attendees: item.json.attendees || []\n    }\n  }));\n\nreturn oldEvents;"
+      },
+      "id": "2142a4e5-b3c7-4f9f-90f2-6947e54eb313",
+      "name": "Filter Events Older Than 24h",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $input.all().length }}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b6c8fde9-f317-4ad0-8494-2a1080179369",
+      "name": "IF Has Events to Cancel",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        -160
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "eventId": "={{ $json.id }}",
+        "options": {
+          "sendUpdates": "all"
+        }
+      },
+      "id": "cb7a6fd7-9333-4762-b51f-71e86ae843f7",
+      "name": "Delete Event",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer el email del asistente (excluyendo al organizador)\nconst attendees = $json.attendees || [];\nconst attendee = attendees.find(a => !a.organizer);\n\nif (!attendee || !attendee.email) {\n  return [];\n}\n\nreturn [{ \n  json: {\n    id: $json.id,\n    summary: $json.summary,\n    customerEmail: attendee.email,\n    customerName: attendee.displayName || attendee.email.split('@')[0],\n    startTime: $json.startTime\n  }\n}];"
+      },
+      "id": "f6e832bb-bd29-495a-af33-5740c30cf173",
+      "name": "Get Attendee Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "hey@aurin.mx",
+        "toEmail": "={{ $json.customerEmail }}",
+        "subject": "Tu cita con Aurin ha sido cancelada (Falta de confirmación)",
+        "options": {}
+      },
+      "id": "4b94ae58-2672-4274-9382-4cc8931ad966",
+      "name": "Send Cancel Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        224,
+        -80
+      ],
+      "webhookId": "3f228707-ab2d-403e-8489-7f095a063362"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Log de eventos cancelados\nconst deletedCount = $input.all().length;\n\nreturn [{\n  json: {\n    success: true,\n    message: `Se cancelaron ${deletedCount} cita(s) no confirmada(s)`,\n    timestamp: new Date().toISOString(),\n    deletedCount\n  }\n}];"
+      },
+      "id": "1d4e6411-6191-4cad-ba5a-45cabcd247bc",
+      "name": "Log Cancellation Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        -160
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Pending Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pending Events": {
+      "main": [
+        [
+          {
+            "node": "Filter Events Older Than 24h",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Events Older Than 24h": {
+      "main": [
+        [
+          {
+            "node": "IF Has Events to Cancel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Has Events to Cancel": {
+      "main": [
+        [
+          {
+            "node": "Delete Event",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Attendee Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "main": [
+        [
+          {
+            "node": "Log Cancellation Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Attendee Email": {
+      "main": [
+        [
+          {
+            "node": "Send Cancel Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Cancel Email": {
+      "main": [
+        [
+          {
+            "node": "Log Cancellation Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bb666cb8-fdfa-49d9-aaa4-bf22728f22c3",
+  "meta": {
+    "instanceId": "db2c5968277b4288cf1a8381d1c27435aa3685422063464e1fce28aecf0339d7"
+  },
+  "id": "XbktF6QM4jTfhmo0",
+  "tags": []
+}

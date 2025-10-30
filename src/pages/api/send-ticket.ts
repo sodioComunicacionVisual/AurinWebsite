@@ -3,13 +3,36 @@ import { sendTicketEmail } from '../../lib/mailing/service';
 import { ticketConfirmationMessage } from '../../lib/mailing/templates';
 import type { TicketData } from '../../lib/mailing/types';
 
+export const prerender = false;
+
+// Handle OPTIONS for CORS preflight
+export const OPTIONS: APIRoute = async () => {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Accept',
+      'Access-Control-Max-Age': '86400',
+    }
+  });
+};
+
 export const POST: APIRoute = async ({ request }) => {
+  // CORS headers for all responses
+  const corsHeaders = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Accept',
+  };
+
   try {
     const body = await request.text();
     if (!body) {
       return new Response(
         JSON.stringify({ error: 'Cuerpo de la petición vacío' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -20,7 +43,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!name || !email || !description) {
       return new Response(
         JSON.stringify({ error: 'Faltan campos requeridos: name, email, description' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -29,7 +52,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!emailRegex.test(email)) {
       return new Response(
         JSON.stringify({ error: 'Email inválido' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } }
+        { status: 400, headers: corsHeaders }
       );
     }
 
@@ -68,18 +91,25 @@ export const POST: APIRoute = async ({ request }) => {
         emailSent: true,
         emailId: result.id
       }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
+      { status: 200, headers: corsHeaders }
     );
 
   } catch (error) {
     console.error('Error creating ticket:', error);
+
+    const corsHeaders = {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Accept',
+    };
 
     return new Response(
       JSON.stringify({
         error: 'Error al crear el ticket',
         details: error instanceof Error ? error.message : 'Error desconocido'
       }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      { status: 500, headers: corsHeaders }
     );
   }
 };
