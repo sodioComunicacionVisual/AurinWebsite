@@ -30,47 +30,8 @@
         "method": "POST",
         "url": "https://aurin.mx/api/send-ticket",
         "sendBody": true,
-        "contentType": "application/json",
-        "bodyParameters": {
-          "parameters": [
-            {
-              "name": "name",
-              "value": "={{ $json.name }}"
-            },
-            {
-              "name": "email",
-              "value": "={{ $json.email }}"
-            },
-            {
-              "name": "company",
-              "value": "={{ $json.company }}"
-            },
-            {
-              "name": "service",
-              "value": "={{ $json.service }}"
-            },
-            {
-              "name": "subject",
-              "value": "={{ $json.subject }}"
-            },
-            {
-              "name": "description",
-              "value": "={{ $json.description }}"
-            },
-            {
-              "name": "ticketId",
-              "value": "={{ $json.ticketId }}"
-            },
-            {
-              "name": "createdAt",
-              "value": "={{ $json.createdAt }}"
-            },
-            {
-              "name": "fileUrl",
-              "value": "={{ $json.fileUrl }}"
-            }
-          ]
-        },
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  name: $json.name,\n  email: $json.email,\n  company: $json.company,\n  service: $json.service,\n  subject: $json.subject,\n  description: $json.description,\n  ticketId: $json.ticketId,\n  createdAt: $json.createdAt,\n  fileUrl: $json.fileUrl\n}) }}",
         "options": {
           "timeout": 30000
         }
