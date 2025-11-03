@@ -114,20 +114,21 @@
     },
     {
       "parameters": {
-        "fromEmail": "hey@aurin.mx",
-        "toEmail": "={{ $json.customerEmail }}",
-        "subject": "Tu cita con Aurin ha sido cancelada (Falta de confirmación)",
+        "method": "POST",
+        "url": "https://aurin.mx/api/send-cancellation-email",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  \"name\": $json.customerName,\n  \"email\": $json.customerEmail,\n  \"appointmentDate\": $json.startTime,\n  \"reason\": \"not_confirmed\"\n} }}",
         "options": {}
       },
       "id": "4b94ae58-2672-4274-9382-4cc8931ad966",
-      "name": "Send Cancel Email",
-      "type": "n8n-nodes-base.emailSend",
-      "typeVersion": 2.1,
+      "name": "Send Cancel Email (via Vercel API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
       "position": [
         224,
         -80
-      ],
-      "webhookId": "3f228707-ab2d-403e-8489-7f095a063362"
+      ]
     },
     {
       "parameters": {

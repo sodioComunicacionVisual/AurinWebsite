@@ -241,6 +241,113 @@ Nos pondremos en contacto contigo dentro de las próximas 24 horas para atender 
 ¿Hay algo más en lo que pueda ayudarte mientras tanto?`;
 };
 
+export const appointmentCancellationEmail = (data: CancellationData): string => {
+  const appointmentDateTime = new Date(data.appointmentDate).toLocaleString('es-MX', {
+    timeZone: 'America/Mexico_City',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+
+  const reasonText = data.reason === 'not_confirmed'
+    ? 'No confirmaste tu cita dentro del período de 24 horas requerido.'
+    : 'Recibimos tu solicitud de cancelación.';
+
+  return `
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background: #ffffff; font-family: Arial, sans-serif;">
+
+      <!-- Header -->
+      <tr>
+        <td style="background: linear-gradient(135deg, #666 0%, #444 100%); padding: 30px; text-align: center;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="color: #fff; font-size: 24px; font-weight: bold; padding-bottom: 10px;">
+                Cita cancelada
+              </td>
+            </tr>
+            <tr>
+              <td style="color: #fff; font-size: 16px;">
+                Aurin - Sistema de Citas
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Content -->
+      <tr>
+        <td style="padding: 30px;">
+
+          <p style="font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 20px;">
+            Hola <strong>${data.name}</strong>,
+          </p>
+
+          <p style="font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 30px;">
+            Lamentamos informarte que tu cita con Aurin ha sido cancelada.
+          </p>
+
+          <!-- Appointment Details -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background: #f8f9fa; margin-bottom: 25px;">
+            <tr>
+              <td style="padding: 20px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="color: #000; font-size: 18px; font-weight: bold; padding-bottom: 15px; border-bottom: 2px solid #D0DF00;">
+                      Detalles de la cita cancelada
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; color: #000;">
+                      <strong>📅 Fecha y hora:</strong> ${appointmentDateTime}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; color: #000;">
+                      <strong>❌ Motivo:</strong> ${reasonText}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Reschedule CTA -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background: #fff3cd; border-left: 4px solid #ffc107; margin-bottom: 25px;">
+            <tr>
+              <td style="padding: 20px;">
+                <p style="margin: 0; color: #856404; font-weight: bold; font-size: 16px;">
+                  ¿Quieres agendar una nueva cita?
+                </p>
+                <p style="margin: 10px 0 0 0; color: #856404; line-height: 1.6;">
+                  Puedes contactarnos directamente en <a href="mailto:hey@aurin.mx" style="color: #856404; text-decoration: underline;">hey@aurin.mx</a> o agendar una nueva cita a través de nuestro chatbot en <a href="https://aurin.mx" style="color: #856404; text-decoration: underline;">aurin.mx</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+
+          <p style="font-size: 14px; color: #666; line-height: 1.6; margin-top: 30px;">
+            Si tienes alguna pregunta, no dudes en contactarnos en <a href="mailto:hey@aurin.mx" style="color: #D0DF00; text-decoration: none;">hey@aurin.mx</a>
+          </p>
+
+          <!-- Footer -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 30px; border-top: 1px solid #eee;">
+            <tr>
+              <td style="padding-top: 20px; text-align: center; color: #888; font-size: 12px;">
+                <p style="margin: 5px 0;">Este email fue enviado automáticamente por el sistema de citas de Aurin.</p>
+                <p style="margin: 5px 0;">© ${new Date().getFullYear()} Aurin. Todos los derechos reservados.</p>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </table>
+  `;
+};
+
 export const appointmentConfirmationEmail = (
   data: AppointmentData,
   confirmUrl: string

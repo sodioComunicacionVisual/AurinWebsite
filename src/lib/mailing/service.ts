@@ -4,8 +4,8 @@
  */
 
 import { Resend } from 'resend';
-import type { ContactFormData, TicketData, AppointmentData, EmailResponse } from './types';
-import { contactEmailTemplate, ticketEmailTemplate, appointmentConfirmationEmail } from './templates';
+import type { ContactFormData, TicketData, AppointmentData, CancellationData, EmailResponse } from './types';
+import { contactEmailTemplate, ticketEmailTemplate, appointmentConfirmationEmail, appointmentCancellationEmail } from './templates';
 import crypto from 'crypto';
 
 const resend = new Resend(import.meta.env.RESEND_API_KEY);
@@ -146,6 +146,31 @@ export async function sendAppointmentConfirmation(data: AppointmentData): Promis
     };
   } catch (error) {
     console.error('Error sending appointment confirmation email:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+}
+
+/**
+ * Send appointment cancellation email
+ */
+export async function sendAppointmentCancellation(data: CancellationData): Promise<EmailResponse> {
+  try {
+    const result = await resend.emails.send({
+      from: 'Aurin <onboarding@resend.dev>',
+      to: [data.email],
+      subject: `Cita cancelada - ${new Date(data.appointmentDate).toLocaleDateString('es-MX')}`,
+      html: appointmentCancellationEmail(data),
+    });
+
+    return {
+      success: true,
+      id: result.data?.id,
+    };
+  } catch (error) {
+    console.error('Error sending appointment cancellation email:', error);
     return {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',

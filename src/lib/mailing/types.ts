@@ -38,6 +38,13 @@ export interface AppointmentData {
   calendarLink: string;
 }
 
+export interface CancellationData {
+  name: string;
+  email: string;
+  appointmentDate: string; // ISO string
+  reason: 'not_confirmed' | 'user_requested';
+}
+
 export interface EmailResponse {
   success: boolean;
   id?: string;
