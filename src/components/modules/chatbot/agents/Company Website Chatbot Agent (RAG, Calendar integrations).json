@@ -20,7 +20,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// CÓDIGO MEJORADO - Inyecta fileUrl en el mensaje para que el agente lo vea\n\nconst message = $json.body.message;\nconst sessionId = $json.body.sessionId;\nconst metadata = $json.body.metadata || {};\nconst newFileUrl = $json.body.fileUrl || null;\n\nconsole.log('=== STORE CONTEXT ===');\nconsole.log('Message:', message);\nconsole.log('SessionId:', sessionId);\nconsole.log('FileUrl:', newFileUrl);\n\n// SOLUCIÓN: Agregar fileUrl al mensaje si existe para que el agente lo vea\nlet enhancedMessage = message;\nif (newFileUrl) {\n  enhancedMessage = `${message}\\n\\n[SYSTEM: User attached file: ${newFileUrl}]`;\n  console.log('✅ FileUrl inyectado en el mensaje');\n}\n\nreturn [{\n  json: {\n    chatInput: enhancedMessage,  // Mensaje con info del archivo\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: newFileUrl,\n    query: message  // Query original sin modificar\n  }\n}];"
+        "jsCode": "// CÓDIGO MEJORADO - Mantiene estado del calendario y fileUrl\n\nconst message = $json.body.message;\nconst sessionId = $json.body.sessionId;\nconst metadata = $json.body.metadata || {};\nconst newFileUrl = $json.body.fileUrl || null;\n\n// Recuperar estado del calendario de metadata (si existe)\nconst pendingBooking = metadata.pendingBooking || null;\nconst customerEmail = metadata.customerEmail || '';\n\nconsole.log('=== STORE CONTEXT ===');\nconsole.log('Message:', message);\nconsole.log('SessionId:', sessionId);\nconsole.log('FileUrl:', newFileUrl);\nconsole.log('PendingBooking:', pendingBooking);\nconsole.log('CustomerEmail:', customerEmail);\n\n// SOLUCIÓN: Agregar fileUrl al mensaje si existe para que el agente lo vea\nlet enhancedMessage = message;\nif (newFileUrl) {\n  enhancedMessage = `${message}\\n\\n[SYSTEM: User attached file: ${newFileUrl}]`;\n  console.log('✅ FileUrl inyectado en el mensaje');\n}\n\nreturn [{\n  json: {\n    chatInput: enhancedMessage,\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: newFileUrl,\n    query: message,\n    pendingBooking: pendingBooking,\n    customerEmail: customerEmail\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -144,7 +144,7 @@
     {
       "parameters": {
         "name": "calendarAgent",
-        "description": "Call this tool to schedule quick 30-minute appointments. Only for demos, brief consultations, and service introductions. Requires at least 24 hours advance notice. User must confirm via email within 24h or appointment will be auto-cancelled.",
+        "description": "Call this tool to schedule quick 30-minute appointments. Only for demos, brief consultations, and service introductions. Requires at least 24 hours advance notice. User must confirm via email within 24h or appointment will be auto-cancelled. When user provides their info (name, email, reason), you MUST format it as a single line JSON string in the query parameter like this: CUSTOMER_DATA:{\"name\":\"Full Name\",\"email\":\"email@example.com\",\"reason\":\"Brief description\"}",
         "workflowId": {
           "__rl": true,
           "value": "CALENDAR_AGENT_V4_WORKFLOW_ID",
@@ -155,7 +155,10 @@
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "query": "={{ $json.query }}"
+            "query": "={{ $json.query }}",
+            "customerEmail": "={{ $('Store Context and FileUrl').first().json.customerEmail || '' }}",
+            "pendingBooking": "={{ $('Store Context and FileUrl').first().json.pendingBooking }}",
+            "customerData": ""
           }
         }
       },
@@ -188,6 +191,18 @@
               "id": "session-id",
               "name": "sessionId",
               "value": "={{ $('Store Context and FileUrl').first().json.sessionId }}",
+              "type": "string"
+            },
+            {
+              "id": "pending-booking",
+              "name": "pendingBooking",
+              "value": "={{ $json.pendingBooking || null }}",
+              "type": "object"
+            },
+            {
+              "id": "customer-email",
+              "name": "customerEmail",
+              "value": "={{ $json.customerEmail || '' }}",
               "type": "string"
             }
           ]

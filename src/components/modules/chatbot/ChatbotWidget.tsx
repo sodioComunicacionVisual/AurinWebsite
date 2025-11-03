@@ -66,6 +66,8 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
   const [isMobile, setIsMobile] = useState(false)
   const [isOnline, setIsOnline] = useState(true)
   const [sessionId, setSessionId] = useState<string>('')
+  const [pendingBooking, setPendingBooking] = useState<any>(null)
+  const [customerEmail, setCustomerEmail] = useState<string>('')
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
@@ -270,7 +272,9 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
             userAgent: navigator.userAgent,
             referrer: document.referrer,
             hasAttachment: !!fileUrl,
-            fileName: fileMetadata?.name
+            fileName: fileMetadata?.name,
+            pendingBooking: pendingBooking,
+            customerEmail: customerEmail
           }
         })
       })
@@ -294,6 +298,17 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
       }
 
       const data = await response.json()
+
+      // Actualizar estado del calendario si viene en la respuesta
+      if (data.pendingBooking) {
+        setPendingBooking(data.pendingBooking)
+      } else if (data.pendingBooking === null) {
+        setPendingBooking(null)
+      }
+
+      if (data.customerEmail) {
+        setCustomerEmail(data.customerEmail)
+      }
 
       // Respuesta del bot desde n8n
       const botMessage: ChatMessage = {
