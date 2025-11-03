@@ -32,7 +32,7 @@ export const POST: APIRoute = async ({ request }) => {
     try {
       // Llamar al webhook de n8n con CORS habilitado
       // IMPORTANTE: El workflow debe estar ACTIVO en n8n y configurado para POST
-      const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'http://213.210.13.193:5678/webhook/chatbot';
+      const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'https://n8n.n8nsystems.info/webhook/chatbot';
 
       console.log('🔗 Sending to n8n webhook:', { url: n8nWebhookUrl, payload: n8nPayload });
 

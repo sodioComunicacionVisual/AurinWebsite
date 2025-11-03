@@ -4,47 +4,46 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "chatbot",
+        "path": "/chatbot",
         "responseMode": "responseNode",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -752,
-        -320
+        -688,
+        16
       ],
-      "id": "e033ad73-cd7f-4cd5-b6fe-69499f14e330",
+      "id": "e5ae5564-a186-4b3f-bd92-8475f4ab1087",
       "name": "Webhook",
-      "webhookId": "f18aca18-5ade-4c75-ab64-1496a980b445",
-      "alwaysOutputData": false
+      "webhookId": "f18aca18-5ade-4c75-ab64-1496a980b445"
     },
     {
       "parameters": {
-        "jsCode": "// CÓDIGO MEJORADO - Maneja contexto de Calendar y FileUrl\nconst message = $json.body.message;\nconst sessionId = $json.body.sessionId;\nconst metadata = $json.body.metadata || {};\nconst newFileUrl = $json.body.fileUrl || null;\n\nconsole.log('=== STORE CONTEXT ===');\nconsole.log('Message:', message);\nconsole.log('SessionId:', sessionId);\nconsole.log('FileUrl:', newFileUrl);\nconsole.log('Metadata:', metadata);\n\n// Agregar fileUrl al mensaje si existe\nlet enhancedMessage = message;\nif (newFileUrl) {\n  enhancedMessage = `${message}\\n\\n[SYSTEM: User attached file: ${newFileUrl}]`;\n  console.log('✅ FileUrl inyectado en el mensaje');\n}\n\n// Extraer datos de calendario si existen en metadata\nconst customerEmail = metadata.customerEmail || '';\nconst pendingBooking = metadata.pendingBooking || null;\nconst customerData = metadata.customerData || null;\n\nreturn [{\n  json: {\n    chatInput: enhancedMessage,\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: newFileUrl,\n    query: message,\n    // Datos de calendario para contexto\n    customerEmail: customerEmail,\n    pendingBooking: pendingBooking,\n    customerData: customerData\n  }\n}];"
+        "jsCode": "// CÓDIGO MEJORADO - Inyecta fileUrl en el mensaje para que el agente lo vea\n\nconst message = $json.body.message;\nconst sessionId = $json.body.sessionId;\nconst metadata = $json.body.metadata || {};\nconst newFileUrl = $json.body.fileUrl || null;\n\nconsole.log('=== STORE CONTEXT ===');\nconsole.log('Message:', message);\nconsole.log('SessionId:', sessionId);\nconsole.log('FileUrl:', newFileUrl);\n\n// SOLUCIÓN: Agregar fileUrl al mensaje si existe para que el agente lo vea\nlet enhancedMessage = message;\nif (newFileUrl) {\n  enhancedMessage = `${message}\\n\\n[SYSTEM: User attached file: ${newFileUrl}]`;\n  console.log('✅ FileUrl inyectado en el mensaje');\n}\n\nreturn [{\n  json: {\n    chatInput: enhancedMessage,  // Mensaje con info del archivo\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: newFileUrl,\n    query: message  // Query original sin modificar\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -432,
-        -320
+        -368,
+        16
       ],
-      "id": "67eb2a34-720e-41d9-8067-80296dc0cd6a",
+      "id": "2465cef6-8d70-44bf-bff6-28bb47ba38da",
       "name": "Store Context and FileUrl"
     },
     {
       "parameters": {
         "options": {
-          "systemMessage": "You are Aurin's chatbot assistant. You route requests to tools - never answer directly.\\n\\nTOOLS:\\n• RAGagent - FAQs about Aurin\\n• calendarAgent - Schedule meetings\\n• ticketAgent - Create support tickets\\n\\nCALENDAR WORKFLOW:\\n1. Check availability: call calendarAgent with user's query\\n2. User picks time → collect: nombre completo, email, empresa (optional), descripción del proyecto\\n3. When you have all data, call calendarAgent again with JSON:\\n{\\n  \\\"name\\\": \\\"Full Name\\\",\\n  \\\"email\\\": \\\"email@example.com\\\",\\n  \\\"company\\\": \\\"Company or empty\\\",\\n  \\\"project\\\": \\\"Project description\\\"\\n}\\n4. After booking, remind user to CONFIRM within 24h\\n5. For cancellation/confirmation, call calendarAgent with action\\n\\nTICKET CREATION:\\nCollect: nombre, email, empresa, servicio, asunto, descripcion, archivoAdjunto\\n\\nIMPORTANT - FILE ATTACHMENTS:\\nWhen you see [SYSTEM: User attached file: URL] in the conversation, extract the URL.\\n\\nEXAMPLE MESSAGE:\\n\\\"Hello\\n\\n[SYSTEM: User attached file: https://blob.vercel-storage.com/file.png]\\\"\\n\\nEXTRACT: https://blob.vercel-storage.com/file.png\\n\\nJSON FORMAT for ticketAgent (REQUIRED):\\n{\\n  \\\"nombre\\\": \\\"Name\\\",\\n  \\\"email\\\": \\\"email@example.com\\\",\\n  \\\"empresa\\\": \\\"\\\",\\n  \\\"servicio\\\": \\\"Service\\\",\\n  \\\"asunto\\\": \\\"Subject\\\",\\n  \\\"descripcion\\\": \\\"Description\\\",\\n  \\\"archivoAdjunto\\\": \\\"https://extracted-url-here or empty string\\\"\\n}\\n\\nRULES:\\n1. If [SYSTEM: User attached file: URL] appears → extract URL\\n2. Always use empty string \\\"\\\" if no data (NEVER use null)\\n3. For calendar: guide user through data collection step by step\\n4. Speak Spanish naturally\\n5. After creating booking, emphasize 24h confirmation requirement",
+          "systemMessage": "You are Aurin's chatbot assistant. You route requests to tools - never answer directly.\\n\\nTOOLS:\\n• RAGagent - FAQs about Aurin services, portfolio, expertise\\n• calendarAgent - SOLO para citas rápidas de 30 minutos (demos, consultas breves)\\n• ticketAgent - Para proyectos complejos, presupuestos, consultas profundas\\n\\nCALENDAR AGENT (Citas Rápidas):\\n- Solo para: demos, dudas rápidas, consultas breves, conocer servicios\\n- Duración: 30 minutos\\n- Requisitos: nombre, email, motivo breve\\n- Disponibilidad: Lunes a Viernes, 9-11 AM y 2-5 PM (horario México)\\n- Confirmación: Usuario debe confirmar en 24h vía email o la cita se cancela\\n- Anticipación mínima: 24 horas\\n\\nTICKET AGENT (Consultas Profundas):\\n- Para: proyectos grandes, presupuestos detallados, consultas complejas\\n- Nuestro equipo contactará personalmente\\n- Acepta archivos adjuntos\\n- Collect: nombre, email, empresa (opcional), servicio, asunto, descripcion, archivoAdjunto\\n\\nFILE ATTACHMENTS:\\nWhen you see [SYSTEM: User attached file: URL], extract URL and include in archivoAdjunto field.\\n\\nJSON FORMAT for ticketAgent (REQUIRED):\\n{\\n  \\\"nombre\\\": \\\"Name\\\",\\n  \\\"email\\\": \\\"email@example.com\\\",\\n  \\\"empresa\\\": \\\"\\\",\\n  \\\"servicio\\\": \\\"Service\\\",\\n  \\\"asunto\\\": \\\"Subject\\\",\\n  \\\"descripcion\\\": \\\"Description\\\",\\n  \\\"archivoAdjunto\\\": \\\"https://url or empty string\\\"\\n}\\n\\nRULES:\\n1. Si usuario quiere cita rápida/demo/consulta breve → calendarAgent\\n2. Si usuario quiere proyecto grande/presupuesto/consulta profunda → ticketAgent\\n3. Si solo pregunta sobre servicios → RAGagent\\n4. Always use empty string \\\"\\\" if no data (NEVER use null)\\n5. Speak Spanish naturally",
           "maxIterations": 10
         }
       },
-      "id": "052aea84-8608-4ae6-b1a0-32b581a065c5",
+      "id": "f166c279-7653-4a1c-b9b6-b000d495b8d9",
       "name": "Ultimate Website Chatbot Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        -16,
-        -320
+        48,
+        16
       ],
       "typeVersion": 1.7
     },
@@ -52,23 +51,23 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-3.5-turbo",
           "mode": "list",
-          "cachedResultName": "gpt-3.5-turbo"
+          "value": "gpt-4o-mini",
+          "cachedResultName": "gpt-4o-mini"
         },
         "options": {}
       },
-      "id": "842015f2-b2ae-4fd4-a72a-74d8d97bc3ca",
+      "id": "fa099966-77fb-4e41-bee1-7e33f610fe95",
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        -368,
-        64
+        -304,
+        400
       ],
       "typeVersion": 1.2,
       "credentials": {
         "openAiApi": {
-          "id": "ACV0x1hM8fnlwMsD",
+          "id": "4iBfQGZ9AVI8w6ue",
           "name": "OpenAi account 2"
         }
       }
@@ -79,12 +78,12 @@
         "sessionKey": "={{ $json.sessionId }}",
         "contextWindowLength": 10
       },
-      "id": "5a2fa335-5f4f-4ed6-ac5d-742f95ed29df",
+      "id": "ac8fcf9a-5ef3-451f-8603-4996bcb59678",
       "name": "Simple Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
-        -128,
-        160
+        -64,
+        480
       ],
       "typeVersion": 1.3
     },
@@ -94,9 +93,9 @@
         "description": "Call this tool to create a support ticket. Collect: name, email, company, specific service needed, subject/reason, description, and optional file attachment. Format all data clearly for ticket creation.",
         "workflowId": {
           "__rl": true,
-          "value": "G1oYf8PDKQ8h26wa",
+          "value": "xofJhOkiHd6ietuS",
           "mode": "list",
-          "cachedResultUrl": "/workflow/G1oYf8PDKQ8h26wa",
+          "cachedResultUrl": "/workflow/xofJhOkiHd6ietuS",
           "cachedResultName": "Ticket Agent"
         },
         "workflowInputs": {
@@ -106,12 +105,12 @@
           }
         }
       },
-      "id": "20118042-220b-4229-8e78-3965c7f750e3",
+      "id": "f6eefde5-3072-40e7-9aed-a710ece34762",
       "name": "ticketAgent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        112,
-        256
+        176,
+        576
       ],
       "typeVersion": 2
     },
@@ -121,9 +120,9 @@
         "description": "Call this tool to answer FAQs about Aurin services, portfolio, and expertise. Pass the user's question as input.",
         "workflowId": {
           "__rl": true,
-          "value": "ivDdTsqIFM7DI29c",
+          "value": "rPEVrWKRByrpoSC6",
           "mode": "list",
-          "cachedResultUrl": "/workflow/ivDdTsqIFM7DI29c",
+          "cachedResultUrl": "/workflow/rPEVrWKRByrpoSC6",
           "cachedResultName": "RAG Agent"
         },
         "workflowInputs": {
@@ -133,42 +132,39 @@
           }
         }
       },
-      "id": "ef815e49-3df5-4612-9c60-d94d35851130",
+      "id": "30f4ec36-ed37-42bc-9617-d1e85944affc",
       "name": "RAGagent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        416,
-        448
+        480,
+        768
       ],
       "typeVersion": 2
     },
     {
       "parameters": {
         "name": "calendarAgent",
-        "description": "Call this tool for any calendar-related action: check availability, book appointments, cancel meetings, or confirm bookings. When booking, collect full name, email, company (optional), and project description. Pass all data including query, customerEmail, pendingBooking, and customerData.",
+        "description": "Call this tool to schedule quick 30-minute appointments. Only for demos, brief consultations, and service introductions. Requires at least 24 hours advance notice. User must confirm via email within 24h or appointment will be auto-cancelled.",
         "workflowId": {
           "__rl": true,
-          "value": "pgF8FnVC5RyNZd90",
+          "value": "CALENDAR_AGENT_V4_WORKFLOW_ID",
           "mode": "list",
-          "cachedResultUrl": "/workflow/pgF8FnVC5RyNZd90",
-          "cachedResultName": "Calendar Agent Pro v3 (Corrected)"
+          "cachedResultUrl": "/workflow/CALENDAR_AGENT_V4_WORKFLOW_ID",
+          "cachedResultName": "Calendar Agent v4 (Quick Appointments)"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "query": "={{ $json.query }}",
-            "customerEmail": "={{ $json.customerEmail || '' }}",
-            "pendingBooking": "={{ $json.pendingBooking || null }}",
-            "customerData": "={{ $json.customerData || null }}"
+            "query": "={{ $json.query }}"
           }
         }
       },
-      "id": "5eba3e16-492f-4420-8c51-308860737f1e",
+      "id": "f1ef2b75-b657-47f7-b2d3-369cd9f50ff8",
       "name": "calendarAgent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        560,
-        96
+        624,
+        432
       ],
       "typeVersion": 2
     },
@@ -193,12 +189,6 @@
               "name": "sessionId",
               "value": "={{ $('Store Context and FileUrl').first().json.sessionId }}",
               "type": "string"
-            },
-            {
-              "id": "metadata",
-              "name": "metadata",
-              "value": "={{ { customerEmail: $json.customerEmail || '', pendingBooking: $json.pendingBooking || null, customerData: $json.customerData || null, requiresConfirmation: $json.requiresConfirmation || false } }}",
-              "type": "object"
             }
           ]
         },
@@ -207,10 +197,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        256,
-        -320
+        320,
+        16
       ],
-      "id": "217a8739-6add-4838-a2cb-1b3a3ddb6c86",
+      "id": "315f9eed-f538-4cdf-b4fa-9caa56aa7269",
       "name": "Format Success Response"
     },
     {
@@ -222,10 +212,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        576,
-        -320
+        640,
+        16
       ],
-      "id": "d3a43cbf-2d4c-461b-bc02-1d91acb5aab7",
+      "id": "ba82b491-5175-4e42-bd53-0906e29386a4",
       "name": "Respond Success"
     }
   ],
@@ -335,11 +325,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "41849921-8237-4fb0-aaf1-109a4731e02c",
+  "versionId": "bad30100-b369-4c80-9a2a-a03286e7a1fd",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "db2c5968277b4288cf1a8381d1c27435aa3685422063464e1fce28aecf0339d7"
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
   },
-  "id": "WFX6r8v58WSuBw1P",
+  "id": "5eVhyM6e69m1mKTy",
   "tags": []
 }

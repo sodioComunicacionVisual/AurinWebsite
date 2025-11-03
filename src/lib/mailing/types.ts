@@ -29,6 +29,15 @@ export interface TicketData {
   subject?: string;
 }
 
+export interface AppointmentData {
+  name: string;
+  email: string;
+  appointmentDate: string; // ISO string
+  meetLink: string;
+  eventId: string;
+  calendarLink: string;
+}
+
 export interface EmailResponse {
   success: boolean;
   id?: string;

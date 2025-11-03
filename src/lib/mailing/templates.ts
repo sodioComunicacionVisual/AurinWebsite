@@ -240,3 +240,126 @@ Nos pondremos en contacto contigo dentro de las próximas 24 horas para atender 
 
 ¿Hay algo más en lo que pueda ayudarte mientras tanto?`;
 };
+
+export const appointmentConfirmationEmail = (
+  data: AppointmentData,
+  confirmUrl: string
+): string => {
+  const appointmentDateTime = new Date(data.appointmentDate).toLocaleString('es-MX', {
+    timeZone: 'America/Mexico_City',
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+
+  return `
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background: #ffffff; font-family: Arial, sans-serif;">
+
+      <!-- Header -->
+      <tr>
+        <td style="background: linear-gradient(135deg, #D0DF00 0%, #a8b800 100%); padding: 30px; text-align: center;">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="color: #000; font-size: 24px; font-weight: bold; padding-bottom: 10px;">
+                ¡Tu cita está reservada!
+              </td>
+            </tr>
+            <tr>
+              <td style="color: #000; font-size: 16px;">
+                Aurin - Citas Rápidas
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Content -->
+      <tr>
+        <td style="padding: 30px;">
+
+          <p style="font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 20px;">
+            Hola <strong>${data.name}</strong>,
+          </p>
+
+          <p style="font-size: 16px; color: #333; line-height: 1.6; margin-bottom: 30px;">
+            Tu cita con Aurin ha sido reservada exitosamente. Para confirmarla y asegurar tu lugar, haz clic en el botón de abajo.
+          </p>
+
+          <!-- Appointment Details -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background: #f8f9fa; margin-bottom: 25px;">
+            <tr>
+              <td style="padding: 20px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="color: #000; font-size: 18px; font-weight: bold; padding-bottom: 15px; border-bottom: 2px solid #D0DF00;">
+                      Detalles de tu cita
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; color: #000;">
+                      <strong>📅 Fecha y hora:</strong> ${appointmentDateTime}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; color: #000;">
+                      <strong>⏱️ Duración:</strong> 30 minutos
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 12px 0; color: #000;">
+                      <strong>🎥 Enlace de reunión:</strong> <a href="${data.meetLink}" style="color: #D0DF00; text-decoration: none;">${data.meetLink}</a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Important Notice -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="background: #fff3cd; border-left: 4px solid #ffc107; margin-bottom: 25px;">
+            <tr>
+              <td style="padding: 20px;">
+                <p style="margin: 0; color: #856404; font-weight: bold; font-size: 16px;">
+                  ⚠️ IMPORTANTE
+                </p>
+                <p style="margin: 10px 0 0 0; color: #856404; line-height: 1.6;">
+                  Tienes <strong>24 horas</strong> para confirmar tu cita. Si no la confirmas, será cancelada automáticamente para liberar el espacio.
+                </p>
+              </td>
+            </tr>
+          </table>
+
+          <!-- CTA Button -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+            <tr>
+              <td align="center">
+                <a href="${confirmUrl}"
+                   style="background: #D0DF00; color: #000; text-decoration: none; font-weight: bold; font-size: 18px; padding: 16px 40px; display: inline-block; border-radius: 8px;">
+                  ✓ CONFIRMAR MI CITA
+                </a>
+              </td>
+            </tr>
+          </table>
+
+          <p style="font-size: 14px; color: #666; line-height: 1.6; margin-top: 30px;">
+            Si tienes alguna pregunta o necesitas reprogramar, responde a este email o contáctanos en <a href="mailto:hey@aurin.mx" style="color: #D0DF00; text-decoration: none;">hey@aurin.mx</a>
+          </p>
+
+          <!-- Footer -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-top: 30px; border-top: 1px solid #eee;">
+            <tr>
+              <td style="padding-top: 20px; text-align: center; color: #888; font-size: 12px;">
+                <p style="margin: 5px 0;">Este email fue enviado automáticamente por el sistema de citas de Aurin.</p>
+                <p style="margin: 5px 0;">© ${new Date().getFullYear()} Aurin. Todos los derechos reservados.</p>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </table>
+  `;
+};
