@@ -61,29 +61,21 @@ export const POST: APIRoute = async ({ request }) => {
       }
 
       const data = await response.json();
-      console.log('Response from n8n:', data);
+      
+      console.log('📥 Response from n8n:', {
+        hasMetadata: !!data.metadata,
+        metadata: data.metadata
+      });
 
-      // El webhook de n8n devuelve: { success: true, output: "respuesta", sessionId: "...", metadata: {...} }
-      const botResponse = data.output || data.response || data.message || 'Respuesta recibida';
-
-      // Respuesta exitosa con metadata de Calendar si existe
+      // ✅ IMPORTANTE: Retornar TODO tal cual lo envía n8n
+      // No modificar ni agregar campos al metadata
       return new Response(JSON.stringify({
         success: true,
-        output: botResponse,
-        response: botResponse,
+        output: data.output || data.response || data.message || 'Respuesta recibida',
+        response: data.output || data.response || data.message || 'Respuesta recibida',
         sessionId: data.sessionId || sessionId,
         timestamp: new Date().toISOString(),
-        metadata: {
-          model: 'gpt-4o-mini',
-          responseTime: null,
-          // Incluir metadata de Calendar para seguimiento de estado
-          ...(data.metadata && {
-            customerEmail: data.metadata.customerEmail,
-            pendingBooking: data.metadata.pendingBooking,
-            customerData: data.metadata.customerData,
-            requiresConfirmation: data.metadata.requiresConfirmation
-          })
-        }
+        metadata: data.metadata || {}  // ← Pasar metadata completo sin modificar
       }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }

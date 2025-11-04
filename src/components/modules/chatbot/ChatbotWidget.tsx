@@ -66,8 +66,18 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
   const [isMobile, setIsMobile] = useState(false)
   const [isOnline, setIsOnline] = useState(true)
   const [sessionId, setSessionId] = useState<string>('')
-  const [pendingBooking, setPendingBooking] = useState<any>(null)
-  const [customerEmail, setCustomerEmail] = useState<string>('')
+  
+  // ✅ Estado con persistencia en localStorage
+  const [pendingBooking, setPendingBooking] = useState<any>(() => {
+    if (typeof window === 'undefined') return null
+    const saved = localStorage.getItem('chatbot_pendingBooking')
+    return saved ? JSON.parse(saved) : null
+  })
+  
+  const [customerEmail, setCustomerEmail] = useState<string>(() => {
+    if (typeof window === 'undefined') return ''
+    return localStorage.getItem('chatbot_customerEmail') || ''
+  })
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const chatContainerRef = useRef<HTMLDivElement>(null)
@@ -136,6 +146,31 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
       })
     })
   }, [lang, t.welcome])
+
+  // ✅ Persistir pendingBooking y customerEmail en localStorage automáticamente
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    
+    if (pendingBooking) {
+      localStorage.setItem('chatbot_pendingBooking', JSON.stringify(pendingBooking))
+      console.log('💾 PendingBooking saved to localStorage:', pendingBooking)
+    } else {
+      localStorage.removeItem('chatbot_pendingBooking')
+      console.log('🗑️ PendingBooking removed from localStorage')
+    }
+  }, [pendingBooking])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    
+    if (customerEmail) {
+      localStorage.setItem('chatbot_customerEmail', customerEmail)
+      console.log('💾 CustomerEmail saved to localStorage:', customerEmail)
+    } else {
+      localStorage.removeItem('chatbot_customerEmail')
+      console.log('🗑️ CustomerEmail removed from localStorage')
+    }
+  }, [customerEmail])
 
   // Handle event listeners and body scroll
   useEffect(() => {
