@@ -256,6 +256,24 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
     setIsTyping(true)
 
     try {
+      // ✅ Preparar metadata con estado actual
+      const requestMetadata = {
+        timestamp: new Date().toISOString(),
+        userId: 'anonymous',
+        userAgent: navigator.userAgent,
+        referrer: document.referrer,
+        hasAttachment: !!fileUrl,
+        fileName: fileMetadata?.name,
+        pendingBooking: pendingBooking,
+        customerEmail: customerEmail
+      }
+
+      console.log('📤 Sending to backend:', {
+        message: messageText,
+        sessionId: sessionId,
+        metadata: requestMetadata
+      })
+
       // Usar nuestra API route para evitar problemas CORS
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -266,16 +284,7 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
           message: messageText,
           sessionId: sessionId,
           fileUrl: fileUrl, // Incluir URL del archivo si existe
-          metadata: {
-            timestamp: new Date().toISOString(),
-            userId: 'anonymous',
-            userAgent: navigator.userAgent,
-            referrer: document.referrer,
-            hasAttachment: !!fileUrl,
-            fileName: fileMetadata?.name,
-            pendingBooking: pendingBooking,
-            customerEmail: customerEmail
-          }
+          metadata: requestMetadata
         })
       })
 
@@ -299,15 +308,21 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
 
       const data = await response.json()
 
-      // Actualizar estado del calendario si viene en la respuesta
-      if (data.pendingBooking) {
-        setPendingBooking(data.pendingBooking)
-      } else if (data.pendingBooking === null) {
-        setPendingBooking(null)
-      }
-
-      if (data.customerEmail) {
-        setCustomerEmail(data.customerEmail)
+      // ✅ GUARDAR metadata completo del backend para el siguiente turno
+      if (data.metadata) {
+        console.log('✅ Metadata received from backend:', data.metadata)
+        
+        // Actualizar pendingBooking si existe en metadata
+        if (data.metadata.pendingBooking !== undefined) {
+          setPendingBooking(data.metadata.pendingBooking)
+          console.log('✅ PendingBooking saved:', data.metadata.pendingBooking)
+        }
+        
+        // Actualizar customerEmail si existe en metadata
+        if (data.metadata.customerEmail) {
+          setCustomerEmail(data.metadata.customerEmail)
+          console.log('✅ CustomerEmail saved:', data.metadata.customerEmail)
+        }
       }
 
       // Respuesta del bot desde n8n

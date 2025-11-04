@@ -1,0 +1,84 @@
+{
+  "name": "Calendar Agent v4 (Quick Appointments)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-1",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [-1184, 288]
+    },
+    {
+      "parameters": {
+        "jsCode": "// === PARSEAR SOLICITUD v5 - ENHANCED ===\nconst inputJson = $input.item.json || {};\nconst query = (inputJson.query || '').toLowerCase();\nconst queryOriginal = inputJson.query || '';\nconst customerEmail = inputJson.customerEmail || '';\nconst pendingBookingIn = inputJson.pendingBooking || null;\nlet customerData = inputJson.customerData || null;\nlet action = 'check';\nlet targetDate = null;\nlet targetTime = null;\n\nconsole.log('=== PARSE REQUEST v5 ===');\nconsole.log('Query:', queryOriginal);\nconsole.log('PendingBooking:', JSON.stringify(pendingBookingIn));\nconsole.log('CustomerData:', JSON.stringify(customerData));\n\n// Detectar formato: BOOKING: name=..., email=..., reason=...\nconst bookingMatch = queryOriginal.match(/BOOKING:\\s*name\\s*=\\s*([^,]+),\\s*email\\s*=\\s*([^,]+)(?:,\\s*reason\\s*=\\s*(.+))?/i);\nif (bookingMatch) {\n  customerData = {\n    name: bookingMatch[1].trim(),\n    email: bookingMatch[2].trim(),\n    reason: bookingMatch[3] ? bookingMatch[3].trim() : 'Consulta general'\n  };\n  console.log('✅ BOOKING detected:', JSON.stringify(customerData));\n  \n  if (pendingBookingIn && pendingBookingIn.start && pendingBookingIn.end) {\n    action = 'create_event';\n    console.log('✅ PendingBooking found, setting action to create_event');\n  } else {\n    action = 'book';\n    console.log('⚠️ BOOKING without pendingBooking, will request time');\n  }\n} else {\n  const isCancel = /(cancelar|eliminar|quitar|cancel)/i.test(query);\n  const isConfirm = /(confirmar|confirmo|si confirmo|confirm|yes)/i.test(query);\n  const isBooking = /(agendar|reservar|programar|cita|appointment|book)/i.test(query);\n\n  if (isBooking) action = 'book';\n  if (isCancel) action = 'cancel';\n  if (isConfirm) action = 'confirm';\n}\n\nif (action === 'book' && !customerData) {\n  const daysEs = ['lunes','martes','miercoles','miércoles','jueves','viernes','sabado','sábado','domingo'];\n  const daysEn = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];\n  \n  for (let i = 0; i < 7; i++) {\n    const d = new Date();\n    const diff = (i + 7 - d.getDay() + 1) % 7 || 7;\n    d.setDate(d.getDate() + diff);\n    if (query.includes(daysEs[i]) || query.includes(daysEn[i])) {\n      targetDate = d.toISOString().split('T')[0];\n      console.log('✅ Date detected:', targetDate);\n      break;\n    }\n  }\n  \n  const timeMatch = query.match(/(\\d{1,2})(?::(\\d{2}))?\\s?(am|pm)?/i);\n  if (timeMatch) {\n    let [_, h, m, p] = timeMatch;\n    let hours = parseInt(h);\n    const minutes = m || '00';\n    if (p) {\n      if (p.toLowerCase() === 'pm' && hours !== 12) hours += 12;\n      if (p.toLowerCase() === 'am' && hours === 12) hours = 0;\n    }\n    targetTime = String(hours).padStart(2,'0') + ':' + minutes;\n    console.log('✅ Time detected:', targetTime);\n  }\n\n  if (targetDate && targetTime) {\n    const proposedDateTime = new Date(targetDate + 'T' + targetTime + ':00-06:00');\n    const minDateTime = new Date(Date.now() + 24*60*60*1000);\n\n    if (proposedDateTime < minDateTime) {\n      console.log('❌ Validation failed: less than 24h advance');\n      return [{\n        json: {\n          output: '⏰ Solo aceptamos citas con al menos **24 horas de anticipación** para poder confirmarlas adecuadamente.\\n\\nEsto nos permite asegurar que recibirás tu email de confirmación y podrás confirmar tu asistencia a tiempo.\\n\\n¿Quieres ver horarios disponibles para más adelante?'\n        }\n      }];\n    }\n  }\n}\n\nreturn [{\n  json: {\n    query,\n    action,\n    targetDate,\n    targetTime,\n    customerEmail,\n    customerData,\n    pendingBookingIn\n  }\n}];"
+      },
+      "id": "parse-request",
+      "name": "Parse Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-960, 288]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "limit": 100,
+        "options": {
+          "orderBy": "startTime",
+          "timeMin": "={{ new Date().toISOString() }}",
+          "timeMax": "={{ new Date(Date.now() + 7*24*60*60*1000).toISOString() }}"
+        }
+      },
+      "id": "get-events",
+      "name": "Get Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [-736, 288],
+      "alwaysOutputData": true,
+      "continueOnFail": true,
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 3000,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar Aurin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// === PROCESAR ACCIÓN v6 - FIXED EMPTY CALENDAR ===\nconst parseData = $('Parse Request').item.json;\nconst { action, targetDate, targetTime, customerEmail, customerData, pendingBookingIn } = parseData;\n\nconsole.log('=== PROCESS ACTION v6 ===');\nconsole.log('Action:', action);\n\n// FIXED: Manejar calendarios vacíos correctamente\nconst allItems = $input.all();\nlet events = [];\n\nconsole.log('📊 AllItems received:', allItems.length);\n\nif (allItems.length === 0) {\n  console.log('✅ Calendario vacío (0 eventos)');\n  events = [];\n} else {\n  const validItems = allItems.filter(item => {\n    const json = item.json;\n    return json && json.id && json.summary;\n  });\n\n  console.log(`📊 Valid events: ${validItems.length} / ${allItems.length}`);\n  \n  if (validItems.length > 0) {\n    events = validItems.map(i => i.json);\n    console.log(`✅ Retrieved ${events.length} events`);\n  } else {\n    const firstItem = allItems[0].json;\n    if (firstItem && firstItem.error) {\n      console.error('❌ Google Calendar Error:', firstItem.error.message);\n      return [{\n        json: {\n          output: '⚠️ Error al conectar con el calendario. Intenta de nuevo.'\n        }\n      }];\n    }\n    console.log('✅ Sin eventos válidos - calendario vacío');\n    events = [];\n  }\n}\n\nconst allowedTimes = ['11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30'];\n\nlet response = '';\nlet pendingBooking = null;\nlet shouldCreateEvent = false;\n\nif (action === 'check' || action === 'book') {\n  if (!targetDate && !targetTime) {\n    response = `📅 **Disponibilidad esta semana (CDMX, GMT-6)**\\n\\n`;\n    const days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];\n    \n    for (let i = 1; i < 8; i++) {\n      const d = new Date();\n      d.setDate(d.getDate() + i);\n      if (d.getDay() === 0 || d.getDay() === 6) continue;\n      const dateStr = d.toISOString().split('T')[0];\n      \n      const busySlots = events\n        .filter(e => e.start?.dateTime?.startsWith(dateStr))\n        .map(e => ({\n          start: new Date(new Date(e.start.dateTime).getTime() - 15*60*1000),\n          end: new Date(new Date(e.end.dateTime).getTime() + 15*60*1000)\n        }));\n\n      const availableTimes = allowedTimes.filter(time => {\n        const proposedStart = new Date(`${dateStr}T${time}:00-06:00`);\n        const proposedEnd = new Date(proposedStart.getTime() + 30*60*1000);\n        return !busySlots.some(busy => proposedStart < busy.end && proposedEnd > busy.start);\n      });\n\n      if (availableTimes.length > 0) {\n        response += `**${days[d.getDay()]} ${d.getDate()}**: ${availableTimes.join(', ')}\\n`;\n      }\n    }\n    response += `\\n💡 **Duración:** 30 minutos\\n⚠️ **Importante:** Debes confirmar tu cita en 24h vía email o será cancelada.\\n\\n¿Qué día y hora prefieres? (Ej: \"Jueves a las 3 PM\")`;\n  } else if (targetDate && targetTime && !customerData) {\n    const startISO = `${targetDate}T${targetTime}:00-06:00`;\n    const endISO = new Date(new Date(startISO).getTime() + 30*60*1000).toISOString();\n    \n    response = `✅ ¡Perfecto! Confirmemos tu cita:\\n\\n📅 **${new Date(startISO).toLocaleString('es-MX',{weekday:'long',month:'long',day:'numeric',hour:'numeric',minute:'numeric'})}**\\n\\nPara confirmar, necesito:\\n1. **Nombre completo**\\n2. **Email**\\n3. **¿De qué trata tu consulta?**\\n\\n_Responde con esta info y agendaré tu cita._`;\n    pendingBooking = { start: startISO, end: endISO };\n  } else if (customerData) {\n    shouldCreateEvent = true;\n  }\n} else if (action === 'create_event') {\n  shouldCreateEvent = true;\n}\n\nreturn [{\n  json: {\n    output: response,\n    pendingBooking,\n    shouldCreateEvent,\n    customerData\n  }\n}];"
+      },
+      "id": "process-action",
+      "name": "Process Action",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-512, 288]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [[{ "node": "Parse Request", "type": "main", "index": 0 }]]
+    },
+    "Parse Request": {
+      "main": [[{ "node": "Get Events", "type": "main", "index": 0 }]]
+    },
+    "Get Events": {
+      "main": [[{ "node": "Process Action", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  },
+  "tags": []
+}

@@ -1,0 +1,95 @@
+{
+  "name": "Calendar Agent SIMPLIFIED DEBUG",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-debug",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// === STEP 1: LOG INPUT ===\nconst input = $input.item.json;\n\nconsole.log('==========================================');\nconsole.log('🔵 STEP 1: WORKFLOW STARTED');\nconsole.log('==========================================');\nconsole.log('Input received:', JSON.stringify(input, null, 2));\nconsole.log('');\n\nreturn [{ json: input }];"
+      },
+      "id": "log-input",
+      "name": "LOG: Input Received",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "limit": 10,
+        "options": {
+          "orderBy": "startTime",
+          "timeMin": "={{ new Date().toISOString() }}",
+          "timeMax": "={{ new Date(Date.now() + 7*24*60*60*1000).toISOString() }}"
+        }
+      },
+      "id": "get-events-debug",
+      "name": "Get Google Calendar Events",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [680, 300],
+      "alwaysOutputData": false,
+      "continueOnFail": false,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "GOOGLE_CALENDAR_CREDENTIAL_ID",
+          "name": "Google Calendar Aurin"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// === STEP 2: LOG GOOGLE CALENDAR RESPONSE ===\nconst allItems = $input.all();\n\nconsole.log('==========================================');\nconsole.log('🟢 STEP 2: GOOGLE CALENDAR RESPONSE');\nconsole.log('==========================================');\nconsole.log('Number of items returned:', allItems.length);\nconsole.log('');\n\nif (allItems.length === 0) {\n  console.log('⚠️ Google Calendar devolvió 0 items');\n  console.log('Esto puede significar:');\n  console.log('  1. Tu calendario está vacío (sin eventos)');\n  console.log('  2. Hay un error de credenciales');\n  console.log('  3. El nodo anterior falló');\n  console.log('');\n  \n  return [{\n    json: {\n      success: false,\n      message: '⚠️ Google Calendar devolvió 0 items. Ver logs para detalles.',\n      itemCount: 0,\n      items: []\n    }\n  }];\n}\n\n// Log cada item\nallItems.forEach((item, index) => {\n  console.log(`--- Item ${index + 1} ---`);\n  console.log('Keys:', Object.keys(item.json));\n  console.log('Full item:', JSON.stringify(item.json, null, 2));\n  console.log('');\n});\n\n// Filtrar eventos válidos\nconst validEvents = allItems.filter(item => {\n  const json = item.json;\n  return json && json.id && json.summary;\n});\n\nconsole.log('Valid events found:', validEvents.length);\nconsole.log('');\n\nif (validEvents.length === 0) {\n  console.log('⚠️ No se encontraron eventos válidos');\n  console.log('Items recibidos no tienen estructura esperada (id + summary)');\n  console.log('');\n}\n\nreturn [{\n  json: {\n    success: true,\n    message: `✅ Google Calendar devolvió ${allItems.length} items, ${validEvents.length} válidos`,\n    itemCount: allItems.length,\n    validEventCount: validEvents.length,\n    items: allItems.map(i => i.json),\n    validEvents: validEvents.map(i => ({\n      id: i.json.id,\n      summary: i.json.summary,\n      start: i.json.start,\n      end: i.json.end\n    }))\n  }\n}];"
+      },
+      "id": "log-response",
+      "name": "LOG: Calendar Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// === STEP 3: FINAL OUTPUT ===\nconst data = $input.item.json;\n\nconsole.log('==========================================');\nconsole.log('🔵 STEP 3: FINAL OUTPUT');\nconsole.log('==========================================');\nconsole.log('Success:', data.success);\nconsole.log('Message:', data.message);\nconsole.log('Item count:', data.itemCount);\nconsole.log('Valid event count:', data.validEventCount || 0);\nconsole.log('');\n\nif (data.success && data.validEventCount > 0) {\n  console.log('✅ SUCCESS: Google Calendar funciona correctamente');\n  console.log('');\n  console.log('Eventos encontrados:');\n  data.validEvents.forEach((event, index) => {\n    console.log(`  ${index + 1}. ${event.summary}`);\n    console.log(`     Start: ${event.start?.dateTime || event.start?.date}`);\n    console.log(`     End: ${event.end?.dateTime || event.end?.date}`);\n  });\n} else if (data.success && data.itemCount === 0) {\n  console.log('⚠️ Google Calendar conectó pero devolvió 0 eventos');\n  console.log('Tu calendario probablemente está vacío.');\n} else {\n  console.log('❌ ERROR: Revisa los logs anteriores');\n}\n\nconsole.log('');\nconsole.log('==========================================');\nconsole.log('🏁 DEBUG COMPLETED');\nconsole.log('==========================================');\n\nreturn [{\n  json: {\n    output: data.message,\n    debug: {\n      success: data.success,\n      itemCount: data.itemCount,\n      validEventCount: data.validEventCount || 0,\n      events: data.validEvents || [],\n      rawItems: data.items || []\n    }\n  }\n}];"
+      },
+      "id": "final-output",
+      "name": "LOG: Final Summary",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [[{ "node": "LOG: Input Received", "type": "main", "index": 0 }]]
+    },
+    "LOG: Input Received": {
+      "main": [[{ "node": "Get Google Calendar Events", "type": "main", "index": 0 }]]
+    },
+    "Get Google Calendar Events": {
+      "main": [[{ "node": "LOG: Calendar Response", "type": "main", "index": 0 }]]
+    },
+    "LOG: Calendar Response": {
+      "main": [[{ "node": "LOG: Final Summary", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+  },
+  "tags": []
+}

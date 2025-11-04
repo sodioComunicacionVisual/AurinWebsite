@@ -20,7 +20,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// CÓDIGO MEJORADO - Mantiene estado del calendario y fileUrl\n\nconst message = $json.body.message;\nconst sessionId = $json.body.sessionId;\nconst metadata = $json.body.metadata || {};\nconst newFileUrl = $json.body.fileUrl || null;\n\n// Recuperar estado del calendario de metadata (si existe)\nconst pendingBooking = metadata.pendingBooking || null;\nconst customerEmail = metadata.customerEmail || '';\n\nconsole.log('=== STORE CONTEXT ===');\nconsole.log('Message:', message);\nconsole.log('SessionId:', sessionId);\nconsole.log('FileUrl:', newFileUrl);\nconsole.log('PendingBooking:', pendingBooking);\nconsole.log('CustomerEmail:', customerEmail);\n\n// SOLUCIÓN: Agregar fileUrl al mensaje si existe para que el agente lo vea\nlet enhancedMessage = message;\nif (newFileUrl) {\n  enhancedMessage = `${message}\\n\\n[SYSTEM: User attached file: ${newFileUrl}]`;\n  console.log('✅ FileUrl inyectado en el mensaje');\n}\n\nreturn [{\n  json: {\n    chatInput: enhancedMessage,\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: newFileUrl,\n    query: message,\n    pendingBooking: pendingBooking,\n    customerEmail: customerEmail\n  }\n}];"
+        "jsCode": "// === STORE CONTEXT v2 - ENHANCED STATE MANAGEMENT ===\n\nconst message = $json.body.message;\nconst sessionId = $json.body.sessionId;\nconst metadata = $json.body.metadata || {};\nconst newFileUrl = $json.body.fileUrl || null;\n\n// Recuperar estado del calendario de metadata (si existe)\nconst pendingBooking = metadata.pendingBooking || null;\nconst customerEmail = metadata.customerEmail || '';\nlet customerData = metadata.customerData || null;\n\nconsole.log('=== STORE CONTEXT v2 ===');\nconsole.log('Message:', message);\nconsole.log('SessionId:', sessionId);\nconsole.log('FileUrl:', newFileUrl);\nconsole.log('PendingBooking from metadata:', JSON.stringify(pendingBooking));\nconsole.log('CustomerEmail from metadata:', customerEmail);\nconsole.log('CustomerData from metadata:', JSON.stringify(customerData));\n\n// IMPROVED: Detectar customerData del mensaje con mejor parsing\n// Detecta formatos como: \"Juan Pérez, juan@mail.com, quiero una demo\"\nconst dataMatch = message.match(/^\\s*([^,]+?)\\s*,\\s*([\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,})\\s*,\\s*(.+?)\\s*$/i);\nif (dataMatch && !customerData) {\n  const potentialName = dataMatch[1].trim();\n  const potentialEmail = dataMatch[2].trim();\n  const potentialReason = dataMatch[3].trim();\n  \n  // Validaciones básicas\n  if (potentialEmail.includes('@') && potentialName.length >= 3 && potentialReason.length >= 3) {\n    customerData = {\n      name: potentialName,\n      email: potentialEmail,\n      reason: potentialReason\n    };\n    console.log('✅ CustomerData detectado en mensaje:', JSON.stringify(customerData));\n  } else {\n    console.log('⚠️ Formato detectado pero validación falló');\n  }\n}\n\n// Agregar fileUrl al mensaje si existe\nlet enhancedMessage = message;\nif (newFileUrl) {\n  enhancedMessage = `${message}\\n\\n[SYSTEM: User attached file: ${newFileUrl}]`;\n  console.log('✅ FileUrl inyectado en el mensaje');\n}\n\nreturn [{\n  json: {\n    chatInput: enhancedMessage,\n    sessionId: sessionId,\n    action: \"sendMessage\",\n    metadata: metadata,\n    fileUrl: newFileUrl,\n    query: message,\n    pendingBooking: pendingBooking,\n    customerEmail: customerEmail,\n    customerData: customerData\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -34,7 +34,7 @@
     {
       "parameters": {
         "options": {
-          "systemMessage": "You are Aurin's chatbot assistant. You route requests to tools - never answer directly.\\n\\nTOOLS:\\n• RAGagent - FAQs about Aurin services, portfolio, expertise\\n• calendarAgent - SOLO para citas rápidas de 30 minutos (demos, consultas breves)\\n• ticketAgent - Para proyectos complejos, presupuestos, consultas profundas\\n\\nCALENDAR AGENT (Citas Rápidas):\\n- Solo para: demos, dudas rápidas, consultas breves, conocer servicios\\n- Duración: 30 minutos\\n- Requisitos: nombre, email, motivo breve\\n- Disponibilidad: Lunes a Viernes, 9-11 AM y 2-5 PM (horario México)\\n- Confirmación: Usuario debe confirmar en 24h vía email o la cita se cancela\\n- Anticipación mínima: 24 horas\\n\\nTICKET AGENT (Consultas Profundas):\\n- Para: proyectos grandes, presupuestos detallados, consultas complejas\\n- Nuestro equipo contactará personalmente\\n- Acepta archivos adjuntos\\n- Collect: nombre, email, empresa (opcional), servicio, asunto, descripcion, archivoAdjunto\\n\\nFILE ATTACHMENTS:\\nWhen you see [SYSTEM: User attached file: URL], extract URL and include in archivoAdjunto field.\\n\\nJSON FORMAT for ticketAgent (REQUIRED):\\n{\\n  \\\"nombre\\\": \\\"Name\\\",\\n  \\\"email\\\": \\\"email@example.com\\\",\\n  \\\"empresa\\\": \\\"\\\",\\n  \\\"servicio\\\": \\\"Service\\\",\\n  \\\"asunto\\\": \\\"Subject\\\",\\n  \\\"descripcion\\\": \\\"Description\\\",\\n  \\\"archivoAdjunto\\\": \\\"https://url or empty string\\\"\\n}\\n\\nRULES:\\n1. Si usuario quiere cita rápida/demo/consulta breve → calendarAgent\\n2. Si usuario quiere proyecto grande/presupuesto/consulta profunda → ticketAgent\\n3. Si solo pregunta sobre servicios → RAGagent\\n4. Always use empty string \\\"\\\" if no data (NEVER use null)\\n5. Speak Spanish naturally",
+          "systemMessage": "You are Aurin's chatbot assistant. You route requests to tools - NEVER answer directly or ask for info yourself.\\n\\nTOOLS:\\n• RAGagent - FAQs about Aurin services, portfolio, expertise\\n• calendarAgent - SOLO para citas rápidas de 30 minutos (demos, consultas breves)\\n• ticketAgent - Para proyectos complejos, presupuestos, consultas profundas\\n\\n=== CALENDAR AGENT (Citas Rápidas) ===\\n\\n**PURPOSE:** Quick 30-minute appointments (demos, brief consultations)\\n\\n**HOURS:** Monday-Friday, 11 AM-5:30 PM (Mexico City time, GMT-6)\\n\\n**REQUIREMENTS:** name, email, brief reason\\n\\n**IMPORTANT:** 24-hour advance notice required. User must confirm via email within 24h or appointment auto-cancels.\\n\\n=== CALENDAR WORKFLOW - FOLLOW EXACTLY ===\\n\\n**STEP 1:** User asks for appointment\\n→ Call: calendarAgent(query: \\\"[user's exact message]\\\")\\n→ Tool returns: Available time slots\\n\\n**STEP 2:** User selects a time (e.g. \\\"Martes a las 3 PM\\\")\\n→ Call: calendarAgent(query: \\\"[user's exact message with time]\\\")\\n→ Tool returns: Time confirmed, requests user data (name, email, reason)\\n\\n**STEP 3:** User provides data (e.g. \\\"Juan Pérez, juan@mail.com, quiero una demo\\\")\\n→ Call: calendarAgent(query: \\\"BOOKING: name=Juan Pérez, email=juan@mail.com, reason=demo\\\")\\n→ Tool creates appointment and sends confirmation\\n\\n=== CRITICAL RULES ===\\n\\n1. **ALWAYS pass user's exact message** as query parameter - NEVER modify it\\n2. **NEVER ask for user info yourself** - let calendarAgent handle the conversation\\n3. **ONLY use BOOKING format** after tool has requested user data\\n4. **NEVER include date/time in BOOKING** - tool already has it in pendingBooking context\\n5. **Call calendarAgent for ANY appointment-related request** - availability checks, time selection, cancellations, etc.\\n\\n=== EXAMPLE CONVERSATION ===\\n\\nUser: \\\"Quiero una cita rápida\\\"\\nYou: calendarAgent(query: \\\"Quiero una cita rápida\\\")\\nTool: \\\"📅 Disponibilidad esta semana: Lunes 4: 11:00, 11:30, 12:00...\\\"\\n\\nUser: \\\"Martes a las 3 PM\\\"\\nYou: calendarAgent(query: \\\"Martes a las 3 PM\\\")\\nTool: \\\"✅ ¡Perfecto! Para confirmar necesito: 1. Nombre completo 2. Email 3. ¿De qué trata tu consulta?\\\"\\n\\nUser: \\\"Juan Pérez, juan@mail.com, quiero una demo\\\"\\nYou: calendarAgent(query: \\\"BOOKING: name=Juan Pérez, email=juan@mail.com, reason=demo\\\")\\nTool: \\\"✅ ¡Cita reservada exitosamente!...\\\"\\n\\n=== TICKET AGENT ===\\n\\n**PURPOSE:** Complex projects, detailed budgets, in-depth consultations\\n\\n**ACCEPTS:** File attachments\\n\\n**COLLECT:** nombre, email, empresa (optional), servicio, asunto, descripcion, archivoAdjunto\\n\\n**FILE ATTACHMENTS:** When you see [SYSTEM: User attached file: URL], extract URL for archivoAdjunto field\\n\\n**JSON FORMAT (REQUIRED):**\\n{\\n  \\\"nombre\\\": \\\"Name\\\",\\n  \\\"email\\\": \\\"email@example.com\\\",\\n  \\\"empresa\\\": \\\"\\\",\\n  \\\"servicio\\\": \\\"Service\\\",\\n  \\\"asunto\\\": \\\"Subject\\\",\\n  \\\"descripcion\\\": \\\"Description\\\",\\n  \\\"archivoAdjunto\\\": \\\"https://url or empty string\\\"\\n}\\n\\n=== ROUTING RULES ===\\n\\n1. Quick appointment/demo/brief consultation → calendarAgent\\n2. Large project/detailed budget/complex inquiry → ticketAgent\\n3. Questions about services → RAGagent\\n4. Always use empty string \\\"\\\" if no data (NEVER use null)\\n5. Speak Spanish naturally\\n6. NEVER handle appointment logic yourself - ALWAYS delegate to calendarAgent",
           "maxIterations": 10
         }
       },
@@ -144,12 +144,12 @@
     {
       "parameters": {
         "name": "calendarAgent",
-        "description": "Call this tool to schedule quick 30-minute appointments. Only for demos, brief consultations, and service introductions. Requires at least 24 hours advance notice. User must confirm via email within 24h or appointment will be auto-cancelled. When user provides their info (name, email, reason), you MUST format it as a single line JSON string in the query parameter like this: CUSTOMER_DATA:{\"name\":\"Full Name\",\"email\":\"email@example.com\",\"reason\":\"Brief description\"}",
+        "description": "**WHEN TO CALL:** User requests appointment, asks about availability, selects a time, provides booking details, or wants to cancel/confirm. Call this tool for ANY appointment-related interaction.\\n\\n**REQUIRED INPUT:** Always pass 'query' parameter with user's exact message or formatted BOOKING data.\\n\\n**BOOKING FORMAT:** ONLY use after user has selected a time AND tool has requested user data. Format: 'BOOKING: name=Full Name, email=user@example.com, reason=brief reason'. NEVER include date/time in BOOKING - the tool already has it in context.\\n\\n**EXAMPLES:**\\n- User asks for availability → query: \\\"quiero una cita\\\"\\n- User selects time → query: \\\"martes a las 3 PM\\\"\\n- User provides data after tool request → query: \\\"BOOKING: name=Juan Pérez, email=juan@mail.com, reason=demo\\\"\\n\\n**STATE MANAGEMENT:** This tool maintains booking state (pendingBooking) across calls. Always call it sequentially for multi-step bookings.",
         "workflowId": {
           "__rl": true,
-          "value": "CALENDAR_AGENT_V4_WORKFLOW_ID",
+          "value": "1hDtxRoCnSslDzd9",
           "mode": "list",
-          "cachedResultUrl": "/workflow/CALENDAR_AGENT_V4_WORKFLOW_ID",
+          "cachedResultUrl": "https://n8n.n8nsystems.info/workflow/1hDtxRoCnSslDzd9",
           "cachedResultName": "Calendar Agent v4 (Quick Appointments)"
         },
         "workflowInputs": {
@@ -157,8 +157,8 @@
           "value": {
             "query": "={{ $json.query }}",
             "customerEmail": "={{ $('Store Context and FileUrl').first().json.customerEmail || '' }}",
-            "pendingBooking": "={{ $('Store Context and FileUrl').first().json.pendingBooking }}",
-            "customerData": ""
+            "pendingBooking": "={{ $('Store Context and FileUrl').first().json.pendingBooking || null }}",
+            "customerData": "={{ $('Store Context and FileUrl').first().json.customerData || null }}"
           }
         }
       },
@@ -194,9 +194,15 @@
               "type": "string"
             },
             {
+              "id": "metadata",
+              "name": "metadata",
+              "value": "={{ { pendingBooking: $json.pendingBooking || $json.pendingBookingIn || null, customerEmail: $json.customerEmail || '', customerData: $json.customerData || null } }}",
+              "type": "object"
+            },
+            {
               "id": "pending-booking",
               "name": "pendingBooking",
-              "value": "={{ $json.pendingBooking || null }}",
+              "value": "={{ $json.pendingBooking || $json.pendingBookingIn || null }}",
               "type": "object"
             },
             {
@@ -204,6 +210,12 @@
               "name": "customerEmail",
               "value": "={{ $json.customerEmail || '' }}",
               "type": "string"
+            },
+            {
+              "id": "customer-data",
+              "name": "customerData",
+              "value": "={{ $json.customerData || null }}",
+              "type": "object"
             }
           ]
         },
