@@ -1,0 +1,223 @@
+{
+  "name": "Auto-Cancel Unconfirmed Appointments (Cron)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -416,
+        32
+      ],
+      "id": "3d2ba6c9-6352-4e99-aa9a-33946b64e2b1",
+      "name": "Schedule Trigger (Every Hour)"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "limit": 100,
+        "options": {
+          "orderBy": "startTime"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        32
+      ],
+      "id": "19ada99c-abb4-4548-ba19-bec4381a6c07",
+      "name": "Get All Upcoming Events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "zTherxx0tHk8018C",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// === FILTER UNCONFIRMED EVENTS > 24H OLD ===\nconst allItems = $input.all();\nconst now = Date.now();\nconst unconfirmedEvents = [];\n\nconsole.log('=== AUTO-CANCEL CHECK ===');\nconsole.log('Total events:', allItems.length);\n\nfor (const item of allItems) {\n  const event = item.json;\n  \n  // Skip if no extendedProperties\n  if (!event.extendedProperties?.private) {\n    continue;\n  }\n  \n  const props = event.extendedProperties.private;\n  \n  // Check if confirmed = false\n  if (props.confirmed !== 'false') {\n    continue;\n  }\n  \n  // Check if created > 24h ago\n  const createdAt = new Date(props.createdAt).getTime();\n  const ageHours = (now - createdAt) / (1000 * 60 * 60);\n  \n  if (ageHours >= 24) {\n    console.log(`❌ Unconfirmed event found: ${event.id} (${ageHours.toFixed(1)}h old)`);\n    unconfirmedEvents.push({\n      json: {\n        eventId: event.id,\n        summary: event.summary,\n        start: event.start?.dateTime,\n        customerEmail: props.customerEmail,\n        customerName: props.customerName,\n        createdAt: props.createdAt,\n        ageHours: ageHours.toFixed(1)\n      }\n    });\n  }\n}\n\nconsole.log(`Found ${unconfirmedEvents.length} events to cancel`);\n\nif (unconfirmedEvents.length === 0) {\n  return [];\n}\n\nreturn unconfirmedEvents;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        32,
+        32
+      ],
+      "id": "994e9649-0906-44c0-aa81-98a382e3ebd6",
+      "name": "Filter Unconfirmed Events"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": "primary"
+        },
+        "eventId": "={{ $json.eventId }}",
+        "options": {
+          "sendUpdates": "all"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        32
+      ],
+      "id": "ddb262b2-e67b-4151-a4a0-1f8b8adcea53",
+      "name": "Delete Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "zTherxx0tHk8018C",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://aurin.mx/api/send-cancellation-email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "name",
+              "value": "={{ $json.customerName }}"
+            },
+            {
+              "name": "email",
+              "value": "={{ $json.customerEmail }}"
+            },
+            {
+              "name": "appointmentDate",
+              "value": "={{ $json.start }}"
+            },
+            {
+              "name": "reason",
+              "value": "not_confirmed"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        464,
+        32
+      ],
+      "id": "487a55d6-7cff-411d-ae76-8006fb654114",
+      "name": "Send Cancellation Email",
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// === LOG CANCELLATION ===\nconst event = $input.item.json;\n\nconsole.log('✅ Cancelled unconfirmed appointment:', {\n  eventId: event.eventId,\n  customerEmail: event.customerEmail,\n  ageHours: event.ageHours\n});\n\nreturn [{\n  json: {\n    success: true,\n    eventId: event.eventId,\n    cancelled: true,\n    reason: 'not_confirmed_within_24h'\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        32
+      ],
+      "id": "4f446628-80db-4c7b-b38e-01169a665130",
+      "name": "Log Cancellation"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger (Every Hour)": {
+      "main": [
+        [
+          {
+            "node": "Get All Upcoming Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All Upcoming Events": {
+      "main": [
+        [
+          {
+            "node": "Filter Unconfirmed Events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Unconfirmed Events": {
+      "main": [
+        [
+          {
+            "node": "Delete Event",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "main": [
+        [
+          {
+            "node": "Send Cancellation Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Cancellation Email": {
+      "main": [
+        [
+          {
+            "node": "Log Cancellation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b9d5897f-0a47-477d-96b2-c25ecafbbe77",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eb1d2639bfd28e6a4dea7c6abeadac554e9d9182503dceedf7cc099b750e578d"
+  },
+  "id": "XbktF6QM4jTfhmo0",
+  "tags": []
+}

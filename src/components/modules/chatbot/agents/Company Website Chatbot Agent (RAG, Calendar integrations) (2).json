@@ -11,10 +11,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -688,
-        16
+        -560,
+        -160
       ],
-      "id": "e5ae5564-a186-4b3f-bd92-8475f4ab1087",
+      "id": "db4bc0a2-98dc-4a3b-b2a1-32b8cd789159",
       "name": "Webhook",
       "webhookId": "f18aca18-5ade-4c75-ab64-1496a980b445"
     },
@@ -25,10 +25,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -368,
-        16
+        -240,
+        -160
       ],
-      "id": "2465cef6-8d70-44bf-bff6-28bb47ba38da",
+      "id": "41cc2fef-ba83-4934-8350-47bc4253066a",
       "name": "Store Context and FileUrl"
     },
     {
@@ -38,12 +38,12 @@
           "maxIterations": 10
         }
       },
-      "id": "f166c279-7653-4a1c-b9b6-b000d495b8d9",
+      "id": "9d44ce9f-2fbe-4c1e-ba8e-77e4a5b5a266",
       "name": "Ultimate Website Chatbot Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        48,
-        16
+        176,
+        -160
       ],
       "typeVersion": 1.7
     },
@@ -57,17 +57,17 @@
         },
         "options": {}
       },
-      "id": "fa099966-77fb-4e41-bee1-7e33f610fe95",
+      "id": "b5c043ac-71eb-4027-969f-5590e3acff4a",
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        -304,
-        400
+        -176,
+        224
       ],
       "typeVersion": 1.2,
       "credentials": {
         "openAiApi": {
-          "id": "4iBfQGZ9AVI8w6ue",
+          "id": "ACV0x1hM8fnlwMsD",
           "name": "OpenAi account 2"
         }
       }
@@ -78,12 +78,12 @@
         "sessionKey": "={{ $json.sessionId }}",
         "contextWindowLength": 10
       },
-      "id": "ac8fcf9a-5ef3-451f-8603-4996bcb59678",
+      "id": "6fb09d29-1da7-4121-ae37-7d90da671bc5",
       "name": "Simple Memory",
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "position": [
-        -64,
-        480
+        64,
+        304
       ],
       "typeVersion": 1.3
     },
@@ -93,9 +93,9 @@
         "description": "Call this tool to create a support ticket. Collect: name, email, company, specific service needed, subject/reason, description, and optional file attachment. Format all data clearly for ticket creation.",
         "workflowId": {
           "__rl": true,
-          "value": "xofJhOkiHd6ietuS",
+          "value": "G1oYf8PDKQ8h26wa",
           "mode": "list",
-          "cachedResultUrl": "/workflow/xofJhOkiHd6ietuS",
+          "cachedResultUrl": "/workflow/G1oYf8PDKQ8h26wa",
           "cachedResultName": "Ticket Agent"
         },
         "workflowInputs": {
@@ -105,12 +105,12 @@
           }
         }
       },
-      "id": "f6eefde5-3072-40e7-9aed-a710ece34762",
+      "id": "2f6ae50c-fe68-4057-b1be-c26e7fe05bcc",
       "name": "ticketAgent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        176,
-        576
+        304,
+        400
       ],
       "typeVersion": 2
     },
@@ -120,9 +120,9 @@
         "description": "Call this tool to answer FAQs about Aurin services, portfolio, and expertise. Pass the user's question as input.",
         "workflowId": {
           "__rl": true,
-          "value": "rPEVrWKRByrpoSC6",
+          "value": "ivDdTsqIFM7DI29c",
           "mode": "list",
-          "cachedResultUrl": "/workflow/rPEVrWKRByrpoSC6",
+          "cachedResultUrl": "/workflow/ivDdTsqIFM7DI29c",
           "cachedResultName": "RAG Agent"
         },
         "workflowInputs": {
@@ -132,12 +132,12 @@
           }
         }
       },
-      "id": "30f4ec36-ed37-42bc-9617-d1e85944affc",
+      "id": "692d4107-143b-49a4-b578-d39165bb6475",
       "name": "RAGagent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        480,
-        768
+        608,
+        592
       ],
       "typeVersion": 2
     },
@@ -149,8 +149,8 @@
           "__rl": true,
           "value": "1hDtxRoCnSslDzd9",
           "mode": "list",
-          "cachedResultUrl": "https://n8n.n8nsystems.info/workflow/1hDtxRoCnSslDzd9",
-          "cachedResultName": "Calendar Agent v4 (Quick Appointments)"
+          "cachedResultUrl": "/workflow/1hDtxRoCnSslDzd9",
+          "cachedResultName": "Calendar Agent v5 (With Email Confirmation)"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -162,12 +162,12 @@
           }
         }
       },
-      "id": "f1ef2b75-b657-47f7-b2d3-369cd9f50ff8",
+      "id": "6d46e6d7-5391-49d3-960e-ef1012d63420",
       "name": "calendarAgent",
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "position": [
-        624,
-        432
+        752,
+        256
       ],
       "typeVersion": 2
     },
@@ -224,10 +224,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        320,
-        16
+        448,
+        -160
       ],
-      "id": "315f9eed-f538-4cdf-b4fa-9caa56aa7269",
+      "id": "fc4dffd2-282e-4c90-a4f6-aa00312532fc",
       "name": "Format Success Response"
     },
     {
@@ -239,10 +239,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.4,
       "position": [
-        640,
-        16
+        768,
+        -160
       ],
-      "id": "ba82b491-5175-4e42-bd53-0906e29386a4",
+      "id": "1550a409-f70a-4a5f-8bcb-7ab0dfc109d9",
       "name": "Respond Success"
     }
   ],
@@ -352,11 +352,11 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "bad30100-b369-4c80-9a2a-a03286e7a1fd",
+  "versionId": "b27e5f03-da15-4051-b5a7-9d6310f1347d",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "473b8e2f44c2c249c630a674e0ffd242a718055278d7a389908825386c510f30"
+    "instanceId": "eb1d2639bfd28e6a4dea7c6abeadac554e9d9182503dceedf7cc099b750e578d"
   },
-  "id": "5eVhyM6e69m1mKTy",
+  "id": "WFX6r8v58WSuBw1P",
   "tags": []
 }
