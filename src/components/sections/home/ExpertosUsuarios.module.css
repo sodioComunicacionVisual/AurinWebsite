@@ -2,7 +2,7 @@
   width: 100vw;
   max-width: 100%;
   padding: 100px 50px 200px 50px;
-  overflow: hidden;
+  overflow: visible;
   box-sizing: border-box;
   position: relative;
   left: 50%;
