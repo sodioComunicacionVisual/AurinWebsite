@@ -1,0 +1,124 @@
+/**
+ * Google Calendar Service
+ * Direct integration with Google Calendar API
+ */
+
+import { google } from 'googleapis';
+
+const CALENDAR_ID = 'primary';
+
+// TODO: Add these to your .env
+const credentials = {
+  client_email: import.meta.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+  private_key: import.meta.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+};
+
+export interface CalendarEvent {
+  id: string;
+  summary: string;
+  description?: string;
+  start: string;
+  end: string;
+  htmlLink?: string;
+  hangoutLink?: string;
+  attendees?: string[];
+  confirmed?: string;
+  createdAt?: string;
+  customerName?: string;
+  customerEmail?: string;
+}
+
+export class GoogleCalendarService {
+  private calendar;
+
+  constructor() {
+    const auth = new google.auth.JWT({
+      email: credentials.client_email,
+      key: credentials.private_key,
+      scopes: ['https://www.googleapis.com/auth/calendar'],
+    });
+
+    this.calendar = google.calendar({ version: 'v3', auth });
+  }
+
+  async getEvents(startDate: Date, endDate: Date): Promise<CalendarEvent[]> {
+    const response = await this.calendar.events.list({
+      calendarId: CALENDAR_ID,
+      timeMin: startDate.toISOString(),
+      timeMax: endDate.toISOString(),
+      singleEvents: true,
+      orderBy: 'startTime',
+    });
+
+    return response.data.items?.map(event => ({
+      id: event.id!,
+      summary: event.summary || '',
+      description: event.description,
+      start: event.start?.dateTime || event.start?.date || '',
+      end: event.end?.dateTime || event.end?.date || '',
+      htmlLink: event.htmlLink,
+      hangoutLink: event.hangoutLink,
+      attendees: event.attendees?.map(a => a.email || ''),
+      confirmed: event.extendedProperties?.private?.confirmed,
+      createdAt: event.extendedProperties?.private?.createdAt,
+      customerName: event.extendedProperties?.private?.customerName,
+      customerEmail: event.extendedProperties?.private?.customerEmail,
+    })) || [];
+  }
+
+  async deleteEvent(eventId: string): Promise<void> {
+    await this.calendar.events.delete({
+      calendarId: CALENDAR_ID,
+      eventId: eventId,
+      sendUpdates: 'all',
+    });
+  }
+
+  async createEvent(data: {
+    summary: string;
+    description: string;
+    start: string;
+    end: string;
+    attendees: string[];
+    customerName: string;
+    customerEmail: string;
+  }): Promise<CalendarEvent> {
+    const response = await this.calendar.events.insert({
+      calendarId: CALENDAR_ID,
+      conferenceDataVersion: 1,
+      requestBody: {
+        summary: data.summary,
+        description: data.description,
+        start: { dateTime: data.start, timeZone: 'America/Mexico_City' },
+        end: { dateTime: data.end, timeZone: 'America/Mexico_City' },
+        attendees: data.attendees.map(email => ({ email })),
+        conferenceData: {
+          createRequest: {
+            requestId: `meet-${Date.now()}`,
+            conferenceSolutionKey: { type: 'hangoutsMeet' },
+          },
+        },
+        extendedProperties: {
+          private: {
+            confirmed: 'false',
+            customerEmail: data.customerEmail,
+            customerName: data.customerName,
+            createdAt: new Date().toISOString(),
+          },
+        },
+      },
+    });
+
+    const event = response.data;
+    return {
+      id: event.id!,
+      summary: event.summary || '',
+      description: event.description,
+      start: event.start?.dateTime || '',
+      end: event.end?.dateTime || '',
+      htmlLink: event.htmlLink,
+      hangoutLink: event.hangoutLink,
+      attendees: event.attendees?.map(a => a.email || ''),
+    };
+  }
+}
