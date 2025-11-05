@@ -1,0 +1,163 @@
+.topLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+.content {
+  position: absolute;
+  bottom: 120px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  z-index: 2;
+}
+
+.topSection {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.socialLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 7.2px;
+}
+
+.socialIcon {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #262626;
+  border-radius: 1000px;
+  padding: 8px;
+  color: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.socialIcon:hover {
+  background: #d0df00;
+  color: #000;
+  transform: scale(1.1);
+}
+
+.socialIcon svg {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.corner {
+  width: 2.4px;
+  height: 2.4px;
+  position: absolute;
+  outline: 0.4px #696969 solid;
+  outline-offset: -0.2px;
+  pointer-events: none;
+}
+
+.corner[data-position="top-left"] {
+  left: 0;
+  top: 0;
+}
+
+.corner[data-position="top-right"] {
+  right: 0;
+  top: 0;
+}
+
+.corner[data-position="bottom-left"] {
+  left: 0;
+  bottom: 0;
+}
+
+.corner[data-position="bottom-right"] {
+  right: 0;
+  bottom: 0;
+}
+
+
+.scrollButtonContainer {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scrollButton {
+  width: 106px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 100px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.scrollButton:hover {
+  background: rgb(208, 223, 0);
+  transform: translateY(2px);
+}
+
+.scrollButton:hover svg {
+  color: black;
+}
+
+.scrollButton svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .content {
+    padding: 20px;
+  }
+
+  .socialLinks {
+    gap: 5px;
+  }
+
+  .socialIcon {
+    width: 24px;
+    height: 24px;
+    padding: 6px;
+  }
+
+  .socialIcon svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scrollButtonContainer {
+    bottom: 30px;
+  }
+
+  .scrollButton {
+    width: 80px;
+    padding: 6px;
+  }
+
+  .scrollButton svg {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -2,7 +2,8 @@
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
 import styles from './Banner.module.css';
-
+import BannerTopLayer from './BannerTopLayer.astro';
+import BannerBackgroundEffectsContainer from '../../modules/banner/BannerBackgroundEffectsContainer.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -11,8 +12,61 @@ const t = translations[currentLang];
 
 <section class={styles.banner}>
   <div class={styles.bannerContainer}>
-    <div class={styles.bannerPlaceholder}>
-      <h2>{t.banner.title}</h2>
+    <!-- Capa de fondo con efectos WebGL y textura -->
+    <BannerBackgroundEffectsContainer />
+    
+    <!-- Contenido principal -->
+    <div class={styles.content}>
+      <div class={styles.contentInner}>
+        <!-- Badge -->
+        <div class={styles.badge}>
+          {t.banner.badge}
+        </div>
+
+        <!-- Aurin Logo -->
+        <div class={styles.logoContainer}>
+          <img 
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AurinTinyWhiteLogo.svg"
+            alt="Aurin Logo"
+            class={styles.logo}
+          />
+        </div>
+
+        <!-- Títulos -->
+        <div class={styles.titles}>
+          <h2 class={styles.title1}>
+            {t.banner.title1}
+          </h2>
+          <h2 class={styles.title2}>
+            {t.banner.title2}
+          </h2>
+        </div>
+
+        <!-- Descripción -->
+        <div class={styles.description}>
+          <p>{t.banner.description}</p>
+        </div>
+
+        <!-- CTA Button -->
+        <div class={styles.ctaContainer}>
+          <a href="/contacto" class={styles.buttonLink}>
+            <div class={styles.buttonWrapper}>
+              <div class={styles.buttonText}>
+                <span>{t.banner.buttonText}</span>
+              </div>
+              <div class={styles.buttonIcon}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 7h10v10"></path>
+                  <path d="M7 17 17 7"></path>
+                </svg>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
+    
+    <!-- Capa superior con iconos sociales y líneas guía -->
+    <BannerTopLayer />
   </div>
 </section>

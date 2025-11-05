@@ -208,7 +208,11 @@ export const translations = {
       }
     },
     banner: {
-      title: 'Banner Here'
+      badge: 'User Experts',
+      title1: 'Design that connects.',
+      title2: 'Experiences that transform.',
+      description: 'We create visual narratives that inspire and generate real impact. From branding to digital experiences, we turn your vision into memorable results.',
+      buttonText: 'Start your project now'
     },
     descripcion: {
       mainHeading: 'In a world overflowing with visual stimuli, our mission is to create connections that truly matter. ',
@@ -784,7 +788,11 @@ export const translations = {
       }
     },
     banner: {
-      title: 'Banner Aquí'
+      badge: 'Expertos en Usuarios',
+      title1: 'Diseño que conecta.',
+      title2: 'Experiencias que transforman.',
+      description: 'Creamos narrativas visuales que inspiran y generan impacto real. Desde branding hasta experiencias digitales, convertimos tu visión en resultados memorables.',
+      buttonText: 'Inicia tu proyecto ahora'
     },
     descripcion: {
       mainHeading: 'En un mundo lleno de estímulos visuales, nuestra misión es crear conexiones que realmente importen.',

@@ -120,6 +120,14 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
 
     const updateHeader = () => {
       const currentScrollY = window.scrollY;
+      const headerElement = header as HTMLElement;
+      
+      // Change background based on scroll position
+      if (currentScrollY > 50) {
+        headerElement.style.background = 'black';
+      } else {
+        headerElement.style.background = 'transparent';
+      }
       
       // Show header at top of page
       if (currentScrollY <= 0) {

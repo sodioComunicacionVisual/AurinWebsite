@@ -30,8 +30,7 @@ export const POST: APIRoute = async ({ request }) => {
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
 
     try {
-      // Llamar al webhook de n8n con CORS habilitado
-      // IMPORTANTE: El workflow debe estar ACTIVO en n8n y configurado para POST
+      // Llamar al webhook de n8n 
       const n8nWebhookUrl = process.env.N8N_WEBHOOK_URL || 'https://n8nsystems.info/webhook/chatbot';
 
       console.log('🔗 Sending to n8n webhook:', { url: n8nWebhookUrl, payload: n8nPayload });
