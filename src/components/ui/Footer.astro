@@ -9,6 +9,9 @@ import { translations } from '../../i18n/translations.js';
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
+
+// Check if we're in development mode (localhost or dev environment)
+const isDevelopment = import.meta.env.DEV || Astro.url.hostname === 'localhost';
 ---
 
 <footer class={styles.footer}>
@@ -44,10 +47,17 @@ const t = translations[currentLang];
           </div>
 
           <div class={styles['footer-section']}>
+            <h3 class={styles['footer-title']}>Dev Tools</h3>
             <div class={styles['footer-link-container']}>
               <div class={styles['footer-line']}></div>
-              <a href="https://aurin-payload-cms.vercel.app/admin/" target="_blank" rel="noopener noreferrer" class={styles['footer-link']}>Acceder</a>
+              <a href="https://aurin-payload-cms.vercel.app/admin/" target="_blank" rel="noopener noreferrer" class={styles['footer-link']}>Payload CMS</a>
             </div>
+            {isDevelopment && (
+              <div class={styles['footer-link-container']}>
+                <div class={styles['footer-line']}></div>
+                <a href="https://n8nsystems.info/" target="_blank" rel="noopener noreferrer" class={styles['footer-link']}>n8n Workflows</a>
+              </div>
+            )}
           </div>
         </div>
 

@@ -326,7 +326,7 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
 
         {/* Timestamp */}
         <span className={styles.timestamp}>
-          {new Date(data.timestamp).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+          {new Date().toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
             day: 'numeric',
             month: 'short'
           })}
