@@ -178,7 +178,8 @@
   }
 
   .logo {
-    width: 16rem; /* Aumentado de 12rem a 16rem para móvil */
+    width: 16rem; 
+    padding-right: 2em;
   }
 
   .description p {

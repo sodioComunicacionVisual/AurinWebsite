@@ -94,6 +94,7 @@ const LightRays: React.FC<LightRaysProps> = ({
   const [isVisible, setIsVisible] = useState(false)
   const observerRef = useRef<IntersectionObserver | null>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [scrollOpacity, setScrollOpacity] = useState(1)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -123,6 +124,36 @@ const LightRays: React.FC<LightRaysProps> = ({
     handleResize() // Initial check
     mediaQuery.addEventListener("change", handleResize)
     return () => mediaQuery.removeEventListener("change", handleResize)
+  }, [])
+
+  // Scroll opacity effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return
+      
+      const rect = containerRef.current.getBoundingClientRect()
+      const viewportHeight = window.innerHeight
+      
+      // Calcular opacidad basada en la posición del banner
+      // Cuando top = 0, opacity = 1
+      // Cuando el banner sale completamente del viewport, opacity = 0
+      let opacity = 1
+      
+      if (rect.top < 0) {
+        // El banner está scrolleando hacia arriba
+        const scrollProgress = Math.abs(rect.top) / rect.height
+        opacity = Math.max(0, 1 - scrollProgress)
+      } else if (rect.top > 0) {
+        // El banner está visible desde arriba
+        opacity = 1
+      }
+      
+      setScrollOpacity(opacity)
+    }
+    
+    handleScroll() // Initial check
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
@@ -250,8 +281,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   }
   
   float brightness = 1.0 - (coord.y / iResolution.y);
-  fragColor.x *= 0.1 + brightness * 0.8;
-  fragColor.y *= 0.3 + brightness * 0.6;
+  fragColor.x *= 0.5 + brightness * 0.5;
+  fragColor.y *= 0.5 + brightness * 0.5;
   fragColor.z *= 0.5 + brightness * 0.5;
   
   if (saturation != 1.0) {
@@ -483,6 +514,10 @@ void main() {
     <div
       ref={containerRef}
       className={`w-full h-full pointer-events-none z-[3] overflow-hidden relative ${className}`.trim()}
+      style={{
+        opacity: scrollOpacity,
+        transition: 'opacity 0.1s ease-out'
+      }}
     />
   )
 }

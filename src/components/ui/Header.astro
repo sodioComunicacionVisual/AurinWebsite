@@ -122,33 +122,37 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
       const currentScrollY = window.scrollY;
       const headerElement = header as HTMLElement;
       
-      // Change background based on scroll position
-      if (currentScrollY > 50) {
-        headerElement.style.background = 'rgba(255, 255, 255, 0.05)';
-        headerElement.style.backdropFilter = 'blur(10px)';
-        headerElement.style.webkitBackdropFilter = 'blur(10px)';
-        headerElement.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
-      } else {
-        headerElement.style.background = 'transparent';
-        headerElement.style.backdropFilter = 'none';
-        headerElement.style.webkitBackdropFilter = 'none';
-        headerElement.style.borderBottom = 'none';
-      }
-      
-      // Show header at top of page
+      // Ocultar header en top: 0
       if (currentScrollY <= 0) {
-        header.classList.remove('header-hidden');
-        header.classList.add('header-visible');
-      }
-      // Hide header when scrolling down
-      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
         header.classList.add('header-hidden');
         header.classList.remove('header-visible');
       }
-      // Show header when scrolling up
-      else if (currentScrollY < lastScrollY) {
+      // Mostrar header con background cuando se hace scroll
+      else if (currentScrollY > 0 && currentScrollY <= 50) {
         header.classList.remove('header-hidden');
         header.classList.add('header-visible');
+        headerElement.style.background = 'rgba(255, 255, 255, 0.05)';
+        headerElement.style.backdropFilter = 'blur(10px)';
+        (headerElement.style as any).webkitBackdropFilter = 'blur(10px)';
+        headerElement.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+      }
+      // Header visible con background
+      else if (currentScrollY > 50) {
+        headerElement.style.background = 'rgba(255, 255, 255, 0.05)';
+        headerElement.style.backdropFilter = 'blur(10px)';
+        (headerElement.style as any).webkitBackdropFilter = 'blur(10px)';
+        headerElement.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+        
+        // Hide header when scrolling down
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          header.classList.add('header-hidden');
+          header.classList.remove('header-visible');
+        }
+        // Show header when scrolling up
+        else if (currentScrollY < lastScrollY) {
+          header.classList.remove('header-hidden');
+          header.classList.add('header-visible');
+        }
       }
 
       lastScrollY = currentScrollY;

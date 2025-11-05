@@ -146,7 +146,7 @@
   }
 
   .rightColumn {
-    max-width: 100%;
+    display: none;
   }
 
   .headingHighlight {
