@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Cita Confirmada - Aurin"
+  description="Tu cita ha sido confirmada exitosamente"
+>
+  <section class="confirmation-page">
+    <div class="confirmation-container">
+      <div class="confirmation-icon">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="#22c55e" stroke-width="2" fill="none"/>
+          <path d="M8 12.5L10.5 15L16 9.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1>¡Cita Confirmada!</h1>
+
+      <p class="confirmation-message">
+        Tu cita ha sido confirmada exitosamente. Recibirás todos los detalles en tu correo electrónico.
+      </p>
+
+      <div class="confirmation-details">
+        <p>¿Qué sigue?</p>
+        <ul>
+          <li>Revisa tu email para ver el link de Google Meet</li>
+          <li>Agrega el evento a tu calendario</li>
+          <li>Prepárate para nuestra reunión</li>
+        </ul>
+      </div>
+
+      <div class="confirmation-actions">
+        <a href="/" class="btn-primary">Volver al inicio</a>
+        <a href="mailto:hey@aurin.mx" class="btn-secondary">Contactar soporte</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .confirmation-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .confirmation-container {
+    max-width: 600px;
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  }
+
+  .confirmation-icon {
+    margin-bottom: 2rem;
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #1a202c;
+    margin-bottom: 1rem;
+  }
+
+  .confirmation-message {
+    font-size: 1.125rem;
+    color: #4a5568;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .confirmation-details {
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+
+  .confirmation-details p {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+  }
+
+  .confirmation-details ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .confirmation-details li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #4a5568;
+  }
+
+  .confirmation-details li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #22c55e;
+    font-weight: bold;
+  }
+
+  .confirmation-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 0.75rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  .btn-secondary {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+  }
+
+  .btn-secondary:hover {
+    background: #667eea;
+    color: white;
+  }
+
+  @media (max-width: 640px) {
+    .confirmation-container {
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .confirmation-actions {
+      flex-direction: column;
+    }
+
+    .btn-primary, .btn-secondary {
+      width: 100%;
+    }
+  }
+</style>
