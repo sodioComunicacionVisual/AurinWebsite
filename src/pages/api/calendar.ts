@@ -11,7 +11,10 @@ const corsHeaders = {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { action, ...data } = await request.json();
+    const body = await request.json();
+    console.log('📥 Calendar API received:', JSON.stringify(body));
+
+    const { action, ...data } = body;
 
     const calendarService = new GoogleCalendarService();
 
@@ -110,9 +113,12 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
+    console.log('❌ Invalid action:', action);
     return new Response(JSON.stringify({
       success: false,
-      error: 'Invalid action'
+      error: 'Invalid action',
+      receivedAction: action,
+      receivedData: data
     }), {
       status: 400,
       headers: corsHeaders
