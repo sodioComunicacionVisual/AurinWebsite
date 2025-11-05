@@ -1,5 +1,5 @@
 ---
-import SecondaryButton from './SecondaryButton.astro';
+import MainButton from './MainButton.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 import styles from './MainCat.module.css';
@@ -39,7 +39,7 @@ const mainCatContent = (t.mainCat as any)[pageContext] || (t.mainCat as any).hom
           </p>
         </div>
         <div class={styles.buttonWrapper}>
-          <SecondaryButton text={mainCatContent.buttonText} href="/contacto" />
+          <MainButton text={mainCatContent.buttonText} href="/contacto" />
         </div>
       </div>
     </div>

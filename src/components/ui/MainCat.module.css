@@ -23,6 +23,37 @@
   justify-content: space-between;
   align-items: center;
   gap: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de glow sobre el logo en el background */
+.mainCatContent::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  width: 300px;
+  height: 300px;
+  transform: translate(0, -50%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.15) 30%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(40px);
+}
+
+.mainCatContent::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  transform: translate(0, -50%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(20px);
 }
 
 .mainCatText {
@@ -31,6 +62,8 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+  position: relative;
+  z-index: 3;
 }
 
 .mainCatText p {
@@ -47,8 +80,9 @@
 }
 
 .buttonWrapper {
-  position: static;
-  transform: none;
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
 }
 
 /* Responsive Design */

@@ -1,0 +1,20 @@
+---
+import { Tilt } from './Tilt';
+
+interface Props {
+  className?: string;
+  rotationFactor?: number;
+  isReverse?: boolean;
+}
+
+const { className, rotationFactor = 15, isReverse = false } = Astro.props;
+---
+
+<Tilt 
+  client:load 
+  className={className}
+  rotationFactor={rotationFactor}
+  isReverse={isReverse}
+>
+  <slot />
+</Tilt>

@@ -2,8 +2,10 @@
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
 import styles from './Banner.module.css';
-import BannerTopLayer from './BannerTopLayer.astro';
 import BannerBackgroundEffectsContainer from '../../modules/banner/BannerBackgroundEffectsContainer.astro';
+import FloatingDustContainer from '../../modules/banner/FloatingDustContainer.astro';
+import MainButton from '../../ui/MainButton.astro';
+import { Tilt } from '../../ui/Tilt';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -15,21 +17,26 @@ const t = translations[currentLang];
     <!-- Capa de fondo con efectos WebGL y textura -->
     <BannerBackgroundEffectsContainer />
     
+    <!-- Floating dust particles -->
+    <FloatingDustContainer />
+    
     <!-- Contenido principal -->
     <div class={styles.content}>
       <div class={styles.contentInner}>
-        <!-- Badge -->
-        <div class={styles.badge}>
-          {t.banner.badge}
-        </div>
-
         <!-- Aurin Logo -->
         <div class={styles.logoContainer}>
-          <img 
-            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AurinTinyWhiteLogo.svg"
-            alt="Aurin Logo"
-            class={styles.logo}
-          />
+          <Tilt 
+            client:visible
+            rotationFactor={10}
+            style={{ transformOrigin: 'center center' }}
+          >
+            <img 
+              src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AurinTinyWhiteLogo.svg"
+              alt="Aurin Logo"
+              class={styles.logo}
+              draggable="false"
+            />
+          </Tilt>
         </div>
 
         <!-- Títulos -->
@@ -42,31 +49,56 @@ const t = translations[currentLang];
           </h2>
         </div>
 
-        <!-- Descripción -->
-        <div class={styles.description}>
-          <p>{t.banner.description}</p>
+        <!-- Social Links -->
+        <div class={styles.socialLinks}>
+          <a 
+            href="https://www.instagram.com/aurinmx?igsh=MWxyOW5obGtpaHUwMA==" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class={styles.socialIcon}
+            aria-label="Instagram"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="24" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line>
+            </svg>
+          </a>
+
+          <a 
+            href="https://www.linkedin.com/company/aurinmx/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class={styles.socialIcon}
+            aria-label="LinkedIn"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="24" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect width="4" height="12" x="2" y="9"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </a>
+
+          <a 
+            href="https://www.facebook.com/profile.php?id=61569531232140" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class={styles.socialIcon}
+            aria-label="Facebook"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="24" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+          </a>
         </div>
+
+   
 
         <!-- CTA Button -->
         <div class={styles.ctaContainer}>
-          <a href="/contacto" class={styles.buttonLink}>
-            <div class={styles.buttonWrapper}>
-              <div class={styles.buttonText}>
-                <span>{t.banner.buttonText}</span>
-              </div>
-              <div class={styles.buttonIcon}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7 7h10v10"></path>
-                  <path d="M7 17 17 7"></path>
-                </svg>
-              </div>
-            </div>
-          </a>
+          <MainButton text={t.banner.buttonText} href="/contacto" />
         </div>
       </div>
     </div>
-    
-    <!-- Capa superior con iconos sociales y líneas guía -->
-    <BannerTopLayer />
   </div>
 </section>
