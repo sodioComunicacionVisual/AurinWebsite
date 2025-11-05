@@ -124,9 +124,15 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
       
       // Change background based on scroll position
       if (currentScrollY > 50) {
-        headerElement.style.background = 'black';
+        headerElement.style.background = 'rgba(255, 255, 255, 0.05)';
+        headerElement.style.backdropFilter = 'blur(10px)';
+        headerElement.style.webkitBackdropFilter = 'blur(10px)';
+        headerElement.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
       } else {
         headerElement.style.background = 'transparent';
+        headerElement.style.backdropFilter = 'none';
+        headerElement.style.webkitBackdropFilter = 'none';
+        headerElement.style.borderBottom = 'none';
       }
       
       // Show header at top of page

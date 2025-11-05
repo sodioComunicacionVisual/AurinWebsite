@@ -5,7 +5,7 @@ import styles from './Banner.module.css';
 import BannerBackgroundEffectsContainer from '../../modules/banner/BannerBackgroundEffectsContainer.astro';
 import FloatingDustContainer from '../../modules/banner/FloatingDustContainer.astro';
 import MainButton from '../../ui/MainButton.astro';
-import { Tilt } from '../../ui/Tilt';
+import TiltContainer from '../../ui/TiltContainer.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -25,18 +25,14 @@ const t = translations[currentLang];
       <div class={styles.contentInner}>
         <!-- Aurin Logo -->
         <div class={styles.logoContainer}>
-          <Tilt 
-            client:visible
-            rotationFactor={10}
-            style={{ transformOrigin: 'center center' }}
-          >
+          <TiltContainer rotationFactor={10}>
             <img 
               src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AurinTinyWhiteLogo.svg"
               alt="Aurin Logo"
               class={styles.logo}
               draggable="false"
             />
-          </Tilt>
+          </TiltContainer>
         </div>
 
         <!-- Títulos -->
