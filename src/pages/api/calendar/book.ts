@@ -1,7 +1,7 @@
 /**
  * POST /api/calendar/book
  *
- * Creates a calendar event and sends confirmation email.
+ * Creates a calendar event via n8n webhook (with OAuth and Google Meet support).
  * Requires a pending booking and customer details.
  *
  * @body {
@@ -44,7 +44,7 @@
  *   "success": true,
  *   "event": {
  *     "id": "evt123",
- *     "meetLink": "https://meet.google.com/...",
+ *     "meetLink": "https://meet.google.com/xxx-xxxx-xxx",
  *     "calendarLink": "https://calendar.google.com/..."
  *   },
  *   "message": "Cita creada exitosamente"
@@ -52,8 +52,6 @@
  */
 
 import type { APIRoute } from 'astro';
-import { GoogleCalendarService } from '../../../lib/calendar/googleCalendar';
-import { sendAppointmentConfirmation } from '../../../lib/mailing/service';
 import type { PendingBooking, CustomerData } from '../../../lib/calendar/types';
 
 export const prerender = false;
@@ -62,6 +60,9 @@ const corsHeaders = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
 };
+
+// n8n webhook URL for creating calendar events (with OAuth & Google Meet)
+const N8N_CREATE_APPOINTMENT_WEBHOOK = 'https://n8nsystems.info/webhook/create-appointment';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -91,38 +92,51 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const calendarService = new GoogleCalendarService();
-
-    // Create event in Google Calendar
-    const event = await calendarService.createEvent({
-      summary: `Cita con ${customerData.name}`,
-      description: `Motivo: ${customerData.reason || 'Consulta'}\nEmail: ${customerData.email}`,
-      start: pendingBooking.start,
-      end: pendingBooking.end,
-      attendees: [customerData.email],
-      customerName: customerData.name,
-      customerEmail: customerData.email,
-    });
-
-    // Send confirmation email
-    await sendAppointmentConfirmation({
+    console.log('📅 Creating appointment via n8n webhook:', {
       name: customerData.name,
       email: customerData.email,
-      appointmentDate: pendingBooking.start,
-      meetLink: event.hangoutLink || event.htmlLink || '',
-      eventId: event.id,
-      calendarLink: event.htmlLink || '',
+      start: pendingBooking.start,
     });
 
+    // Call n8n webhook to create calendar event with OAuth (supports Google Meet)
+    const n8nResponse = await fetch(N8N_CREATE_APPOINTMENT_WEBHOOK, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customerName: customerData.name,
+        customerEmail: customerData.email,
+        eventStart: pendingBooking.start,
+        eventEnd: pendingBooking.end,
+        reason: customerData.reason || 'Consulta',
+      }),
+    });
+
+    if (!n8nResponse.ok) {
+      const errorText = await n8nResponse.text();
+      console.error('❌ n8n webhook error:', n8nResponse.status, errorText);
+      throw new Error(`Failed to create appointment: ${n8nResponse.status}`);
+    }
+
+    const n8nData = await n8nResponse.json();
+
+    console.log('✅ Appointment created:', {
+      eventId: n8nData.eventId,
+      meetLink: n8nData.meetLink,
+      emailSent: n8nData.emailSent,
+    });
+
+    // n8n webhook already sends confirmation email, just return success
     return new Response(
       JSON.stringify({
         success: true,
         event: {
-          id: event.id,
-          meetLink: event.hangoutLink || '',
-          calendarLink: event.htmlLink || '',
+          id: n8nData.eventId,
+          meetLink: n8nData.meetLink || '',
+          calendarLink: n8nData.calendarLink || '',
         },
-        message: 'Cita creada exitosamente',
+        message: n8nData.message || 'Cita creada exitosamente',
       }),
       {
         status: 200,
