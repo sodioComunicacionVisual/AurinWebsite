@@ -1,0 +1,59 @@
+.responseContainer {
+  margin-top: 1.5rem;
+}
+
+.glassContainer {
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+}
+
+.iconBackground {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: white;
+}
+
+.textWrapper {
+  flex: 1;
+}
+
+.responseText {
+  color: white;
+  font-size: 1rem;
+  line-height: 1.625;
+  font-weight: 400;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .glassContainer {
+    padding: 1rem;
+  }
+  
+  .contentWrapper {
+    gap: 0.75rem;
+  }
+  
+  .responseText {
+    font-size: 0.875rem;
+  }
+}

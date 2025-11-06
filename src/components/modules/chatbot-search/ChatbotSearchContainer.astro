@@ -1,0 +1,25 @@
+---
+import { ChatbotInterface, GlassFilter } from './index';
+---
+
+<div class="chatbot-search-wrapper">
+  <GlassFilter client:only="react" />
+  <ChatbotInterface client:only="react" />
+</div>
+
+<style>
+  .chatbot-search-wrapper {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
+
+  @media (max-width: 768px) {
+    .chatbot-search-wrapper {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+  }
+</style>

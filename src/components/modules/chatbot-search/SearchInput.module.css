@@ -1,0 +1,125 @@
+.searchInputWrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.glassContainer {
+  border-radius: 1.25rem;
+  padding: 0.25rem;
+}
+
+.form {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.input {
+  width: 100%;
+  background: transparent !important;
+  color: white;
+  padding: 1rem 3.5rem 1rem 1.5rem;
+  border-radius: 1.5rem;
+  outline: none;
+  font-size: 1.125rem;
+  font-weight: 400;
+  font-family: var(--font-body);
+  border: none;
+  transition: none;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 700;
+  font-family: var(--font-body);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input:focus,
+.input:active,
+.input:focus-visible {
+  outline: none;
+  background: transparent !important;
+  border: none;
+}
+
+.input::-webkit-input-placeholder {
+  background: transparent !important;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  -webkit-text-fill-color: white !important;
+  background: transparent !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.submitButton {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 0.625rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.submitButton:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.submitButton svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: white;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .input {
+    font-size: 1rem;
+    padding: 0.875rem 3rem 0.875rem 1.25rem;
+  }
+  
+  .submitButton {
+    padding: 0.5rem;
+  }
+  
+  .submitButton svg {
+    width: 1rem;
+    height: 1rem;
+  }
+}

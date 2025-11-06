@@ -6,6 +6,7 @@ import BannerBackgroundEffectsContainer from '../../modules/banner/BannerBackgro
 import FloatingDustContainer from '../../modules/banner/FloatingDustContainer.astro';
 import MainButton from '../../ui/MainButton.astro';
 import TiltContainer from '../../ui/TiltContainer.astro';
+import ChatbotSearchContainer from '../../modules/chatbot-search/ChatbotSearchContainer.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -45,7 +46,10 @@ const t = translations[currentLang];
           </h2>
         </div>
 
-
+        <!-- Search Input -->
+        <div class={styles.searchContainer}>
+          <ChatbotSearchContainer />
+        </div>
 
         <!-- CTA Button -->
         <div class={styles.ctaContainer}>
