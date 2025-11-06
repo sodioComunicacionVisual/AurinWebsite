@@ -86,12 +86,14 @@ export class GoogleCalendarService {
     const response = await this.calendar.events.insert({
       calendarId: CALENDAR_ID,
       conferenceDataVersion: 1,
+      sendUpdates: 'none', // Don't send Google Calendar invites
       requestBody: {
         summary: data.summary,
         description: data.description,
         start: { dateTime: data.start, timeZone: 'America/Mexico_City' },
         end: { dateTime: data.end, timeZone: 'America/Mexico_City' },
-        attendees: data.attendees.map(email => ({ email })),
+        // ❌ REMOVED attendees field - Service Account can't invite without Domain-Wide Delegation
+        // Email confirmation will be sent via Resend instead
         conferenceData: {
           createRequest: {
             requestId: `meet-${Date.now()}`,
@@ -118,7 +120,7 @@ export class GoogleCalendarService {
       end: event.end?.dateTime || '',
       htmlLink: event.htmlLink,
       hangoutLink: event.hangoutLink,
-      attendees: event.attendees?.map(a => a.email || ''),
+      attendees: [], // No attendees in Google Calendar, handled via email
     };
   }
 }
