@@ -8,6 +8,8 @@ import { getCurrentTime, validateFile, formatFileSize, formatMessageTime } from 
 import { SessionManager, type ChatMessage } from '../../../lib/chatbot/sessionManager'
 import { ChatApiClient } from '../../../lib/chatbot/apiClient'
 import { MarkdownRenderer } from './MarkdownRenderer'
+import { detectCalendarIntent, handleUserMessage, fetchAvailability } from '../../../lib/chatbot/calendarIntentHandler'
+import type { CalendarMetadata, PendingBooking, CustomerData } from '../../../lib/calendar/types'
 
 interface ChatbotTranslations {
   welcome: string;
@@ -68,15 +70,16 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
   const [sessionId, setSessionId] = useState<string>('')
   
   // ✅ Estado con persistencia en localStorage
-  const [pendingBooking, setPendingBooking] = useState<any>(() => {
+  const [pendingBooking, setPendingBooking] = useState<PendingBooking | null>(() => {
     if (typeof window === 'undefined') return null
     const saved = localStorage.getItem('chatbot_pendingBooking')
     return saved ? JSON.parse(saved) : null
   })
-  
-  const [customerEmail, setCustomerEmail] = useState<string>(() => {
-    if (typeof window === 'undefined') return ''
-    return localStorage.getItem('chatbot_customerEmail') || ''
+
+  const [customerData, setCustomerData] = useState<CustomerData | null>(() => {
+    if (typeof window === 'undefined') return null
+    const saved = localStorage.getItem('chatbot_customerData')
+    return saved ? JSON.parse(saved) : null
   })
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -147,10 +150,10 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
     })
   }, [lang, t.welcome])
 
-  // ✅ Persistir pendingBooking y customerEmail en localStorage automáticamente
+  // ✅ Persistir pendingBooking y customerData en localStorage automáticamente
   useEffect(() => {
     if (typeof window === 'undefined') return
-    
+
     if (pendingBooking) {
       localStorage.setItem('chatbot_pendingBooking', JSON.stringify(pendingBooking))
       console.log('💾 PendingBooking saved to localStorage:', pendingBooking)
@@ -162,15 +165,15 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    
-    if (customerEmail) {
-      localStorage.setItem('chatbot_customerEmail', customerEmail)
-      console.log('💾 CustomerEmail saved to localStorage:', customerEmail)
+
+    if (customerData) {
+      localStorage.setItem('chatbot_customerData', JSON.stringify(customerData))
+      console.log('💾 CustomerData saved to localStorage:', customerData)
     } else {
-      localStorage.removeItem('chatbot_customerEmail')
-      console.log('🗑️ CustomerEmail removed from localStorage')
+      localStorage.removeItem('chatbot_customerData')
+      console.log('🗑️ CustomerData removed from localStorage')
     }
-  }, [customerEmail])
+  }, [customerData])
 
   // Handle event listeners and body scroll
   useEffect(() => {
@@ -291,25 +294,79 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
     setIsTyping(true)
 
     try {
-      // ✅ Preparar metadata con estado actual
-      const requestMetadata = {
-        timestamp: new Date().toISOString(),
-        userId: 'anonymous',
-        userAgent: navigator.userAgent,
-        referrer: document.referrer,
-        hasAttachment: !!fileUrl,
-        fileName: fileMetadata?.name,
-        pendingBooking: pendingBooking,
-        customerEmail: customerEmail
+      // ✅ Check if user message has calendar intent FIRST
+      const currentMetadata: CalendarMetadata = {
+        pendingBooking,
+        customerEmail: customerData?.email || '',
+        customerData,
       }
 
-      console.log('📤 Sending to backend:', {
-        message: messageText,
-        sessionId: sessionId,
-        metadata: requestMetadata
-      })
+      const intentResult = await handleUserMessage(messageText, currentMetadata)
 
-      // Usar nuestra API route para evitar problemas CORS
+      if (intentResult.shouldCallAPI && intentResult.apiEndpoint) {
+        console.log('📅 Calendar intent detected, calling:', intentResult.apiEndpoint)
+
+        // Update metadata if returned by intent handler
+        if (intentResult.metadata) {
+          if (intentResult.metadata.customerData) {
+            setCustomerData(intentResult.metadata.customerData)
+            console.log('✅ CustomerData saved from intent:', intentResult.metadata.customerData)
+          }
+        }
+
+        // Call calendar API directly
+        const calendarResponse = await fetch(intentResult.apiEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(intentResult.apiPayload),
+        })
+
+        const calendarData = await calendarResponse.json()
+
+        if (calendarData.success) {
+          // Update state based on API response
+          if (calendarData.pendingBooking) {
+            setPendingBooking(calendarData.pendingBooking)
+            console.log('✅ PendingBooking updated:', calendarData.pendingBooking)
+          }
+
+          if (calendarData.event) {
+            // Booking completed - clear state
+            setPendingBooking(null)
+            setCustomerData(null)
+            console.log('✅ Booking completed, state cleared')
+          }
+
+          // Generate bot response based on result
+          let botResponse = calendarData.message || ''
+
+          if (calendarData.pendingBooking) {
+            const { dateFormatted, timeFormatted } = calendarData.pendingBooking
+            botResponse = `✅ ¡Perfecto! Cita para el **${dateFormatted} a las ${timeFormatted}**\n\nPara confirmar necesito:\n1. 👤 Nombre completo\n2. 📧 Email\n3. 📝 Motivo\n\nEscríbelo así:\n"Juan Pérez, juan@ejemplo.com, quiero una demo"`
+          } else if (calendarData.event) {
+            botResponse = `✅ **¡Cita agendada!**\n\n📧 Recibirás un email de confirmación. Por favor confírmala en las próximas 24 horas.\n\n${calendarData.event.meetLink ? `🔗 Link de Meet: ${calendarData.event.meetLink}` : ''}`
+          }
+
+          setIsTyping(false)
+
+          const botMessage: ChatMessage = {
+            id: nanoid(8),
+            text: botResponse,
+            sender: "bot",
+            timestamp: new Date().toISOString(),
+            file: undefined,
+          }
+
+          const updatedMessagesWithBot = [...messages, userMessage, botMessage]
+          setMessages(updatedMessagesWithBot)
+          saveMessagesToSession(updatedMessagesWithBot)
+          return
+        }
+      }
+
+      // ✅ No calendar intent detected - call chatbot API (n8n)
+      console.log('💬 Sending to chatbot')
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -318,14 +375,12 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
         body: JSON.stringify({
           message: messageText,
           sessionId: sessionId,
-          fileUrl: fileUrl, // Incluir URL del archivo si existe
-          metadata: requestMetadata
+          fileUrl: fileUrl,
         })
       })
 
       setIsTyping(false)
 
-      // Verificar si la respuesta es exitosa
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
         const errorMessage: ChatMessage = {
@@ -335,35 +390,28 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
           timestamp: new Date().toISOString(),
           file: undefined
         }
-        const updatedMessages = [...messages, userMessage, errorMessage]
-        setMessages(updatedMessages)
-        saveMessagesToSession(updatedMessages)
+        const updatedMessagesError = [...messages, userMessage, errorMessage]
+        setMessages(updatedMessagesError)
+        saveMessagesToSession(updatedMessagesError)
         return
       }
 
       const data = await response.json()
+      let botResponseText = data.output || data.response || t.errorProcess
 
-      // ✅ GUARDAR metadata completo del backend para el siguiente turno
-      if (data.metadata) {
-        console.log('✅ Metadata received from backend:', data.metadata)
-        
-        // Actualizar pendingBooking si existe en metadata
-        if (data.metadata.pendingBooking !== undefined) {
-          setPendingBooking(data.metadata.pendingBooking)
-          console.log('✅ PendingBooking saved:', data.metadata.pendingBooking)
-        }
-        
-        // Actualizar customerEmail si existe en metadata
-        if (data.metadata.customerEmail) {
-          setCustomerEmail(data.metadata.customerEmail)
-          console.log('✅ CustomerEmail saved:', data.metadata.customerEmail)
-        }
+      // ✅ Check if bot response has calendar intent
+      const calendarIntent = detectCalendarIntent(botResponseText)
+
+      if (calendarIntent.isCalendar && calendarIntent.intent === 'show_availability') {
+        // Bot wants to show availability - fetch it
+        console.log('📅 Bot requested availability, fetching...')
+        botResponseText = await fetchAvailability()
       }
 
-      // Respuesta del bot desde n8n
+      // Respuesta del bot
       const botMessage: ChatMessage = {
         id: nanoid(8),
-        text: data.output || data.response || t.errorProcess,
+        text: botResponseText,
         sender: "bot",
         timestamp: new Date().toISOString(),
         file: undefined
