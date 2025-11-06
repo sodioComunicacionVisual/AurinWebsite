@@ -3,7 +3,6 @@
 import { useState, type FormEvent } from "react"
 import { ArrowUpRight } from "lucide-react"
 import { motion } from "motion/react"
-import { GlassEffect } from "./GlassEffect"
 import { useTypewriter } from "./useTypewriter"
 import styles from "./SearchInput.module.css"
 
@@ -46,35 +45,45 @@ export function SearchInput({ onSubmit, isLoading = false }: SearchInputProps) {
       animate={{ opacity: 1, y: 0 }} 
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <GlassEffect className={styles.glassContainer}>
+      <div className={styles.glassContainer}>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <label htmlFor="chatbot-input" className={styles.label}>
-            ¿Qué servicio buscas?
-          </label>
-          <input
-            id="chatbot-input"
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={`¿Qué servicio buscas? ${typewriterText}`}
-            disabled={isLoading}
-            className={styles.input}
-            aria-label="Escribe tu pregunta sobre servicios"
-          />
+          <motion.div 
+            className={styles.inputContainer}
+            whileHover={{ y: -2 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <label htmlFor="chatbot-input" className={styles.label}>
+              ¿Qué servicio buscas?
+            </label>
+            <input
+              id="chatbot-input"
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={`¿Qué servicio buscas? ${typewriterText}`}
+              disabled={isLoading}
+              className={styles.input}
+              aria-label="Escribe tu pregunta sobre servicios"
+            />
+          </motion.div>
           <motion.button
             type="submit"
             disabled={!query.trim() || isLoading}
             className={styles.submitButton}
-            style={{ y: "-50%" }}
-            whileHover={{ scale: 1.1, backgroundColor: "rgba(255, 255, 255, 0.3)" }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ y: -2, filter: "brightness(1.1)", boxShadow: "0 4px 12px rgba(208, 223, 0, 0.3)" }}
+            whileTap={{ y: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             aria-label="Enviar pregunta"
           >
-            <ArrowUpRight />
+            <motion.div
+              whileHover={{ rotate: 45 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ArrowUpRight strokeWidth={2.5} size={22} />
+            </motion.div>
           </motion.button>
         </form>
-      </GlassEffect>
+      </div>
     </motion.div>
   )
 }
