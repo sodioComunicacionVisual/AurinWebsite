@@ -16,7 +16,7 @@ const resend = new Resend(import.meta.env.RESEND_API_KEY);
 export async function sendContactEmail(data: ContactFormData): Promise<EmailResponse> {
   try {
     const emailPayload: any = {
-      from: 'Aurin <onboarding@resend.dev>',
+      from: 'Aurin <noreply@aurin.mx>',
       to: ['info@sodio.net'],
       subject: `${data.asunto} - ${data.nombre}`,
       replyTo: data.correo,
@@ -52,7 +52,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<EmailResp
 export async function sendTicketEmail(data: TicketData): Promise<EmailResponse> {
   try {
     const emailPayload: any = {
-      from: 'Aurin <onboarding@resend.dev>',
+      from: 'Aurin <noreply@aurin.mx>',
       to: ['info@sodio.net'],
       subject: `Ticket de Agente Aurin - ${data.name}`,
       replyTo: data.email,
@@ -168,7 +168,7 @@ export async function sendAppointmentNotificationToAdmin(data: AppointmentData):
     `;
 
     const result = await resend.emails.send({
-      from: 'Aurin Calendar <onboarding@resend.dev>',
+      from: 'Aurin Calendar <noreply@aurin.mx>',
       to: ['info@sodio.net'],
       subject: `Nueva Cita: ${data.name} - ${formattedDate}`,
       html,
@@ -196,7 +196,7 @@ export async function sendAppointmentConfirmation(data: AppointmentData): Promis
     const confirmUrl = `https://aurin.mx/api/calendar/confirm?token=${token}`;
 
     const result = await resend.emails.send({
-      from: 'Aurin <onboarding@resend.dev>',
+      from: 'Aurin <noreply@aurin.mx>',
       to: [data.email],
       subject: `Confirma tu cita - ${new Date(data.appointmentDate).toLocaleDateString('es-MX')}`,
       html: appointmentConfirmationEmail(data, confirmUrl),
@@ -221,7 +221,7 @@ export async function sendAppointmentConfirmation(data: AppointmentData): Promis
 export async function sendAppointmentCancellation(data: CancellationData): Promise<EmailResponse> {
   try {
     const result = await resend.emails.send({
-      from: 'Aurin <onboarding@resend.dev>',
+      from: 'Aurin <noreply@aurin.mx>',
       to: [data.email],
       subject: `Cita cancelada - ${new Date(data.appointmentDate).toLocaleDateString('es-MX')}`,
       html: appointmentCancellationEmail(data),
