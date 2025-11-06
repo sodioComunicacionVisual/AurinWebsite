@@ -5,9 +5,9 @@
 
 import { google } from 'googleapis';
 
-const CALENDAR_ID = 'primary';
+// Calendar ID for "Citas de Aurin.mx"
+const CALENDAR_ID = 'd8ef031d15c90593c2688e6aa89081c0f2cca90a18c32ddf14243b792d81f3a7@group.calendar.google.com';
 
-// TODO: Add these to your .env
 const credentials = {
   client_email: import.meta.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
   private_key: import.meta.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY?.replace(/\\n/g, '\n'),
