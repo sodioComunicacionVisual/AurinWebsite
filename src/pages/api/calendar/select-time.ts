@@ -59,12 +59,26 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const { dayName, time } = await request.json();
 
+    console.log('📅 select-time called:', { dayName, time });
+
     // Validate input
     if (!dayName || !time) {
       return new Response(
         JSON.stringify({
           success: false,
           error: 'Missing required fields: dayName or time',
+        }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
+
+    // Validate time format (HH:MM)
+    if (!/^\d{1,2}:\d{2}$/.test(time)) {
+      console.error('❌ Invalid time format:', time);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: `Invalid time format: ${time}. Expected HH:MM`,
         }),
         { status: 400, headers: corsHeaders }
       );
@@ -83,6 +97,8 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    console.log('📅 Target date:', targetDate);
+
     // Validate the date is bookable
     if (!isValidBookingDate(targetDate)) {
       return new Response(
@@ -96,8 +112,13 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Create ISO datetime strings
     const dateISO = formatDateISO(targetDate);
+    console.log('📅 Date ISO:', dateISO);
+
     const startISO = createDateTimeISO(dateISO, time);
+    console.log('📅 Start ISO:', startISO);
+
     const endISO = calculateEndTime(startISO);
+    console.log('📅 End ISO:', endISO);
 
     const startDate = new Date(startISO);
 

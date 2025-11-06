@@ -192,6 +192,18 @@ export function createDateTimeISO(date: string, time: string): string {
  */
 export function calculateEndTime(startISO: string): string {
   const start = new Date(startISO);
+
+  // Validate date
+  if (isNaN(start.getTime())) {
+    throw new Error(`Invalid start date: ${startISO}`);
+  }
+
   const end = new Date(start.getTime() + APPOINTMENT_DURATION_MINUTES * 60 * 1000);
+
+  // Validate end date
+  if (isNaN(end.getTime())) {
+    throw new Error('Failed to calculate end time');
+  }
+
   return end.toISOString().slice(0, 19) + '-06:00';
 }
