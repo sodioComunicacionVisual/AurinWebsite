@@ -85,21 +85,15 @@ export class GoogleCalendarService {
   }): Promise<CalendarEvent> {
     const response = await this.calendar.events.insert({
       calendarId: CALENDAR_ID,
-      conferenceDataVersion: 1,
       sendUpdates: 'none', // Don't send Google Calendar invites
       requestBody: {
         summary: data.summary,
         description: data.description,
         start: { dateTime: data.start, timeZone: 'America/Mexico_City' },
         end: { dateTime: data.end, timeZone: 'America/Mexico_City' },
-        // ❌ REMOVED attendees field - Service Account can't invite without Domain-Wide Delegation
-        // Email confirmation will be sent via Resend instead
-        conferenceData: {
-          createRequest: {
-            requestId: `meet-${Date.now()}`,
-            conferenceSolutionKey: { type: 'hangoutsMeet' },
-          },
-        },
+        // ❌ REMOVED attendees - Service Account can't invite without Domain-Wide Delegation
+        // ❌ REMOVED conferenceData - Requires Google Workspace with Meet enabled
+        // Email confirmation will be sent via Resend with meeting instructions
         extendedProperties: {
           private: {
             confirmed: 'false',

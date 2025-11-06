@@ -1,3 +1,4 @@
+//Esta API se encarga de subir datos a Vercel Blob
 import type { APIRoute } from 'astro';
 import { put } from '@vercel/blob';
 

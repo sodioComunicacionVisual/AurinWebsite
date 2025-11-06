@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent; /* Dejar que el background effects maneje el color */
+  background: transparent; 
   overflow: hidden;
 }
 

@@ -415,11 +415,19 @@ export const appointmentConfirmationEmail = (
                       <strong>⏱️ Duración:</strong> 30 minutos
                     </td>
                   </tr>
+                  ${data.meetLink ? `
                   <tr>
                     <td style="padding: 12px 0; color: #000;">
                       <strong>🎥 Enlace de reunión:</strong> <a href="${data.meetLink}" style="color: #D0DF00; text-decoration: none;">${data.meetLink}</a>
                     </td>
                   </tr>
+                  ` : `
+                  <tr>
+                    <td style="padding: 12px 0; color: #000;">
+                      <strong>📞 Modalidad:</strong> Te contactaremos al email proporcionado con los detalles de la reunión
+                    </td>
+                  </tr>
+                  `}
                 </table>
               </td>
             </tr>

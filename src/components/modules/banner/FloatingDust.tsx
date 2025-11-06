@@ -68,12 +68,14 @@ export default function FloatingDust({
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const systemRef = useRef<ParticleSystem | null>(null)
   const animationRef = useRef<number | null>(null)
+  const isPausedRef = useRef(false)
+  const isVisibleRef = useRef(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext('2d', { alpha: true })
     if (!ctx) return
 
     let width = window.innerWidth
@@ -113,7 +115,7 @@ export default function FloatingDust({
       particle.accelY = (Math.random() - 0.5) * 0.02
 
       if (particle.life >= particle.maxLife / 2) {
-        particle.alpha = (1 - particle.life / particle.maxLife) * 0.8 // Máxima opacidad 0.8
+        particle.alpha = (1 - particle.life / particle.maxLife) * 1 
       } else {
         particle.alpha = (particle.life / particle.maxLife) * 0.8
       }
@@ -122,14 +124,18 @@ export default function FloatingDust({
     })
 
     const render = () => {
-      // Clear with transparency
-      ctx.clearRect(0, 0, width, height)
+      // Solo renderizar si está visible y la página está activa
+      if (isVisibleRef.current && !isPausedRef.current) {
+        // Clear with transparency
+        ctx.clearRect(0, 0, width, height)
 
-      // Draw particles
-      ctx.globalCompositeOperation = 'lighter'
-      system.particles.forEach((particle) => particle.draw(ctx, color))
+        // Draw particles
+        ctx.globalCompositeOperation = 'lighter'
+        system.particles.forEach((particle) => particle.draw(ctx, color))
 
-      system.update()
+        system.update()
+      }
+      
       animationRef.current = requestAnimationFrame(render)
     }
 
@@ -139,11 +145,33 @@ export default function FloatingDust({
       setup()
     }
 
+    // Intersection Observer para detectar visibilidad
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisibleRef.current = entries[0].isIntersecting
+      },
+      { 
+        threshold: 0,
+        rootMargin: '100px 0px 100px 0px'
+      }
+    )
+
+    observer.observe(canvas)
+
+    // Page Visibility API
+    const handleVisibilityChange = () => {
+      isPausedRef.current = document.hidden
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
     window.addEventListener('resize', handleResize)
+    
     setup()
     render()
 
     return () => {
+      observer.disconnect()
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       window.removeEventListener('resize', handleResize)
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)

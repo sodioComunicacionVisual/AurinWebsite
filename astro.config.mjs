@@ -7,10 +7,16 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   site: 'https://aurin.mx',
   output: 'server',
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+  }),
   integrations: [lenis(), react()],
   vite: {
-    // Configuraciones de Vite si las necesitas
+    build: {
+      assetsInlineLimit: 0, // Force all assets to be separate files
+    },
   },
   i18n: {
     defaultLocale: 'es',

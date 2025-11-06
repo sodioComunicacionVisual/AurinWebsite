@@ -95,7 +95,10 @@ const LightRays: React.FC<LightRaysProps> = ({
   const observerRef = useRef<IntersectionObserver | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [scrollOpacity, setScrollOpacity] = useState(1)
+  const [isPageVisible, setIsPageVisible] = useState(true)
+  const isPausedRef = useRef(false)
 
+  // Intersection Observer con margen para pre-carga
   useEffect(() => {
     if (!containerRef.current) return
 
@@ -104,7 +107,10 @@ const LightRays: React.FC<LightRaysProps> = ({
         const entry = entries[0]
         setIsVisible(entry.isIntersecting)
       },
-      { threshold: 0.1 },
+      { 
+        threshold: 0,
+        rootMargin: '100px 0px 100px 0px' // Pre-cargar antes de que sea visible
+      },
     )
 
     observerRef.current.observe(containerRef.current)
@@ -117,6 +123,18 @@ const LightRays: React.FC<LightRaysProps> = ({
     }
   }, [])
 
+  // Page Visibility API - Pausar cuando la pestaña no está activa
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      const isHidden = document.hidden
+      setIsPageVisible(!isHidden)
+      isPausedRef.current = isHidden
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [])
+
   useEffect(() => {
     // Check if we're on mobile on mount and on resize
     const mediaQuery = window.matchMedia("(max-width: 768px)")
@@ -126,29 +144,33 @@ const LightRays: React.FC<LightRaysProps> = ({
     return () => mediaQuery.removeEventListener("change", handleResize)
   }, [])
 
-  // Scroll opacity effect
+  // Scroll opacity effect con throttling
   useEffect(() => {
+    let ticking = false
+    
     const handleScroll = () => {
-      if (!containerRef.current) return
-      
-      const rect = containerRef.current.getBoundingClientRect()
-      const viewportHeight = window.innerHeight
-      
-      // Calcular opacidad basada en la posición del banner
-      // Cuando top = 0, opacity = 1
-      // Cuando el banner sale completamente del viewport, opacity = 0
-      let opacity = 1
-      
-      if (rect.top < 0) {
-        // El banner está scrolleando hacia arriba
-        const scrollProgress = Math.abs(rect.top) / rect.height
-        opacity = Math.max(0, 1 - scrollProgress)
-      } else if (rect.top > 0) {
-        // El banner está visible desde arriba
-        opacity = 1
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!containerRef.current) {
+            ticking = false
+            return
+          }
+          
+          const rect = containerRef.current.getBoundingClientRect()
+          let opacity = 1
+          
+          if (rect.top < 0) {
+            const scrollProgress = Math.abs(rect.top) / rect.height
+            opacity = Math.max(0, 1 - scrollProgress)
+          } else if (rect.top > 0) {
+            opacity = 1
+          }
+          
+          setScrollOpacity(opacity)
+          ticking = false
+        })
+        ticking = true
       }
-      
-      setScrollOpacity(opacity)
     }
     
     handleScroll() // Initial check
@@ -378,23 +400,29 @@ void main() {
           return
         }
 
-        uniforms.iTime.value = t * 0.001
+        // Solo renderizar si está visible Y la página está activa
+        const shouldRender = isVisible && !isPausedRef.current && scrollOpacity > 0.01
+        
+        if (shouldRender) {
+          uniforms.iTime.value = t * 0.001
 
-        if (followMouse && mouseInfluence > 0.0) {
-          const smoothing = 0.92
-          smoothMouseRef.current.x = smoothMouseRef.current.x * smoothing + mouseRef.current.x * (1 - smoothing)
-          smoothMouseRef.current.y = smoothMouseRef.current.y * smoothing + mouseRef.current.y * (1 - smoothing)
+          if (followMouse && mouseInfluence > 0.0) {
+            const smoothing = 0.92
+            smoothMouseRef.current.x = smoothMouseRef.current.x * smoothing + mouseRef.current.x * (1 - smoothing)
+            smoothMouseRef.current.y = smoothMouseRef.current.y * smoothing + mouseRef.current.y * (1 - smoothing)
 
-          uniforms.mousePos.value = [smoothMouseRef.current.x, smoothMouseRef.current.y]
+            uniforms.mousePos.value = [smoothMouseRef.current.x, smoothMouseRef.current.y]
+          }
+
+          try {
+            renderer.render({ scene: mesh })
+          } catch (error) {
+            console.warn("WebGL rendering error:", error)
+            return
+          }
         }
-
-        try {
-          renderer.render({ scene: mesh })
-          animationIdRef.current = requestAnimationFrame(loop)
-        } catch (error) {
-          console.warn("WebGL rendering error:", error)
-          return
-        }
+        
+        animationIdRef.current = requestAnimationFrame(loop)
       }
 
       window.addEventListener("resize", updatePlacement)
@@ -493,19 +521,31 @@ void main() {
     isMobile,
   ])
 
+  // Mouse tracking con throttling
   useEffect(() => {
+    let ticking = false
+    
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current || !rendererRef.current) return
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!containerRef.current || !rendererRef.current) {
+            ticking = false
+            return
+          }
 
-      const rect = containerRef.current.getBoundingClientRect()
-      const x = (e.clientX - rect.left) / rect.width
-      const y = (e.clientY - rect.top) / rect.height
+          const rect = containerRef.current.getBoundingClientRect()
+          const x = (e.clientX - rect.left) / rect.width
+          const y = (e.clientY - rect.top) / rect.height
 
-      mouseRef.current = { x, y }
+          mouseRef.current = { x, y }
+          ticking = false
+        })
+        ticking = true
+      }
     }
 
     if (followMouse) {
-      window.addEventListener("mousemove", handleMouseMove)
+      window.addEventListener("mousemove", handleMouseMove, { passive: true })
       return () => window.removeEventListener("mousemove", handleMouseMove)
     }
   }, [followMouse])

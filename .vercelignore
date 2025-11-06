@@ -1,0 +1,17 @@
+# Don't upload these to Vercel
+node_modules
+.git
+.vscode
+.idea
+.DS_Store
+
+# Speedlify modules - deployed separately
+src/components/modules/speedlify/
+src/components/modules/original-speedlify/
+
+# Local environment files
+.env.local
+.env.development
+
+# Build artifacts that will be regenerated
+.astro/

@@ -1,3 +1,4 @@
+//Esta API se encarga de fetchear data desde https://voluble-lokum-f26e16.netlify.app para mostrarla en los stats del footer 
 import type { APIRoute } from 'astro';
 
 // Este endpoint consume los datos del despliegue en Netlify de Speedlify

@@ -344,7 +344,7 @@ export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidg
             const { dateFormatted, timeFormatted } = calendarData.pendingBooking
             botResponse = `✅ ¡Perfecto! Cita para el **${dateFormatted} a las ${timeFormatted}**\n\nPara confirmar necesito:\n1. 👤 Nombre completo\n2. 📧 Email\n3. 📝 Motivo\n\nEscríbelo así:\n"Juan Pérez, juan@ejemplo.com, quiero una demo"`
           } else if (calendarData.event) {
-            botResponse = `✅ **¡Cita agendada!**\n\n📧 Recibirás un email de confirmación. Por favor confírmala en las próximas 24 horas.\n\n${calendarData.event.meetLink ? `🔗 Link de Meet: ${calendarData.event.meetLink}` : ''}`
+            botResponse = `✅ **¡Cita agendada!**\n\n📧 Recibirás un email de confirmación. Por favor confírmala en las próximas 24 horas.\n\n💡 Los detalles de la reunión estarán en el email.`
           }
 
           setIsTyping(false)
