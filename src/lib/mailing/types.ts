@@ -36,6 +36,7 @@ export interface AppointmentData {
   meetLink: string;
   eventId: string;
   calendarLink: string;
+  reason?: string; // Added for appointment notifications
 }
 
 export interface CancellationData {

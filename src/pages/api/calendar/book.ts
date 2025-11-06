@@ -29,7 +29,7 @@
 import type { APIRoute } from 'astro';
 import type { PendingBooking, CustomerData } from '../../../lib/calendar/types';
 import { GoogleCalendarService } from '../../../lib/calendar/googleCalendar';
-import { sendAppointmentConfirmation } from '../../../lib/mailing/service';
+import { sendAppointmentConfirmation, sendAppointmentNotificationToAdmin } from '../../../lib/mailing/service';
 
 export const prerender = false;
 
@@ -90,17 +90,23 @@ export const POST: APIRoute = async ({ request }) => {
       calendarLink: event.htmlLink,
     });
 
-    // Send confirmation email
-    await sendAppointmentConfirmation({
+    const appointmentData = {
       name: customerData.name,
       email: customerData.email,
       appointmentDate: pendingBooking.start,
       meetLink: '', // No Meet link with Service Account
       eventId: event.id,
       calendarLink: event.htmlLink || '',
-    });
+      reason: customerData.reason,
+    };
 
-    console.log('✅ Confirmation email sent to:', customerData.email);
+    // Send confirmation email to customer
+    await sendAppointmentConfirmation(appointmentData);
+    console.log('✅ Confirmation email sent to customer:', customerData.email);
+
+    // Send notification to admin
+    await sendAppointmentNotificationToAdmin(appointmentData);
+    console.log('✅ Notification email sent to admin');
 
     return new Response(
       JSON.stringify({

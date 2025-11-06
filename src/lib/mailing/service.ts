@@ -126,12 +126,74 @@ export function validateAppointmentToken(token: string): { valid: boolean; event
 }
 
 /**
- * Send appointment confirmation email
+ * Send appointment notification to admin
+ */
+export async function sendAppointmentNotificationToAdmin(data: AppointmentData): Promise<EmailResponse> {
+  try {
+    const appointmentDate = new Date(data.appointmentDate);
+    const formattedDate = appointmentDate.toLocaleString('es-MX', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+      timeZone: 'America/Mexico_City'
+    });
+
+    const html = `
+      <h2>🔔 Nueva Cita Agendada</h2>
+      <p>Se ha creado una nueva cita en tu calendario:</p>
+
+      <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3>📅 Detalles de la Cita</h3>
+        <p><strong>Cliente:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Fecha y Hora:</strong> ${formattedDate}</p>
+        ${data.reason ? `<p><strong>Motivo:</strong> ${data.reason}</p>` : ''}
+        <p><strong>ID del Evento:</strong> ${data.eventId}</p>
+      </div>
+
+      <p>
+        <a href="${data.calendarLink}" style="background-color: #4285f4; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; margin: 10px 0;">
+          Ver en Google Calendar
+        </a>
+      </p>
+
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+      <p style="color: #666; font-size: 14px;">
+        ⚠️ <strong>Nota:</strong> El cliente tiene 24 horas para confirmar su cita. Si no la confirma, será automáticamente cancelada.
+      </p>
+    `;
+
+    const result = await resend.emails.send({
+      from: 'Aurin Calendar <onboarding@resend.dev>',
+      to: ['info@sodio.net'],
+      subject: `Nueva Cita: ${data.name} - ${formattedDate}`,
+      html,
+    });
+
+    return {
+      success: true,
+      id: result.data?.id,
+    };
+  } catch (error) {
+    console.error('Error sending admin notification:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+}
+
+/**
+ * Send appointment confirmation email to customer
  */
 export async function sendAppointmentConfirmation(data: AppointmentData): Promise<EmailResponse> {
   try {
     const token = generateAppointmentToken(data.eventId, data.email);
-    const confirmUrl = `https://aurin.mx/api/confirm-appointment?token=${token}`;
+    const confirmUrl = `https://aurin.mx/api/calendar/confirm?token=${token}`;
 
     const result = await resend.emails.send({
       from: 'Aurin <onboarding@resend.dev>',
