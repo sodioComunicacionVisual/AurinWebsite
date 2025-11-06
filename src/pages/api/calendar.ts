@@ -1,6 +1,5 @@
 import type { APIRoute } from 'astro';
 import { GoogleCalendarService } from '../../lib/calendar/googleCalendar';
-import { sendAppointmentConfirmation } from '../../lib/mailing/service';
 
 export const prerender = false;
 
@@ -79,33 +78,45 @@ export const POST: APIRoute = async ({ request }) => {
         });
       }
 
-      // Create event in Google Calendar
-      const event = await calendarService.createEvent({
-        summary: `Cita con ${customerName}`,
-        description: `Motivo: ${reason || 'Consulta'}\nEmail: ${customerEmail}`,
-        start,
-        end,
-        attendees: [customerEmail],
+      console.log('📅 Creating appointment via n8n webhook:', {
         customerName,
         customerEmail,
+        start,
+        end,
       });
 
-      // Send confirmation email
-      await sendAppointmentConfirmation({
-        name: customerName,
-        email: customerEmail,
-        appointmentDate: start,
-        meetLink: event.hangoutLink || event.htmlLink || '',
-        eventId: event.id,
-        calendarLink: event.htmlLink || '',
+      // Call n8n webhook to create event with OAuth (handles Google Meet + Email)
+      const n8nResponse = await fetch('https://n8nsystems.info/webhook/create-appointment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName,
+          customerEmail,
+          eventStart: start,
+          eventEnd: end,
+          reason: reason || 'Consulta',
+        }),
+      });
+
+      if (!n8nResponse.ok) {
+        const errorText = await n8nResponse.text();
+        console.error('❌ n8n webhook error:', n8nResponse.status, errorText);
+        throw new Error(`Failed to create appointment: ${n8nResponse.status}`);
+      }
+
+      const n8nData = await n8nResponse.json();
+
+      console.log('✅ Appointment created:', {
+        eventId: n8nData.id,
+        meetLink: n8nData.hangoutLink,
       });
 
       return new Response(JSON.stringify({
         success: true,
         event: {
-          id: event.id,
-          meetLink: event.hangoutLink,
-          calendarLink: event.htmlLink,
+          id: n8nData.id,
+          meetLink: n8nData.hangoutLink || n8nData.htmlLink || '',
+          calendarLink: n8nData.htmlLink || '',
         }
       }), {
         status: 200,
