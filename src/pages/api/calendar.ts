@@ -78,45 +78,34 @@ export const POST: APIRoute = async ({ request }) => {
         });
       }
 
-      console.log('📅 Creating appointment via n8n webhook:', {
+      console.log('📅 Creating appointment directly with GoogleCalendarService:', {
         customerName,
         customerEmail,
         start,
         end,
       });
 
-      // Call n8n webhook to create event with OAuth (handles Google Meet + Email)
-      const n8nResponse = await fetch('https://n8nsystems.info/webhook/create-appointment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          customerName,
-          customerEmail,
-          eventStart: start,
-          eventEnd: end,
-          reason: reason || 'Consulta',
-        }),
+      // Create event directly using GoogleCalendarService
+      const event = await calendarService.createEvent({
+        summary: `Cita con ${customerName}`,
+        description: `Motivo: ${reason || 'Consulta'}\nEmail: ${customerEmail}`,
+        start,
+        end,
+        attendees: [customerEmail],
+        customerName,
+        customerEmail,
       });
 
-      if (!n8nResponse.ok) {
-        const errorText = await n8nResponse.text();
-        console.error('❌ n8n webhook error:', n8nResponse.status, errorText);
-        throw new Error(`Failed to create appointment: ${n8nResponse.status}`);
-      }
-
-      const n8nData = await n8nResponse.json();
-
       console.log('✅ Appointment created:', {
-        eventId: n8nData.id,
-        meetLink: n8nData.hangoutLink,
+        eventId: event.id,
+        calendarLink: event.htmlLink,
       });
 
       return new Response(JSON.stringify({
         success: true,
         event: {
-          id: n8nData.id,
-          meetLink: n8nData.hangoutLink || n8nData.htmlLink || '',
-          calendarLink: n8nData.htmlLink || '',
+          id: event.id,
+          calendarLink: event.htmlLink || '',
         }
       }), {
         status: 200,
