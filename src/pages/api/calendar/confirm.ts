@@ -5,8 +5,8 @@
  */
 
 import type { APIRoute } from 'astro';
-import { validateAppointmentToken } from '../../lib/mailing/service';
-import { GoogleCalendarService } from '../../lib/calendar/googleCalendar';
+import { validateAppointmentToken } from '../../../lib/mailing/service';
+import { GoogleCalendarService } from '../../../lib/calendar/googleCalendar';
 
 export const prerender = false;
 
