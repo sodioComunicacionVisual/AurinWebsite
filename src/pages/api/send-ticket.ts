@@ -38,12 +38,18 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const data = JSON.parse(body);
+    console.log('📥 Ticket API received:', JSON.stringify(data));
+
     const { name, email, company, service, subject, description, ticketId, createdAt, fileUrl } = data;
 
     // Validación básica
     if (!name || !email || !description) {
+      console.error('❌ Missing required fields:', { name: !!name, email: !!email, description: !!description });
       return new Response(
-        JSON.stringify({ error: 'Faltan campos requeridos: name, email, description' }),
+        JSON.stringify({
+          error: 'Faltan campos requeridos: name, email, description',
+          received: { name: !!name, email: !!email, description: !!description }
+        }),
         { status: 400, headers: corsHeaders }
       );
     }
