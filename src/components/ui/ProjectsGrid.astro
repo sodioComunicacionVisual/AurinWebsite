@@ -52,6 +52,7 @@ try {
           ]}
           image={getImageUrl(project.hero.bannerImage?.url) || 'https://placehold.co/800x600?text=No+Image'}
           href={getProjectUrl(project, currentLang)}
+          category={project.category.slug}
         />
       ))
     ) : (

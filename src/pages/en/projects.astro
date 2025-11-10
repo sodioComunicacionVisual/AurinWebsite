@@ -4,7 +4,8 @@ import Header from '../../components/ui/Header.astro';
 import InteractiveBackground from '../../components/ui/InteractiveBackground.astro';
 import StickyFooter from '../../components/ui/StickyFooter.astro';
 import Introduction from '../../components/sections/projects/Introduction.astro';
-import ProjectCard from '../../components/ui/ProjectCard.astro';
+import ProjectsGrid from '../../components/ui/ProjectsGrid.astro';
+import FilterPills from '../../components/ui/FilterPills.astro';
 import MainCat from '../../components/ui/MainCat.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
@@ -92,55 +93,18 @@ const canonicalUrl = "https://aurin.mx/en/projects";
   <main class="proyectos-page">
     <!-- Introduction Section -->
     <Introduction />
-    
-    <!-- First Strip of Projects -->
-    <section class="projects-strip">
-      <div class="strip-container">
-        <ProjectCard
-          title={t.projects.projectTitles["proyecto-innovador-1"]}
-          tags={[t.projects.projectTags["Branding"], t.projects.projectTags["UI/UX"], t.projects.projectTags["Web"]]}
-          image="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["transformacion-digital"]}
-          tags={[t.projects.projectTags["Desarrollo"], t.projects.projectTags["Estrategia"]]}
-          image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["experiencia-usuario"]}
-          tags={[t.projects.projectTags["UX Research"], t.projects.projectTags["Design"]]}
-          image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-          href="#"
-        />
+
+    <!-- Projects Grid - Automatically fetches and displays all projects from Payload CMS -->
+    <section class="projects-section">
+      <div class="projects-container">
+        <!-- Filter Pills -->
+        <FilterPills />
+
+        <!-- Projects Grid -->
+        <ProjectsGrid />
       </div>
     </section>
-    
-    <!-- Second Strip of Projects -->
-    <section class="projects-strip">
-      <div class="strip-container">
-        <ProjectCard
-          title={t.projects.projectTitles["identidad-visual"]}
-          tags={[t.projects.projectTags["Branding"], t.projects.projectTags["Diseño Gráfico"]]}
-          image="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["plataforma-digital"]}
-          tags={[t.projects.projectTags["Web App"], t.projects.projectTags["Mobile"]]}
-          image="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80"
-          href="#"
-        />
-        <ProjectCard
-          title={t.projects.projectTitles["estrategia-marca"]}
-          tags={[t.projects.projectTags["Marketing"], t.projects.projectTags["Branding"]]}
-          image="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80"
-          href="#"
-        />
-      </div>
-    </section>
-    
+
     <!-- Call to Action -->
     <MainCat />
   </main>
@@ -154,59 +118,52 @@ const canonicalUrl = "https://aurin.mx/en/projects";
     min-height: 100vh;
     padding-top: 80px;
   }
-  
-  /* Projects Strip */
-  .projects-strip {
+
+  /* Projects Section */
+  .projects-section {
     width: 100%;
     padding: 60px 0;
   }
-  
-  .strip-container {
+
+  .projects-container {
     max-width: var(--maxWidth);
     margin: 0 auto;
     padding: 0 100px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
   }
-  
+
   /* Responsive Design */
   @media (max-width: 1200px) {
-    .strip-container {
+    .projects-container {
       padding: 0 60px;
-      gap: 30px;
     }
   }
-  
+
   @media (max-width: 968px) {
-    .strip-container {
-      grid-template-columns: repeat(2, 1fr);
+    .projects-container {
       padding: 0 40px;
     }
-    
-    .projects-strip {
+
+    .projects-section {
       padding: 40px 0;
     }
   }
-  
+
   @media (max-width: 768px) {
     .proyectos-page {
       padding-top: 60px;
     }
-    
-    .strip-container {
+
+    .projects-container {
       padding: 0 30px;
-      gap: 24px;
     }
   }
-  
+
   @media (max-width: 640px) {
-    .strip-container {
-      grid-template-columns: 1fr;
+    .projects-container {
       padding: 0 20px;
     }
-    
-    .projects-strip {
+
+    .projects-section {
       padding: 30px 0;
     }
   }

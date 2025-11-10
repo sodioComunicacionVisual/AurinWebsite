@@ -5,6 +5,7 @@ import InteractiveBackground from '../components/ui/InteractiveBackground.astro'
 import StickyFooter from '../components/ui/StickyFooter.astro';
 import Introduction from '../components/sections/projects/Introduction.astro';
 import ProjectsGrid from '../components/ui/ProjectsGrid.astro';
+import FilterPills from '../components/ui/FilterPills.astro';
 import MainCat from '../components/ui/MainCat.astro';
 import { getLangFromUrl } from '../i18n/utils.js';
 import { translations } from '../i18n/translations.js';
@@ -96,6 +97,10 @@ const canonicalUrl = currentLang === 'es' ? "https://aurin.mx/proyectos" : "http
     <!-- Projects Grid - Automatically fetches and displays all projects from Payload CMS -->
     <section class="projects-section">
       <div class="projects-container">
+        <!-- Filter Pills -->
+        <FilterPills />
+
+        <!-- Projects Grid -->
         <ProjectsGrid />
       </div>
     </section>

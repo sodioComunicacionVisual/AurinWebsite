@@ -119,13 +119,13 @@ export class PayloadAPI {
 
   // Get all published projects
   static async getProjects(locale: string = 'es'): Promise<PayloadProject[]> {
-    const data = await this.fetchAPI('/projects?where[status][equals]=published&sort=-publishDate', locale);
+    const data = await this.fetchAPI('/projects?where[status][equals]=published&sort=-publishDate&limit=100', locale);
     return data.docs || [];
   }
 
   // Get featured projects
   static async getFeaturedProjects(locale: string = 'es'): Promise<PayloadProject[]> {
-    const data = await this.fetchAPI('/projects?where[status][equals]=published&where[featured][equals]=true&sort=-publishDate', locale);
+    const data = await this.fetchAPI('/projects?where[status][equals]=published&where[featured][equals]=true&sort=-publishDate&limit=100', locale);
     return data.docs || [];
   }
 
@@ -142,25 +142,25 @@ export class PayloadAPI {
 
   // Get projects by category
   static async getProjectsByCategory(categorySlug: string, locale: string = 'es'): Promise<PayloadProject[]> {
-    const data = await this.fetchAPI(`/projects?where[category.slug][equals]=${categorySlug}&where[status][equals]=published&sort=-publishDate`, locale);
+    const data = await this.fetchAPI(`/projects?where[category.slug][equals]=${categorySlug}&where[status][equals]=published&sort=-publishDate&limit=100`, locale);
     return data.docs || [];
   }
 
   // Get projects by tag
   static async getProjectsByTag(tagSlug: string, locale: string = 'es'): Promise<PayloadProject[]> {
-    const data = await this.fetchAPI(`/projects?where[tags.slug][contains]=${tagSlug}&where[status][equals]=published&sort=-publishDate`, locale);
+    const data = await this.fetchAPI(`/projects?where[tags.slug][contains]=${tagSlug}&where[status][equals]=published&sort=-publishDate&limit=100`, locale);
     return data.docs || [];
   }
 
   // Get all categories
   static async getCategories(locale: string = 'es'): Promise<PayloadCategory[]> {
-    const data = await this.fetchAPI('/categories', locale);
+    const data = await this.fetchAPI('/categories?limit=100', locale);
     return data.docs || [];
   }
 
   // Get all tags
   static async getTags(locale: string = 'es'): Promise<PayloadTag[]> {
-    const data = await this.fetchAPI('/tags', locale);
+    const data = await this.fetchAPI('/tags?limit=100', locale);
     return data.docs || [];
   }
 
@@ -177,7 +177,7 @@ export class PayloadAPI {
 
   // Search projects
   static async searchProjects(query: string, locale: string = 'es'): Promise<PayloadProject[]> {
-    const data = await this.fetchAPI(`/projects?where[or][0][title][contains]=${encodeURIComponent(query)}&where[or][1][hero.description][contains]=${encodeURIComponent(query)}&where[status][equals]=published`, locale);
+    const data = await this.fetchAPI(`/projects?where[or][0][title][contains]=${encodeURIComponent(query)}&where[or][1][hero.description][contains]=${encodeURIComponent(query)}&where[status][equals]=published&limit=100`, locale);
     return data.docs || [];
   }
 }

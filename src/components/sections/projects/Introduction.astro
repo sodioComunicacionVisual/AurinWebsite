@@ -7,6 +7,9 @@ import styles from './Introduction.module.css';
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
+
+// Contact page URL based on language
+const contactUrl = currentLang === 'en' ? '/en/contact' : '/contacto';
 ---
 
 <section class={styles.introduction}>
@@ -22,7 +25,7 @@ const t = translations[currentLang];
                 </p>
             </div>
             <div class={styles.ctaWrapper}>
-                <MainButton text={t.projects.introduction.ctaButton} href="#contacto" />
+                <MainButton text={t.projects.introduction.ctaButton} href={contactUrl} />
             </div>
         </div>
     </div>

@@ -29,3 +29,7 @@ pnpm-debug.log*
 # Speedlify modules - deployed separately
 src/components/modules/speedlify/
 src/components/modules/original-speedlify/
+
+# CMS repository (managed separately)
+/aurin-cms/
+../aurin-cms/

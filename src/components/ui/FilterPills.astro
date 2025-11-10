@@ -1,0 +1,156 @@
+---
+import { PayloadAPI, type PayloadCategory } from '../../lib/payload';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+import styles from './FilterPills.module.css';
+
+interface Props {
+  currentFilter?: string;
+}
+
+const { currentFilter = 'all' } = Astro.props;
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+// Fetch categories from Payload CMS
+let categories: PayloadCategory[] = [];
+try {
+  categories = await PayloadAPI.getCategories(currentLang);
+} catch (error) {
+  console.error('Error fetching categories:', error);
+  categories = [];
+}
+
+// All filter label
+const allLabel = currentLang === 'es' ? 'Todos' : 'All';
+---
+
+<div class={styles.filterContainer}>
+  <div class={styles.pillsContainer} data-filter-pills>
+    <!-- All filter -->
+    <button
+      class={styles.pill}
+      data-filter="all"
+      data-pill
+      data-active="true"
+    >
+      {allLabel}
+    </button>
+
+    <!-- Category filters -->
+    {categories.map((category) => (
+      <button
+        class={styles.pill}
+        data-filter={category.slug}
+        data-pill
+        data-active="false"
+        data-category-color={category.color}
+      >
+        {category.name}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Client-side filter functionality with Motion animations
+  import { animate } from 'motion';
+
+  function initFilters() {
+    const pillsContainer = document.querySelector('[data-filter-pills]');
+    if (!pillsContainer) return;
+
+    const pills = pillsContainer.querySelectorAll('[data-pill]');
+    const projectCards = document.querySelectorAll('[data-project-card]');
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const filter = pill.getAttribute('data-filter');
+        if (!filter) return;
+
+        // Update active state on pills
+        pills.forEach((p) => {
+          p.setAttribute('data-active', 'false');
+        });
+        pill.setAttribute('data-active', 'true');
+
+        // Filter and animate projects
+        const cardsToShow: Element[] = [];
+        const cardsToHide: Element[] = [];
+
+        projectCards.forEach((card) => {
+          const cardCategory = card.getAttribute('data-category');
+
+          if (filter === 'all' || cardCategory === filter) {
+            cardsToShow.push(card);
+          } else {
+            cardsToHide.push(card);
+          }
+        });
+
+        // Animate out cards that should be hidden
+        if (cardsToHide.length > 0) {
+          cardsToHide.forEach((card) => {
+            animate(
+              card,
+              {
+                opacity: [1, 0],
+                scale: [1, 0.95],
+                filter: ['blur(0px)', 'blur(4px)']
+              },
+              {
+                duration: 0.3,
+                easing: [0.4, 0, 0.2, 1]
+              }
+            ).finished.then(() => {
+              (card as HTMLElement).style.display = 'none';
+            });
+          });
+        }
+
+        // Animate in cards that should be shown with stagger
+        if (cardsToShow.length > 0) {
+          cardsToShow.forEach((card, index) => {
+            (card as HTMLElement).style.display = '';
+
+            animate(
+              card,
+              {
+                opacity: [0, 1],
+                scale: [0.95, 1],
+                filter: ['blur(4px)', 'blur(0px)'],
+                y: [20, 0]
+              },
+              {
+                duration: 0.5,
+                delay: index * 0.05,
+                easing: [0.4, 0, 0.2, 1]
+              }
+            );
+          });
+        }
+
+        // Update URL without reload
+        const url = new URL(window.location.href);
+        if (filter === 'all') {
+          url.searchParams.delete('category');
+        } else {
+          url.searchParams.set('category', filter);
+        }
+        window.history.pushState({}, '', url);
+      });
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFilters);
+  } else {
+    initFilters();
+  }
+
+  // Support for Astro view transitions
+  document.addEventListener('astro:page-load', initFilters);
+</script>

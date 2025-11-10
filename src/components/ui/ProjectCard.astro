@@ -9,20 +9,22 @@ interface Props {
   image: string;
   href?: string;
   class?: string;
+  category?: string;
 }
 
-const { 
-  title, 
+const {
+  title,
   tags = [],
   image,
   href = '#',
-  class: className = ''
+  class: className = '',
+  category
 } = Astro.props;
 
 const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<a href={href} class={`${styles['project-card']} ${className}`} data-card-id={uniqueId}>
+<a href={href} class={`${styles['project-card']} ${className}`} data-card-id={uniqueId} data-project-card data-category={category}>
   <div class={styles['card-content']}>
     <!-- Image container -->
     <Tilt 
