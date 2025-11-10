@@ -1,6 +1,6 @@
 ---
 import styles from './MegaMenu.module.css';
-import { ArrowRight, X, Instagram, Linkedin, Facebook } from 'lucide-astro';
+import { ArrowRight, X } from 'lucide-astro';
 import { getLangFromUrl } from '../../i18n/utils';
 import { translations } from '../../i18n/translations';
 
@@ -45,13 +45,28 @@ const menuItems = [
 
     <div class={styles['social-links']}>
       <a href="https://www.instagram.com/aurinmx?igsh=MWxyOW5obGtpaHUwMA==" target="_blank" rel="noopener noreferrer" class={styles['social-icon']} aria-label="Instagram">
-        <Instagram size={24} />
+        <img 
+          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Instagram.svg" 
+          alt="Instagram"
+          width="24"
+          height="24"
+        />
       </a>
       <a href="https://www.linkedin.com/company/aurinmx/" target="_blank" rel="noopener noreferrer" class={styles['social-icon']} aria-label="LinkedIn">
-        <Linkedin size={24} />
+        <img 
+          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Linkedin.svg" 
+          alt="LinkedIn"
+          width="24"
+          height="24"
+        />
       </a>
       <a href="https://www.facebook.com/profile.php?id=61569531232140" target="_blank" rel="noopener noreferrer" class={styles['social-icon']} aria-label="Facebook">
-        <Facebook size={24} />
+        <img 
+          src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Facebook.svg" 
+          alt="Facebook"
+          width="24"
+          height="24"
+        />
       </a>
     </div>
   </div>

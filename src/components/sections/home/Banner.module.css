@@ -123,9 +123,15 @@
   border-color: #d0df00;
 }
 
-.socialIcon svg {
+.socialIcon img {
   width: 20px;
   height: 20px;
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+}
+
+.socialIcon:hover img {
+  filter: brightness(0) invert(0);
 }
 
 @media (min-width: 768px) {
@@ -139,7 +145,7 @@
     height: 44px;
   }
 
-  .socialIcon svg {
+  .socialIcon img {
     width: 22px;
     height: 22px;
   }

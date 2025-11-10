@@ -95,6 +95,11 @@
     text-decoration: none;
   }
 
+  .social-icon img {
+    filter: brightness(0) saturate(100%) invert(88%) sepia(45%) saturate(1030%) hue-rotate(8deg) brightness(102%) contrast(89%);
+    transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   .social-icon:hover {
     transform: scale(1.15) rotate(10deg);
     background-color: var(--color-black-b, #161616);
@@ -228,7 +233,7 @@
       height: 45px;
     }
 
-    .social-icon :global(svg) {
+    .social-icon img {
       width: 22px;
       height: 22px;
     }
@@ -268,7 +273,7 @@
       height: 40px;
     }
 
-    .social-icon :global(svg) {
+    .social-icon img {
       width: 20px;
       height: 20px;
     }
@@ -297,7 +302,7 @@
       height: 38px;
     }
 
-    .social-icon :global(svg) {
+    .social-icon img {
       width: 18px;
       height: 18px;
     }
