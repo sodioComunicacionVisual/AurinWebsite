@@ -21,6 +21,9 @@ const { title, categories, description, bannerImage } = Astro.props;
             <span class={styles.category}>{category}</span>
           ))}
         </div>
+        <div class={styles.descriptionWrapper}>
+          <p class={styles.description}>{description}</p>
+        </div>
       </div>
 
       <div class={styles.imageSection}>
@@ -36,10 +39,6 @@ const { title, categories, description, bannerImage } = Astro.props;
           </div>
         )}
       </div>
-    </div>
-
-    <div class={styles.descriptionWrapper}>
-      <p class={styles.description}>{description}</p>
     </div>
 
     <button class={styles.scrollButton} aria-label="Scroll down" id="scrollDownButton">

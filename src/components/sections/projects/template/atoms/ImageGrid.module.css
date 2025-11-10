@@ -1,13 +1,102 @@
-/* Stacked Cards Layout */
-.imageGrid {
+/* Main Image Section - Full Width */
+.imageSection {
   width: 100%;
-  background: var(--color-black-a, #0A0A0A);
   position: relative;
-  /* IMPORTANT: NO overflow:hidden - it breaks sticky positioning */
+  overflow: hidden;
+  padding: 49px 0;
 }
 
 .container {
   width: 100%;
   margin: 0 auto;
-  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.mainImage {
+  width: 100%;
+  height: auto;
+  min-height: 400px;
+  max-height: 600px;
+  display: block;
+  object-fit: cover;
+  transform: translateZ(0);
+  will-change: transform;
+  border-radius: 0;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 400px;
+  background: #1A1A1A;
+}
+
+.placeholder span {
+  color: white;
+  font-family: var(--font-heading);
+  font-size: var(--heading-1-size);
+  font-weight: var(--heading-1-weight);
+  line-height: var(--heading-1-line-height);
+  text-align: center;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .mainImage {
+    min-height: 500px;
+    max-height: 700px;
+  }
+
+  .placeholder {
+    min-height: 500px;
+  }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  .mainImage {
+    min-height: 600px;
+    max-height: 800px;
+  }
+
+  .placeholder {
+    min-height: 600px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1440px) {
+  .mainImage {
+    min-height: 700px;
+    max-height: 900px;
+  }
+
+  .placeholder {
+    min-height: 700px;
+  }
+}
+
+/* Extra Large Screens - Max Width Constraint */
+@media (min-width: 2500px) {
+  .imageSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    max-width: 2500px;
+    border-radius: 12px;
+  }
+
+  .mainImage {
+    border-radius: 12px;
+  }
+
+  .placeholder {
+    border-radius: 12px;
+  }
 }

@@ -147,7 +147,7 @@ const LightRays: React.FC<LightRaysProps> = ({
   // Scroll opacity effect con throttling
   useEffect(() => {
     let ticking = false
-    
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
@@ -155,24 +155,26 @@ const LightRays: React.FC<LightRaysProps> = ({
             ticking = false
             return
           }
-          
+
           const rect = containerRef.current.getBoundingClientRect()
           let opacity = 1
-          
-          if (rect.top < 0) {
+
+          // Cuando el top es 0 o mayor (sección visible desde arriba), opacidad completa
+          if (rect.top >= 0) {
+            opacity = 1
+          } else {
+            // Cuando scrolleamos hacia abajo (top es negativo), calculamos fade out
             const scrollProgress = Math.abs(rect.top) / rect.height
             opacity = Math.max(0, 1 - scrollProgress)
-          } else if (rect.top > 0) {
-            opacity = 1
           }
-          
+
           setScrollOpacity(opacity)
           ticking = false
         })
         ticking = true
       }
     }
-    
+
     handleScroll() // Initial check
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -401,8 +403,9 @@ void main() {
         }
 
         // Solo renderizar si está visible Y la página está activa
-        const shouldRender = isVisible && !isPausedRef.current && scrollOpacity > 0.01
-        
+        // Removemos el umbral de scrollOpacity para que siempre renderice cuando isVisible = true
+        const shouldRender = isVisible && !isPausedRef.current
+
         if (shouldRender) {
           uniforms.iTime.value = t * 0.001
 
@@ -421,7 +424,7 @@ void main() {
             return
           }
         }
-        
+
         animationIdRef.current = requestAnimationFrame(loop)
       }
 

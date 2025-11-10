@@ -29,15 +29,16 @@ const exampleData = {
   projectCategories: ["Diseño UX/UI", "Desarrollo Web"],
   projectDescription: "Un proyecto de ejemplo para demostrar la funcionalidad.",
   caseStudyTitle: "Caso de Estudio - Proyecto de Ejemplo",
-  images: [
-    { alt: "Imagen de ejemplo", placeholder: "Imagen de ejemplo" }
-  ],
+  caseStudyContent: "Este es un ejemplo de contenido de caso de estudio.",
+  mainImage: undefined,
+  mainImageAlt: "Imagen de ejemplo",
   servicesTitle: "Los servicios que ofrecimos:",
   services: [
     { name: "Diseño UX/UI" },
     { name: "Desarrollo Frontend" }
   ],
   learningTitle: "Nuestros Aprendizajes",
+  learningContent: "Contenido de aprendizajes de ejemplo.",
   publishDate: new Date(),
   featured: false,
   status: "published"
@@ -73,13 +74,10 @@ const projectData = project ? {
   projectCategories: [project.category.name],
   projectDescription: project.hero.description,
   bannerImage: getImageUrl(project.hero.bannerImage?.url),
-  caseStudyTitle: project.caseStudy.title,
-  caseStudyContent: renderRichText(project.caseStudy.content),
-  images: project.gallery.map(item => ({
-    src: getImageUrl(item.image?.url),
-    alt: item.alt,
-    placeholder: item.caption || item.alt
-  })),
+  caseStudyTitle: project.caseStudy?.title,
+  caseStudyContent: renderRichText(project.caseStudy?.content),
+  mainImage: project.gallery && project.gallery.length > 0 ? getImageUrl(project.gallery[0].image?.url) : undefined,
+  mainImageAlt: project.gallery && project.gallery.length > 0 ? project.gallery[0].alt : undefined,
   servicesTitle: currentLang === 'en' ? "What we did:" : "Los servicios que ofrecimos:",
   services: project.hero.services.map(service => ({ name: service.name })),
   learningTitle: project.learnings.title,

@@ -13,12 +13,6 @@ import LearningSection from './atoms/LearningSection.astro';
 import styles from './Template.module.css';
 
 // TypeScript interfaces para props din�micas desde Strapi
-interface ImageItem {
-  src?: string;
-  alt: string;
-  placeholder?: string;
-}
-
 interface Service {
   name: string;
 }
@@ -30,12 +24,13 @@ interface ProjectTemplateProps {
   projectDescription: string;
   bannerImage?: string;
 
-  // Case Study Section
-  caseStudyTitle: string;
+  // Case Study Section (optional)
+  caseStudyTitle?: string;
   caseStudyContent?: string;
 
-  // Image Grid Section
-  images: ImageItem[];
+  // Main Image Section
+  mainImage?: string;
+  mainImageAlt?: string;
 
   // Services Section
   servicesTitle: string;
@@ -76,16 +71,16 @@ const { projectData } = Astro.props;
   />
 
   <!-- Strip 2: Case Study -->
-  {projectData.caseStudyContent && (
+  {projectData.caseStudyTitle && projectData.caseStudyContent && (
     <CaseStudySection
       title={projectData.caseStudyTitle}
       content={projectData.caseStudyContent}
     />
   )}
 
-  <!-- Strip 3: Image Grid -->
-  {projectData.images && projectData.images.length > 0 && (
-    <ImageGrid images={projectData.images} />
+  <!-- Strip 3: Main Image -->
+  {projectData.mainImage && (
+    <ImageGrid image={projectData.mainImage} alt={projectData.mainImageAlt} />
   )}
 
   <!-- Strip 4: Services (Interactive Island) -->

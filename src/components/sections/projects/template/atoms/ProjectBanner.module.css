@@ -6,7 +6,9 @@
 }
 
 .container {
-  padding: 80px 20px;
+  padding: 100px 20px 49px 20px;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -95,15 +97,7 @@
 .descriptionWrapper {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-end;
-  padding: 50px 100px 0px 100px;
-
-}
-
-@media (max-width: 909px) {
-  .descriptionWrapper {
-    padding: 50px 0px 0px 0px;
-  }
+  align-items: flex-start;
 }
 
 .description {
@@ -142,7 +136,7 @@
 /* Tablet: 768px and up */
 @media (min-width: 768px) {
   .container {
-    padding: 100px 40px;
+    padding: 120px 30px 49px 30px;
     gap: 40px;
   }
 
@@ -166,6 +160,7 @@
 /* Desktop: 1024px and up */
 @media (min-width: 1024px) {
   .container {
+    padding: 150px 50px 49px 50px;
     gap: 50px;
   }
 

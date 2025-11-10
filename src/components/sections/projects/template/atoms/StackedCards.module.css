@@ -1,18 +1,15 @@
 /* Container - matches the example's section styling with proper height for sticky */
 .container {
   width: 100%;
-  background-color: rgb(2 6 23); /* bg-slate-950 equivalent */
   color: white;
-  /* Critical: Container needs sufficient height for sticky to work */
-  min-height: 600vh; /* 6 cards × 100vh each */
+  min-height: 600vh; 
 }
 
 /* Card Wrapper - sticky positioning with responsive behavior */
 .cardWrapper {
   width: 100%;
   position: sticky;
-  /* top is set inline via style prop for progressive stacking */
-  /* Critical: Ensure no overflow issues from parent */
+
 }
 
 /* Figure - full screen height, centered */

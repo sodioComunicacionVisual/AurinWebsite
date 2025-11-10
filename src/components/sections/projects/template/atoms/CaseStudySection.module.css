@@ -5,12 +5,13 @@
 }
 
 .container {
-  padding: 60px 20px;
+  padding: 49px 20px;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
-
 
 .title {
   color: #D0DF00;
@@ -18,16 +19,8 @@
   font-size: var(--body-bold-1-size);
   font-weight: var(--body-bold-1-weight);
   line-height: var(--body-bold-1-line-height);
-  text-align: end;
-  padding: 50px 100px 0px 100px;
+  text-align: center;
   margin: 0;
-}
-
-/* Remove side padding for viewports smaller than 910px */
-@media (max-width: 909px) {
-  .title {
-    padding: 50px 0px 0px 0px;
-  }
 }
 
 .content {
@@ -36,21 +29,17 @@
   font-size: var(--body-1-size);
   font-weight: var(--body-1-weight);
   line-height: var(--body-1-line-height);
-  text-align: right;
+  text-align: center;
   margin: 0;
-  padding: 0px 100px 0px 100px;
-}
-
-@media (max-width: 909px) {
-  .content {
-    padding: 0px 0px 0px 0px;
-  }
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Tablet: 768px and up */
 @media (min-width: 768px) {
   .container {
-    padding: 80px 40px;
+    padding: 49px 30px;
     gap: 40px;
   }
 }
@@ -58,7 +47,7 @@
 /* Desktop: 1024px and up */
 @media (min-width: 1024px) {
   .container {
-    padding: 100px 50px;
+    padding: 49px 50px;
     gap: 50px;
   }
 }

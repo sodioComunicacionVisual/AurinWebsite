@@ -1,44 +1,41 @@
 ---
-import { CardsParallax, type iCardItem } from './StackedCards';
-
-interface ImageItem {
-  src?: string;
-  alt: string;
-  placeholder?: string;
-  caption?: string;
-}
+import styles from './ImageGrid.module.css';
 
 interface Props {
-  images: ImageItem[];
+  image?: string;
+  alt?: string;
 }
 
-const { images } = Astro.props;
-
-// Transform images to iCardItem format (limit to 6 cards)
-const cardItems: iCardItem[] = images.length > 0
-  ? images.slice(0, 6).map(img => ({
-      src: img.src,
-      alt: img.alt,
-      placeholder: img.placeholder
-    }))
-  : [
-      {
-        alt: 'Imagen del proyecto 1',
-        placeholder: 'Proyecto Imagen 1'
-      },
-      {
-        alt: 'Imagen del proyecto 2',
-        placeholder: 'Proyecto Imagen 2'
-      },
-      {
-        alt: 'Imagen del proyecto 3',
-        placeholder: 'Proyecto Imagen 3'
-      },
-      {
-        alt: 'Imagen del proyecto 4',
-        placeholder: 'Proyecto Imagen 4'
-      }
-    ];
+const { image, alt = 'Imagen del proyecto' } = Astro.props;
 ---
 
-<CardsParallax items={cardItems} client:load />
+<section class={styles.imageSection}>
+  <div class={styles.container}>
+    {image ? (
+      <img
+        src={image}
+        alt={alt}
+        class={styles.mainImage}
+        data-u-parallax="2"
+      />
+    ) : (
+      <div class={styles.placeholder}>
+        <span>Main Image</span>
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  import Ukiyo from 'ukiyojs';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const image = document.querySelector('[data-u-parallax]');
+    if (image) {
+      new Ukiyo(image as HTMLElement, {
+        scale: 1.2,
+        speed: 1.5
+      });
+    }
+  });
+</script>
