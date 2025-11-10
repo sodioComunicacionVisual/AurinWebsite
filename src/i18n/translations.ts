@@ -91,6 +91,19 @@ export const translations = {
       avatarAlt: "Assistant avatar",
       botAvatarAlt: "Bot avatar"
     },
+    chatbotSearch: {
+      label: "What service are you looking for?",
+      placeholder: "What service are you looking for?",
+      ariaLabel: "Type your question about services",
+      submitAriaLabel: "Submit question",
+      services: [
+        "Web and mobile app development",
+        "Usability testing",
+        "Branding development",
+        "UX/UI Design",
+        "Digital Consulting"
+      ]
+    },
     header: {
       menu: "Menu",
       switchToSpanish: "Switch to Spanish",
@@ -670,6 +683,19 @@ export const translations = {
       errorProcess: "Lo siento, no pude procesar tu mensaje",
       avatarAlt: "Avatar del asistente",
       botAvatarAlt: "Avatar del bot"
+    },
+    chatbotSearch: {
+      label: "¿Qué servicio buscas?",
+      placeholder: "¿Qué servicio buscas?",
+      ariaLabel: "Escribe tu pregunta sobre servicios",
+      submitAriaLabel: "Enviar pregunta",
+      services: [
+        "Desarrollo web y de aplicaciones móviles",
+        "Pruebas de usabilidad",
+        "Desarrollo de Branding",
+        "Diseño UX/UI",
+        "Consultoría Digital"
+      ]
     },
     header: {
       menu: "Menú",

@@ -9,9 +9,16 @@ import styles from "./SearchInput.module.css"
 interface SearchInputProps {
   onSubmit?: (query: string) => void
   isLoading?: boolean
+  translations?: {
+    label: string
+    placeholder: string
+    ariaLabel: string
+    submitAriaLabel: string
+    services: string[]
+  }
 }
 
-const SERVICES = [
+const DEFAULT_SERVICES = [
   "Desarrollo web y de aplicaciones móviles",
   "Pruebas de usabilidad",
   "Desarrollo de Branding",
@@ -19,10 +26,19 @@ const SERVICES = [
   "Consultoría Digital",
 ]
 
-export function SearchInput({ onSubmit, isLoading = false }: SearchInputProps) {
+export function SearchInput({ onSubmit, isLoading = false, translations }: SearchInputProps) {
   const [query, setQuery] = useState("")
+  
+  const t = translations || {
+    label: "¿Qué servicio buscas?",
+    placeholder: "¿Qué servicio buscas?",
+    ariaLabel: "Escribe tu pregunta sobre servicios",
+    submitAriaLabel: "Enviar pregunta",
+    services: DEFAULT_SERVICES
+  }
+  
   const typewriterText = useTypewriter({
-    words: SERVICES,
+    words: t.services,
     typeSpeed: 80,
     deleteSpeed: 40,
     delayBetweenWords: 2500,
@@ -53,17 +69,17 @@ export function SearchInput({ onSubmit, isLoading = false }: SearchInputProps) {
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <label htmlFor="chatbot-input" className={styles.label}>
-              ¿Qué servicio buscas?
+              {t.label}
             </label>
             <input
               id="chatbot-input"
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder={`¿Qué servicio buscas? ${typewriterText}`}
+              placeholder={`${t.placeholder} ${typewriterText}`}
               disabled={isLoading}
               className={styles.input}
-              aria-label="Escribe tu pregunta sobre servicios"
+              aria-label={t.ariaLabel}
             />
           </motion.div>
           <motion.button
@@ -73,7 +89,7 @@ export function SearchInput({ onSubmit, isLoading = false }: SearchInputProps) {
             whileHover={{ y: -2, filter: "brightness(1.1)", boxShadow: "0 4px 12px rgba(208, 223, 0, 0.3)" }}
             whileTap={{ y: 0 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            aria-label="Enviar pregunta"
+            aria-label={t.submitAriaLabel}
           >
             <motion.div
               whileHover={{ rotate: 45 }}

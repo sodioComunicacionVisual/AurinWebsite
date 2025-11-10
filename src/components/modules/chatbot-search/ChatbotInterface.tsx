@@ -6,7 +6,17 @@ import { nanoid } from 'nanoid'
 import { SearchInput } from "./SearchInput"
 import { ChatbotResponse } from "./ChatbotResponse"
 
-export function ChatbotInterface() {
+interface ChatbotInterfaceProps {
+  translations?: {
+    label: string
+    placeholder: string
+    ariaLabel: string
+    submitAriaLabel: string
+    services: string[]
+  }
+}
+
+export function ChatbotInterface({ translations }: ChatbotInterfaceProps) {
   const [response, setResponse] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -57,7 +67,7 @@ export function ChatbotInterface() {
 
   return (
     <div>
-      <SearchInput onSubmit={handleSubmit} isLoading={isLoading} />
+      <SearchInput onSubmit={handleSubmit} isLoading={isLoading} translations={translations} />
 
       <AnimatePresence mode="wait">
         {isLoading && <ChatbotResponse key="loading" response="Pensando en tu consulta..." />}
