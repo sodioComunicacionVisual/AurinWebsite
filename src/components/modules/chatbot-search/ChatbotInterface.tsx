@@ -1,25 +1,58 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { AnimatePresence } from "motion/react"
+import { nanoid } from 'nanoid'
 import { SearchInput } from "./SearchInput"
 import { ChatbotResponse } from "./ChatbotResponse"
-import { getMockResponse } from "./mockResponses"
 
 export function ChatbotInterface() {
   const [response, setResponse] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Generar sessionId único para este chatbot-search
+  const sessionIdRef = useRef<string>(nanoid(16))
 
   const handleSubmit = async (query: string) => {
     setIsLoading(true)
     setResponse(null)
+    setError(null)
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 800))
+    try {
+      // Llamar a la API de chat con modo 'search'
+      const apiResponse = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: query,
+          sessionId: sessionIdRef.current,
+          mode: 'search', // ← Modo búsqueda para respuestas cortas
+          metadata: {
+            source: 'chatbot-search',
+            timestamp: new Date().toISOString()
+          }
+        })
+      })
 
-    const mockResponse = getMockResponse(query)
-    setResponse(mockResponse)
-    setIsLoading(false)
+      if (!apiResponse.ok) {
+        const errorData = await apiResponse.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Error al procesar tu consulta')
+      }
+
+      const data = await apiResponse.json()
+      const botResponse = data.output || data.response || 'No se pudo obtener una respuesta'
+
+      setResponse(botResponse)
+    } catch (err: any) {
+      console.error('Error en chatbot-search:', err)
+      setError(err.message || 'Hubo un error al procesar tu consulta. Por favor intenta de nuevo.')
+      setResponse('Lo siento, no pude procesar tu consulta en este momento. Por favor intenta de nuevo o contáctanos en hey@aurin.mx')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (

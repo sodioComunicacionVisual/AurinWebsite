@@ -8,4 +8,5 @@ export { GlassEffect, GlassFilter } from './GlassEffect'
 
 // Utilities
 export { useTypewriter } from './useTypewriter'
-export { getMockResponse, mockResponses } from './mockResponses'
+// Mock responses deprecated - now using real API with mode='search'
+// export { getMockResponse, mockResponses } from './mockResponses'

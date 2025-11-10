@@ -15,14 +15,26 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    const { message, sessionId, metadata, fileUrl } = body;
+    const { message, sessionId, metadata, fileUrl, mode } = body;
+
+    // Determinar si es modo búsqueda (respuestas cortas) o conversación completa
+    const isSearchMode = mode === 'search';
+
+    // Preparar instrucciones adicionales para modo search
+    let enhancedMessage = message;
+    if (isSearchMode) {
+      enhancedMessage = `[MODO BÚSQUEDA: Responde en máximo 2-3 oraciones, solo sobre servicios de Aurin, sin mencionar agendamiento de citas]\n\nPregunta: ${message}`;
+    }
 
     // Preparar payload para n8n según el formato que espera el nodo Code
     const n8nPayload = {
-      message: message,
+      message: enhancedMessage,
       sessionId: sessionId,
       fileUrl: fileUrl || null, // URL del archivo subido a Vercel Blob
-      metadata: metadata || {}
+      metadata: {
+        ...metadata || {},
+        mode: mode || 'full' // Agregar modo al metadata
+      }
     };
 
     // Configurar timeout para la request
