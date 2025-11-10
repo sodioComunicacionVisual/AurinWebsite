@@ -78,6 +78,7 @@
   color: rgba(255, 255, 255, 0.5);
   font-weight: 400;
   font-family: var(--font-body);
+  font-size: clamp(14px, 3.6cqw, 18px);
 }
 
 .input:disabled {
