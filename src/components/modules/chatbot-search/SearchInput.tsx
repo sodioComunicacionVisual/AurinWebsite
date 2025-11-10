@@ -14,7 +14,7 @@ interface SearchInputProps {
     placeholder: string
     ariaLabel: string
     submitAriaLabel: string
-    services: string[]
+    services: readonly string[]
   }
 }
 
@@ -24,7 +24,7 @@ const DEFAULT_SERVICES = [
   "Desarrollo de Branding",
   "Diseño UX/UI",
   "Consultoría Digital",
-]
+] as const
 
 export function SearchInput({ onSubmit, isLoading = false, translations }: SearchInputProps) {
   const [query, setQuery] = useState("")

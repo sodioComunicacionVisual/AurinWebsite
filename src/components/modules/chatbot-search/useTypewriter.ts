@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 
 interface UseTypewriterOptions {
-  words: string[]
+  words: readonly string[]
   typeSpeed?: number
   deleteSpeed?: number
   delayBetweenWords?: number

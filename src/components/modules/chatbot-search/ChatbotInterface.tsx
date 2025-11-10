@@ -12,7 +12,7 @@ interface ChatbotInterfaceProps {
     placeholder: string
     ariaLabel: string
     submitAriaLabel: string
-    services: string[]
+    services: readonly string[]
   }
 }
 
