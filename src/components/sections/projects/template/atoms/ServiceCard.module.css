@@ -50,10 +50,10 @@
 
 .serviceName {
   color: #D0DF00;
-  font-size: clamp(2rem, 4vw, 6rem);
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 400;
-  line-height: 1;
+  font-family: var(--font-body);
+  font-size: var(--body-bold-3-size);
+  font-weight: var(--body-bold-3-weight);
+  line-height: var(--body-bold-3-line-height);
   margin: 0;
   transition: color 0.5s ease;
   flex-shrink: 0;

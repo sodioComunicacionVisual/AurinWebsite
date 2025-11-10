@@ -20,15 +20,13 @@
 
 .title {
   color: white;
-  font-size: clamp(40px, 8vw, 120px);
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-body);
+  font-size: var(--body-bold-1-size);
+  font-weight: var(--body-bold-1-weight);
+  line-height: var(--body-bold-1-line-height);
   text-transform: uppercase;
-  line-height: 1;
   text-align: center;
   margin: 0;
-  text-box-trim: trim-both;
-  text-box-edge: cap alphabetic;
 }
 
 .decorativeLines {

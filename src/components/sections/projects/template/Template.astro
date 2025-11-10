@@ -1,4 +1,6 @@
 ---
+import InteractiveBackground from '../../../ui/InteractiveBackground.astro';
+import Vignette from '../../../ui/Vignette.astro';
 import Header from '../../../ui/Header.astro';
 import MainCat from '../../../ui/MainCat.astro';
 import Projects from '../../../ui/Projects.astro';
@@ -55,6 +57,9 @@ interface Props {
 
 const { projectData } = Astro.props;
 ---
+
+<InteractiveBackground />
+<Vignette intensity="medium" />
 
 <!-- Header Navigation -->
 <Header />

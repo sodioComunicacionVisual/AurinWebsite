@@ -597,7 +597,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
       });
 
       // Scroll-triggered card activation and content switching
-      const scrollContainer = document.querySelector('.scroll-container');
+      const scrollContainer = document.querySelector('.scroll-container') as HTMLElement;
       const contentSections = document.querySelectorAll('.content-section');
       
       if (scrollContainer) {
