@@ -12,6 +12,6 @@ const { title, content } = Astro.props;
 <section class={styles.learningSection}>
   <div class={styles.container}>
     <h2 class={styles.title}>{title}</h2>
-    <p class={styles.content}>{content}</p>
+    <div class={styles.content} set:html={content}></div>
   </div>
 </section>

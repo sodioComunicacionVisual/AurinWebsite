@@ -214,11 +214,109 @@ export function formatDate(dateString: string, locale: string = 'es'): string {
   });
 }
 
-// Rich text renderer helper
+// Rich text renderer helper - converts Lexical JSON to HTML
 export function renderRichText(content: any): string {
-  // This is a basic implementation - you might want to use a proper rich text renderer
   if (!content) return '';
-  
-  // For now, return as HTML string - you can enhance this based on your rich text structure
-  return JSON.stringify(content);
+  if (typeof content === 'string') return content;
+
+  try {
+    if (!content.root || !content.root.children) return '';
+
+    const serializeNode = (node: any): string => {
+      // Handle text nodes
+      if (node.type === 'text') {
+        let text = node.text || '';
+
+        // Apply formatting
+        if (node.format) {
+          if (node.format & 1) text = `<strong>${text}</strong>`; // Bold
+          if (node.format & 2) text = `<em>${text}</em>`; // Italic
+          if (node.format & 8) text = `<u>${text}</u>`; // Underline
+          if (node.format & 16) text = `<code>${text}</code>`; // Code
+        }
+
+        // Apply special text types
+        if (node.type === 'text' && text) {
+          const style = node.style || '';
+          if (style.includes('strikethrough')) text = `<s>${text}</s>`;
+        }
+
+        return text;
+      }
+
+      // Handle paragraph nodes
+      if (node.type === 'paragraph') {
+        const children = node.children?.map(serializeNode).join('') || '';
+        const textAlign = node.format ? `style="text-align: ${node.format};"` : '';
+        return `<p ${textAlign}>${children}</p>`;
+      }
+
+      // Handle heading nodes
+      if (node.type === 'heading') {
+        const tag = node.tag || 'h2';
+        const children = node.children?.map(serializeNode).join('') || '';
+        const textAlign = node.format ? `style="text-align: ${node.format};"` : '';
+        return `<${tag} ${textAlign}>${children}</${tag}>`;
+      }
+
+      // Handle list nodes
+      if (node.type === 'list') {
+        const tag = node.listType === 'number' ? 'ol' : 'ul';
+        const children = node.children?.map(serializeNode).join('') || '';
+        return `<${tag}>${children}</${tag}>`;
+      }
+
+      if (node.type === 'listitem') {
+        const children = node.children?.map(serializeNode).join('') || '';
+        return `<li>${children}</li>`;
+      }
+
+      // Handle quote nodes
+      if (node.type === 'quote') {
+        const children = node.children?.map(serializeNode).join('') || '';
+        return `<blockquote>${children}</blockquote>`;
+      }
+
+      // Handle code block nodes
+      if (node.type === 'code') {
+        const children = node.children?.map((child: any) => child.text || '').join('') || '';
+        return `<pre><code>${children}</code></pre>`;
+      }
+
+      // Handle link nodes
+      if (node.type === 'link' || node.type === 'autolink') {
+        const children = node.children?.map(serializeNode).join('') || '';
+        const url = node.url || '#';
+        return `<a href="${url}" target="${node.newTab ? '_blank' : '_self'}" rel="${node.newTab ? 'noopener noreferrer' : ''}">${children}</a>`;
+      }
+
+      // Handle line break
+      if (node.type === 'linebreak') {
+        return '<br>';
+      }
+
+      // Default: try to render children if they exist
+      if (node.children) {
+        return node.children.map(serializeNode).join('');
+      }
+
+      return '';
+    };
+
+    return content.root.children.map(serializeNode).join('');
+  } catch (error) {
+    console.error('Error rendering rich text:', error);
+    // Fallback: extract plain text
+    if (content.root && content.root.children) {
+      return content.root.children
+        .map((node: any) => {
+          if (node.children) {
+            return node.children.map((child: any) => child.text || '').join('');
+          }
+          return node.text || '';
+        })
+        .join('\n\n');
+    }
+    return '';
+  }
 }

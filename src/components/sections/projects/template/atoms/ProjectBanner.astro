@@ -22,7 +22,7 @@ const { title, categories, description, bannerImage } = Astro.props;
           ))}
         </div>
         <div class={styles.descriptionWrapper}>
-          <p class={styles.description}>{description}</p>
+          <div class={styles.description} set:html={description}></div>
         </div>
       </div>
 

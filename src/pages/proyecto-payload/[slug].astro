@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Template from '../../components/sections/projects/template/Template.astro';
-import { PayloadAPI, type PayloadProject, getImageUrl } from '../../lib/payload';
+import { PayloadAPI, type PayloadProject, getImageUrl, renderRichText } from '../../lib/payload';
 import { getLangFromUrl } from '../../i18n/utils';
 import { translations } from '../../i18n/translations';
 
@@ -32,7 +32,7 @@ const exampleData = {
   caseStudyContent: "Este es un ejemplo de contenido de caso de estudio.",
   mainImage: undefined,
   mainImageAlt: "Imagen de ejemplo",
-  servicesTitle: "Los servicios que ofrecimos:",
+  servicesTitle: "Los que hicimos:",
   services: [
     { name: "Diseño UX/UI" },
     { name: "Desarrollo Frontend" }
@@ -44,41 +44,17 @@ const exampleData = {
   status: "published"
 };
 
-// Helper function to render rich text content (Lexical format)
-function renderRichText(content: any): string {
-  if (!content) return '';
-  // This assumes Lexical format - adjust based on your Payload editor
-  // For now, we'll do a basic conversion. You may need @payloadcms/richtext-lexical for proper rendering
-  try {
-    if (typeof content === 'string') return content;
-    if (content.root && content.root.children) {
-      return content.root.children
-        .map((node: any) => {
-          if (node.children) {
-            return node.children.map((child: any) => child.text || '').join('');
-          }
-          return node.text || '';
-        })
-        .join('\n\n');
-    }
-    return JSON.stringify(content);
-  } catch (error) {
-    console.error('Error rendering rich text:', error);
-    return '';
-  }
-}
-
 // Transform Payload project to template format
 const projectData = project ? {
   projectTitle: project.title,
   projectCategories: [project.category.name],
-  projectDescription: project.hero.description,
+  projectDescription: renderRichText(project.hero.description),
   bannerImage: getImageUrl(project.hero.bannerImage?.url),
   caseStudyTitle: project.caseStudy?.title,
   caseStudyContent: renderRichText(project.caseStudy?.content),
   mainImage: project.gallery && project.gallery.length > 0 ? getImageUrl(project.gallery[0].image?.url) : undefined,
   mainImageAlt: project.gallery && project.gallery.length > 0 ? project.gallery[0].alt : undefined,
-  servicesTitle: currentLang === 'en' ? "What we did:" : "Los servicios que ofrecimos:",
+  servicesTitle: currentLang === 'en' ? "What we did:" : "Los que hicimos:",
   services: project.hero.services.map(service => ({ name: service.name })),
   learningTitle: project.learnings.title,
   learningContent: renderRichText(project.learnings.content),
