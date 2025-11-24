@@ -44,20 +44,29 @@ const exampleData = {
   status: "published"
 };
 
+// Helper function to check if content is empty
+const hasContent = (content: any): boolean => {
+  if (!content) return false;
+  if (Array.isArray(content) && content.length === 0) return false;
+  const rendered = renderRichText(content);
+  const cleanContent = rendered.replace(/<[^>]*>/g, '').trim();
+  return cleanContent.length > 0;
+};
+
 // Transform Payload project to template format
 const projectData = project ? {
   projectTitle: project.title,
   projectCategories: [project.category.name],
   projectDescription: renderRichText(project.hero.description),
   bannerImage: getImageUrl(project.hero.bannerImage?.url),
-  caseStudyTitle: project.caseStudy?.title,
-  caseStudyContent: renderRichText(project.caseStudy?.content),
+  caseStudyTitle: project.caseStudy?.title?.trim() || undefined,
+  caseStudyContent: hasContent(project.caseStudy?.content) ? renderRichText(project.caseStudy.content) : undefined,
   mainImage: project.gallery && project.gallery.length > 0 ? getImageUrl(project.gallery[0].image?.url) : undefined,
   mainImageAlt: project.gallery && project.gallery.length > 0 ? project.gallery[0].alt : undefined,
   servicesTitle: currentLang === 'en' ? "What we did:" : "Los que hicimos:",
   services: project.hero.services.map(service => ({ name: service.name })),
-  learningTitle: project.learnings.title,
-  learningContent: renderRichText(project.learnings.content),
+  learningTitle: project.learnings?.title?.trim() || undefined,
+  learningContent: hasContent(project.learnings?.content) ? renderRichText(project.learnings.content) : undefined,
 } : exampleData;
 
 // SEO

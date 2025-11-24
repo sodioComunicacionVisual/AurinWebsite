@@ -12,7 +12,7 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  integrations: [lenis(), react()],
+  integrations: [react()],
   vite: {
     build: {
       assetsInlineLimit: 0, // Force all assets to be separate files

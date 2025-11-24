@@ -33,11 +33,11 @@ interface ProjectTemplateProps {
   mainImageAlt?: string;
 
   // Services Section
-  servicesTitle: string;
-  services: Service[];
+  servicesTitle?: string;
+  services?: Service[];
 
   // Learning Section
-  learningTitle: string;
+  learningTitle?: string;
   learningContent?: string;
 
   // Optional Payload fields
@@ -84,7 +84,7 @@ const { projectData } = Astro.props;
   )}
 
   <!-- Strip 4: Services (Interactive Island) -->
-  {projectData.services && projectData.services.length > 0 && (
+  {projectData.servicesTitle && projectData.services && projectData.services.length > 0 && (
     <ServicesSection
       title={projectData.servicesTitle}
       services={projectData.services}
@@ -92,7 +92,7 @@ const { projectData } = Astro.props;
   )}
 
   <!-- Strip 5: Learning -->
-  {projectData.learningContent && (
+  {projectData.learningTitle && projectData.learningContent && (
     <LearningSection
       title={projectData.learningTitle}
       content={projectData.learningContent}
