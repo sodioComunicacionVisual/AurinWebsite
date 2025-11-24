@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import lenis from 'astro-lenis';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 
