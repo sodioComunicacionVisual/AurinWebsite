@@ -51,9 +51,12 @@
 }
 
 .category {
-  color: white;
+  color: rgb(0, 0, 0);
+  background-color: #D0DF00;
+  padding: 6px 12px;
+  border-radius: 100px;
   font-family: var(--font-body);
-  font-size: var(--body-0-size);
+  font-size: var(--body-0-line-height);
   font-weight: 600;
   line-height: var(--body-0-line-height);
   white-space: nowrap;

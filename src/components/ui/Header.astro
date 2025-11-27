@@ -122,34 +122,29 @@ if (currentPath === '/nosotros' && alternateLang === 'en') {
       const currentScrollY = window.scrollY;
       const headerElement = header as HTMLElement;
       
-      // Ocultar header en top: 0
+      // Siempre visible en top: 0
       if (currentScrollY <= 0) {
-        header.classList.add('header-hidden');
-        header.classList.remove('header-visible');
-      }
-      // Mostrar header con background cuando se hace scroll
-      else if (currentScrollY > 0 && currentScrollY <= 50) {
         header.classList.remove('header-hidden');
         header.classList.add('header-visible');
-        headerElement.style.background = 'rgba(255, 255, 255, 0.05)';
-        headerElement.style.backdropFilter = 'blur(10px)';
-        (headerElement.style as any).webkitBackdropFilter = 'blur(10px)';
-        headerElement.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+        headerElement.style.background = 'transparent';
+        headerElement.style.backdropFilter = 'none';
+        (headerElement.style as any).webkitBackdropFilter = 'none';
+        headerElement.style.borderBottom = 'none';
       }
-      // Header visible con background
-      else if (currentScrollY > 50) {
+      // Mostrar header con background cuando se hace scroll down
+      else if (currentScrollY > 0) {
         headerElement.style.background = 'rgba(255, 255, 255, 0.05)';
         headerElement.style.backdropFilter = 'blur(10px)';
         (headerElement.style as any).webkitBackdropFilter = 'blur(10px)';
         headerElement.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
         
-        // Hide header when scrolling down
-        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Ocultar header cuando se hace scroll up
+        if (currentScrollY < lastScrollY) {
           header.classList.add('header-hidden');
           header.classList.remove('header-visible');
         }
-        // Show header when scrolling up
-        else if (currentScrollY < lastScrollY) {
+        // Mostrar header cuando se hace scroll down
+        else if (currentScrollY > lastScrollY) {
           header.classList.remove('header-hidden');
           header.classList.add('header-visible');
         }
