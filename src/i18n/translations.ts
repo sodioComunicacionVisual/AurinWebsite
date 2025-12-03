@@ -233,7 +233,8 @@ export const translations = {
       contentHighlight: 'At Aurin, we embrace the symbiosis of contrasts:',
       contentContinue: 'the near and the far, the human and the technological, intuition and data, creativity and strategy. We believe that differences expand perspectives, enrich our vision, and integrate new ways of understanding the world, allowing us to create more innovative and effective solutions.',
       parallaxSmall: '+Further',
-      parallaxLarge: '+Closer'
+      parallaxLarge: '+Closer',
+      contrastText: '+Closer, +Further'
     },
     expertosUsuarios: {
       subtitle: 'User',
@@ -286,7 +287,7 @@ export const translations = {
       legal: 'LEGAL',
       privacyPolicy: 'Privacy policy',
       termsConditions: 'Terms and conditions',
-      copyright: '©2025 Aurin. All rights reserved'
+      copyright: '©2025 aurin. All rights reserved'
     },
     privacy: {
       seo: {
@@ -826,7 +827,8 @@ export const translations = {
       contentHighlight: 'En Aurin, abrazamos la simbiosis de los contrastes:',
       contentContinue: 'lo cercano y lo distante, lo humano y lo tecnológico, la intuición y los datos, la creatividad y la estrategia. Creemos que las diferencias amplían perspectivas, enriquecen nuestra visión e integran nuevas formas de entender el mundo, permitiéndonos crear soluciones más innovadoras y efectivas.',
       parallaxSmall: '+Lejos',
-      parallaxLarge: '+Cerca'
+      parallaxLarge: '+Cerca',
+      contrastText: '+Cerca, +lejos'
     },
     expertosUsuarios: {
       subtitle: 'Expertos en',
@@ -879,7 +881,7 @@ export const translations = {
       legal: 'LEGALES',
       privacyPolicy: 'Aviso de privacidad',
       termsConditions: 'Términos y condiciones',
-      copyright: '©2025 Aurin. Todos los derechos reservados'
+      copyright: '©2025 aurin. Todos los derechos reservados'
     },
     privacy: {
       seo: {

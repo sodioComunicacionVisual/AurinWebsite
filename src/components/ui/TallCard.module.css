@@ -31,7 +31,7 @@
 
 /* Dark card variant - Cards pares (2, 4) - Gris oscuro */
 .card.dark {
-  background: linear-gradient(185deg, rgba(0, 0, 0, 0) 47%, #1A1A1A 47%), #282828;
+  background: linear-gradient(197deg, rgba(0, 0, 0, 0) 47%, #1A1A1A 47%), #282828;
 }
 
 /* Green hover overlay for both variants */
@@ -39,7 +39,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(161deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), #D0DF00;
+  background: linear-gradient(197deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), #D0DF00;
   border-radius: 10px;
   opacity: 0;
   transition: opacity 0.3s ease;

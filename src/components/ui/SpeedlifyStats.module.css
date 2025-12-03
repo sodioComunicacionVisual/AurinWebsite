@@ -39,14 +39,16 @@
 }
 
 .loadingText {
+  font-family: var(--font-body);
   color: rgba(255, 255, 255, 0.7);
-  font-size: 0.875rem;
+  font-size: var(--body-4-size);
 }
 
 /* Error State */
 .error {
+  font-family: var(--font-body);
   color: rgba(255, 255, 255, 0.5);
-  font-size: 0.875rem;
+  font-size: var(--body-4-size);
 }
 
 /* Score Card */
@@ -68,8 +70,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-body);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: var(--body-bold-6-weight);
   color: #000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
@@ -80,12 +83,14 @@
 }
 
 .scoreLabel {
+  font-family: var(--font-body);
   color: white;
-  font-size: 0.875rem;
+  font-size: var(--body-4-size);
   font-weight: 500;
 }
 
 .scoreValue {
+  font-family: var(--font-body);
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.75rem;
 }
@@ -112,14 +117,16 @@
 }
 
 .vitalLabel {
+  font-family: var(--font-body);
   color: white;
   font-size: 0.75rem;
   margin-bottom: 0.125rem;
 }
 
 .vitalValue {
+  font-family: var(--font-body);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: var(--body-bold-6-weight);
 }
 
 /* Meta Section */
@@ -165,6 +172,7 @@
 }
 
 .statusText {
+  font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 500;
 }
@@ -182,11 +190,13 @@
 }
 
 .timestamp {
+  font-family: var(--font-body);
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.75rem;
 }
 
 .poweredBy {
+  font-family: var(--font-body);
   color: rgba(255, 255, 255, 0.4);
   font-size: 0.75rem;
   text-decoration: none;

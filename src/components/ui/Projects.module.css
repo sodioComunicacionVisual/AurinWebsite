@@ -45,12 +45,18 @@
   line-height: var(--heading-5-line-height) !important;
 }
 
+.heading :global([data-word]:nth-child(7)) {
+  display: block;
+  width: 100%;
+}
+
 .heading :global([data-word]:nth-child(n+7)) {
   color: var(--color-yellow) !important;
   font-size: var(--heading-2-size) !important;
   font-family: var(--font-heading) !important;
   font-weight: 300 !important;
   line-height: var(--heading-2-line-height) !important;
+  white-space: nowrap;
 }
 
 /* Projects grid */

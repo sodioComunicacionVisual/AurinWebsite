@@ -29,14 +29,18 @@ const t = translations[currentLang];
           <strong class={styles.textHighlight}>{t.descripcion.contentHighlight}</strong> {t.descripcion.contentContinue}
         </p>
       </div>
+      
+      <div class={styles.contrastTextWrapper}>
+        <p class={styles.contrastText}>
+          {t.descripcion.contrastText}
+        </p>
+      </div>
     </div>
     
     <!-- Right column -->
     <div class={styles.rightColumn}>
       <div class={styles.svgWrapper}>
         <img src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg" alt="Light SVG" class={styles.svgElement} />
-        <div class={styles.parallaxTextSmall} data-parallax-small>{t.descripcion.parallaxSmall}</div>
-        <div class={styles.parallaxTextLarge} data-parallax-large>{t.descripcion.parallaxLarge}</div>
       </div>
     </div>
   </div>

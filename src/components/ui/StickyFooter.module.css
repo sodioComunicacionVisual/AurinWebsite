@@ -113,27 +113,20 @@
   gap: 0;
 }
 
-.footerLine {
-  width: 100%;
-  max-width: 20px;
-  height: 100%;
-  border-bottom: 1.07px solid #282828;
-}
-
 .footerTitle {
   color: white;
-  font-size: 16px;
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: var(--body-bold-6-size);
+  font-weight: var(--body-bold-6-weight);
   line-height: 16px;
   margin: 0;
 }
 
 .footerLink {
-  color: #A0A0A0;
-  font-size: 20px;
-  font-family: 'Urbanist', sans-serif;
-  font-weight: 400;
+  color: var(--color-gray-a);
+  font-family: var(--font-body);
+  font-size: var(--body-1-size);
+  font-weight: var(--body-1-weight);
   line-height: 22px;
   background: none;
   border: none;
@@ -164,9 +157,9 @@
 
 .footerCopyright p {
   color: white;
-  font-size: 14px;
-  font-family: 'Instrument Sans', sans-serif;
-  font-weight: 400;
+  font-family: var(--font-body);
+  font-size: var(--body-4-size);
+  font-weight: var(--body-4-weight);
   text-decoration: underline;
   line-height: 14px;
   margin: 0;

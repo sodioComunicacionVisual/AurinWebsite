@@ -260,19 +260,41 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     width: 100%;
     max-width: var(--maxWidth);
     margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .splide__track {
+    overflow: visible;
   }
 
   .splide__list {
     display: flex;
-    gap: 2rem;
+    gap: clamp(0.5rem, 2vw, 2rem);
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 0;
     margin: 0;
     list-style: none;
-    max-width: var(--maxWidth);
-    margin: 0 auto;
+    width: 100%;
     transition: transform 0.6s ease-out;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  .splide__list :global(.card) {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    cursor: default;
+    flex: 1;
+    max-width: 250px;
+    min-width: 180px;
   }
 
   @media (min-width: 1200px) {
@@ -285,10 +307,18 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     .splide__list {
       justify-content: flex-start;
       width: max-content;
+      gap: clamp(0.5rem, 3vw, 1.5rem);
     }
     
     .splide__track {
       overflow: hidden;
+    }
+
+    .splide__list :global(.card) {
+      flex: 0 0 auto;
+      width: clamp(180px, 40vw, 220px);
+      min-width: unset;
+      max-width: unset;
     }
   }
 
@@ -540,33 +570,27 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     
     if (splideElement) {
       const splide = new Splide(splideElement as HTMLElement, {
-        fixedWidth: '250px',
+        autoWidth: true,
         perMove: 1,
-        gap: '1.75rem',
+        gap: '2vw',
         accessibility: {
           slideRole: '',
           slideLabel: '',
           slideLabelFormat: '',
         },
-        padding: '2rem',
+        padding: '0',
         pagination: false,
         arrows: false,
-        drag: true,
+        drag: false,
         breakpoints: {
-          1024: {
-            fixedWidth: '250px',
-            gap: '1.5rem',
-            padding: '1.5rem',
+          1199: {
+            gap: '3vw',
           },
           768: {
-            fixedWidth: '220px',
-            gap: '1rem',
-            padding: '1rem',
+            gap: '2.5vw',
           },
           480: {
-            fixedWidth: '200px',
-            gap: '0.5rem',
-            padding: '0.5rem',
+            gap: '2vw',
           },
         },
       });
@@ -635,9 +659,15 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
               const herramientasSection = document.querySelector('.herramientas-section');
               const currentSplideList = herramientasSection?.querySelector('.splide__list') as HTMLElement;
               if (currentSplideList && cards.length > 0) {
-                const cardWidth = 250 + 32; // card width + gap
+                // Calculate actual card width and gap dynamically
+                const firstCard = cards[0] as HTMLElement;
+                const cardRect = firstCard.getBoundingClientRect();
+                const cardWidth = cardRect.width;
+                const computedStyle = window.getComputedStyle(currentSplideList);
+                const gap = parseFloat(computedStyle.gap) || (window.innerWidth * 0.03); // fallback to 3vw
+                
                 const containerWidth = currentSplideList.parentElement?.offsetWidth || 0;
-                const totalWidth = cards.length * cardWidth;
+                const totalWidth = (cards.length * cardWidth) + ((cards.length - 1) * gap);
                 const maxTranslate = Math.max(0, totalWidth - containerWidth);
                 const translateX = Math.min(scrollProgress * maxTranslate, maxTranslate);
                 
