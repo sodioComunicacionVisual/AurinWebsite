@@ -26,37 +26,26 @@
 .headingWrapper {
   flex: 1;
   max-width: 488px;
+  display: flex;
+  flex-direction: column;
 }
 
-.heading {
-  margin: 0 !important;
+.headingLight {
+  color: var(--color-white);
+  font-size: var(--heading-5-size);
+  font-family: var(--font-heading);
+  font-weight: 300;
+  line-height: var(--heading-5-line-height);
 }
 
-.heading :global([data-word]:nth-child(1)),
-.heading :global([data-word]:nth-child(2)),
-.heading :global([data-word]:nth-child(3)),
-.heading :global([data-word]:nth-child(4)),
-.heading :global([data-word]:nth-child(5)),
-.heading :global([data-word]:nth-child(6)) {
-  color: var(--color-white) !important;
-  font-size: var(--heading-5-size) !important;
-  font-family: var(--font-heading) !important;
-  font-weight: 300 !important;
-  line-height: var(--heading-5-line-height) !important;
-}
-
-.heading :global([data-word]:nth-child(7)) {
-  display: block;
-  width: 100%;
-}
-
-.heading :global([data-word]:nth-child(n+7)) {
-  color: var(--color-yellow) !important;
-  font-size: var(--heading-2-size) !important;
-  font-family: var(--font-heading) !important;
-  font-weight: 300 !important;
-  line-height: var(--heading-2-line-height) !important;
+.headingHighlight {
+  color: var(--color-yellow);
+  font-size: var(--heading-2-size);
+  font-family: var(--font-heading);
+  font-weight: 300;
+  line-height: var(--heading-2-line-height);
   white-space: nowrap;
+  margin: 0;
 }
 
 /* Projects grid */

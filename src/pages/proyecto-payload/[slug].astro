@@ -58,7 +58,7 @@ const projectData = project ? {
   projectTitle: project.title,
   projectCategories: [project.category.name],
   projectDescription: renderRichText(project.hero.description),
-  bannerImage: getImageUrl(project.hero.bannerImage?.url),
+  bannerImage: getImageUrl(project.client?.logo?.url) || getImageUrl(project.hero.bannerImage?.url),
   caseStudyTitle: project.caseStudy?.title?.trim() || undefined,
   caseStudyContent: hasContent(project.caseStudy?.content) ? renderRichText(project.caseStudy.content) : undefined,
   mainImage: project.gallery && project.gallery.length > 0 ? getImageUrl(project.gallery[0].image?.url) : undefined,

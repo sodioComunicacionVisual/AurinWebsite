@@ -13,7 +13,7 @@
 
   /* Long Card */
   .long-card {
-    min-height: clamp(12.5rem, 20vw, 18.75rem);
+    min-height: clamp(10.5rem, 15vw, 15.75rem);
     background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #161616;
     overflow: hidden;
     border-radius: 10px;
@@ -44,7 +44,7 @@
     flex: 1;
     align-self: stretch;
     padding-inline: clamp(1.5rem, 5.5vw, 4.9375rem);
-    padding-top: clamp(5.5rem, 7vw, 6.5rem);
+    padding-top: clamp(4.5rem, 5vw, 4.5rem);
     padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
     overflow: visible;
     display: flex;

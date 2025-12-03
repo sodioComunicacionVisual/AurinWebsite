@@ -33,3 +33,4 @@ src/components/modules/original-speedlify/
 # CMS repository (managed separately)
 /aurin-cms/
 ../aurin-cms/
+aurin-cms

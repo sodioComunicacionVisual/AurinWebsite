@@ -138,7 +138,8 @@ export const translations = {
         description: "Explore our most recent projects and discover how we have helped our clients break boundaries. From disruptive startups to established companies, each collaboration reflects our passion for design, our balance between human and technological, and our ability to discover opportunities that transform into real achievements.",
         ctaButton: "Start your project now"
       },
-      heading: "Some of our most recent projects",
+      headingLight: "Historias que",
+      headingHighlight: "hablan por si solas",
       buttonText: "View all projects",
       tags: {
         uxui: "UX/UI Design",
@@ -555,7 +556,8 @@ export const translations = {
       },
       usBanner: {
         title: "Authors of Experiences through Design and Technology",
-        description: "The Aurin, believe in the power of closeness to understand, connect, and inspire, and the vision to go further, pushing each project beyond expectations. Through our innovative approach and the use of design and technology, we amplify the impact and visibility of our clients, partners, and team, projecting them toward new horizons.",
+        description1: "The Aurin, believe in the power of closeness to understand, connect, and inspire, and the vision to go further, pushing each project beyond expectations.",
+        description2: "Through our innovative approach and the use of design and technology, we amplify the impact and visibility of our clients, partners, and team, projecting them toward new horizons.",
         buttonText: "Start your Aurin journey"
       },
       rutasInexploradas: {
@@ -732,7 +734,8 @@ export const translations = {
         description: "Explora nuestros proyectos más recientes y descubre cómo hemos ayudado a nuestros clientes a romper límites. Desde startups disruptivas hasta empresas consolidadas, cada colaboración refleja nuestra pasión por el diseño, nuestro equilibrio entre lo humano y lo tecnológico, y nuestra capacidad para descubrir oportunidades que se transforman en logros reales.",
         ctaButton: "Comienza tu proyecto ahora"
       },
-      heading: "Historias que hablan por si solas",
+      headingLight: "Historias que",
+      headingHighlight: "hablan por si solas",
       buttonText: "Ver todos los proyectos",
       tags: {
         uxui: "Diseño UX/UI",
@@ -1149,7 +1152,8 @@ export const translations = {
       },
       usBanner: {
         title: "Realizadores de experiencias a través del diseño y la tecnología.",
-        description: "Los Aurin creemos en el poder de la cercanía para entender, conectar e inspirar, y en la visión de ir más lejos para llevar cada proyecto más allá de las expectativas. Gracias a nuestro enfoque y al uso de diseño y tecnología, ampliamos el impacto y la visibilidad de nuestros clientes, aliados y equipo, proyectándolos hacia nuevos horizontes.",
+        description1: "Los Aurin creemos en el poder de la cercanía para entender, conectar e inspirar, y en la visión de ir más lejos para llevar cada proyecto más allá de las expectativas.",
+        description2: "Gracias a nuestro enfoque y al uso de diseño y tecnología, ampliamos el impacto y la visibilidad de nuestros clientes, aliados y equipo, proyectándolos hacia nuevos horizontes.",
         buttonText: "Comienza tu proceso Aurin"
       },
       rutasInexploradas: {
