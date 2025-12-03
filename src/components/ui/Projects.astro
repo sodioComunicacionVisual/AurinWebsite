@@ -57,7 +57,7 @@ try {
               project.category.name,
               ...(project.tags?.slice(0, 1).map((tag: { name: string }) => tag.name) || [])
             ]}
-            image={getImageUrl(project.client?.logo?.url) || getImageUrl(project.hero.bannerImage?.url) || 'https://placehold.co/800x600?text=No+Image'}
+            image={getImageUrl(project.hero.bannerImage?.url) || 'https://placehold.co/800x600?text=No+Image'}
             href={getProjectUrl(project, currentLang)}
           />
         ))
