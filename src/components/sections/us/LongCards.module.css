@@ -22,6 +22,7 @@
     align-items: flex-start;
     position: relative;
     cursor: pointer;
+    --counter-color: #D0DF00;
   }
 
   .long-card::before {
@@ -37,6 +38,10 @@
 
   .long-card:hover::before {
     opacity: 1;
+  }
+
+  .long-card:hover {
+    --counter-color: #000000;
   }
 
   /* Main Content */
@@ -71,10 +76,6 @@
   .animated-counter {
     font-family: var(--font-body);
     font-size: clamp(4rem, 15.5vw, 12.5rem) !important;
-  }
-
-  .long-card:hover .card-number {
-    color: #0A0A0A !important;
   }
 
   .card-label {

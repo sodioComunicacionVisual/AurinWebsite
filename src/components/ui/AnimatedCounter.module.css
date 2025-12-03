@@ -8,6 +8,8 @@
   overflow: hidden;
   line-height: 1;
   align-items: center;
+  transition: color 0.5s ease;
+  color: var(--counter-color, #D0DF00) !important;
 }
 
 .counter-digit {
@@ -31,6 +33,8 @@
 .counter-suffix {
   margin-left: 0.1em;
   font-variant-numeric: tabular-nums;
+  color: var(--counter-color, #D0DF00) !important;
+  transition: color 0.5s ease;
 }
 
 .gradient-container {

@@ -9,7 +9,6 @@
 .image-wrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: 800px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -35,6 +34,8 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  /* Ensure Ukiyo wrapper doesn't break layout */
+  max-width: 100%;
 }
 
 /* Responsive adjustments */
@@ -54,4 +55,11 @@
   .image-wrapper {
     aspect-ratio: 1 / 1;
   }
+}
+
+/* Ensure Ukiyo wrapper is fully responsive */
+:global(.ukiyo-wrapper) {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
 }

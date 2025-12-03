@@ -28,11 +28,25 @@ const t = translations[currentLang];
   
   // Initialize Ukiyo parallax effect when the DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
-    new Ukiyo('.ukiyo', {
+    const ukiyoInstance = new Ukiyo('.ukiyo', {
       speed: 1.5,
       scale: 1.2,
       wrapperClass: 'ukiyo-wrapper',
       willChange: true
+    });
+    
+    // Ensure responsive behavior on resize
+    let resizeTimeout: NodeJS.Timeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Reinitialize or refresh Ukiyo if needed
+        const wrapper = document.querySelector('.ukiyo-wrapper');
+        if (wrapper) {
+          wrapper.style.width = '100%';
+          wrapper.style.maxWidth = '100%';
+        }
+      }, 250);
     });
   });
 </script>
