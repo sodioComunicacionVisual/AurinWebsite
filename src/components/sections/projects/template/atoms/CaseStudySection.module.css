@@ -15,7 +15,7 @@
 
 .title {
   color: #D0DF00;
-  font-family: var(--font-body);
+  font-family: var(--font-heading);
   font-size: var(--body-bold-1-size);
   font-weight: var(--body-bold-1-weight);
   line-height: var(--body-bold-1-line-height);
