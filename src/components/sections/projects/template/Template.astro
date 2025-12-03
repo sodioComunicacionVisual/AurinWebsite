@@ -8,19 +8,13 @@ import StickyFooter from '../../../ui/StickyFooter.astro';
 import ProjectBanner from './atoms/ProjectBanner.astro';
 import CaseStudySection from './atoms/CaseStudySection.astro';
 import ImageGrid from './atoms/ImageGrid.astro';
-import ServicesSection from './atoms/ServicesSection.astro';
-import LearningSection from './atoms/LearningSection.astro';
 import styles from './Template.module.css';
 
-// TypeScript interfaces para props din�micas desde Strapi
-interface Service {
-  name: string;
-}
-
+// TypeScript interfaces para props dinámicas desde Payload
 interface ProjectTemplateProps {
   // Banner Section
   projectTitle: string;
-  projectCategories: string[];
+  projectCategories: string[]; // Ahora son los servicios ofrecidos
   projectDescription: string;
   bannerImage?: string;
 
@@ -31,14 +25,6 @@ interface ProjectTemplateProps {
   // Main Image Section
   mainImage?: string;
   mainImageAlt?: string;
-
-  // Services Section
-  servicesTitle?: string;
-  services?: Service[];
-
-  // Learning Section
-  learningTitle?: string;
-  learningContent?: string;
 
   // Optional Payload fields
   publishDate?: Date;
@@ -58,8 +44,6 @@ const { projectData } = Astro.props;
 
 <!-- Header Navigation -->
 <Header />
-
-
 
 <article class={styles.projectTemplate}>
   <!-- Strip 1: Project Banner (Hero) -->
@@ -81,22 +65,6 @@ const { projectData } = Astro.props;
   <!-- Strip 3: Main Image -->
   {projectData.mainImage && (
     <ImageGrid image={projectData.mainImage} alt={projectData.mainImageAlt} />
-  )}
-
-  <!-- Strip 4: Services (Interactive Island) -->
-  {projectData.servicesTitle && projectData.services && projectData.services.length > 0 && (
-    <ServicesSection
-      title={projectData.servicesTitle}
-      services={projectData.services}
-    />
-  )}
-
-  <!-- Strip 5: Learning -->
-  {projectData.learningTitle && projectData.learningContent && (
-    <LearningSection
-      title={projectData.learningTitle}
-      content={projectData.learningContent}
-    />
   )}
 </article>
 
