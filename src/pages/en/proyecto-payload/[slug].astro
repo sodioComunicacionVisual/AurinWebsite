@@ -1,9 +1,9 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Template from '../../components/sections/projects/template/Template.astro';
-import { PayloadAPI, type PayloadProject, getImageUrl, renderRichText } from '../../lib/payload';
-import { getLangFromUrl } from '../../i18n/utils';
-import { translations } from '../../i18n/translations';
+import Layout from '../../../layouts/Layout.astro';
+import Template from '../../../components/sections/projects/template/Template.astro';
+import { PayloadAPI, type PayloadProject, getImageUrl, renderRichText } from '../../../lib/payload';
+import { getLangFromUrl } from '../../../i18n/utils';
+import { translations } from '../../../i18n/translations';
 
 export const prerender = false;
 
@@ -25,9 +25,9 @@ const t = translations[currentLang];
 
 // Fallback data in case project is not found
 const exampleData = {
-  projectTitle: "Proyecto de Ejemplo",
-  projectCategories: ["Diseño UX/UI", "Desarrollo Web"],
-  projectDescription: "Un proyecto de ejemplo para demostrar la funcionalidad.",
+  projectTitle: "Example Project",
+  projectCategories: ["UX/UI Design", "Web Development"],
+  projectDescription: "An example project to demonstrate functionality.",
   gallery: [],
   publishDate: new Date(),
   featured: false,
@@ -48,7 +48,7 @@ const projectData = project ? {
 
 // SEO
 const seoTitle = `${projectData.projectTitle} - Aurin`;
-const seoDescription = projectData.projectDescription || "Proyecto desarrollado por Aurin";
+const seoDescription = projectData.projectDescription || "Project developed by Aurin";
 ---
 
 <Layout

@@ -10,6 +10,8 @@ interface Props {
   href?: string;
   class?: string;
   category?: string;
+  services?: Array<{ name: string }>;
+  filters?: string[];
 }
 
 const {
@@ -18,13 +20,15 @@ const {
   image,
   href = '#',
   class: className = '',
-  category
+  category,
+  services = [],
+  filters = []
 } = Astro.props;
 
 const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
-<a href={href} class={`${styles['project-card']} ${className}`} data-card-id={uniqueId} data-project-card data-category={category}>
+<a href={href} class={`${styles['project-card']} ${className}`} data-card-id={uniqueId} data-project-card data-category={category} data-filters={JSON.stringify(filters)}>
   <div class={styles['card-content']}>
     <!-- Image container -->
     <Tilt 
@@ -41,20 +45,24 @@ const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
     <!-- Info section -->
     <div class={styles['info-section']}>
       <div class={styles['info-content']}>
-        <!-- Tags -->
-        <div class={styles['tags-container']}>
-          {tags.map((tag, index) => (
-            <>
-              {index > 0 && <div class={styles['tag-dot']}></div>}
-              <span class={styles['tag-text']}>{tag}</span>
-            </>
-          ))}
-        </div>
-        
         <!-- Title -->
         <h3 class={styles['project-title']} set:html={title}></h3>
+
+        <!-- Services (Chips Verdes) -->
+        {services.length > 0 && (
+          <div class={styles['services-container']}>
+            {services.slice(0, 3).map((service) => (
+              <span class={styles['service-chip']}>{service.name}</span>
+            ))}
+            {services.length > 3 && (
+              <span class={`${styles['service-chip']} ${styles['service-more']}`}>
+                +{services.length - 3}
+              </span>
+            )}
+          </div>
+        )}
       </div>
-      
+
       <!-- Arrow button -->
       <div class={styles['arrow-button']} data-arrow-button>
         <ArrowUpRight size={16.67} strokeWidth={2.5} />

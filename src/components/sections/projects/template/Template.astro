@@ -6,11 +6,15 @@ import MainCat from '../../../ui/MainCat.astro';
 import Projects from '../../../ui/Projects.astro';
 import StickyFooter from '../../../ui/StickyFooter.astro';
 import ProjectBanner from './atoms/ProjectBanner.astro';
-import CaseStudySection from './atoms/CaseStudySection.astro';
-import ImageGrid from './atoms/ImageGrid.astro';
+import GalleryCarousel from '../../../ui/carousel/GalleryCarousel';
 import styles from './Template.module.css';
 
 // TypeScript interfaces para props dinámicas desde Payload
+interface GalleryImage {
+  imgUrl: string;
+  alt: string;
+}
+
 interface ProjectTemplateProps {
   // Banner Section
   projectTitle: string;
@@ -18,13 +22,8 @@ interface ProjectTemplateProps {
   projectDescription: string;
   bannerImage?: string;
 
-  // Case Study Section (optional)
-  caseStudyTitle?: string;
-  caseStudyContent?: string;
-
-  // Main Image Section
-  mainImage?: string;
-  mainImageAlt?: string;
+  // Gallery Section (replaces Main Image)
+  gallery?: GalleryImage[];
 
   // Optional Payload fields
   publishDate?: Date;
@@ -54,17 +53,14 @@ const { projectData } = Astro.props;
     bannerImage={projectData.bannerImage}
   />
 
-  <!-- Strip 2: Case Study -->
-  {projectData.caseStudyTitle && projectData.caseStudyContent && (
-    <CaseStudySection
-      title={projectData.caseStudyTitle}
-      content={projectData.caseStudyContent}
-    />
-  )}
-
-  <!-- Strip 3: Main Image -->
-  {projectData.mainImage && (
-    <ImageGrid image={projectData.mainImage} alt={projectData.mainImageAlt} />
+  <!-- Strip 2: Image Gallery Carousel -->
+  {projectData.gallery && projectData.gallery.length > 0 && (
+    <section class={styles.gallerySection}>
+      <GalleryCarousel
+        client:load
+        data={projectData.gallery}
+      />
+    </section>
   )}
 </article>
 

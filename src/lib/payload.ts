@@ -9,17 +9,17 @@ export interface PayloadProject {
   status: 'draft' | 'published' | 'archived';
   featured: boolean;
   publishDate: string;
-  category: {
+  website?: string;
+  keywords?: Array<{
+    keyword: string;
+  }>;
+  category?: {
     id: string;
     name: string;
     slug: string;
     color: string;
   };
-  tags?: Array<{
-    id: string;
-    name: string;
-    slug: string;
-  }>;
+  projectFilters: Array<'diseno-ux-ui' | 'desarrollo-web-movil' | 'desarrollo-branding' | 'marketing-digital' | 'pruebas-usabilidad'>;
   hero: {
     description: string;
     bannerImage: {
@@ -33,10 +33,6 @@ export interface PayloadProject {
       name: string;
     }>;
   };
-  caseStudy: {
-    title: string;
-    content: any; // Rich text content
-  };
   gallery: Array<{
     image: {
       id: string;
@@ -48,25 +44,19 @@ export interface PayloadProject {
     alt: string;
     caption?: string;
   }>;
-  learnings: {
+  learnings?: {
     title: string;
     content: any; // Rich text content
   };
   client: {
     name: string;
     industry?: string;
-    website?: string;
     logo?: {
       id: string;
       url: string;
       alt: string;
     };
   };
-  metrics?: Array<{
-    label: string;
-    value: string;
-    description?: string;
-  }>;
   seo?: {
     metaTitle?: string;
     metaDescription?: string;
@@ -93,6 +83,21 @@ export interface PayloadTag {
   name: string;
   slug: string;
 }
+
+export interface ProjectFilter {
+  value: string;
+  label: string;
+}
+
+// Definición de filtros predefinidos
+export const PROJECT_FILTERS: ProjectFilter[] = [
+  { value: 'todos', label: 'Todos' },
+  { value: 'diseno-ux-ui', label: 'Diseño UX/UI' },
+  { value: 'desarrollo-web-movil', label: 'Desarrollo web y de aplicaciones móviles' },
+  { value: 'desarrollo-branding', label: 'Desarrollo de branding' },
+  { value: 'marketing-digital', label: 'Marketing digital y redes sociales' },
+  { value: 'pruebas-usabilidad', label: 'Pruebas de usabilidad' },
+];
 
 // API Functions
 export class PayloadAPI {
@@ -140,9 +145,18 @@ export class PayloadAPI {
     }
   }
 
-  // Get projects by category
-  static async getProjectsByCategory(categorySlug: string, locale: string = 'es'): Promise<PayloadProject[]> {
-    const data = await this.fetchAPI(`/projects?where[category.slug][equals]=${categorySlug}&where[status][equals]=published&sort=-publishDate&limit=100`, locale);
+  // Get projects by filter (single or multiple)
+  static async getProjectsByFilter(filters: string[], locale: string = 'es'): Promise<PayloadProject[]> {
+    if (filters.length === 0 || filters.includes('todos')) {
+      return this.getProjects(locale);
+    }
+
+    // Build query for multiple filters (OR condition)
+    const filterQueries = filters.map((filter, index) =>
+      `where[or][${index}][projectFilters][contains]=${filter}`
+    ).join('&');
+
+    const data = await this.fetchAPI(`/projects?${filterQueries}&where[status][equals]=published&sort=-publishDate&limit=100`, locale);
     return data.docs || [];
   }
 
@@ -164,17 +178,6 @@ export class PayloadAPI {
     return data.docs || [];
   }
 
-  // Get category by slug
-  static async getCategoryBySlug(slug: string, locale: string = 'es'): Promise<PayloadCategory | null> {
-    try {
-      const data = await this.fetchAPI(`/categories?where[slug][equals]=${slug}`, locale);
-      return data.docs?.[0] || null;
-    } catch (error) {
-      console.error(`Error fetching category with slug ${slug}:`, error);
-      return null;
-    }
-  }
-
   // Search projects
   static async searchProjects(query: string, locale: string = 'es'): Promise<PayloadProject[]> {
     const data = await this.fetchAPI(`/projects?where[or][0][title][contains]=${encodeURIComponent(query)}&where[or][1][hero.description][contains]=${encodeURIComponent(query)}&where[status][equals]=published&limit=100`, locale);
@@ -193,11 +196,6 @@ export function getImageUrl(imageUrl: string | undefined): string {
 export function getProjectUrl(project: PayloadProject, locale: string = 'es'): string {
   const prefix = locale === 'es' ? '' : `/${locale}`;
   return `${prefix}/proyecto-payload/${project.slug}`;
-}
-
-export function getCategoryUrl(category: PayloadCategory, locale: string = 'es'): string {
-  const prefix = locale === 'es' ? '' : `/${locale}`;
-  return `${prefix}/proyectos/categoria/${category.slug}`;
 }
 
 export function getTagUrl(tag: PayloadTag, locale: string = 'es'): string {

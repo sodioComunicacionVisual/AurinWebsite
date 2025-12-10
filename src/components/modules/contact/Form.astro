@@ -8,7 +8,16 @@ import { translations } from '../../../i18n/translations.js';
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
+
+// reCAPTCHA Enterprise Site Key
+const RECAPTCHA_SITE_KEY = import.meta.env.RECAPTCHA_SITE_KEY;
 ---
+
+<!-- reCAPTCHA Enterprise Script -->
+<script is:inline define:vars={{ RECAPTCHA_SITE_KEY }}>
+  window.RECAPTCHA_SITE_KEY = RECAPTCHA_SITE_KEY;
+</script>
+<script src={`https://www.google.com/recaptcha/enterprise.js?render=${RECAPTCHA_SITE_KEY}`} async defer></script>
 
 <section class="contact-section">
   <div class="contact-container">
@@ -796,6 +805,32 @@ const t = translations[currentLang];
           submitButton.textContent = t.contact.form.sending;
         }
 
+        // Generate reCAPTCHA token
+        let recaptchaToken = '';
+        try {
+          if (typeof grecaptcha !== 'undefined' && grecaptcha.enterprise) {
+            await grecaptcha.enterprise.ready();
+            recaptchaToken = await grecaptcha.enterprise.execute(window.RECAPTCHA_SITE_KEY, {
+              action: 'submit_contact_form'
+            });
+          } else {
+            throw new Error('reCAPTCHA not loaded');
+          }
+        } catch (recaptchaError) {
+          console.error('reCAPTCHA error:', recaptchaError);
+          (window as any).showToast({
+            title: 'Error de seguridad',
+            description: 'No se pudo verificar reCAPTCHA. Intenta de nuevo.',
+            type: 'error',
+            duration: 5000
+          });
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = t.contact.form.button;
+          }
+          return;
+        }
+
         let fileUrl: string | null = null;
         let filename: string | null = null;
 
@@ -841,6 +876,7 @@ const t = translations[currentLang];
           servicio: formData.get('servicio') as string,
           asunto: formData.get('asunto') as string,
           mensaje: formData.get('mensaje') as string,
+          recaptchaToken: recaptchaToken, // Add reCAPTCHA token
         };
 
         // Add file info if uploaded

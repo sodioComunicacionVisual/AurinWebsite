@@ -72,7 +72,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 13.60px;
+    gap: 8px;
   }
 
   /* Tags */
@@ -109,6 +109,40 @@
     word-wrap: break-word;
     margin: 0;
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Services (Chips Verdes) */
+  .services-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 0;
+  }
+
+  .service-chip {
+    background: var(--color-black-b);
+    color: var(--color-white);
+    padding: 0.375rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: var(--font-body);
+    transition: all 0.3s ease;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .service-more {
+    background: var(--color-black-b);
+    color: var(--color-white);
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .project-card:hover .service-chip {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   /* Arrow button */

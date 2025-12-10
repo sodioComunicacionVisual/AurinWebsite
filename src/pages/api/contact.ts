@@ -2,7 +2,68 @@ import type { APIRoute } from 'astro';
 import { sendContactEmail } from '../../lib/mailing/service';
 import type { ContactFormData } from '../../lib/mailing/types';
 
-export const POST: APIRoute = async ({ request }) => {
+// reCAPTCHA verification function
+async function verifyRecaptcha(token: string, remoteIp?: string): Promise<{ success: boolean; score?: number; error?: string }> {
+  const secretKey = import.meta.env.RECAPTCHA_SECRET_KEY;
+
+  if (!secretKey) {
+    console.error('RECAPTCHA_SECRET_KEY not configured');
+    return { success: false, error: 'reCAPTCHA not configured' };
+  }
+
+  try {
+    const verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+    const params = new URLSearchParams({
+      secret: secretKey,
+      response: token,
+      ...(remoteIp && { remoteip: remoteIp })
+    });
+
+    const response = await fetch(verifyUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString()
+    });
+
+    const result = await response.json();
+
+    console.log('reCAPTCHA verification result:', {
+      success: result.success,
+      score: result.score,
+      action: result.action,
+      challenge_ts: result.challenge_ts
+    });
+
+    // For reCAPTCHA v3, check the score (0.0 to 1.0)
+    // Scores closer to 1.0 indicate likely legitimate interaction
+    // Typically, 0.5 is a good threshold
+    if (result.success && result.score !== undefined) {
+      if (result.score < 0.5) {
+        return {
+          success: false,
+          score: result.score,
+          error: `Low reCAPTCHA score: ${result.score}`
+        };
+      }
+    }
+
+    return {
+      success: result.success,
+      score: result.score,
+      error: result['error-codes']?.join(', ')
+    };
+  } catch (error) {
+    console.error('Error verifying reCAPTCHA:', error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
+}
+
+export const POST: APIRoute = async ({ request, clientAddress }) => {
   try {
     const body = await request.text();
     if (!body) {
@@ -13,7 +74,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const data = JSON.parse(body);
-    const { nombre, correo, servicio, asunto, mensaje, fileUrl, filename } = data;
+    const { nombre, correo, servicio, asunto, mensaje, fileUrl, filename, recaptchaToken } = data;
 
     // Validación básica
     if (!nombre || !correo || !servicio || !asunto || !mensaje) {
@@ -32,6 +93,28 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    // Verify reCAPTCHA token
+    if (!recaptchaToken) {
+      return new Response(
+        JSON.stringify({ error: 'Token de reCAPTCHA no proporcionado' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const recaptchaResult = await verifyRecaptcha(recaptchaToken, clientAddress);
+
+    if (!recaptchaResult.success) {
+      console.warn('reCAPTCHA verification failed:', recaptchaResult.error);
+      return new Response(
+        JSON.stringify({
+          error: 'Verificación de seguridad fallida',
+          details: recaptchaResult.error
+        }),
+        { status: 403, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    console.log('reCAPTCHA verified successfully with score:', recaptchaResult.score);
     console.log('Intentando enviar email con datos:', { nombre, correo, servicio, asunto, mensaje, fileUrl });
 
     // Prepare contact form data

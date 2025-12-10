@@ -831,7 +831,7 @@ export const translations = {
       contentContinue: 'lo cercano y lo distante, lo humano y lo tecnológico, la intuición y los datos, la creatividad y la estrategia. Creemos que las diferencias amplían perspectivas, enriquecen nuestra visión e integran nuevas formas de entender el mundo, permitiéndonos crear soluciones más innovadoras y efectivas.',
       parallaxSmall: '+Lejos',
       parallaxLarge: '+Cerca',
-      contrastText: '+Cerca, +lejos'
+      contrastText: '+Cerca +Lejos'
     },
     expertosUsuarios: {
       subtitle: 'Expertos en',

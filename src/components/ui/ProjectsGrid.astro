@@ -47,12 +47,14 @@ try {
         <ProjectCard
           title={project.title}
           tags={[
-            project.category.name,
+            ...(project.category ? [project.category.name] : []),
             ...(project.tags?.slice(0, 2).map((tag: any) => tag.name) || [])
           ]}
           image={getImageUrl(project.hero.bannerImage?.url) || 'https://placehold.co/800x600?text=No+Image'}
           href={getProjectUrl(project, currentLang)}
-          category={project.category.slug}
+          category={project.category?.slug}
+          services={project.hero.services || []}
+          filters={project.projectFilters || []}
         />
       ))
     ) : (

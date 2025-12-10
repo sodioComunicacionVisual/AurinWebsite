@@ -11,3 +11,15 @@
   scroll-behavior: smooth;
 }
 
+.gallerySection {
+  width: 100%;
+  padding: 60px 0;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .gallerySection {
+    padding: 40px 0;
+  }
+}

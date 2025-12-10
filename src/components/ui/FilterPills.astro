@@ -1,5 +1,5 @@
 ---
-import { PayloadAPI, type PayloadCategory } from '../../lib/payload';
+import { PROJECT_FILTERS } from '../../lib/payload';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 import styles from './FilterPills.module.css';
@@ -13,49 +13,26 @@ const { currentFilter = 'all' } = Astro.props;
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
-
-// Fetch categories from Payload CMS
-let categories: PayloadCategory[] = [];
-try {
-  categories = await PayloadAPI.getCategories(currentLang);
-} catch (error) {
-  console.error('Error fetching categories:', error);
-  categories = [];
-}
-
-// All filter label
-const allLabel = currentLang === 'es' ? 'Todos' : 'All';
 ---
 
 <div class={styles.filterContainer}>
   <div class={styles.pillsContainer} data-filter-pills>
-    <!-- All filter -->
-    <button
-      class={styles.pill}
-      data-filter="all"
-      data-pill
-      data-active="true"
-    >
-      {allLabel}
-    </button>
-
-    <!-- Category filters -->
-    {categories.map((category) => (
+    {PROJECT_FILTERS.map((filter) => (
       <button
         class={styles.pill}
-        data-filter={category.slug}
+        data-filter={filter.value}
         data-pill
-        data-active="false"
-        data-category-color={category.color}
+        data-active={filter.value === 'todos' ? 'true' : 'false'}
+        data-is-all={filter.value === 'todos' ? 'true' : 'false'}
       >
-        {category.name}
+        {filter.label}
       </button>
     ))}
   </div>
 </div>
 
 <script>
-  // Client-side filter functionality with Motion animations
+  // Multi-select filter functionality with Motion animations
   import { animate } from 'motion';
 
   function initFilters() {
@@ -64,80 +41,122 @@ const allLabel = currentLang === 'es' ? 'Todos' : 'All';
 
     const pills = pillsContainer.querySelectorAll('[data-pill]');
     const projectCards = document.querySelectorAll('[data-project-card]');
+    const activeFilters = new Set(['todos']);
+
+    function updateProjectsVisibility() {
+      const cardsToShow: Element[] = [];
+      const cardsToHide: Element[] = [];
+
+      projectCards.forEach((card) => {
+        const cardFiltersAttr = card.getAttribute('data-filters');
+        const cardFilters = cardFiltersAttr ? JSON.parse(cardFiltersAttr) : [];
+
+        // If "todos" is active, show all cards
+        if (activeFilters.has('todos')) {
+          cardsToShow.push(card);
+          return;
+        }
+
+        // If no filters are active, hide everything
+        if (activeFilters.size === 0) {
+          cardsToHide.push(card);
+          return;
+        }
+
+        // Show if the project has at least one of the active filters
+        const hasMatchingFilter = cardFilters.some((filter: string) =>
+          activeFilters.has(filter)
+        );
+
+        if (hasMatchingFilter) {
+          cardsToShow.push(card);
+        } else {
+          cardsToHide.push(card);
+        }
+      });
+
+      // Animate out cards that should be hidden
+      if (cardsToHide.length > 0) {
+        cardsToHide.forEach((card) => {
+          animate(
+            card,
+            {
+              opacity: [1, 0],
+              scale: [1, 0.95]
+            },
+            {
+              duration: 0.3,
+              easing: [0.4, 0, 0.2, 1]
+            }
+          ).finished.then(() => {
+            (card as HTMLElement).style.display = 'none';
+          });
+        });
+      }
+
+      // Animate in cards that should be shown with stagger
+      if (cardsToShow.length > 0) {
+        cardsToShow.forEach((card, index) => {
+          (card as HTMLElement).style.display = '';
+
+          animate(
+            card,
+            {
+              opacity: [0, 1],
+              scale: [0.95, 1],
+              y: [20, 0]
+            },
+            {
+              duration: 0.5,
+              delay: index * 0.05,
+              easing: [0.4, 0, 0.2, 1]
+            }
+          );
+        });
+      }
+    }
 
     pills.forEach((pill) => {
       pill.addEventListener('click', () => {
-        const filter = pill.getAttribute('data-filter');
-        if (!filter) return;
+        const filterValue = pill.getAttribute('data-filter');
+        const isAllButton = pill.getAttribute('data-is-all') === 'true';
 
-        // Update active state on pills
-        pills.forEach((p) => {
-          p.setAttribute('data-active', 'false');
-        });
-        pill.setAttribute('data-active', 'true');
-
-        // Filter and animate projects
-        const cardsToShow: Element[] = [];
-        const cardsToHide: Element[] = [];
-
-        projectCards.forEach((card) => {
-          const cardCategory = card.getAttribute('data-category');
-
-          if (filter === 'all' || cardCategory === filter) {
-            cardsToShow.push(card);
-          } else {
-            cardsToHide.push(card);
-          }
-        });
-
-        // Animate out cards that should be hidden
-        if (cardsToHide.length > 0) {
-          cardsToHide.forEach((card) => {
-            animate(
-              card,
-              {
-                opacity: [1, 0],
-                scale: [1, 0.95]
-              },
-              {
-                duration: 0.3,
-                easing: [0.4, 0, 0.2, 1]
-              }
-            ).finished.then(() => {
-              (card as HTMLElement).style.display = 'none';
-            });
-          });
-        }
-
-        // Animate in cards that should be shown with stagger
-        if (cardsToShow.length > 0) {
-          cardsToShow.forEach((card, index) => {
-            (card as HTMLElement).style.display = '';
-
-            animate(
-              card,
-              {
-                opacity: [0, 1],
-                scale: [0.95, 1],
-                y: [20, 0]
-              },
-              {
-                duration: 0.5,
-                delay: index * 0.05,
-                easing: [0.4, 0, 0.2, 1]
-              }
-            );
-          });
-        }
-
-        // Update URL without reload
-        const url = new URL(window.location.href);
-        if (filter === 'all') {
-          url.searchParams.delete('category');
+        if (isAllButton) {
+          // If "Todos" is clicked, uncheck all others
+          activeFilters.clear();
+          activeFilters.add('todos');
+          pills.forEach((p) => p.setAttribute('data-active', 'false'));
+          pill.setAttribute('data-active', 'true');
         } else {
-          url.searchParams.set('category', filter);
+          // If another filter is clicked, remove "Todos"
+          activeFilters.delete('todos');
+          pills.forEach((p) => {
+            if (p.getAttribute('data-is-all') === 'true') {
+              p.setAttribute('data-active', 'false');
+            }
+          });
+
+          // Toggle the clicked filter
+          if (activeFilters.has(filterValue!)) {
+            activeFilters.delete(filterValue!);
+            pill.setAttribute('data-active', 'false');
+          } else {
+            activeFilters.add(filterValue!);
+            pill.setAttribute('data-active', 'true');
+          }
+
+          // If no filters are active, go back to "Todos"
+          if (activeFilters.size === 0) {
+            activeFilters.add('todos');
+            pills.forEach((p) => {
+              if (p.getAttribute('data-is-all') === 'true') {
+                p.setAttribute('data-active', 'true');
+              }
+            });
+          }
         }
-        window.history.pushState({}, '', url);
+
+        updateProjectsVisibility();
       });
     });
   }

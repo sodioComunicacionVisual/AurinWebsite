@@ -48,6 +48,6 @@
 @media (min-width: 1024px) {
   .container {
     padding: 49px 50px;
-    gap: 50px;
+    gap: 20px;
   }
 }

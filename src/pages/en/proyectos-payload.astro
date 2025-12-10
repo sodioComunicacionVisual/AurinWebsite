@@ -1,9 +1,8 @@
 ---
-//ESTA ES UNA PAGINA NECESARIA PARA payload. No esta indexada ni se muestra en el layout , pero recomiendo no eliminar.
-import Layout from '../layouts/Layout.astro';
-import { PayloadAPI, getImageUrl, PROJECT_FILTERS } from '../lib/payload';
-import { getLangFromUrl } from '../i18n/utils';
-import { translations } from '../i18n/translations';
+import Layout from '../../layouts/Layout.astro';
+import { PayloadAPI, getImageUrl, PROJECT_FILTERS } from '../../lib/payload';
+import { getLangFromUrl } from '../../i18n/utils';
+import { translations } from '../../i18n/translations';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -13,25 +12,25 @@ const t = translations[currentLang];
 const projects = await PayloadAPI.getProjects(currentLang);
 
 // SEO
-const seoTitle = t.projects?.seo?.title || "Proyectos - Aurin";
-const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados por Aurin";
+const seoTitle = t.projects?.seo?.title || "Projects - Aurin";
+const seoDescription = t.projects?.seo?.description || "Projects developed by Aurin";
 ---
 
-<Layout 
+<Layout
   title={seoTitle}
   description={seoDescription}
 >
   <main class="projects-page">
     <section class="hero">
       <div class="container">
-        <h1>Proyectos</h1>
-        <p>Explora nuestro portafolio de proyectos de diseño gráfico, branding e identidad corporativa.</p>
+        <h1>Projects</h1>
+        <p>Explore our portfolio of graphic design, branding and corporate identity projects.</p>
       </div>
     </section>
 
     <section class="filters">
       <div class="container">
-        <h2>Filtros de Proyectos</h2>
+        <h2>Project Filters</h2>
         <div class="filter-buttons" id="filter-buttons">
           {PROJECT_FILTERS.map((filter) => (
             <button
@@ -61,7 +60,7 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
                 class="project-card"
                 data-filters={JSON.stringify(project.projectFilters || [])}
               >
-                <a href={`/proyecto-payload/${project.slug}`}>
+                <a href={`/en/proyecto-payload/${project.slug}`}>
                   <div class="project-image">
                     {project.hero.bannerImage ? (
                       <img
@@ -73,7 +72,7 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
                       />
                     ) : (
                       <div class="placeholder">
-                        <span>Imagen del proyecto</span>
+                        <span>Project image</span>
                       </div>
                     )}
                   </div>
@@ -81,7 +80,7 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
                   <div class="project-content">
                     <div class="project-meta">
                       {project.featured && (
-                        <span class="featured-badge">Destacado</span>
+                        <span class="featured-badge">Featured</span>
                       )}
                     </div>
 
@@ -104,8 +103,8 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
           </div>
         ) : (
           <div class="empty-state">
-            <h3>No hay proyectos disponibles</h3>
-            <p>Pronto agregaremos nuevos proyectos.</p>
+            <h3>No projects available</h3>
+            <p>We will add new projects soon.</p>
           </div>
         )}
       </div>
@@ -114,7 +113,7 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
 </Layout>
 
 <script>
-  // Filtrado múltiple de proyectos
+  // Multi-filter functionality for projects
   document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
@@ -124,19 +123,19 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
       projectCards.forEach((card) => {
         const cardFilters = JSON.parse(card.getAttribute('data-filters') || '[]');
 
-        // Si "todos" está activo, mostrar todas las tarjetas
+        // If "all" is active, show all cards
         if (activeFilters.has('todos')) {
           card.style.display = 'block';
           return;
         }
 
-        // Si no hay filtros activos, ocultar todo
+        // If no filters are active, hide everything
         if (activeFilters.size === 0) {
           card.style.display = 'none';
           return;
         }
 
-        // Mostrar si el proyecto tiene al menos uno de los filtros activos
+        // Show if the project has at least one of the active filters
         const hasMatchingFilter = cardFilters.some((filter: string) =>
           activeFilters.has(filter)
         );
@@ -151,13 +150,13 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
         const isAllButton = button.getAttribute('data-is-all') === 'true';
 
         if (isAllButton) {
-          // Si se clickea "Todos", desmarcar todos los demás
+          // If "All" is clicked, uncheck all others
           activeFilters.clear();
           activeFilters.add('todos');
           filterButtons.forEach((btn) => btn.classList.remove('active'));
           button.classList.add('active');
         } else {
-          // Si se clickea otro filtro, quitar "Todos"
+          // If another filter is clicked, remove "All"
           activeFilters.delete('todos');
           filterButtons.forEach((btn) => {
             if (btn.getAttribute('data-is-all') === 'true') {
@@ -165,7 +164,7 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
             }
           });
 
-          // Toggle el filtro clickeado
+          // Toggle the clicked filter
           if (activeFilters.has(filterValue!)) {
             activeFilters.delete(filterValue!);
             button.classList.remove('active');
@@ -174,7 +173,7 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
             button.classList.add('active');
           }
 
-          // Si no hay filtros activos, volver a "Todos"
+          // If no filters are active, go back to "All"
           if (activeFilters.size === 0) {
             activeFilters.add('todos');
             filterButtons.forEach((btn) => {
@@ -357,10 +356,16 @@ const seoDescription = t.projects?.seo?.description || "Proyectos desarrollados 
 
 .project-meta {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
-  min-height: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.category {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .featured-badge {
