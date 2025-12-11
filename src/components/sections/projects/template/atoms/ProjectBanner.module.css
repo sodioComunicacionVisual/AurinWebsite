@@ -16,9 +16,15 @@
 
 .content {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 30px;
   padding: 50px 100px 0px 100px;
+}
+
+.imageSection {
+  width: 80px;
+  aspect-ratio: 1 / 1;
+  align-self: flex-start;
 }
 
 /* Remove side padding for viewports smaller than 910px */
@@ -62,13 +68,6 @@
   white-space: nowrap;
 }
 
-.imageSection {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 8px;
-  overflow: hidden;
-}
 
 .bannerImage {
   width: 100%;
@@ -160,6 +159,7 @@
   .content {
     flex-direction: column-reverse;
     gap: 20px;
+    max-width: 60%;
   }
 
   .textSection {
@@ -169,7 +169,6 @@
 
   .imageSection {
     width: 18%;
-    align-self: flex-start;
     margin-bottom: 10px;
   }
 

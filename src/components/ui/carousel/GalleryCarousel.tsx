@@ -16,7 +16,9 @@ const GalleryCarousel = ({ data = [] }: GalleryCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(1); // Start at 1 to allow infinite scroll
   const [isAnimating, setIsAnimating] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const autoSlideRef = useRef<NodeJS.Timeout | null>(null);
 
   // Prefetch all images on mount
   useEffect(() => {
@@ -65,6 +67,31 @@ const GalleryCarousel = ({ data = [] }: GalleryCarouselProps) => {
       containerRef.current.style.transform = `translateX(-${currentIndex * slidePercentage}%)`;
     }
   }, []);
+
+  // Auto-slide effect - only when there's more than 1 image
+  useEffect(() => {
+    // Only auto-slide if there's more than 1 image and images are loaded
+    if (data.length <= 1 || !imagesLoaded || isPaused) {
+      return;
+    }
+
+    // Clear any existing interval
+    if (autoSlideRef.current) {
+      clearInterval(autoSlideRef.current);
+    }
+
+    // Set up auto-slide interval (2.5 seconds)
+    autoSlideRef.current = setInterval(() => {
+      nextSlide();
+    }, 2500);
+
+    // Cleanup on unmount or when dependencies change
+    return () => {
+      if (autoSlideRef.current) {
+        clearInterval(autoSlideRef.current);
+      }
+    };
+  }, [data.length, imagesLoaded, isPaused, currentIndex]);
 
   const nextSlide = () => {
     if (isAnimating || data.length <= 1) return;
@@ -116,6 +143,16 @@ const GalleryCarousel = ({ data = [] }: GalleryCarouselProps) => {
     }
   };
 
+  // Pause auto-slide on mouse enter
+  const handleMouseEnter = () => {
+    setIsPaused(true);
+  };
+
+  // Resume auto-slide on mouse leave
+  const handleMouseLeave = () => {
+    setIsPaused(false);
+  };
+
   if (!data || data.length === 0) {
     return (
       <div style={{
@@ -157,12 +194,16 @@ const GalleryCarousel = ({ data = [] }: GalleryCarouselProps) => {
   }
 
   return (
-    <div style={{
-      width: '100%',
-      maxWidth: '100vw',
-      padding: '0 1rem',
-      position: 'relative'
-    }}>
+    <div
+      style={{
+        width: '100%',
+        maxWidth: '100vw',
+        padding: '0 1rem',
+        position: 'relative'
+      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <div style={{
         width: '100%',
         maxWidth: data.length === 1 ? '1200px' : '100%',
