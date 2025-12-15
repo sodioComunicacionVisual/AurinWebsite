@@ -25,7 +25,7 @@ const t = translations[currentLang];
         data-active={filter.value === 'todos' ? 'true' : 'false'}
         data-is-all={filter.value === 'todos' ? 'true' : 'false'}
       >
-        {filter.label}
+        {t.projects.filters[filter.value as keyof typeof t.projects.filters] || filter.label}
       </button>
     ))}
   </div>
