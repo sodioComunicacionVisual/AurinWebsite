@@ -103,9 +103,6 @@
   .project-title {
     align-self: stretch;
     color: var(--color-white);
-    font-size: 24px;
-    font-family: var(--font-body);
-    font-weight: 400;
     word-wrap: break-word;
     margin: 0;
     transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -193,10 +190,6 @@
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    .project-title {
-      font-size: 20px;
-    }
-
     .tag-text {
       font-size: 13px;
     }

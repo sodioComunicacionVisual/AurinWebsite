@@ -35,7 +35,7 @@ const mainCatContent = (t.mainCat as any)[pageContext] || (t.mainCat as any).hom
     <div class={styles.mainCatWrapper} data-parallax-wrapper>
       <div class={styles.mainCatContent}>
         <div class={styles.mainCatText}>
-          <p class={styles.body0} set:html={mainCatContent.text}>
+          <p class="description" style="color: var(--color-black-a);" set:html={mainCatContent.text}>
           </p>
         </div>
         <div class={styles.buttonWrapper}>

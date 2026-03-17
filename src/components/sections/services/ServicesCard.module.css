@@ -73,11 +73,6 @@
 
 .card-title {
   color: #0A0A0A;
-  font-size: clamp(24px, 3vw, 32px);
-  font-family: var(--font-heading, 'Titillium Web', sans-serif);
-  font-weight: 300;
-  line-height: 1.2;
-  margin: 0;
   transition: all 0.3s ease;
 }
 

@@ -110,9 +110,9 @@ export const translations = {
       switchToEnglish: "Switch to English",
       navLinks: {
         home: "Home",
-        about: "About",
+        about: "Aurin",
         services: "Services", 
-        projects: "Projects",
+        projects: "Portfolio",
         contact: "Contact"
       }
     },
@@ -121,8 +121,8 @@ export const translations = {
       menuItems: {
         home: "Home",
         services: "Services",
-        projects: "Projects",
-        about: "About",
+        projects: "Portfolio",
+        about: "Aurin",
         contact: "Contact"
       }
     },
@@ -139,7 +139,7 @@ export const translations = {
         ctaButton: "Start your project now"
       },
       headingLight: "Historias que",
-      headingHighlight: "hablan por si solas",
+      headingHighlight: "hablan por sí solas",
       buttonText: "View all projects",
       tags: {
         uxui: "UX/UI Design",
@@ -247,7 +247,7 @@ export const translations = {
     },
     expertosUsuarios: {
       subtitle: 'User',
-      title: 'Experts',
+      title: 'experts',
       description: 'We believe that truly great design places the human experience at the heart of everything, bringing meaning to our world through visual narratives that move and transform.',
       buttonText: 'Meet our authors of experiences'
     },
@@ -296,7 +296,8 @@ export const translations = {
       legal: 'LEGAL',
       privacyPolicy: 'Privacy policy',
       termsConditions: 'Terms and conditions',
-      copyright: '©2025 aurin. All rights reserved'
+      copyright: '©2025 aurin. All rights reserved',
+      performanceStats: 'Performance Stats'
     },
     privacy: {
       seo: {
@@ -716,7 +717,7 @@ export const translations = {
         home: "Inicio",
         about: "Nosotros",
         services: "Servicios", 
-        projects: "Proyectos",
+        projects: "Aurin",
         contact: "Contacto"
       }
     },
@@ -725,8 +726,8 @@ export const translations = {
       menuItems: {
         home: "Inicio",
         services: "Servicios",
-        projects: "Proyectos",
-        about: "Nosotros",
+        projects: "Portafolio",
+        about: "Aurin",
         contact: "Contacto"
       }
     },
@@ -743,7 +744,7 @@ export const translations = {
         ctaButton: "Comienza tu proyecto ahora"
       },
       headingLight: "Historias que",
-      headingHighlight: "hablan por si solas",
+      headingHighlight: "hablan por sí solas",
       buttonText: "Ver todos los proyectos",
       tags: {
         uxui: "Diseño UX/UI",
@@ -806,8 +807,8 @@ export const translations = {
         }
       ],
       tools: {
-        titlePart1: "Nuestra caja",
-        titlePart2: "de Herramientas",
+        titlePart1: "Nuestra",
+        titlePart2: "Suite de Herramientas",
         description: "Todo lo que imaginamos, lo creamos con intención. Cada herramienta es una forma de acercarnos, conectar y dar vida a lo que aún no existe.",
         items: [
           {
@@ -834,7 +835,7 @@ export const translations = {
       }
     },
     banner: {
-      badge: 'Expertos en Usuarios',
+      badge: 'Expertos en usuarios',
       title1: 'Diseño que conecta.',
       title2: 'Experiencias que transforman.',
       description: 'Creamos narrativas visuales que inspiran y generan impacto real. Desde branding hasta experiencias digitales, convertimos tu visión en resultados memorables.',
@@ -851,13 +852,13 @@ export const translations = {
     },
     expertosUsuarios: {
       subtitle: 'Expertos en',
-      title: 'Usuarios',
+      title: 'usuarios',
       description: 'Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.',
       buttonText: 'Conoce a nuestros autores de experiencias'
     },
     especialidades: {
       heading: 'Nuestras',
-      headingHighlight: 'Especialidades',
+      headingHighlight: 'especialidades',
       description: 'Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.',
       buttonText: 'Conoce más de nuestros servicios',
       card1Title: 'Auditorías de marca y experiencia',
@@ -900,7 +901,8 @@ export const translations = {
       legal: 'LEGALES',
       privacyPolicy: 'Aviso de privacidad',
       termsConditions: 'Términos y condiciones',
-      copyright: '©2025 aurin. Todos los derechos reservados'
+      copyright: '©2025 aurin. Todos los derechos reservados',
+      performanceStats: 'Estadísticas de Rendimiento'
     },
     privacy: {
       seo: {

@@ -176,9 +176,7 @@
     z-index: 1;
   }
 
-  .menu-button:hover .menu-icon-bg {
-    transform: scale(1.05);
-  }
+
 
   /* Responsive Design */
   @media (max-width: 1200px) {

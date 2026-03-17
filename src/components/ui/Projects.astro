@@ -1,10 +1,23 @@
 ---
+import SectionHeading from './SectionHeading.astro';
 import ProjectCard from './ProjectCard.astro';
 import ButtonIsland from './ButtonIsland.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 import { PayloadAPI, getProjectUrl, getImageUrl, type PayloadProject } from '../../lib/payload';
 import styles from './Projects.module.css';
+
+interface Props {
+  maxProjects?: number;
+  showChips?: boolean;
+  variant?: 'three-column' | 'four-column';
+}
+
+const { 
+  maxProjects = 3, 
+  showChips = true,
+  variant = 'three-column'
+} = Astro.props;
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -13,17 +26,17 @@ const t = translations[currentLang];
 // Fetch projects from Payload CMS
 let projects: PayloadProject[] = [];
 try {
-  // Get all projects and select 3 random ones
+  // Get all projects and select random ones
   const allProjects = await PayloadAPI.getProjects(currentLang);
 
-  // Shuffle array and take first 3 (Fisher-Yates shuffle)
+  // Shuffle array (Fisher-Yates shuffle)
   const shuffled = [...allProjects];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
 
-  projects = shuffled.slice(0, 3);
+  projects = shuffled.slice(0, maxProjects);
 } catch (error) {
   console.error('Error fetching projects:', error);
   // Fallback to empty array if CMS is not available
@@ -35,10 +48,10 @@ try {
   <div class={styles.projectsContainer}>
     <!-- Header section -->
     <div class={styles.headerSection}>
-      <div class={styles.headingWrapper}>
-        <span class={styles.headingLight}>{t.projects.headingLight}</span>
-        <h2 class={styles.headingHighlight}>{t.projects.headingHighlight}</h2>
-      </div>
+      <SectionHeading
+        lightText={t.projects.headingLight}
+        highlightText={t.projects.headingHighlight}
+      />
       
       <ButtonIsland
         text={t.projects.buttonText}
@@ -47,19 +60,18 @@ try {
       />
     </div>
 
-    <!-- Projects grid -->
-    <div class={styles.projectsGrid}>
+    <!-- Projects grid with variant support -->
+    <div class={`${styles.projectsGrid} ${variant === 'four-column' ? styles.projectsGridFourColumn : ''}`}>
       {projects.length > 0 ? (
         projects.map((project) => (
           <ProjectCard
             title={project.title}
             tags={[
-              ...(project.category ? [project.category.name] : []),
-              ...(project.tags?.slice(0, 1).map((tag: { name: string }) => tag.name) || [])
+              ...(project.category ? [project.category.name] : [])
             ]}
             image={getImageUrl(project.hero.bannerImage?.url) || 'https://placehold.co/800x600?text=No+Image'}
             href={getProjectUrl(project, currentLang)}
-            services={project.hero.services || []}
+            services={showChips ? (project.hero.services || []) : []}
             filters={project.projectFilters || []}
           />
         ))
@@ -71,6 +83,7 @@ try {
             tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
             image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectGalicia.webp"
             href="/proyectos/galicia"
+            services={showChips ? [{name: "UX/UI"}] : []}
           />
 
           <ProjectCard
@@ -78,6 +91,7 @@ try {
             tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
             image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSinfonica.webp"
             href="/proyectos/sinfonica"
+            services={showChips ? [{name: "Branding"}] : []}
           />
 
           <ProjectCard
@@ -85,7 +99,18 @@ try {
             tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
             image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSai.webp"
             href="/proyectos/sai"
+            services={showChips ? [{name: "Desarrollo"}] : []}
           />
+          
+          {maxProjects >= 4 && (
+            <ProjectCard
+              title="Extra Project"
+              tags={[t.projects.tags.uxui]}
+              image="https://placehold.co/800x600?text=Project+4"
+              href="/proyectos"
+              services={showChips ? [{name: "Digital"}] : []}
+            />
+          )}
         </>
       )}
     </div>

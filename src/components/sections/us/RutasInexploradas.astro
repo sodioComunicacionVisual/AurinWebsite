@@ -22,10 +22,10 @@ const t = translations[currentLang];
     <!-- Contenido -->
     <div class={styles['content-wrapper']}>
       <div class={styles['text-columns']}>
-        <p class={styles['column-text']}>
+        <p class={`${styles['column-text']} description`} style="color: var(--color-white);">
           {t.about.rutasInexploradas.paragraph1}
         </p>
-        <p class={styles['column-text']}>
+        <p class={`${styles['column-text']} description`} style="color: var(--color-white);">
           {t.about.rutasInexploradas.paragraph2}
         </p>
       </div>

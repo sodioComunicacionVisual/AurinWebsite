@@ -30,7 +30,7 @@ const wrapperClass = `${styles['button-wrapper']} ${styles[`button-wrapper--${va
   {href ? (
     <a href={href} class={styles['button-container']}>
       <div class={styles['button-text']} data-text-container>
-        <span>{text}</span>
+        <span class="description">{text}</span>
       </div>
       <div class={styles['button-icon']} data-icon-container>
         <ArrowUpRight size={22} strokeWidth={2.5} />
@@ -44,7 +44,7 @@ const wrapperClass = `${styles['button-wrapper']} ${styles[`button-wrapper--${va
       class={styles['button-container']}
     >
       <div class={styles['button-text']} data-text-container>
-        <span>{text}</span>
+        <span class="description">{text}</span>
       </div>
       <div class={styles['button-icon']} data-icon-container>
         <ArrowUpRight size={22} strokeWidth={2.5} />

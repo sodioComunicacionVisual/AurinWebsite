@@ -1,5 +1,5 @@
 ---
-import ScrollReveal from '../../ui/ScrollReveal.astro';
+import SectionHeading from '../../ui/SectionHeading.astro';
 import LightTallCard from '../../ui/LightTallCard.astro';
 import DarkTallCard from '../../ui/DarkTallCard.astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
@@ -71,17 +71,12 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     <div class="header">
       <div class="header-content">
         <div class="title-wrapper">
-          <ScrollReveal 
-            text={`${titlePart1}\n${titlePart2}`}
-            tag="h2"
-            textClass="title"
-            baseOpacity={0.7}
-            baseRotation={2}
-            blurStrength={2}
-            enableBlur={true}
+          <SectionHeading
+            lightText={titlePart1}
+            highlightText={titlePart2}
           />
         </div>
-        <p class="description body-1">{description}</p>
+        <p class="description" style="color: var(--color-white);">{description}</p>
       </div>
     </div>
   </div>
@@ -146,29 +141,7 @@ const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
     max-width: 488px;
   }
 
-  :global(.title) {
-    margin: 0 !important;
-    opacity: 1 !important;
-  }
-
-  :global(.title .scroll-reveal-word:nth-child(1)),
-  :global(.title .scroll-reveal-word:nth-child(2)) {
-    color: var(--color-white) !important;
-    font-size: var(--heading-5-size) !important;
-    font-family: var(--font-heading) !important;
-    font-weight: 300 !important;
-    line-height: var(--heading-5-line-height) !important;
-    opacity: 1 !important;
-  }
-
-  :global(.title .scroll-reveal-word:nth-child(n+3)) {
-    color: var(--color-yellow) !important;
-    font-size: var(--heading-2-size) !important;
-    font-family: var(--font-heading) !important;
-    font-weight: 300 !important;
-    line-height: var(--heading-2-line-height) !important;
-    opacity: 1 !important;
-  }
+  
 
   .description {
     align-self: stretch;

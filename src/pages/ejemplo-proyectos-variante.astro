@@ -1,0 +1,45 @@
+---
+// EJEMPLO DE USO: Strip de proyectos con 4 columnas y sin chips
+// Este archivo demuestra cómo integrar la nueva variante en una página
+
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/ui/Header.astro';
+import InteractiveBackground from '../../components/ui/InteractiveBackground.astro';
+import Vignette from '../../components/ui/Vignette.astro';
+import ProjectsFourColumn from '../../components/ui/ProjectsFourColumn.astro';
+import StickyFooter from '../../components/ui/StickyFooter.astro';
+import { getLangFromUrl } from '../../i18n/utils.js';
+import { translations } from '../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<Layout
+  title="Ejemplo - Variante 4 Columnas"
+  description="Página de ejemplo mostrando la strip de proyectos con 4 columnas sin chips"
+>
+  <InteractiveBackground />
+  <Vignette intensity="medium" />
+  <Header />
+  
+  <main style="padding-top: 100px;">
+    <!-- 
+      Nueva variante: ProjectsFourColumn
+      - Muestra 4 proyectos aleatorios
+      - Usa ProjectCardNoChips (sin chips de servicios)
+      - Grid de 4 columnas en desktop
+    -->
+    <ProjectsFourColumn />
+  </main>
+  
+  <StickyFooter />
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    min-height: 100vh;
+  }
+</style>

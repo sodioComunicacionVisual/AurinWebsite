@@ -1,0 +1,19 @@
+.headingWrapper {
+  flex: 1;
+  max-width: 488px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 480px) {
+  .headingWrapper span,
+  .headingWrapper h1,
+  .headingWrapper h2,
+  .headingWrapper h3,
+  .headingWrapper h4,
+  .headingWrapper h5,
+  .headingWrapper h6 {
+    font-size: var(--heading-5-size);
+    line-height: var(--heading-5-line-height);
+  }
+}

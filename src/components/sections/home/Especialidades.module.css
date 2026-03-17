@@ -24,7 +24,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 20px;
+  gap: 30px;                    /* ⭐ Ajustado para consistencia (antes 20px) */
   box-sizing: border-box;
 }
 
@@ -34,34 +34,41 @@
   }
 }
 
+/* Heading wrapper for SectionHeading component */
+.headingWrapper {
+  max-width: 488px;             /* ⭐ Ancho máximo consistente */
+  align-self: stretch;
+}
+
+/* Legacy styles - can be removed if not used elsewhere */
 .heading {
   align-self: stretch;
 }
 
 .headingNormal {
   color: var(--color-white);
-  font-size: clamp(24px, 3.5vw, 32px);
-  font-family: var(--font-heading);
-  font-weight: 300;
-  line-height: clamp(28px, 4vw, 35px);
+  font-size: clamp(var(--font-size-2xl), 3.5vw, var(--heading-5-size));
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-light);
+  line-height: clamp(28px, 4vw, var(--heading-5-line-height));
   word-wrap: break-word;
 }
 
 .headingHighlight {
   color: var(--color-yellow);
-  font-size: clamp(32px, 5vw, 48px);
-  font-family: var(--font-heading);
-  font-weight: 300;
-  line-height: clamp(38px, 5.5vw, 50px);
+  font-size: clamp(var(--heading-5-size), 5vw, var(--heading-2-size));
+  font-family: var(--font-family-display);
+  font-weight: var(--font-weight-light);
+  line-height: clamp(38px, 5.5vw, var(--heading-2-line-height));
   word-wrap: break-word;
 }
 
 .description {
   align-self: stretch;
   color: var(--color-white);
-  font-size: clamp(14px, 3.5vw, 18px);
-  font-family: var(--font-body);
-  font-weight: 400;
+  font-size: var(--body-1-size);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-regular);
   line-height: 1.6;
   word-wrap: break-word;
   margin: 0;
@@ -72,13 +79,13 @@
 .cardsSection {
   flex: 1;
   min-width: 0;
-  padding: clamp(30px, 5vw, 50px) clamp(20px, 3vw, 40px);
+  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12)) clamp(var(--spacing-5), 3vw, var(--spacing-10));
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-2);
   box-sizing: border-box;
 }
 
@@ -87,7 +94,7 @@
   max-width: 713.91px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: var(--spacing-4);
   justify-items: start;
 }
 
@@ -107,14 +114,14 @@
     width: 100%;
     min-width: 0;
     height: auto;
-    padding: 50px 40px;
+    padding: var(--spacing-12) var(--spacing-10);
   }
 
   .cardsSection {
     width: 100%;
     min-width: 0;
     height: auto;
-    padding: 50px 40px;
+    padding: var(--spacing-12) var(--spacing-10);
     align-items: flex-start;
   }
 
@@ -131,16 +138,16 @@
 
 @media (max-width: 768px) {
   .contentSection {
-    padding: 40px 30px;
+    padding: var(--spacing-10) var(--spacing-8);
   }
 
   .cardsSection {
-    padding: 40px 30px;
+    padding: var(--spacing-10) var(--spacing-8);
   }
 
   .cardsGrid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: var(--spacing-5);
   }
 
   .cardsGrid :global(.card) {
@@ -159,16 +166,16 @@
 
 @media (max-width: 480px) {
   .contentSection {
-    padding: 30px 20px;
+    padding: var(--spacing-8) var(--spacing-5);
     gap: 15px;
   }
 
   .cardsSection {
-    padding: 30px 20px;
+    padding: var(--spacing-8) var(--spacing-5);
   }
 
   .cardsGrid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: var(--spacing-5);
   }
 }

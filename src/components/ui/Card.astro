@@ -23,7 +23,7 @@ const uniqueId = `card-${Math.random().toString(36).substr(2, 9)}`;
 		{letter}
 	</div>
 	<div class={styles['card-content']} data-card-content>
-		<div class={styles['card-title']} data-card-title>
+		<div class={`${styles['card-title']} description`} data-card-title>
 			{title}
 		</div>
 	</div>

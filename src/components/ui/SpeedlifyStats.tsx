@@ -58,8 +58,8 @@ const ScoreCard: React.FC<{
       {getScoreGrade(score)}
     </div>
     <div className={styles.scoreInfo}>
-      <span className={styles.scoreLabel}>{label}</span>
-      <span className={styles.scoreValue}>{score}/100</span>
+      <span className={`${styles.scoreLabel} description`}>{label}</span>
+      <span className={`${styles.scoreValue} description`}>{score}/100</span>
     </div>
   </div>
 );
@@ -71,9 +71,9 @@ const VitalCard: React.FC<{
   threshold: number;
 }> = ({ label, value, unit, threshold }) => (
   <div className={styles.vitalCard}>
-    <span className={styles.vitalLabel}>{label}</span>
+    <span className={`${styles.vitalLabel} description`}>{label}</span>
     <span
-      className={styles.vitalValue}
+      className={`${styles.vitalValue} description`}
       style={{ color: value <= threshold ? '#d0df00' : '#fffdc5' }}
     >
       {value}{unit}
@@ -213,7 +213,7 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
     return (
       <div className={`${styles.loading} ${className}`}>
         <div className={styles.spinner}></div>
-        <span className={styles.loadingText}>{t.loading}</span>
+        <span className={`${styles.loadingText} description`}>{t.loading}</span>
       </div>
     );
   }
@@ -309,7 +309,7 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
         {/* Status Indicator */}
         <div className={styles.statusIndicator}>
           <div className={`${styles.statusDot} ${isRealData ? styles.live : styles.demo}`}></div>
-          <span className={`${styles.statusText} ${isRealData ? styles.live : styles.demo}`}>
+          <span className={`${styles.statusText} description ${isRealData ? styles.live : styles.demo}`}>
             {isRealData ? t.status.liveData : t.status.demoData}
           </span>
         </div>
@@ -318,14 +318,14 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
         {(hidePerformance || hideAccessibility) && (
           <div className={styles.statusIndicator}>
             <div className={`${styles.statusDot} ${styles.filtered}`}></div>
-            <span className={`${styles.statusText} ${styles.filtered}`}>
+            <span className={`${styles.statusText} description ${styles.filtered}`}>
               {t.status.filtered}
             </span>
           </div>
         )}
 
         {/* Timestamp */}
-        <span className={styles.timestamp}>
+        <span className={`${styles.timestamp} description`}>
           {new Date().toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
             day: 'numeric',
             month: 'short'
@@ -337,7 +337,7 @@ export const SpeedlifyStats: React.FC<SpeedlifyStatsProps> = ({
           href="https://github.com/zachleat/speedlify"
           target="_blank"
           rel="noopener noreferrer"
-          className={styles.poweredBy}
+          className={`${styles.poweredBy} description`}
         >
           {t.poweredBy}
         </a>

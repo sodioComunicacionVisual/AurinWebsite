@@ -31,31 +31,31 @@ const isDevelopment = import.meta.env.DEV || Astro.url.hostname === 'localhost';
         <!-- Column 1: Oficinas y Contacto -->
         <div class={`${styles['footer-column']} footer-column`}>
           <div class={styles['footer-section']}>
-            <h3 class={styles['footer-title']}>{t.footer.offices}</h3>
+            <h3 class={`${styles['footer-title']} description`}>{t.footer.offices}</h3>
             <div class={styles['footer-link-container']}>
               <div class={styles['footer-line']}></div>
-              <a href="https://aldeacreativa.mx/" target="_blank" rel="noopener noreferrer" class={styles['footer-link']}>{t.footer.officesLink}</a>
+              <a href="https://aldeacreativa.mx/" target="_blank" rel="noopener noreferrer" class={`${styles['footer-link']} description`}>{t.footer.officesLink}</a>
             </div>
           </div>
 
           <div class={styles['footer-section']}>
-            <h3 class={styles['footer-title']}>{t.footer.contact}</h3>
+            <h3 class={`${styles['footer-title']} description`}>{t.footer.contact}</h3>
             <div class={styles['footer-link-container']}>
               <div class={styles['footer-line']}></div>
-              <a href="mailto:hey@aurin.mx" class={styles['footer-link']}>hey@aurin.mx</a>
+              <a href="mailto:hey@aurin.mx" class={`${styles['footer-link']} description`}>hey@aurin.mx</a>
             </div>
           </div>
 
           <div class={styles['footer-section']}>
-            <h3 class={styles['footer-title']}>Dev Tools</h3>
+            <h3 class={`${styles['footer-title']} description`}>Dev Tools</h3>
             <div class={styles['footer-link-container']}>
               <div class={styles['footer-line']}></div>
-              <a href="https://aurin-payload-cms.vercel.app/admin/" target="_blank" rel="noopener noreferrer" class={styles['footer-link']}>Payload CMS</a>
+              <a href="https://aurin-payload-cms.vercel.app/admin/" target="_blank" rel="noopener noreferrer" class={`${styles['footer-link']} description`}>Payload CMS</a>
             </div>
             {isDevelopment && (
               <div class={styles['footer-link-container']}>
                 <div class={styles['footer-line']}></div>
-                <a href="https://n8nsystems.info/" target="_blank" rel="noopener noreferrer" class={styles['footer-link']}>n8n Workflows</a>
+                <a href="https://n8nsystems.info/" target="_blank" rel="noopener noreferrer" class={`${styles['footer-link']} description`}>n8n Workflows</a>
               </div>
             )}
           </div>
@@ -64,14 +64,14 @@ const isDevelopment = import.meta.env.DEV || Astro.url.hostname === 'localhost';
         <!-- Column 2: Legales -->
         <div class={`${styles['footer-column']} footer-column`}>
           <div class={styles['footer-section']}>
-            <h3 class={styles['footer-title']}>{t.footer.legal}</h3>
+            <h3 class={`${styles['footer-title']} description`}>{t.footer.legal}</h3>
             <div class={styles['footer-link-container']}>
               <div class={styles['footer-line']}></div>
-              <a href="/privacidad" class={styles['footer-link']}>{t.footer.privacyPolicy}</a>
+              <a href="/privacidad" class={`${styles['footer-link']} description`}>{t.footer.privacyPolicy}</a>
             </div>
             <div class={styles['footer-link-container']}>
               <div class={styles['footer-line']}></div>
-              <a href="/terminosycondiciones" class={styles['footer-link']}>{t.footer.termsConditions}</a>
+              <a href="/terminosycondiciones" class={`${styles['footer-link']} description`}>{t.footer.termsConditions}</a>
             </div>
           </div>
         </div>

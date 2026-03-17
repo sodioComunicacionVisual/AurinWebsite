@@ -60,16 +60,16 @@
   :global(.title .scroll-reveal-word:nth-child(2)) {
     color: var(--color-white) !important;
     font-size: var(--heading-5-size) !important;
-    font-family: var(--font-heading) !important;
-    font-weight: 300 !important;
+    font-family: var(--font-family-display) !important;
+    font-weight: var(--font-weight-light) !important;
     line-height: var(--heading-5-line-height) !important;
   }
 
   :global(.title .scroll-reveal-word:nth-child(n+3)) {
     color: var(--color-yellow) !important;
     font-size: var(--heading-2-size) !important;
-    font-family: var(--font-heading) !important;
-    font-weight: 300 !important;
+    font-family: var(--font-family-display) !important;
+    font-weight: var(--font-weight-light) !important;
     line-height: var(--heading-2-line-height) !important;
   }
 
@@ -270,20 +270,20 @@
   }
 
   .content-title {
-    color: #D0DF00;
-    font-size: 36px;
-    font-family: var(--font-heading, 'Titillium Web');
-    font-weight: 300;
+    color: var(--color-yellow);
+    font-size: var(--font-size-4xl);
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-light);
     line-height: 40px;
     word-wrap: break-word;
   }
 
   .content-subtitle {
-    color: white;
-    font-size: 32px;
-    font-family: var(--font-heading, 'Titillium Web');
-    font-weight: 300;
-    line-height: 35px;
+    color: var(--color-white);
+    font-size: var(--heading-5-size);
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-light);
+    line-height: var(--heading-5-line-height);
     word-wrap: break-word;
   }
 
@@ -294,10 +294,10 @@
   }
 
   .content-description {
-    color: white;
-    font-size: 20px;
-    font-family: var(--font-body, 'Urbanist');
-    font-weight: 400;
+    color: var(--color-white);
+    font-size: var(--body-1-size);
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-regular);
     word-wrap: break-word;
     line-height: 1.5;
   }

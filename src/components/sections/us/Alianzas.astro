@@ -32,7 +32,7 @@ const t = translations[currentLang];
         delay={0.3}
       >
         <div class={styles['text-content']}>
-          <p class={styles['body-text']} set:html={t.about.alianzas.description}>
+          <p class={`${styles['body-text']} description`} style="color: var(--color-white);" set:html={t.about.alianzas.description}>
           </p>
         </div>
       </ScrollAnimationContainer>

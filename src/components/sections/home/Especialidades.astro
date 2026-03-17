@@ -1,4 +1,5 @@
 ---
+import SectionHeading from '../../ui/SectionHeading.astro';
 import MainButton from '../../ui/MainButton.astro';
 import Card from '../../ui/Card.astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
@@ -14,12 +15,14 @@ const t = translations[currentLang];
   <div class={styles.especialidadesContainer}>
     <!-- Left content section -->
     <div class={styles.contentSection}>
-      <div class={styles.heading}>
-        <span class={styles.headingNormal}>{t.especialidades.heading}<br/></span>
-        <span class={styles.headingHighlight}>{t.especialidades.headingHighlight}</span>
+      <div class={styles.headingWrapper}>
+        <SectionHeading
+          lightText={t.especialidades.heading}
+          highlightText={t.especialidades.headingHighlight}
+        />
       </div>
 
-      <p class={styles.description}>
+      <p class="description" style="color: var(--color-white);">
         Cada idea se convierte en un recorrido único, diseñado para inspirar y conectar.
       </p>
 

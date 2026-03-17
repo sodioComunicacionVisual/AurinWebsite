@@ -115,19 +115,11 @@
 
 .footerTitle {
   color: white;
-  font-family: var(--font-heading);
-  font-size: var(--body-bold-6-size);
-  font-weight: var(--body-bold-6-weight);
-  line-height: 16px;
   margin: 0;
 }
 
 .footerLink {
   color: var(--color-gray-a);
-  font-family: var(--font-body);
-  font-size: var(--body-1-size);
-  font-weight: var(--body-1-weight);
-  line-height: 22px;
   background: none;
   border: none;
   padding: 0;
@@ -147,6 +139,12 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin: 20px 0;
+}
+
+.speedlifyLabel {
+  color: white;
+  margin: 0 0 20px 0;
+  letter-spacing: 0.05em;
 }
 
 .footerCopyright {
@@ -267,14 +265,6 @@
 
   .footerSection {
     gap: 20px;
-  }
-
-  .footerTitle {
-    font-size: 14px;
-  }
-
-  .footerLink {
-    font-size: 18px;
   }
 
   .footerCopyright p {

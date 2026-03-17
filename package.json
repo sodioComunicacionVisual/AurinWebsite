@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "firebase": "^10.7.1",
     "googleapis": "^164.1.0",
+    "gsap": "^3.14.2",
     "leva": "^0.10.1",
     "lucide-astro": "^0.544.0",
     "lucide-react": "^0.545.0",

@@ -2,7 +2,7 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-  font-family: var(--font-body);
+  font-family: var(--font-family-primary);
 }
 
 .bannerContainer {
@@ -72,25 +72,19 @@
   justify-content: center;
 }
 
-.title1,
-.title2 {
-  color: white;
-  font-family: var(--font-heading);
-  font-size: 1.6rem;
-  font-weight: 200;
-  line-height: 1.25;
+.titles h2 {
+  color: var(--color-white);
   margin: 0;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px rgba(255, 255, 255, 0.1);
   position: relative;
   z-index: 50;
-  white-space: nowrap;
 }
 
 /* Social Links */
 .socialLinks {
   display: flex;
   flex-direction: row;
-  gap: 12px;
+  gap: var(--spacing-3);
   justify-content: center;
   align-items: center;
   margin: 1rem 0;
@@ -99,8 +93,8 @@
 }
 
 .socialIcon {
-  width: 40px;
-  height: 40px;
+  width: var(--spacing-10);
+  height: var(--spacing-10);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,25 +103,25 @@
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  padding: 10px;
-  color: white;
-  transition: all 0.3s ease;
+  padding: var(--spacing-2);
+  color: var(--color-white);
+  transition: var(--transition-smooth);
   cursor: pointer;
   text-decoration: none;
 }
 
 .socialIcon:hover {
-  background: #d0df00;
-  color: #000;
+  background: var(--color-yellow);
+  color: var(--color-black-a);
   transform: scale(1.1);
-  border-color: #d0df00;
+  border-color: var(--color-yellow);
 }
 
 .socialIcon img {
-  width: 20px;
-  height: 20px;
+  width: var(--font-size-xl);
+  height: var(--font-size-xl);
   filter: brightness(0) invert(1);
-  transition: filter 0.3s ease;
+  transition: var(--transition-smooth);
 }
 
 .socialIcon:hover img {
@@ -137,7 +131,7 @@
 @media (min-width: 768px) {
   .title1,
   .title2 {
-    font-size: 2.5rem; /* text-5xl */
+    font-size: var(--heading-5-size);
   }
 
   .socialIcon {
@@ -161,9 +155,9 @@
 
 .description p {
   color: rgb(203 213 225); /* slate-300 */
-  font-family: var(--font-body);
-  font-size: 1.25rem; /* text-xl */
-  line-height: 1.75; /* leading-relaxed */
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-relaxed);
   margin: 0;
   filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
 }
@@ -199,11 +193,11 @@
   }
 
   .description p {
-    font-size: 1rem;
+    font-size: var(--font-size-base);
   }
 
   .glowButton {
     padding: 0.75rem 0.875rem 0.75rem 1.25rem;
-    font-size: 0.875rem;
+    font-size: var(--font-size-sm);
   }
 }

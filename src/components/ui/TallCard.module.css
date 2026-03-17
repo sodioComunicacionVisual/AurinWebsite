@@ -95,10 +95,6 @@
   justify-content: flex-end;
   display: flex;
   flex-direction: column;
-  font-size: var(--body-1-size);
-  font-family: var(--font-heading);
-  font-weight: 300;
-  line-height: var(--body-1-line-height);
   word-wrap: break-word;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -133,10 +129,6 @@
     width: clamp(100px, 35%, 180px);
   }
 
-  .card-title {
-    font-size: clamp(16px, 3vw, 20px);
-  }
-
   .card {
     width: 220px;
     min-height: 400px;
@@ -159,15 +151,6 @@
   .card-letter {
     font-size: clamp(120px, 28vw, 200px);
     width: clamp(80px, 30%, 150px);
-  }
-
-  .card-title {
-    font-size: clamp(14px, 2.5vw, 18px);
-  }
-
-  .card {
-    width: 200px;
-    min-height: 350px;
   }
 
   .card-content {

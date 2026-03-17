@@ -1,0 +1,390 @@
+[debug] [2026-01-13T15:12:35.981Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T15:12:35.984Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T15:12:35.984Z] Checked if tokens are valid: false, expires at: 1768262027520
+[debug] [2026-01-13T15:12:35.985Z] Checked if tokens are valid: false, expires at: 1768262027520
+[debug] [2026-01-13T15:12:35.985Z] > refreshing access token with scopes: []
+[debug] [2026-01-13T15:12:35.985Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-13T15:12:35.986Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T15:12:35.989Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T15:12:35.989Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T15:12:35.989Z] Checked if tokens are valid: false, expires at: 1768262027520
+[debug] [2026-01-13T15:12:35.989Z] Checked if tokens are valid: false, expires at: 1768262027520
+[debug] [2026-01-13T15:12:35.989Z] > refreshing access token with scopes: []
+[debug] [2026-01-13T15:12:35.989Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-13T15:12:35.989Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T15:12:36.286Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-13T15:12:36.287Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T15:12:36.349Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T15:12:36.351Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-13T15:12:36.351Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T15:12:36.375Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T15:12:36.680Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T15:12:36.680Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T15:12:36.697Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.697Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.703Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.703Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.703Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.703Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.703Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-13T15:12:36.703Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T15:12:36.704Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-13T15:12:36.704Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T15:12:36.705Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-13T15:12:36.705Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T15:12:36.745Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T15:12:36.745Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T15:12:36.746Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.746Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.755Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.755Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.756Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.756Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:36.756Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-13T15:12:36.756Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T15:12:36.757Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-13T15:12:36.757Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T15:12:36.758Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-13T15:12:36.758Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T15:12:37.182Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-13T15:12:37.182Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-13T15:12:37.190Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-13T15:12:37.191Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-13T15:12:37.232Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-13T15:12:37.232Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-13T15:12:37.233Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-13T15:12:37.234Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-13T15:12:37.234Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-13T15:12:37.234Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-13T15:12:37.271Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-13T15:12:37.271Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-13T15:12:37.316Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T15:12:37.316Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T15:12:37.316Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:37.316Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:37.316Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T15:12:37.438Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T15:12:37.438Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T15:12:37.442Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T15:12:37.442Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T15:12:37.537Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T15:12:37.537Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T15:12:37.537Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:37.537Z] Checked if tokens are valid: true, expires at: 1768320755351
+[debug] [2026-01-13T15:12:37.537Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T15:12:37.645Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T15:12:37.645Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T15:12:37.646Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T15:12:37.646Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T20:51:37.988Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T20:51:37.989Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T20:51:37.990Z] Checked if tokens are valid: false, expires at: 1768320755351
+[debug] [2026-01-13T20:51:37.990Z] Checked if tokens are valid: false, expires at: 1768320755351
+[debug] [2026-01-13T20:51:37.990Z] > refreshing access token with scopes: []
+[debug] [2026-01-13T20:51:37.991Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-13T20:51:37.991Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T20:51:37.992Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T20:51:37.992Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T20:51:37.992Z] Checked if tokens are valid: false, expires at: 1768320755351
+[debug] [2026-01-13T20:51:37.992Z] Checked if tokens are valid: false, expires at: 1768320755351
+[debug] [2026-01-13T20:51:37.992Z] > refreshing access token with scopes: []
+[debug] [2026-01-13T20:51:37.992Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-13T20:51:37.992Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T20:51:38.127Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-13T20:51:38.127Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T20:51:38.152Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T20:51:38.197Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-13T20:51:38.198Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T20:51:38.228Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T20:51:38.378Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T20:51:38.378Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T20:51:38.383Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.383Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.388Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.388Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.388Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.388Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.388Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-13T20:51:38.388Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T20:51:38.389Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-13T20:51:38.389Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T20:51:38.390Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-13T20:51:38.390Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T20:51:38.404Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T20:51:38.404Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T20:51:38.404Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.404Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.405Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.405Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.406Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.406Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.406Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-13T20:51:38.406Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T20:51:38.406Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-13T20:51:38.406Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T20:51:38.407Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-13T20:51:38.407Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T20:51:38.640Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-13T20:51:38.640Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-13T20:51:38.784Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-13T20:51:38.784Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-13T20:51:38.835Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-13T20:51:38.835Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-13T20:51:38.835Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-13T20:51:38.836Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-13T20:51:38.855Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-13T20:51:38.855Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-13T20:51:38.857Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-13T20:51:38.857Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-13T20:51:38.916Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T20:51:38.916Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T20:51:38.916Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.916Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:38.916Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T20:51:39.016Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T20:51:39.016Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T20:51:39.017Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T20:51:39.017Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T20:51:39.096Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T20:51:39.096Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T20:51:39.096Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:39.096Z] Checked if tokens are valid: true, expires at: 1768341097198
+[debug] [2026-01-13T20:51:39.096Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T20:51:39.216Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T20:51:39.216Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T20:51:39.217Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T20:51:39.217Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T22:52:37.357Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T22:52:37.359Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T22:52:37.360Z] Checked if tokens are valid: false, expires at: 1768341097198
+[debug] [2026-01-13T22:52:37.360Z] Checked if tokens are valid: false, expires at: 1768341097198
+[debug] [2026-01-13T22:52:37.360Z] > refreshing access token with scopes: []
+[debug] [2026-01-13T22:52:37.361Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-13T22:52:37.361Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T22:52:37.363Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T22:52:37.363Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T22:52:37.363Z] Checked if tokens are valid: false, expires at: 1768341097198
+[debug] [2026-01-13T22:52:37.363Z] Checked if tokens are valid: false, expires at: 1768341097198
+[debug] [2026-01-13T22:52:37.363Z] > refreshing access token with scopes: []
+[debug] [2026-01-13T22:52:37.363Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-13T22:52:37.363Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T22:52:37.479Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-13T22:52:37.479Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T22:52:37.496Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T22:52:37.498Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-13T22:52:37.498Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-13T22:52:37.512Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T22:52:37.691Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T22:52:37.691Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T22:52:37.695Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.695Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.700Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.700Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.700Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.700Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.700Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-13T22:52:37.700Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T22:52:37.701Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-13T22:52:37.701Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T22:52:37.701Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-13T22:52:37.701Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T22:52:37.715Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T22:52:37.715Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T22:52:37.715Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.715Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.717Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.717Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.717Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.717Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:37.717Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-13T22:52:37.717Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T22:52:37.718Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-13T22:52:37.718Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T22:52:37.719Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-13T22:52:37.719Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-13T22:52:38.076Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-13T22:52:38.076Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-13T22:52:38.116Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-13T22:52:38.116Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-13T22:52:38.121Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-13T22:52:38.121Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-13T22:52:38.173Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T22:52:38.173Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T22:52:38.174Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:38.174Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:38.174Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T22:52:38.261Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T22:52:38.261Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T22:52:38.262Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T22:52:38.262Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T22:52:38.314Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T22:52:38.314Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T22:52:38.314Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:38.314Z] Checked if tokens are valid: true, expires at: 1768348356498
+[debug] [2026-01-13T22:52:38.314Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-13T22:52:38.350Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-13T22:52:38.350Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-13T22:52:38.413Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-13T22:52:38.413Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-13T22:52:38.414Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-13T22:52:38.414Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-13T22:52:38.429Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-13T22:52:38.429Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-13T22:52:38.443Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-13T22:52:38.443Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-15T17:45:32.723Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-15T17:45:32.726Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-15T17:45:32.727Z] Checked if tokens are valid: false, expires at: 1768348356498
+[debug] [2026-01-15T17:45:32.727Z] Checked if tokens are valid: false, expires at: 1768348356498
+[debug] [2026-01-15T17:45:32.727Z] > refreshing access token with scopes: []
+[debug] [2026-01-15T17:45:32.728Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-15T17:45:32.728Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-15T17:45:32.731Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-15T17:45:32.731Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-15T17:45:32.731Z] Checked if tokens are valid: false, expires at: 1768348356498
+[debug] [2026-01-15T17:45:32.731Z] Checked if tokens are valid: false, expires at: 1768348356498
+[debug] [2026-01-15T17:45:32.731Z] > refreshing access token with scopes: []
+[debug] [2026-01-15T17:45:32.731Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-15T17:45:32.731Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-15T17:45:32.865Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-15T17:45:32.865Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-15T17:45:32.903Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-15T17:45:32.912Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-15T17:45:32.913Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-15T17:45:32.932Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-15T17:45:33.276Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-15T17:45:33.276Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-15T17:45:33.314Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.314Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.331Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.331Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.331Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.331Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.331Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-15T17:45:33.331Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-15T17:45:33.332Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-15T17:45:33.332Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-15T17:45:33.332Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-15T17:45:33.332Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-15T17:45:33.355Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-15T17:45:33.355Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-15T17:45:33.356Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.356Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.357Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.357Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.357Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.357Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.357Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-15T17:45:33.357Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-15T17:45:33.358Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-15T17:45:33.358Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-15T17:45:33.359Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-15T17:45:33.359Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-15T17:45:33.805Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-15T17:45:33.805Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-15T17:45:33.805Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-15T17:45:33.806Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-15T17:45:33.807Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-15T17:45:33.807Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-15T17:45:33.807Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-15T17:45:33.807Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-15T17:45:33.811Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-15T17:45:33.811Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-15T17:45:33.816Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-15T17:45:33.816Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-15T17:45:33.866Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-15T17:45:33.866Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-15T17:45:33.866Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.866Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:33.866Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-15T17:45:33.945Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-15T17:45:33.945Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-15T17:45:33.946Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-15T17:45:33.946Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-15T17:45:34.006Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-15T17:45:34.006Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-15T17:45:34.007Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:34.007Z] Checked if tokens are valid: true, expires at: 1768502731913
+[debug] [2026-01-15T17:45:34.007Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-15T17:45:34.098Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-15T17:45:34.099Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-15T17:45:34.100Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-15T17:45:34.100Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-19T14:37:45.119Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-19T14:37:45.120Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-19T14:37:45.121Z] Checked if tokens are valid: false, expires at: 1768502731913
+[debug] [2026-01-19T14:37:45.121Z] Checked if tokens are valid: false, expires at: 1768502731913
+[debug] [2026-01-19T14:37:45.121Z] > refreshing access token with scopes: []
+[debug] [2026-01-19T14:37:45.122Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-19T14:37:45.122Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-19T14:37:45.124Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-19T14:37:45.124Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-19T14:37:45.124Z] Checked if tokens are valid: false, expires at: 1768502731913
+[debug] [2026-01-19T14:37:45.124Z] Checked if tokens are valid: false, expires at: 1768502731913
+[debug] [2026-01-19T14:37:45.124Z] > refreshing access token with scopes: []
+[debug] [2026-01-19T14:37:45.124Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-01-19T14:37:45.124Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-19T14:37:45.579Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-19T14:37:45.579Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-19T14:37:45.594Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-19T14:37:45.596Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-01-19T14:37:45.596Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-01-19T14:37:45.610Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-19T14:37:46.559Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-19T14:37:46.559Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-19T14:37:46.562Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.563Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.568Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.568Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.568Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.568Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.568Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-19T14:37:46.568Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-19T14:37:46.569Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-19T14:37:46.569Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-19T14:37:46.569Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-19T14:37:46.569Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-19T14:37:46.571Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-19T14:37:46.571Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-19T14:37:46.572Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.572Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.573Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.573Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.573Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.573Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:46.573Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [none]
+[debug] [2026-01-19T14:37:46.573Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-19T14:37:46.574Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [none]
+[debug] [2026-01-19T14:37:46.574Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-19T14:37:46.575Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [none]
+[debug] [2026-01-19T14:37:46.575Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com x-goog-quota-user=projects/aurin-plattform
+[debug] [2026-01-19T14:37:47.619Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-19T14:37:47.619Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-19T14:37:47.621Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-19T14:37:47.621Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-19T14:37:47.628Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-19T14:37:47.628Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-19T14:37:47.666Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com 403
+[debug] [2026-01-19T14:37:47.666Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseio.com [omitted]
+[debug] [2026-01-19T14:37:48.140Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com 200
+[debug] [2026-01-19T14:37:48.140Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2026-01-19T14:37:48.145Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com 200
+[debug] [2026-01-19T14:37:48.145Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/aurin-plattform/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2026-01-19T14:37:48.203Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-19T14:37:48.204Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-19T14:37:48.205Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:48.205Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:48.205Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-19T14:37:48.327Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-19T14:37:48.327Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-19T14:37:48.330Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-19T14:37:48.330Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-19T14:37:48.708Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-19T14:37:48.708Z] > authorizing via signed-in user (sodioanalytics@gmail.com)
+[debug] [2026-01-19T14:37:48.708Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:48.708Z] Checked if tokens are valid: true, expires at: 1768837064596
+[debug] [2026-01-19T14:37:48.708Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo [none]
+[debug] [2026-01-19T14:37:49.186Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo 200
+[debug] [2026-01-19T14:37:49.212Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/aurin-plattform/billingInfo {"name":"projects/aurin-plattform/billingInfo","projectId":"aurin-plattform","billingAccountName":"billingAccounts/0169A9-63544E-314C67","billingEnabled":true}
+[debug] [2026-01-19T14:37:49.213Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-01-19T14:37:49.213Z] > authorizing via signed-in user (sodioanalytics@gmail.com)

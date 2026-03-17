@@ -43,10 +43,6 @@
   }
 
   .button-text span {
-    font-size: clamp(14px, 4cqw, 18px);
-    font-family: var(--font-body);
-    font-weight: 600;
-    word-wrap: break-word;
     white-space: nowrap;
   }
 
@@ -158,11 +154,4 @@
     transform: none;
     box-shadow: none;
     background: var(--color-black-a);
-  }
-
-  /* Mobile responsive font size - 30% smaller */
-  @media (max-width: 768px) {
-    .button-text span {
-      font-size: clamp(10px, 3cqw, 13px);
-    }
   }

@@ -44,7 +44,7 @@ export default function ServicesCard({
       >
         <div className={styles['card-letter']}>{letter}</div>
         <div className={styles['card-content']}>
-          <h3 className={styles['card-title']}>{title}</h3>
+          <h3 className={`${styles['card-title']} description`}>{title}</h3>
           <p className={styles['card-description']}>{description}</p>
         </div>
       </motion.div>

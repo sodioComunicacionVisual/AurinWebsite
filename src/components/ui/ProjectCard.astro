@@ -46,7 +46,7 @@ const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
     <div class={styles['info-section']}>
       <div class={styles['info-content']}>
         <!-- Title -->
-        <h3 class={styles['project-title']} set:html={title}></h3>
+        <h3 class={`${styles['project-title']} description`} set:html={title}></h3>
 
         <!-- Services (Chips Verdes) -->
         {services.length > 0 && (

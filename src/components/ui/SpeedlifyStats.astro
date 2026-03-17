@@ -38,41 +38,41 @@ try {
 {pageStats && pageStats.lighthouse && (
   <div class={`speedlify-stats ${className || ''}`}>
     <div class="stats-header">
-      <span class="stats-title">⚡ Performance</span>
-      <span class="stats-timestamp">
+      <span class="stats-title description">⚡ Performance</span>
+      <span class="stats-timestamp description">
         {pageStats.timestamp && new Date(pageStats.timestamp).toLocaleDateString('es-ES')}
       </span>
     </div>
     <div class="stats-grid">
       <div class="stat-item performance">
-        <span class="stat-value">{pageStats.lighthouse.performance || '--'}</span>
-        <span class="stat-label">Performance</span>
+        <span class="stat-value description">{pageStats.lighthouse.performance || '--'}</span>
+        <span class="stat-label description">Performance</span>
       </div>
       <div class="stat-item accessibility">
-        <span class="stat-value">{pageStats.lighthouse.accessibility || '--'}</span>
-        <span class="stat-label">Accessibility</span>
+        <span class="stat-value description">{pageStats.lighthouse.accessibility || '--'}</span>
+        <span class="stat-label description">Accessibility</span>
       </div>
       <div class="stat-item seo">
-        <span class="stat-value">{pageStats.lighthouse.seo || '--'}</span>
-        <span class="stat-label">SEO</span>
+        <span class="stat-value description">{pageStats.lighthouse.seo || '--'}</span>
+        <span class="stat-label description">SEO</span>
       </div>
       <div class="stat-item best-practices">
-        <span class="stat-value">{pageStats.lighthouse.bestPractices || '--'}</span>
-        <span class="stat-label">Best Practices</span>
+        <span class="stat-value description">{pageStats.lighthouse.bestPractices || '--'}</span>
+        <span class="stat-label description">Best Practices</span>
       </div>
     </div>
     {pageStats.lighthouse.firstContentfulPaint && (
       <div class="core-vitals">
-        <span class="vital">
+        <span class="vital description">
           FCP: {Math.round(pageStats.lighthouse.firstContentfulPaint)}ms
         </span>
         {pageStats.lighthouse.largestContentfulPaint && (
-          <span class="vital">
+          <span class="vital description">
             LCP: {Math.round(pageStats.lighthouse.largestContentfulPaint)}ms
           </span>
         )}
         {pageStats.lighthouse.cumulativeLayoutShift && (
-          <span class="vital">
+          <span class="vital description">
             CLS: {pageStats.lighthouse.cumulativeLayoutShift.toFixed(3)}
           </span>
         )}
@@ -88,7 +88,6 @@ try {
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
-  font-size: 0.875rem;
 }
 
 .stats-header {
@@ -104,7 +103,6 @@ try {
 }
 
 .stats-timestamp {
-  font-size: 0.75rem;
   color: #94a3b8;
 }
 
@@ -124,13 +122,11 @@ try {
 
 .stat-value {
   display: block;
-  font-size: 1.25rem;
   font-weight: bold;
   margin-bottom: 0.25rem;
 }
 
 .stat-label {
-  font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #94a3b8;
@@ -162,7 +158,6 @@ try {
 }
 
 .vital {
-  font-size: 0.75rem;
   color: #94a3b8;
   background: rgba(30, 41, 59, 0.3);
   padding: 0.25rem 0.5rem;
