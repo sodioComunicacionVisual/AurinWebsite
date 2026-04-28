@@ -836,7 +836,7 @@ export const translations = {
     },
     banner: {
       badge: 'Expertos en usuarios',
-      title1: 'Diseño que conecta.',
+      title1: 'Diseño que conecta..',
       title2: 'Experiencias que transforman.',
       description: 'Creamos narrativas visuales que inspiran y generan impacto real. Desde branding hasta experiencias digitales, convertimos tu visión en resultados memorables.',
       buttonText: 'Inicia tu proyecto ahora'
