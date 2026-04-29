@@ -11,7 +11,8 @@
 .termsContainer {
   max-width: var(--maxWidth, 1400px);
   margin: 0 auto;
-  padding: 80px 100px;
+  padding-block: 80px;
+  padding-inline: var(--section-padding-x);
 }
 
 /* Header section */
@@ -33,7 +34,7 @@
 
 .termsSubtitle {
   color: var(--color-gray-a, #A0A0A0);
-  font-family: var(--font-body, 'Urbanist', sans-serif);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 400;
   margin: 0;
@@ -91,7 +92,7 @@
 
 .termsSection p {
   color: white;
-  font-family: var(--font-body, 'Urbanist', sans-serif);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 400;
   line-height: 1.7;
@@ -105,7 +106,7 @@
 /* Lists */
 .termsSection ul {
   color: white;
-  font-family: var(--font-body, 'Urbanist', sans-serif);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 400;
   line-height: 1.7;
@@ -151,7 +152,7 @@
 /* Large desktop */
 @media (max-width: 1200px) {
   .termsContainer {
-    padding: 60px 60px;
+    padding-block: 60px;
   }
 
   .termsSection p,
@@ -163,7 +164,7 @@
 /* Medium desktop */
 @media (max-width: 968px) {
   .termsContainer {
-    padding: 50px 40px;
+    padding-block: 50px;
   }
 
   .termsContent {
@@ -178,7 +179,7 @@
   }
 
   .termsContainer {
-    padding: 40px 30px;
+    padding-block: 40px;
   }
 
   .termsHeader {
@@ -207,7 +208,7 @@
 /* Small tablet */
 @media (max-width: 640px) {
   .termsContainer {
-    padding: 30px 20px;
+    padding-block: 30px;
   }
 
   .termsSubtitle {
@@ -231,7 +232,7 @@
   }
 
   .termsContainer {
-    padding: 24px 16px;
+    padding-block: 24px;
   }
 
   .termsHeader {

@@ -1,12 +1,10 @@
 ---
-import { getLangFromUrl } from '../../../i18n/utils.js';
-import { translations } from '../../../i18n/translations.js';
-import styles from './Banner.module.css';
-import BannerBackgroundEffectsContainer from '../../modules/banner/BannerBackgroundEffectsContainer.astro';
-import FloatingDustContainer from '../../modules/banner/FloatingDustContainer.astro';
-import MainButton from '../../ui/MainButton.astro';
-import TiltContainer from '../../ui/TiltContainer.astro';
-import ChatbotSearchContainer from '../../modules/chatbot-search/ChatbotSearchContainer.astro';
+import { getLangFromUrl } from "../../../i18n/utils.js";
+import { translations } from "../../../i18n/translations.js";
+import styles from "./Banner.module.css";
+import BannerBackgroundEffectsContainer from "../../modules/banner/BannerBackgroundEffectsContainer.astro";
+import FloatingDustContainer from "../../modules/banner/FloatingDustContainer.astro";
+import ChatbotSearchContainer from "../../modules/chatbot-search/ChatbotSearchContainer.astro";
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -17,23 +15,23 @@ const t = translations[currentLang];
   <div class={styles.bannerContainer}>
     <!-- Capa de fondo con efectos WebGL y textura -->
     <BannerBackgroundEffectsContainer />
-    
+
     <!-- Floating dust particles -->
     <FloatingDustContainer />
-    
+
     <!-- Contenido principal -->
     <div class={styles.content}>
       <div class={styles.contentInner}>
         <!-- Aurin Logo -->
         <div class={styles.logoContainer}>
-          <TiltContainer rotationFactor={10}>
-            <img 
-              src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AurinTinyWhiteLogo.svg"
+          <div class={styles.logoTilt}>
+            <img
+              src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Header-logo.svg"
               alt="Aurin Logo"
               class={styles.logo}
               draggable="false"
             />
-          </TiltContainer>
+          </div>
         </div>
 
         <!-- Títulos -->
@@ -50,10 +48,6 @@ const t = translations[currentLang];
         <div class={styles.searchContainer}>
           <ChatbotSearchContainer />
         </div>
-
-  
-
-   
       </div>
     </div>
   </div>

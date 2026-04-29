@@ -1,5 +1,6 @@
 .como-llegamos {
-    padding: 200px 50px;
+    padding-block: 200px;
+    padding-inline: var(--section-padding-x);
     overflow: hidden;
     position: relative;
   }
@@ -86,7 +87,7 @@
   /* Responsive adjustments */
   @media (max-width: 1400px) {
     .como-llegamos {
-      padding: 40px 40px;
+      padding-block: 40px;
     }
 
     .como-llegamos-container {
@@ -112,7 +113,7 @@
 
   @media (max-width: 768px) {
     .como-llegamos {
-      padding: 40px 30px;
+      padding-block: 40px;
     }
 
     .heading-yellow {
@@ -132,7 +133,7 @@
 
   @media (max-width: 480px) {
     .como-llegamos {
-      padding: 30px 20px;
+      padding-block: 30px;
     }
 
     .heading-yellow {

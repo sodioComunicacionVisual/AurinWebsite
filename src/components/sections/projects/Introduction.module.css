@@ -1,6 +1,7 @@
 .introduction {
   width: 100%;
-  padding: 100px 50px;
+  padding-block: 100px;
+  padding-inline: var(--section-padding-x);
   box-sizing: border-box;
 }
 
@@ -69,7 +70,7 @@
 /* Responsive Design */
 @media (max-width: 1200px) {
   .introduction {
-    padding: 80px 40px;
+    padding-block: 80px;
   }
 
   .content {
@@ -83,7 +84,7 @@
 
 @media (max-width: 768px) {
   .introduction {
-    padding: 60px 30px;
+    padding-block: 60px;
   }
 
   .content {
@@ -117,7 +118,7 @@
 
 @media (max-width: 480px) {
   .introduction {
-    padding: 40px 20px;
+    padding-block: 40px;
   }
 
   .content {

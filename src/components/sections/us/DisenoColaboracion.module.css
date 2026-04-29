@@ -1,7 +1,8 @@
 
     .diseno-colaboracion {
         height: 100%;
-        padding: 50px;
+        padding-block: 50px;
+        padding-inline: var(--section-padding-x);
         overflow: hidden;
     }
 
@@ -89,7 +90,7 @@
     /* Responsive Design */
     @media (max-width: 1024px) {
         .diseno-colaboracion {
-            padding: 30px;
+            padding-block: 30px;
         }
 
         .diseno-container {
@@ -117,7 +118,7 @@
 
     @media (max-width: 768px) {
         .diseno-colaboracion {
-            padding: 20px;
+            padding-block: 20px;
         }
 
         .text-card {

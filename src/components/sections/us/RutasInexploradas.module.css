@@ -1,7 +1,7 @@
   .rutas-inexploradas {
     width: 100%;
     padding-block: clamp(5rem, 12.5vw, 12.5rem);
-    padding-inline: clamp(1.25rem, 3.125vw, 3.125rem);
+    padding-inline: var(--section-padding-x);
     overflow: hidden;
   }
 

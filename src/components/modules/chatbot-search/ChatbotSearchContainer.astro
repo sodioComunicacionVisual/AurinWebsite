@@ -1,5 +1,5 @@
 ---
-import { ChatbotInterface, GlassFilter } from './index';
+import { ChatbotInterface } from './index';
 import { getLangFromUrl } from '../../../i18n/utils';
 import { translations } from '../../../i18n/translations';
 
@@ -8,7 +8,6 @@ const t = translations[lang].chatbotSearch;
 ---
 
 <div class="chatbot-search-wrapper">
-  <GlassFilter client:only="react" />
   <ChatbotInterface client:only="react" translations={t} />
 </div>
 
@@ -24,7 +23,7 @@ const t = translations[lang].chatbotSearch;
   @media (max-width: 768px) {
     .chatbot-search-wrapper {
       max-width: 100%;
-      padding: 0 1rem;
+      padding: 0;
     }
   }
 </style>
