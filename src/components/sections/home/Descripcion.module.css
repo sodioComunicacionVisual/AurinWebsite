@@ -1,5 +1,6 @@
 .descripcion {
-  padding: var(--spacing-12) var(--spacing-12);
+  padding-block: var(--spacing-12);
+  padding-inline: var(--section-padding-x);
   overflow: hidden;
 }
 
@@ -106,7 +107,7 @@
 /* Responsive adjustments */
 @media (max-width: 1400px) {
   .descripcion {
-    padding: var(--spacing-10) var(--spacing-10);
+    padding-block: var(--spacing-10);
   }
 
   .descripcionContainer {
@@ -136,7 +137,7 @@
   }
 
   .svgWrapper {
-    min-width: 100vw;
+    min-width: 100%;
     /* min-height: 400px; */
   }
 
@@ -174,7 +175,7 @@
 
 @media (max-width: 768px) {
   .descripcion {
-    padding: var(--spacing-10) var(--spacing-8);
+    padding-block: var(--spacing-10);
   }
 
   .leftColumn {
@@ -187,7 +188,7 @@
   }
 
   .svgWrapper {
-    min-width: 100vw;
+    min-width: 100%;
     /* min-height: 350px; */
   }
 
@@ -225,7 +226,7 @@
 
 @media (max-width: 480px) {
   .descripcion {
-    padding: var(--spacing-8) var(--spacing-5);
+    padding-block: var(--spacing-8);
   }
 
   .leftColumn {
@@ -238,7 +239,7 @@
   }
 
   .svgWrapper {
-    min-width: 100vw;
+    min-width: 100%;
     /* min-height: 300px; */
   }
 

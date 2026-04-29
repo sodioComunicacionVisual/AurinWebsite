@@ -1,7 +1,8 @@
 
   .alianzas {
-    margin: 200px 0px;
-    padding: 200px 100px;
+    margin: 200px 0;
+    padding-block: 200px;
+    padding-inline: var(--section-padding-x);
     background: var(--color-black-b);
     overflow: hidden;
   }
@@ -96,7 +97,7 @@
   /* Responsive Design */
   @media (max-width: 1400px) {
     .alianzas {
-      padding: 80px 50px;
+      padding-block: 80px;
     }
 
     .alianzas-container {
@@ -110,7 +111,7 @@
 
   @media (max-width: 1024px) {
     .alianzas {
-      padding: 60px 40px;
+      padding-block: 60px;
     }
 
     .alianzas-container {
@@ -130,7 +131,7 @@
 
   @media (max-width: 768px) {
     .alianzas {
-      padding: 40px 30px;
+      padding-block: 40px;
     }
 
     .heading-white {
@@ -154,7 +155,7 @@
 
   @media (max-width: 480px) {
     .alianzas {
-      padding: 30px 20px;
+      padding-block: 30px;
     }
 
     .heading-white {

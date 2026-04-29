@@ -1,66 +1,49 @@
-.responseContainer {
-  margin-top: 1.5rem;
-}
-
-.glassContainer {
-  border-radius: 9.66px;
-  padding: 16.20px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.contentWrapper {
+.container {
   display: flex;
-  gap: 1rem;
+  gap: 0.875rem;
   align-items: flex-start;
+  margin-top: 1rem;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .iconWrapper {
   flex-shrink: 0;
-}
-
-.iconBackground {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-yellow);
   border-radius: 9999px;
-  padding: 0.5rem;
+  padding: 0.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: white;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: var(--color-black-a);
 }
 
-.textWrapper {
+.text {
   flex: 1;
-}
-
-.responseText {
-  color: white;
-  font-size: 1.2rem;
-  line-height: 1.625;
-  font-weight: 400;
   margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1rem;
+  line-height: 1.65;
+  font-weight: 400;
+  font-family: var(--font-body);
 }
 
 @media (max-width: 768px) {
-  .glassContainer {
-    padding: 1rem;
+  .container {
+    padding: 14px 16px;
+    gap: 0.625rem;
   }
-  
-  .contentWrapper {
-    gap: 0.75rem;
-  }
-  
-  .responseText {
-    font-size: 0.875rem;
+
+  .text {
+    font-size: 0.9rem;
   }
 }

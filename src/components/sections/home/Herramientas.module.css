@@ -11,7 +11,8 @@
   align-items: center;
   gap: 50px;
   flex-wrap: wrap;
-  padding: 49px 50px;
+  padding-block: 49px;
+  padding-inline: var(--section-padding-x);
   margin-bottom: 3.5rem;
 }
 

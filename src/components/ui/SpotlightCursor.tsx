@@ -2,6 +2,9 @@
 import { useRef, useEffect, useState } from 'react';
 import { useMotionValue, useSpring, motion, AnimatePresence } from 'framer-motion';
 
+const isTouchDevice = () =>
+  typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
 interface SpotlightConfig {
   radius?: number;
   brightness?: number;
@@ -144,6 +147,8 @@ export const SpotlightCursor = ({
       unsubscribeY();
     };
   }, [config.radius, config.brightness, config.color, config.smoothing, mouseX, mouseY, smoothMouseX, smoothMouseY]);
+
+  if (isTouchDevice()) return null;
 
   return (
     <>

@@ -19,7 +19,7 @@
 /* T�tulo Section */
 .title-section {
   padding-block: clamp(1rem, 2vh, 1.5rem);
-  padding-inline: clamp(1.25rem, 8vw, 6.25rem);
+  padding-inline: var(--section-padding-x);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,7 +40,7 @@
 /* Description Section */
 .description-section {
   padding-block: clamp(1rem, 2vh, 1.5rem);
-  padding-inline: clamp(1.25rem, 8vw, 6.25rem);
+  padding-inline: var(--section-padding-x);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,7 +69,7 @@
 /* Button Section */
 .button-section {
   padding-block: clamp(1rem, 2vh, 1.5rem);
-  padding-inline: clamp(1.25rem, 8vw, 6.25rem);
+  padding-inline: var(--section-padding-x);
   display: flex;
   justify-content: center;
   align-items: center;

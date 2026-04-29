@@ -1,6 +1,7 @@
 .especialidades {
   width: 100%;
   overflow-x: hidden;
+  padding-inline: var(--section-padding-x);
 }
 
 .especialidadesContainer {
@@ -18,7 +19,7 @@
 .contentSection {
   flex: 0 0 auto;
   height: auto;
-  padding: clamp(30px, 10vw, 50px) clamp(40px, 5vw, 100px);
+  padding: clamp(30px, 10vw, 50px) 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -28,11 +29,6 @@
   box-sizing: border-box;
 }
 
-@media (min-width: 1500px) {
-  .contentSection {
-    padding-left: 1.5rem;
-  }
-}
 
 /* Heading wrapper for SectionHeading component */
 .headingWrapper {
@@ -79,7 +75,7 @@
 .cardsSection {
   flex: 1;
   min-width: 0;
-  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12)) clamp(var(--spacing-5), 3vw, var(--spacing-10));
+  padding: clamp(var(--spacing-8), 5vw, var(--spacing-12)) 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -114,14 +110,14 @@
     width: 100%;
     min-width: 0;
     height: auto;
-    padding: var(--spacing-12) var(--spacing-10);
+    padding: var(--spacing-12) 0;
   }
 
   .cardsSection {
     width: 100%;
     min-width: 0;
     height: auto;
-    padding: var(--spacing-12) var(--spacing-10);
+    padding: var(--spacing-12) 0;
     align-items: flex-start;
   }
 
@@ -138,11 +134,11 @@
 
 @media (max-width: 768px) {
   .contentSection {
-    padding: var(--spacing-10) var(--spacing-8);
+    padding: var(--spacing-10) 0;
   }
 
   .cardsSection {
-    padding: var(--spacing-10) var(--spacing-8);
+    padding: var(--spacing-10) 0;
   }
 
   .cardsGrid {
@@ -166,12 +162,12 @@
 
 @media (max-width: 480px) {
   .contentSection {
-    padding: var(--spacing-8) var(--spacing-5);
+    padding: var(--spacing-8) 0;
     gap: 15px;
   }
 
   .cardsSection {
-    padding: var(--spacing-8) var(--spacing-5);
+    padding: var(--spacing-8) 0;
   }
 
   .cardsGrid {

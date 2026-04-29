@@ -11,7 +11,8 @@
 .privacyContainer {
   max-width: var(--maxWidth, 1400px);
   margin: 0 auto;
-  padding: 80px 100px;
+  padding-block: 80px;
+  padding-inline: var(--section-padding-x);
 }
 
 /* Header section */
@@ -33,7 +34,7 @@
 
 .privacySubtitle {
   color: var(--color-gray-a, #A0A0A0);
-  font-family: var(--font-body, 'Urbanist', sans-serif);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 400;
   margin: 0;
@@ -86,7 +87,7 @@
 
 .privacySection p {
   color: white;
-  font-family: var(--font-body, 'Urbanist', sans-serif);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 400;
   line-height: 1.7;
@@ -100,7 +101,7 @@
 /* Lists */
 .privacySection ul {
   color: white;
-  font-family: var(--font-body, 'Urbanist', sans-serif);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 400;
   line-height: 1.7;
@@ -140,7 +141,7 @@
 /* Large desktop */
 @media (max-width: 1200px) {
   .privacyContainer {
-    padding: 60px 60px;
+    padding-block: 60px;
   }
 
   .privacySection p,
@@ -152,7 +153,7 @@
 /* Medium desktop */
 @media (max-width: 968px) {
   .privacyContainer {
-    padding: 50px 40px;
+    padding-block: 50px;
   }
 
   .privacyContent {
@@ -167,7 +168,7 @@
   }
 
   .privacyContainer {
-    padding: 40px 30px;
+    padding-block: 40px;
   }
 
   .privacyHeader {
@@ -196,7 +197,7 @@
 /* Small tablet */
 @media (max-width: 640px) {
   .privacyContainer {
-    padding: 30px 20px;
+    padding-block: 30px;
   }
 
   .privacySubtitle {
@@ -220,7 +221,7 @@
   }
 
   .privacyContainer {
-    padding: 24px 16px;
+    padding-block: 24px;
   }
 
   .privacyHeader {

@@ -1,6 +1,6 @@
   .long-cards {
     padding-block: clamp(3rem, 6.25vw, 6.25rem);
-    padding-inline: clamp(1.25rem, 3.125vw, 3.125rem);
+    padding-inline: var(--section-padding-x);
   }
 
   .cards-wrapper {
