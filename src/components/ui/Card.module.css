@@ -1,5 +1,6 @@
 .card {
 	width: 100%;
+	max-width: 348.95px;
 	aspect-ratio: 1 / 1;
 	background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #212224;
 	overflow: hidden;
@@ -14,6 +15,7 @@
 	opacity: 0;
 	transform: translateY(30px);
 	transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	box-sizing: border-box;
 }
 
 .card::before {
@@ -32,7 +34,19 @@
 	transform: translateY(0);
 }
 
-.card:hover::before {
+.card:not(.card-yellow):hover::before {
+	opacity: 1;
+}
+
+.card-yellow {
+	background: linear-gradient(200deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), var(--color-yellow);
+}
+
+.card-yellow::before {
+	background: linear-gradient(199deg, rgba(0, 0, 0, 0) 47%, #171819 47%), #212224;
+}
+
+.card-yellow:hover::before {
 	opacity: 1;
 }
 
@@ -54,8 +68,16 @@
 	transition: color 0.3s ease;
 }
 
-.card:hover .card-letter {
+.card:not(.card-yellow):hover .card-letter {
 	color: var(--color-black-a);
+}
+
+.card-yellow .card-letter {
+	color: var(--color-black-a);
+}
+
+.card-yellow:hover .card-letter {
+	color: var(--color-yellow) !important;
 }
 
 .card-content {
@@ -66,16 +88,31 @@
 	padding: 35px 25px;
 	display: flex;
 	align-items: flex-end;
+	box-sizing: border-box;
 }
 
 .card-title {
 	color: var(--color-yellow);
 	max-width: 290px;
 	transition: color 0.3s ease;
+	font-family: var(--font-heading, "Titillium Web", sans-serif);
+	font-size: clamp(24px, 3vw, 32px);
+	font-weight: 300;
+	line-height: 1.1;
+	word-break: break-word;
+	overflow-wrap: break-word;
 }
 
-.card:hover .card-title {
+.card:not(.card-yellow):hover .card-title {
 	color: var(--color-black-a);
+}
+
+.card-yellow .card-title {
+	color: var(--color-black-a) !important;
+}
+
+.card-yellow:hover .card-title {
+	color: var(--color-yellow) !important;
 }
 
 /* Responsive */
@@ -93,6 +130,10 @@
 }
 
 @media (max-width: 768px) {
+	.card {
+		max-width: 300px;
+	}
+
 	.card-letter {
 		font-size: 200px;
 		top: -15px;
@@ -107,6 +148,10 @@
 }
 
 @media (max-width: 480px) {
+	.card {
+		max-width: 260px;
+	}
+
 	.card-letter {
 		font-size: 150px;
 		top: -10px;

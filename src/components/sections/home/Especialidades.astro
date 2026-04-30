@@ -22,19 +22,21 @@ const t = translations[currentLang];
         />
       </div>
 
-      <p class="description" style="color: var(--color-white);">
+      <p class={styles.description}>
         Cada idea se convierte en un recorrido único, diseñado para inspirar y conectar.
       </p>
 
-      <MainButton
-        text={t.especialidades.buttonText}
-        href="/servicios"
-      />
+      <div class={styles.buttonWrapper}>
+        <MainButton
+          text={t.especialidades.buttonText}
+          href="/servicios"
+        />
+      </div>
     </div>
 
     <!-- Right cards section -->
     <div class={styles.cardsSection}>
-      <div class={styles.cardsGrid}>
+      <div class={styles.cardsRow}>
         <Card
           letter="M"
           title={t.especialidades.card1Title}
@@ -42,12 +44,13 @@ const t = translations[currentLang];
         <Card
           letter="E"
           title={t.especialidades.card2Title}
-        />
-        <Card
-          letter="D"
-          title={t.especialidades.card3Title}
+          variant="yellow"
         />
       </div>
+      <Card
+        letter="D"
+        title={t.especialidades.card3Title}
+      />
     </div>
   </div>
 </section>

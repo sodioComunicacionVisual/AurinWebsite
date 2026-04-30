@@ -60,7 +60,7 @@
   display: block;
   margin: 0 auto;
   fill: white;
-  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.3));
+  /*filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.3));*/
   position: relative;
   z-index: 50;
   user-select: none;

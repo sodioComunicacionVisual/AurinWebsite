@@ -1,6 +1,6 @@
 ---
 // Componente Astro que actúa como contenedor para el widget de React
-import ChatbotWidget from './ChatbotWidget.tsx';
+import ChatbotLazy from './ChatbotLazy.tsx';
 import './chatbot.css';
 import './markdown.css';
 import { getLangFromUrl } from '../../../i18n/utils.js';
@@ -11,6 +11,6 @@ const t = translations[currentLang];
 ---
 
 <div class="chatbot-container">
-  <ChatbotWidget client:only="react" lang={currentLang} translations={t.chatbot} />
+  <ChatbotLazy client:only="react" lang={currentLang} translations={t.chatbot} />
 </div>
 

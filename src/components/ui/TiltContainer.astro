@@ -11,7 +11,7 @@ const { className, rotationFactor = 15, isReverse = false } = Astro.props;
 ---
 
 <Tilt 
-  client:load 
+  client:visible
   className={className}
   rotationFactor={rotationFactor}
   isReverse={isReverse}

@@ -57,7 +57,7 @@ const { projectData } = Astro.props;
   {projectData.gallery && projectData.gallery.length > 0 && (
     <section class={styles.gallerySection}>
       <GalleryCarousel
-        client:load
+        client:visible
         data={projectData.gallery}
       />
     </section>

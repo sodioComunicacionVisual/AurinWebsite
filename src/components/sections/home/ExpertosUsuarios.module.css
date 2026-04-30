@@ -1,5 +1,6 @@
 .expertosUsuarios {
   width: 100%;
+  background-color: #000000;
   padding-block: var(--spacing-12);
   padding-inline: var(--section-padding-x);
   overflow: hidden;
@@ -7,15 +8,14 @@
   position: relative;
 }
 
-.expertosUsuarios::before {
-  content: '';
+.vectorDecoration {
   position: absolute;
-  top: 50%;
   left: 0;
+  top: 50%;
   transform: translateY(-50%);
-  width: 300px;
-  height: 300px;
-  opacity: 0.1;
+  width: 531px;
+  height: 250px;
+  mix-blend-mode: plus-lighter;
   pointer-events: none;
   z-index: 0;
 }
@@ -24,30 +24,38 @@
   width: 100%;
   max-width: var(--maxWidth);
   margin: 0 auto;
-  padding: 0 var(--spacing-5);
   box-sizing: border-box;
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .contentWrapper {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: var(--spacing-20);
+  gap: var(--spacing-16);
   width: 100%;
 }
 
 /* Left Column - Title */
 .titleColumn {
-  flex: 0 0 40%;
-  width: 40%;
+  flex: 0 0 auto;
+  width: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: var(--spacing-2);
+  gap: 0;
   min-width: 0;
+}
+
+.subtitle {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  line-height: 35px;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-white);
+  margin: 0;
 }
 
 /* Right Column - Content */
@@ -57,38 +65,88 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: var(--spacing-8);
+  gap: var(--spacing-12);
   min-width: 0;
 }
 
 .description {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.description p {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xl);
+  line-height: 1.5;
+  font-weight: var(--font-weight-regular);
   color: var(--color-white);
+  margin: 0;
+  max-width: 680px;
 }
 
-.lampDecoration {
-  position: absolute;
-  left: -20px;
-  top: 40%;
-  transform: translateY(-50%) scaleX(2) scaleY(1.5);
-  z-index: 1;
+/* Split Button */
+.splitButton {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
+.splitButtonText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  padding-inline: var(--spacing-4);
+  background-color: var(--color-yellow);
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-black-a);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity var(--transition-fast);
+}
+
+.splitButtonText:hover {
+  opacity: 0.88;
+}
+
+.splitButtonIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background-color: var(--color-yellow);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
+  border-left: 1.5px solid rgba(10, 10, 10, 0.12);
+}
+
+.splitButtonIcon:hover {
+  opacity: 0.88;
+}
+
+/* Responsive */
+@media (max-width: 1280px) {
+  .titleColumn {
+    width: 280px;
+  }
+}
+
+@media (max-width: 992px) {
   .expertosUsuarios {
     padding-block: var(--spacing-10);
   }
 
   .contentWrapper {
-    gap: var(--spacing-16);
+    gap: var(--spacing-10);
+  }
+
+  .titleColumn {
+    width: 240px;
+  }
+
+  .subtitle {
+    font-size: 28px;
   }
 }
 
@@ -97,20 +155,45 @@
     padding-block: var(--spacing-8);
   }
 
-  .container {
-    padding: 0 var(--spacing-2);
-  }
-
   .contentWrapper {
     flex-direction: column;
     gap: var(--spacing-8);
     align-items: flex-start;
   }
 
-  .titleColumn,
+  .titleColumn {
+    width: 100%;
+    flex: none;
+  }
+
   .contentColumn {
     width: 100%;
     flex: none;
+    gap: var(--spacing-8);
+  }
+
+  .description {
+    max-width: 100%;
+  }
+
+  .splitButtonText {
+    font-size: var(--font-size-base);
+    height: 46px;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .splitButtonIcon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 0;
+  }
+
+  .vectorDecoration {
+    width: 320px;
+    height: 150px;
   }
 }
 
@@ -119,11 +202,20 @@
     padding-block: var(--spacing-6);
   }
 
-  .container {
-    padding: 0 var(--spacing-1);
+  .subtitle {
+    font-size: 24px;
+    line-height: 30px;
   }
 
-  .contentWrapper {
-    gap: var(--spacing-6);
+  .splitButton {
+    width: 100%;
+  }
+
+  .splitButtonText {
+    flex: 1;
+    height: auto;
+    min-height: 46px;
+    padding-block: var(--spacing-2);
+    padding-inline: var(--spacing-3);
   }
 }

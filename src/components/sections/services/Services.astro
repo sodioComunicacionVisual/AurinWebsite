@@ -46,7 +46,7 @@ const services = [
             description={service.description || ''}
             range={[i * 0.25, 1]}
             targetScale={targetScale}
-            client:load
+            client:visible
           />
         );
       }
@@ -60,7 +60,7 @@ const services = [
           description={service.description || ''}
           range={[i * 0.25, 1]}
           targetScale={targetScale}
-          client:load
+          client:visible
         />
       );
     })}

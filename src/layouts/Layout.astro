@@ -7,7 +7,6 @@ import ChatbotContainer from '../components/modules/chatbot/ChatbotContainer.ast
 import SpotlightCursorContainer from '../components/ui/SpotlightCursorContainer.astro';
 import Vignette from '../components/ui/Vignette.astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
-import Analytics from '@vercel/analytics/astro';
 
 interface Props {
 	title: string;
@@ -62,6 +61,13 @@ const {
 		<link rel="manifest" href="/favicon/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
 
+		<!-- Google Fonts — non-blocking load -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" media="print" onload="this.media='all'" />
+		<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" /></noscript>
+
 		<!-- Prefetch critical resources -->
 		<link rel="prefetch" href="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Avatar_2%404x.webp" as="image" />
 		
@@ -92,7 +98,6 @@ const {
 		)}
 		<ChatbotContainer />
 		<SpeedInsights />
-		<Analytics />
 	</body>
 </html>
 

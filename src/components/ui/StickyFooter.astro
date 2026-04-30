@@ -2,7 +2,6 @@
 // StickyFooter component with parallax effect
 import styles from './StickyFooter.module.css';
 import LampLight from './LampLight.astro';
-import SpeedlifyStats from './SpeedlifyStats.tsx';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 
@@ -66,12 +65,6 @@ const t = translations[currentLang];
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Speedlify Stats Section -->
-        <div class={styles.speedlifySection}>
-          <p class={`${styles.speedlifyLabel} description`}>{t.footer.performanceStats}</p>
-          <SpeedlifyStats client:load lang={currentLang} />
         </div>
 
         <div class={styles.footerCopyright}>

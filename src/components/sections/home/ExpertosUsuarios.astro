@@ -1,28 +1,29 @@
 ---
-import MainButton from '../../ui/MainButton.astro';
-import LampLight from '../../ui/LampLight.astro';
 import ScrollReveal from '../../ui/ScrollReveal.astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
 import styles from './ExpertosUsuarios.module.css';
-// Detect current language
+
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 ---
 
 <section class={styles.expertosUsuarios}>
-  <div class={styles.lampDecoration}>
-    <LampLight lightColor="#D0DF00" intensity="medium" />
-  </div>
+  <img
+    src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Vector.svg"
+    alt=""
+    class={styles.vectorDecoration}
+    aria-hidden="true"
+  />
   <div class={styles.container}>
     <div class={styles.contentWrapper}>
       <!-- Left Column: Title -->
       <div class={styles.titleColumn}>
-        <h2 class="heading-5" style="color: var(--color-white); margin: 0;">{t.expertosUsuarios.subtitle}</h2>
-        <ScrollReveal 
+        <p class={styles.subtitle}>{t.expertosUsuarios.subtitle}</p>
+        <ScrollReveal
           text={t.expertosUsuarios.title}
-          tag="h1"
-          textClass="heading-5"
+          tag="h2"
+          textClass="heading-2"
           textStyle="color: var(--color-yellow); margin: 0;"
           baseOpacity={0.7}
           baseRotation={2}
@@ -33,16 +34,18 @@ const t = translations[currentLang];
 
       <!-- Right Column: Description and CTA -->
       <div class={styles.contentColumn}>
-        <div class={styles.description}>
-          <p class="description" style="color: var(--color-white);">
-            {t.expertosUsuarios.description}
-          </p>
+        <p class={styles.description}>{t.expertosUsuarios.description}</p>
+
+        <div class={styles.splitButton}>
+          <a href="/nosotros" class={styles.splitButtonText}>
+            {t.expertosUsuarios.buttonText}
+          </a>
+          <a href="/nosotros" class={styles.splitButtonIcon} aria-label="Ver más">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 17L17 5M17 5H8M17 5V14" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
         </div>
-        
-        <MainButton 
-          text={t.expertosUsuarios.buttonText}
-          href="/nosotros"
-        />
       </div>
     </div>
   </div>
