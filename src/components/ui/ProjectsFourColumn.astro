@@ -1,6 +1,6 @@
 ---
 import SectionHeading from './SectionHeading.astro';
-import ProjectCardNoChips from './ProjectCardNoChips.astro';
+import ProjectCard from './ProjectCard.astro';
 import ButtonIsland from './ButtonIsland.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
@@ -52,7 +52,7 @@ try {
     <div class={styles.projectsGrid}>
       {projects.length > 0 ? (
         projects.map((project) => (
-          <ProjectCardNoChips
+          <ProjectCard showChips={false}
             title={project.title}
             tags={[
               ...(project.category ? [project.category.name] : [])
@@ -66,28 +66,28 @@ try {
       ) : (
         <!-- Fallback projects if CMS is not available -->
         <>
-          <ProjectCardNoChips
+          <ProjectCard showChips={false}
             title="Galicia"
             tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
             image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectGalicia.webp"
             href="/proyectos/galicia"
           />
 
-          <ProjectCardNoChips
+          <ProjectCard showChips={false}
             title="Sinfonica de<br/>Minería"
             tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
             image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSinfonica.webp"
             href="/proyectos/sinfonica"
           />
 
-          <ProjectCardNoChips
+          <ProjectCard showChips={false}
             title="SAI Derecho y economía"
             tags={[t.projects.tags.uxui, t.projects.tags.frontBack]}
             image="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/ProjectSai.webp"
             href="/proyectos/sai"
           />
 
-          <ProjectCardNoChips
+          <ProjectCard showChips={false}
             title="Proyecto Extra"
             tags={[t.projects.tags.uxui]}
             image="https://placehold.co/800x600?text=Proyecto+4"

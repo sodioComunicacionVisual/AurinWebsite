@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
+import styles from './markdown.module.css'
 
 interface MarkdownRendererProps {
   content: string
@@ -7,7 +8,7 @@ interface MarkdownRendererProps {
 
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
   return (
-    <div className="markdown-content">
+    <div className={styles.markdownContent}>
       <ReactMarkdown
         components={{
           p: ({ children }) => <p>{children}</p>,

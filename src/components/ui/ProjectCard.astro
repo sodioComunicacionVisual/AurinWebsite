@@ -5,13 +5,14 @@ import { Tilt } from '../ui/Tilt';
 
 interface Props {
   title: string;
-  tags: string[];
+  tags?: string[];
   image: string;
   href?: string;
   class?: string;
   category?: string;
   services?: Array<{ name: string }>;
   filters?: string[];
+  showChips?: boolean;
 }
 
 const {
@@ -22,7 +23,8 @@ const {
   class: className = '',
   category,
   services = [],
-  filters = []
+  filters = [],
+  showChips = true
 } = Astro.props;
 
 const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
@@ -49,7 +51,7 @@ const uniqueId = `project-card-${Math.random().toString(36).substr(2, 9)}`;
         <h3 class={`${styles['project-title']} description`} set:html={title}></h3>
 
         <!-- Services (Chips Verdes) -->
-        {services.length > 0 && (
+        {showChips && services.length > 0 && (
           <div class={styles['services-container']}>
             {services.slice(0, 3).map((service) => (
               <span class={styles['service-chip']}>{service.name}</span>

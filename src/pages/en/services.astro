@@ -7,7 +7,7 @@ import SBanner from '../../components/sections/services/SBanner.astro';
 import ServicesComponent from '../../components/sections/services/Services.astro';
 import HerramientasVariant from '../../components/sections/services/HerramientasVariant.astro';
 import MainCat from '../../components/ui/MainCat.astro';
-import Projects from '../../components/ui/Projects.astro';
+import DynamicProjects from '../../components/ui/DynamicProjects.astro';
 import { getLangFromUrl } from '../../i18n/utils.js';
 import { translations } from '../../i18n/translations.js';
 
@@ -97,6 +97,6 @@ const speakable = [".services-banner", ".services-list", ".ux-description"];
   <ServicesComponent />
   <HerramientasVariant />
   <MainCat />
-  <Projects />
+  <DynamicProjects />
   <StickyFooter />
 </Layout>

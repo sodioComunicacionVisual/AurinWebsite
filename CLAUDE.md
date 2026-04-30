@@ -32,7 +32,6 @@ src/
 │   └── Layout.astro   # Root layout — injects global CSS, SEO, Chatbot, SpotlightCursor, Analytics
 ├── lib/
 │   ├── payload.ts     # Payload CMS API client (projects, categories, tags)
-│   ├── strapi.ts      # Strapi CMS client (legacy / secondary)
 │   ├── calendar/      # Google Calendar integration (appointment booking)
 │   ├── chatbot/       # Chatbot session + intent logic
 │   └── mailing/       # Email via Resend (contact, appointment confirmations)
@@ -45,8 +44,7 @@ src/
 
 ### Data sources
 
-- **Payload CMS** (`https://aurin-payload-cms.vercel.app/api`) — primary source for projects. Use `PayloadAPI` class from `src/lib/payload.ts`. Env vars: `PAYLOAD_API_URL`, `PAYLOAD_SERVER_URL`.
-- **Strapi** — secondary/legacy CMS (`STRAPI_URL`, defaults to `http://localhost:1337`).
+- **Payload CMS** (`https://aurin-payload-cms.vercel.app/api`) — único CMS, fuente de proyectos. Usar clase `PayloadAPI` de `src/lib/payload.ts`. Env vars: `PAYLOAD_API_URL`, `PAYLOAD_SERVER_URL`.
 - **n8n webhook** (`N8N_WEBHOOK_URL`) — chatbot AI backend.
 - **Resend** (`RESEND_API_KEY`) — transactional email.
 - **Google Calendar** — appointment scheduling via `src/lib/calendar/`.

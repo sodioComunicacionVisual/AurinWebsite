@@ -1,52 +1,52 @@
 
 
-.markdown-content {
+.markdownContent {
   color: #e5e5e5;
   line-height: 1.5;
 }
 
-.markdown-content p {
+.markdownContent p {
   margin: 0;
 }
 
-.markdown-content strong {
+.markdownContent strong {
   font-weight: bold;
   color: #d0df00;
 }
 
-.markdown-content em {
+.markdownContent em {
   font-style: italic;
   color: #e5e5e5;
 }
 
-.markdown-content a {
+.markdownContent a {
   color: #d0df00;
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
-.markdown-content a:hover {
+.markdownContent a:hover {
   color: #e0ef10;
 }
 
-.markdown-content ul {
+.markdownContent ul {
   list-style-type: disc;
   list-style-position: inside;
   margin: 8px 0;
 }
 
-.markdown-content ol {
+.markdownContent ol {
   list-style-type: decimal;
   list-style-position: inside;
   margin: 8px 0;
 }
 
-.markdown-content li {
+.markdownContent li {
   color: #e5e5e5;
   margin: 4px 0;
 }
 
-.markdown-content code {
+.markdownContent code {
   background-color: rgba(0, 0, 0, 0.3);
   padding: 2px 6px;
   border-radius: 4px;
@@ -55,7 +55,7 @@
   font-size: 12px;
 }
 
-.markdown-content pre {
+.markdownContent pre {
   background-color: rgba(0, 0, 0, 0.3);
   padding: 8px;
   border-radius: 4px;
@@ -63,7 +63,7 @@
   overflow-x: auto;
 }
 
-.markdown-content pre code {
+.markdownContent pre code {
   background: none;
   padding: 0;
   display: block;
@@ -71,28 +71,28 @@
   font-size: 12px;
 }
 
-.markdown-content h1 {
+.markdownContent h1 {
   font-size: 18px;
   font-weight: bold;
   color: #d0df00;
   margin-bottom: 8px;
 }
 
-.markdown-content h2 {
+.markdownContent h2 {
   font-size: 16px;
   font-weight: bold;
   color: #d0df00;
   margin-bottom: 8px;
 }
 
-.markdown-content h3 {
+.markdownContent h3 {
   font-size: 14px;
   font-weight: bold;
   color: #d0df00;
   margin-bottom: 4px;
 }
 
-.markdown-content blockquote {
+.markdownContent blockquote {
   border-left: 2px solid #d0df00;
   padding-left: 12px;
   margin: 8px 0;

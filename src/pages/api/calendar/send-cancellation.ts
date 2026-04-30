@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { sendAppointmentCancellation } from '../../lib/mailing/service';
-import type { CancellationData } from '../../lib/mailing/types';
+import { sendAppointmentCancellation } from '../../../lib/mailing/service';
+import type { CancellationData } from '../../../lib/mailing/types';
 
 export const prerender = false;
 

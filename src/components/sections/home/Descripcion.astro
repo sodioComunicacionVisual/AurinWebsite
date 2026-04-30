@@ -1,8 +1,8 @@
 ---
-import ScrollReveal from '../../ui/ScrollReveal.astro';
-import { getLangFromUrl } from '../../../i18n/utils.js';
-import { translations } from '../../../i18n/translations.js';
-import styles from './Descripcion.module.css';
+import ScrollReveal from "../../ui/ScrollReveal.astro";
+import { getLangFromUrl } from "../../../i18n/utils.js";
+import { translations } from "../../../i18n/translations.js";
+import styles from "./Descripcion.module.css";
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -13,65 +13,66 @@ const t = translations[currentLang];
   <div class={styles.descripcionContainer}>
     <!-- Left column -->
     <div class={styles.leftColumn}>
-      <ScrollReveal 
+      <ScrollReveal
         text={t.descripcion.mainHeading}
         tag="h2"
-        textClass="heading-5"
-        textStyle="color: var(--color-yellow); margin: 0;"
+        textClass={styles.mainHeadingText}
         baseOpacity={0.2}
         baseRotation={4}
         blurStrength={5}
         enableBlur={true}
       />
-      
+
       <div class={styles.contentText}>
         <p class="description" style="color: var(--color-white);">
-          {t.descripcion.contentText}<br/>
-          <strong class={styles.textHighlight}>{t.descripcion.contentHighlight}</strong> {t.descripcion.contentContinue}
+          {t.descripcion.contentText}<br />
+          <strong class={styles.textHighlight}
+            >{t.descripcion.contentHighlight}</strong
+          >
+          {t.descripcion.contentContinue}
         </p>
       </div>
-      
+
       <div class={styles.contrastTextWrapper}>
-        <p class="heading-5" style="color: var(--color-yellow); word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; margin: 0;">
+        <p class={styles.contrastText}>
           {t.descripcion.contrastText}
         </p>
       </div>
     </div>
-    
-    <!-- Right column -->
-    <div class={styles.rightColumn}>
-      <div class={styles.svgWrapper}>
-        <img src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg" alt="Light SVG" class={styles.svgElement} />
-      </div>
-    </div>
+
+  </div>
+  <div class={styles.svgAbsolute}>
+    <img
+      src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg"
+      alt=""
+      class={styles.svgElement}
+    />
   </div>
 </section>
 
 <script>
-  import { scroll, animate } from 'motion';
+  import { scroll, animate } from "motion";
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const smallText = document.querySelector('[data-parallax-small]') as HTMLElement;
-    const largeText = document.querySelector('[data-parallax-large]') as HTMLElement;
+  document.addEventListener("DOMContentLoaded", () => {
+    const smallText = document.querySelector(
+      "[data-parallax-small]",
+    ) as HTMLElement;
+    const largeText = document.querySelector(
+      "[data-parallax-large]",
+    ) as HTMLElement;
 
     if (smallText) {
-      scroll(
-        animate(smallText, { y: [0, 40] }),
-        {
-          target: smallText,
-          offset: ['start end', 'end start']
-        }
-      );
+      scroll(animate(smallText, { y: [0, 40] }), {
+        target: smallText,
+        offset: ["start end", "end start"],
+      });
     }
 
     if (largeText) {
-      scroll(
-        animate(largeText, { y: [0, -60] }),
-        {
-          target: largeText,
-          offset: ['start end', 'end start']
-        }
-      );
+      scroll(animate(largeText, { y: [0, -60] }), {
+        target: largeText,
+        offset: ["start end", "end start"],
+      });
     }
   });
 </script>
