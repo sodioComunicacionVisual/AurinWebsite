@@ -108,7 +108,7 @@ try {
           
           {maxProjects >= 4 && (
             <ProjectCard
-              title="Proyecto Extra"
+              title={currentLang === 'en' ? 'Extra Project' : 'Proyecto Extra'}
               tags={[t.projects.tags.uxui]}
               image="https://placehold.co/800x600?text=Proyecto+4"
               href="/proyectos"

@@ -11,7 +11,7 @@ import EnterpriseMarquee from '../../components/sections/home/EnterpriseMarquee.
 import Especialidades from '../../components/sections/home/Especialidades.astro';
 import MainCat from '../../components/ui/MainCat.astro';
 import HerramientasVariant from '../../components/sections/services/HerramientasVariant.astro';
-import Projects from '../../components/ui/Projects.astro';
+import DynamicProjects from '../../components/ui/DynamicProjects.astro';
 import StickyFooter from '../../components/ui/StickyFooter.astro';
 import { translations } from '../../i18n/translations.js';
 
@@ -83,7 +83,7 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 
 		<HerramientasVariant />
 
-		<Projects maxProjects={4} showChips={false} variant="four-column" />
+		<DynamicProjects maxProjects={4} showChips={false} variant="four-column" />
 
 		<StickyFooter />
 
