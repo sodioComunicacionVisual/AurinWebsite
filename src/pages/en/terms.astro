@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/ui/Header.astro';
+import StickyFooter from '../../components/ui/StickyFooter.astro';
+import MainCat from '../../components/ui/MainCat.astro';
+import TermsConditions from '../../components/sections/t&c/TermsConditions.astro';
+import InteractiveBackground from '../../components/ui/InteractiveBackground.astro';
+import Vignette from '../../components/ui/Vignette.astro';
+import { getLangFromUrl } from '../../i18n/utils';
+import { translations } from '../../i18n/translations';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang].termsConditions;
+---
+
+<Layout
+  title={t.seo.title}
+  description={t.seo.description}
+  keywords={t.seo.keywords}
+>
+  <InteractiveBackground />
+  <Vignette intensity="medium" />
+  <Header />
+
+  <main>
+    <TermsConditions lang={currentLang} />
+    <MainCat />
+  </main>
+
+  <StickyFooter />
+</Layout>

@@ -1,0 +1,205 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import InteractiveBackground from '../../components/ui/InteractiveBackground.astro';
+import Vignette from '../../components/ui/Vignette.astro';
+import BannerBackgroundEffectsContainer from '../../components/modules/banner/BannerBackgroundEffectsContainer.astro';
+import FloatingDustContainer from '../../components/modules/banner/FloatingDustContainer.astro';
+import MainButton from '../../components/ui/MainButton.astro';
+---
+
+<Layout
+  title="Appointment Confirmed - Aurin"
+  description="Your appointment has been confirmed successfully"
+>
+  <InteractiveBackground />
+  <Vignette intensity="medium" />
+
+  <section class="confirmation-page">
+    <BannerBackgroundEffectsContainer />
+    <FloatingDustContainer />
+
+    <svg style="position: absolute; width: 0; height: 0">
+      <filter
+        id="glass"
+        x="-50%"
+        y="-50%"
+        width="200%"
+        height="200%"
+        primitiveUnits="objectBoundingBox"
+      >
+        <feImage
+          id="glassImage"
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+          result="map"
+        />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0.02" result="blur" />
+        <feDisplacementMap
+          id="disp"
+          in="blur"
+          in2="map"
+          scale="0.8"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        ></feDisplacementMap>
+      </filter>
+    </svg>
+
+    <div class="confirmation-container">
+      <div class="confirmation-icon">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="var(--color-yellow)" stroke-width="2" fill="none"/>
+          <path d="M8 12.5L10.5 15L16 9.5" stroke="var(--color-yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1 class="heading-bold-2">Appointment Confirmed!</h1>
+
+      <p class="confirmation-message body-1">
+        Your appointment has been confirmed successfully. You will receive all the details in your email.
+      </p>
+
+      <div class="confirmation-details">
+        <p class="body-bold-5">What's next?</p>
+        <ul>
+          <li class="body-2">Check your email for the Google Meet link</li>
+          <li class="body-2">Add the event to your calendar</li>
+          <li class="body-2">Get ready for our meeting</li>
+        </ul>
+      </div>
+
+      <div class="confirmation-actions">
+        <MainButton text="Back to home" href="/en/" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .confirmation-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .confirmation-container {
+    max-width: 600px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.10) 0%,
+      rgba(255, 255, 255, 0.06) 50%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: url(#glass);
+    -webkit-backdrop-filter: url(#glass);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 24px;
+    padding: 3rem;
+    text-align: center;
+    box-shadow:
+      0 8px 32px 0 rgba(0, 0, 0, 0.37),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 30;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+  }
+
+  .confirmation-icon {
+    margin-bottom: 2rem;
+    animation: scaleIn 0.5s ease-out;
+    display: inline-block;
+  }
+
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  h1 {
+    color: var(--color-yellow);
+    margin-bottom: 1.5rem;
+  }
+
+  .confirmation-message {
+    color: var(--color-white);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .confirmation-details {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: left;
+  }
+
+  .confirmation-details p {
+    color: var(--color-yellow);
+    margin-bottom: 1rem;
+  }
+
+  .confirmation-details ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .confirmation-details li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--color-gray-a);
+  }
+
+  .confirmation-details li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-yellow);
+    font-weight: bold;
+  }
+
+  .confirmation-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .confirmation-container {
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<script>
+  const feImage = document.getElementById('glassImage');
+  if (feImage) {
+    fetch('https://essykings.github.io/JavaScript/map.png')
+      .then((response) => response.blob())
+      .then((blob) => {
+        const objURL = URL.createObjectURL(blob);
+        feImage.setAttribute('href', objURL);
+      })
+      .catch((error) => {
+        console.error('Error loading glass effect map:', error);
+      });
+  }
+</script>
