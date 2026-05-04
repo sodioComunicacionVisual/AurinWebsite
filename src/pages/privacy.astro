@@ -2,9 +2,9 @@
 import { getLangFromUrl, translations } from '@/i18n';
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/layout/Header.astro';
-import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Footer from '@/components/layout/Footer.astro';
 import CtaBanner from '@/components/layout/CtaBanner.astro';
-import Privacy from '@/blocks/shared/Privacy/Privacy.astro';
+import { Privacy } from '@/blocks/shared';
 import Vignette from '@/components/ui/Vignette.astro';
 
 const currentLang = getLangFromUrl(Astro.url);
@@ -19,11 +19,11 @@ const t = translations[currentLang].privacy;
   <Vignette intensity="medium" />
   <Header />
 
-  <main>
+  <main id="main-content">
     <Privacy lang={currentLang} />
     <CtaBanner />
   </main>
 
-  <StickyFooter />
+  <Footer />
 </Layout>
 

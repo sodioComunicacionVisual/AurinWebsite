@@ -2,9 +2,11 @@
 import { getLangFromUrl, translations } from '@/i18n';
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/layout/Header.astro';
-import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Footer from '@/components/layout/Footer.astro';
 import Form from '@/blocks/shared/Contact/Form.astro';
 import Toast from '@/components/ui/Toast.astro';
+import { SITE } from '@/config/site';
+import type { ContactPageStructuredData } from '@/types/seo';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -16,17 +18,17 @@ const seoDescription = t.contact.seo.description;
 const seoKeywords = t.contact.seo.keywords;
 
 // Datos estructurados para SEO (Schema.org)
-const structuredData = {
+const structuredData: ContactPageStructuredData = {
   "@context": "https://schema.org",
   "@type": "ContactPage",
   "mainEntity": {
     "@type": "Organization",
-    "name": "Aurin",
-    "url": "https://aurin.mx",
-    "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+    "name": SITE.name,
+    "url": SITE.url,
+    "logo": SITE.logoUrl,
     "contactPoint": {
       "@type": "ContactPoint",
-      "email": "hey@aurin.mx",
+      "email": SITE.contactEmail,
       "contactType": "customer service",
       "areaServed": "MX",
       "availableLanguage": ["Spanish", "English"]
@@ -49,14 +51,14 @@ const speakable = [".contact-form", ".contact-info"];
   keywords={seoKeywords}
   structuredData={structuredData}
   speakable={speakable}
-  canonical="https://aurin.mx/contact"
-  ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+  canonical={`${SITE.url}/contact`}
+  ogImage={SITE.logoUrl}
 >
   <Header />
-  <main>
+  <main id="main-content">
     <Form />
   </main>
-  <StickyFooter />
+  <Footer />
   <Toast />
 </Layout>
 

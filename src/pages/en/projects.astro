@@ -2,11 +2,13 @@
 import { getLangFromUrl, translations } from '@/i18n';
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/layout/Header.astro';
-import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Footer from '@/components/layout/Footer.astro';
 import Introduction from '@/blocks/projects/Introduction/Introduction.astro';
 import ProjectsGrid from '@/components/projects/ProjectsGrid.astro';
 import FilterPills from '@/components/ui/FilterPills.astro';
 import CtaBanner from '@/components/layout/CtaBanner.astro';
+import { SITE } from '@/config/site';
+import type { CollectionPageStructuredData } from '@/types/seo';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -17,19 +19,19 @@ const seoTitle = t.projects.seo.title;
 const seoDescription = t.projects.seo.description;
 const seoKeywords = t.projects.seo.keywords;
 
-// Structured data for SEO (Schema.org)
-const structuredData = {
+// Datos estructurados para SEO (Schema.org)
+const structuredData: CollectionPageStructuredData = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "name": "Project Portfolio - Aurin",
+  "name": currentLang === 'es' ? "Portfolio de Proyectos - Aurin" : "Project Portfolio - Aurin",
   "description": seoDescription,
-  "url": "https://aurin.mx/en/projects",
-  "inLanguage": "en-US",
+  "url": currentLang === 'es' ? `${SITE.url}/projects` : `${SITE.url}/en/projects`,
+  "inLanguage": currentLang === 'es' ? "es-MX" : "en-US",
   "mainEntity": {
     "@type": "Organization",
-    "name": "Aurin",
-    "url": "https://aurin.mx",
-    "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+    "name": SITE.name,
+    "url": SITE.url,
+    "logo": SITE.logoUrl,
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Design Project Portfolio",
@@ -40,7 +42,7 @@ const structuredData = {
           "description": "Branding, UI/UX and web development project",
           "creator": {
             "@type": "Organization",
-            "name": "Aurin"
+            "name": SITE.name
           },
           "keywords": [t.projects.projectTags["Branding"], t.projects.projectTags["UI/UX"], t.projects.projectTags["Web"]]
         },
@@ -50,7 +52,7 @@ const structuredData = {
           "description": "Development and digital strategy project",
           "creator": {
             "@type": "Organization",
-            "name": "Aurin"
+            "name": SITE.name
           },
           "keywords": [t.projects.projectTags["Desarrollo"], t.projects.projectTags["Estrategia"]]
         },
@@ -60,7 +62,7 @@ const structuredData = {
           "description": "UX research and design project",
           "creator": {
             "@type": "Organization",
-            "name": "Aurin"
+            "name": SITE.name
           },
           "keywords": [t.projects.projectTags["UX Research"], t.projects.projectTags["Design"]]
         }
@@ -72,8 +74,8 @@ const structuredData = {
 // CSS selectors for speakable content (voice optimization)
 const speakable = [".projects-introduction", ".projects-strip", ".project-card"];
 
-// Canonical URL
-const canonicalUrl = "https://aurin.mx/en/projects";
+// Canonical URL based on language
+const canonicalUrl = currentLang === 'es' ? `${SITE.url}/projects` : `${SITE.url}/en/projects`;
 ---
 
 <Layout 
@@ -83,11 +85,11 @@ const canonicalUrl = "https://aurin.mx/en/projects";
   structuredData={structuredData}
   speakable={speakable}
   canonical={canonicalUrl}
-  ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+  ogImage={SITE.logoUrl}
 >
   <Header />
   
-  <main class="proyectos-page">
+  <main id="main-content" class="proyectos-page">
     <!-- Introduction Section -->
     <Introduction />
 
@@ -106,7 +108,7 @@ const canonicalUrl = "https://aurin.mx/en/projects";
     <CtaBanner />
   </main>
   
-  <StickyFooter />
+  <Footer />
 </Layout>
 
 <style>

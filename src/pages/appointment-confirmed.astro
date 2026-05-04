@@ -1,8 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import Vignette from '@/components/ui/Vignette.astro';
-import HeroBackgroundEffectsContainer from '@/blocks/shared/Hero/HeroBackgroundEffectsContainer.astro';
-import FloatingDustContainer from '@/blocks/shared/Hero/FloatingDustContainer.astro';
+import { HeroBackgroundEffectsContainer, FloatingDustContainer } from '@/blocks/shared';
 import MainButton from '@/components/ui/MainButton.astro';
 ---
 
@@ -12,7 +11,7 @@ import MainButton from '@/components/ui/MainButton.astro';
 >
   <Vignette intensity="medium" />
   
-  <section class="confirmation-page">
+  <main id="main-content" class="confirmation-page">
     <!-- Efectos de fondo WebGL y luces -->
     <HeroBackgroundEffectsContainer />
     
@@ -76,7 +75,7 @@ import MainButton from '@/components/ui/MainButton.astro';
         <MainButton text="Volver al inicio" href="/" />
       </div>
     </div>
-  </section>
+  </main>
 </Layout>
 
 <style>

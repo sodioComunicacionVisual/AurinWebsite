@@ -4,15 +4,13 @@ import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/layout/Header.astro';
 import MegaMenu from '@/components/layout/MegaMenu.astro';
 import Vignette from '@/components/ui/Vignette.astro';
-import Hero from '@/blocks/home/Hero/Hero.astro';
-import Description from '@/blocks/home/Description/Description.astro';
-import UserExperts from '@/blocks/home/UserExperts/UserExperts.astro';
-import EnterpriseMarquee from '@/blocks/home/EnterpriseMarquee/EnterpriseMarquee.astro';
-import Specialties from '@/blocks/home/Specialties/Specialties.astro';
+import { Hero, Description, UserExperts, EnterpriseMarquee, Specialties } from '@/blocks/home';
 import CtaBanner from '@/components/layout/CtaBanner.astro';
 import ToolsVariant from '@/blocks/shared/ToolsVariant/ToolsVariant.astro';
 import DynamicProjects from '@/components/projects/DynamicProjects.astro';
-import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { SITE } from '@/config/site';
+import type { OrganizationStructuredData } from '@/types/seo';
 
 // Get English translations
 const t = translations.en;
@@ -23,12 +21,12 @@ const seoDescription = t.seo.description;
 const seoKeywords = t.seo.keywords;
 
 // Structured data for SEO (Schema.org)
-const structuredData = {
+const structuredData: OrganizationStructuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Aurin",
-  "url": "https://aurin.mx",
-  "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+  "name": SITE.name,
+  "url": SITE.url,
+  "logo": SITE.logoUrl,
   "description": seoDescription,
   "address": {
     "@type": "PostalAddress",
@@ -37,12 +35,10 @@ const structuredData = {
   },
   "contactPoint": {
     "@type": "ContactPoint",
-    "email": "hey@aurin.mx",
+    "email": SITE.contactEmail,
     "contactType": "customer service"
   },
-  "sameAs": [
-    "https://aldeacreativa.mx/"
-  ],
+  "sameAs": SITE.sameAs,
   "areaServed": "MX",
   "serviceType": t.structuredData.serviceTypes
 };
@@ -58,13 +54,13 @@ const speakable = [".banner-content", ".description-main", ".specialties-section
 	keywords={seoKeywords}
 	structuredData={structuredData}
 	speakable={speakable}
-	canonical="https://aurin.mx/en/"
-	ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+	canonical={`${SITE.url}/en/`}
+	ogImage={SITE.logoUrl}
 >
 	<Vignette intensity="medium" />
 	<Header />
 	<MegaMenu />
-	<main>
+	<main id="main-content">
 	
 		<Hero/>
 		<Description />
@@ -83,7 +79,7 @@ const speakable = [".banner-content", ".description-main", ".specialties-section
 
 		<DynamicProjects maxProjects={4} showChips={false} variant="four-column" />
 
-		<StickyFooter />
+		<Footer />
 
 	</main>
 </Layout>

@@ -2,9 +2,9 @@
 import { getLangFromUrl, translations } from '@/i18n';
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/layout/Header.astro';
-import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Footer from '@/components/layout/Footer.astro';
 import CtaBanner from '@/components/layout/CtaBanner.astro';
-import TermsConditions from '@/blocks/shared/TermsConditions/TermsConditions.astro';
+import { TermsConditions } from '@/blocks/shared';
 import Vignette from '@/components/ui/Vignette.astro';
 
 const currentLang = getLangFromUrl(Astro.url);
@@ -19,10 +19,10 @@ const t = translations[currentLang].termsConditions;
   <Vignette intensity="medium" />
   <Header />
 
-  <main>
+  <main id="main-content">
     <TermsConditions lang={currentLang} />
     <CtaBanner />
   </main>
 
-  <StickyFooter />
+  <Footer />
 </Layout>

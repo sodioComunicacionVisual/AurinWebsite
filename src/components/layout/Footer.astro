@@ -1,86 +1,128 @@
 ---
 import { getLangFromUrl, translations } from '@/i18n';
-// Footer component
+// Footer component with parallax effect
 import styles from './Footer.module.css';
-import LampLight from './LampLight.astro';
+import LampLight from '@/components/ui/LampLight.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
-
-// Check if we're in development mode (localhost or dev environment)
-const isDevelopment = import.meta.env.DEV || Astro.url.hostname === 'localhost';
 ---
 
-<footer class={styles.footer}>
-  <div class={styles['footer-container']}>
-    <div class={styles['footer-content']}>
-      <!-- Lámpara decorativa en el lado izquierdo -->
-      <div class={styles['lamp-decoration']}>
-        <LampLight lightColor="#fcffbb" intensity="medium" />
-      </div>
-      <img
-        class={`${styles['footer-logo']} footer-logo`}
-        src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
-        alt="Aurin Logo"
-      />
-
-      <div class={styles['footer-columns']}>
-        <!-- Column 1: Oficinas y Contacto -->
-        <div class={`${styles['footer-column']} footer-column`}>
-          <div class={styles['footer-section']}>
-            <h3 class={`${styles['footer-title']} description`}>{t.footer.offices}</h3>
-            <div class={styles['footer-link-container']}>
-              <div class={styles['footer-line']}></div>
-              <a href="https://aldeacreativa.mx/" target="_blank" rel="noopener noreferrer" class={`${styles['footer-link']} description`}>{t.footer.officesLink}</a>
+<div data-footer-parallax class={styles.footerWrap}>
+  <footer data-footer-parallax-inner class={styles.stickyFooter}>
+    <div class={styles.stickyContainer}>
+      <div class={styles.footerContent}>
+        <div class={styles.footerContainer}>
+          <div class={styles.footerContentInner}>
+            <!-- Lámpara decorativa en el lado izquierdo -->
+            <div class={styles.lampDecoration}>
+              <LampLight lightColor="#fcffbb" intensity="medium" />
             </div>
-          </div>
-
-          <div class={styles['footer-section']}>
-            <h3 class={`${styles['footer-title']} description`}>{t.footer.contact}</h3>
-            <div class={styles['footer-link-container']}>
-              <div class={styles['footer-line']}></div>
-              <a href="mailto:hey@aurin.mx" class={`${styles['footer-link']} description`}>hey@aurin.mx</a>
+            
+            <!-- Lámpara decorativa más grande -->
+            <div class={styles.lampDecorationLarge}>
+              <LampLight lightColor="#D0DF00" intensity="high" />
             </div>
-          </div>
+            
+            <img
+              class={`${styles.footerLogo} footer-logo`}
+              src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+              alt="Aurin Logo"
+            />
 
-          <div class={styles['footer-section']}>
-            <h3 class={`${styles['footer-title']} description`}>Dev Tools</h3>
-            <div class={styles['footer-link-container']}>
-              <div class={styles['footer-line']}></div>
-              <a href="https://aurin-payload-cms.vercel.app/admin/" target="_blank" rel="noopener noreferrer" class={`${styles['footer-link']} description`}>Payload CMS</a>
-            </div>
-            {isDevelopment && (
-              <div class={styles['footer-link-container']}>
-                <div class={styles['footer-line']}></div>
-                <a href="https://n8nsystems.info/" target="_blank" rel="noopener noreferrer" class={`${styles['footer-link']} description`}>n8n Workflows</a>
+          <div class={styles.footerColumns}>
+            <!-- Column 1: Oficinas y Contacto -->
+            <div class={`${styles.footerColumn} footer-column`}>
+              <div class={styles.footerSection}>
+                <h3 class={`${styles.footerTitle} description`}>{t.footer.offices}</h3>
+                <div class={styles.footerLinkContainer}>
+                  <a href="https://aldeacreativa.mx/" target="_blank" rel="noopener noreferrer" class={`${styles.footerLink} description`}>{t.footer.officesLink}</a>
+                </div>
               </div>
-            )}
+
+              <div class={styles.footerSection}>
+                <h3 class={`${styles.footerTitle} description`}>{t.footer.contact}</h3>
+                <div class={styles.footerLinkContainer}>
+                  <a href="mailto:hey@aurin.mx" class={`${styles.footerLink} description`}>hey@aurin.mx</a>
+                </div>
+              </div>
+
+     
+            </div>
+
+            <!-- Column 2: Legales -->
+            <div class={`${styles.footerColumn} footer-column`}>
+              <div class={styles.footerSection}>
+                <h3 class={`${styles.footerTitle} description`}>{t.footer.legal}</h3>
+                <div class={styles.footerLinkContainer}>
+                  <a href="/privacy" class={`${styles.footerLink} description`}>{t.footer.privacyPolicy}</a>
+                </div>
+                <div class={styles.footerLinkContainer}>
+                  <a href="/terms" class={`${styles.footerLink} description`}>{t.footer.termsConditions}</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Column 2: Legales -->
-        <div class={`${styles['footer-column']} footer-column`}>
-          <div class={styles['footer-section']}>
-            <h3 class={`${styles['footer-title']} description`}>{t.footer.legal}</h3>
-            <div class={styles['footer-link-container']}>
-              <div class={styles['footer-line']}></div>
-              <a href="/privacy" class={`${styles['footer-link']} description`}>{t.footer.privacyPolicy}</a>
-            </div>
-            <div class={styles['footer-link-container']}>
-              <div class={styles['footer-line']}></div>
-              <a href="/terms" class={`${styles['footer-link']} description`}>{t.footer.termsConditions}</a>
-            </div>
-          </div>
+        <div class={styles.footerCopyright}>
+          <p>{t.footer.copyright}</p>
         </div>
       </div>
     </div>
+  </footer>
+  <div data-footer-parallax-dark class={styles.footerWrapDark}></div>
+</div>
 
-    <div class={styles['footer-copyright']}>
-      <p>{t.footer.copyright}</p>
-    </div>
-  </div>
-</footer>
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initFooterParallax() {
+    const footerElements = document.querySelectorAll('[data-footer-parallax]');
+    
+    footerElements.forEach(el => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'clamp(top bottom)',
+          end: 'clamp(top top)',
+          scrub: true,
+        }
+      });
+    
+      const inner = el.querySelector('[data-footer-parallax-inner]');
+      const dark = el.querySelector('[data-footer-parallax-dark]');
+    
+      if (inner) {
+        tl.from(inner, {
+          yPercent: -20,
+          ease: 'linear'
+        });
+      }
+    
+      if (dark) {
+        tl.from(dark, {
+          opacity: 0.5,
+          ease: 'linear'
+        }, '<');
+      }
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFooterParallax);
+  } else {
+    initFooterParallax();
+  }
+
+  // Re-initialize on route changes (for SPA-like behavior)
+  document.addEventListener('astro:after-swap', initFooterParallax);
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

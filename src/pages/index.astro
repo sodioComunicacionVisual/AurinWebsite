@@ -1,77 +1,78 @@
 ---
-import { translations } from '@/i18n';
-import Layout from '@/layouts/Layout.astro';
-import Header from '@/components/layout/Header.astro';
-import MegaMenu from '@/components/layout/MegaMenu.astro';
-import Hero from '@/blocks/home/Hero/Hero.astro';
-import Description from '@/blocks/home/Description/Description.astro';
-import UserExperts from '@/blocks/home/UserExperts/UserExperts.astro';
-import EnterpriseMarquee from '@/blocks/home/EnterpriseMarquee/EnterpriseMarquee.astro';
-import Specialties from '@/blocks/home/Specialties/Specialties.astro';
-import CtaBanner from '@/components/layout/CtaBanner.astro';
-import ToolsVariant from '@/blocks/shared/ToolsVariant/ToolsVariant.astro';
-import DynamicProjects from '@/components/projects/DynamicProjects.astro';
-import StickyFooter from '@/components/layout/StickyFooter.astro';
+import type { OrganizationStructuredData } from "@/types/seo";
+import { SITE } from "@/config/site";
+import { translations } from "@/i18n";
+import Layout from "@/layouts/Layout.astro";
+import {
+  Hero,
+  Description as OurVision,
+  UserExperts,
+  EnterpriseMarquee as SliderClients,
+  Specialties,
+} from "@/blocks/home";
+import ToolsSuite from "@/blocks/shared/ToolsVariant/ToolsVariant.astro";
+import Header from "@/components/layout/Header.astro";
+import MegaMenu from "@/components/layout/MegaMenu.astro";
+import Banner from "@/components/layout/CtaBanner.astro";
+import Footer from "@/components/layout/Footer.astro";
+import Projects from "@/components/projects/DynamicProjects.astro";
 
-// Get Spanish translations (default)
 const t = translations.es;
 
-// SEO optimizado para LLMs y motores de búsqueda
 const seoTitle = t.seo.title;
 const seoDescription = t.seo.description;
 const seoKeywords = t.seo.keywords;
 
-// Datos estructurados para SEO (Schema.org)
-const structuredData = {
+const structuredData: OrganizationStructuredData = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Aurin",
-  "url": "https://aurin.mx",
-  "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
-  "description": seoDescription,
-  "address": {
+  name: SITE.name,
+  url: SITE.url,
+  logo: SITE.logoUrl,
+  description: seoDescription,
+  address: {
     "@type": "PostalAddress",
-    "addressLocality": "Aldea Creativa",
-    "addressCountry": "MX"
+    addressLocality: "Aldea Creativa",
+    addressCountry: "MX",
   },
-  "contactPoint": {
+  contactPoint: {
     "@type": "ContactPoint",
-    "email": "hey@aurin.mx",
-    "contactType": "customer service"
+    email: SITE.contactEmail,
+    contactType: "customer service",
   },
-  "sameAs": [
-    "https://aldeacreativa.mx/"
-  ],
-  "areaServed": "MX",
-  "serviceType": t.structuredData.serviceTypes
+  sameAs: SITE.sameAs,
+  areaServed: "MX",
+  serviceType: t.structuredData.serviceTypes,
 };
 
-// Selectores CSS para contenido speakable (optimización de voz)
-const speakable = [".banner-content", ".description-main", ".specialties-section"];
-
+// (Voice optimization)
+const speakable = [
+  ".banner-content",
+  ".description-main",
+  ".specialties-section",
+];
 ---
 
-<Layout 
-	title={seoTitle}
-	description={seoDescription}
-	keywords={seoKeywords}
-	structuredData={structuredData}
-	speakable={speakable}
-	canonical="https://aurin.mx/"
-	ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+  keywords={seoKeywords}
+  structuredData={structuredData}
+  speakable={speakable}
+  canonical={SITE.url}
+  ogImage={SITE.logoUrl}
 >
-	<Header />
-	<MegaMenu />
-	<main>
-		<Hero/>
-		<Description />
-		<EnterpriseMarquee />
-		<UserExperts />
-		<Specialties />
-		<ToolsVariant />
-		<DynamicProjects maxProjects={4} showChips={false} variant="four-column" />
-    <CtaBanner/>
-		<StickyFooter />
-	</main>
+  <Header />
+  <MegaMenu />
+  <main id="main-content">
+    <Hero />
+    <OurVision />
+    <SliderClients />
+    <UserExperts />
+    <Specialties />
+    <ToolsSuite />
+    <Projects maxProjects={4} showChips={false} variant="four-column" />
+    <Banner />
+    <Footer />
+  </main>
 </Layout>
-

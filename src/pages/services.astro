@@ -2,12 +2,12 @@
 import { getLangFromUrl, translations } from '@/i18n';
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/layout/Header.astro';
-import StickyFooter from '@/components/layout/StickyFooter.astro';
-import ServicesBanner from '@/blocks/services/ServicesBanner/ServicesBanner.astro';
-import Services from '@/blocks/services/Services/Services.astro';
-import ToolsScrollStory from '@/blocks/services/ToolsScrollStory/ToolsScrollStory.astro';
+import Footer from '@/components/layout/Footer.astro';
+import { ServicesBanner, Services, ToolsScrollStory } from '@/blocks/services';
 import CtaBanner from '@/components/layout/CtaBanner.astro';
 import DynamicProjects from '@/components/projects/DynamicProjects.astro';
+import { SITE } from '@/config/site';
+import type { ServiceStructuredData } from '@/types/seo';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -19,18 +19,18 @@ const seoDescription = t.services.seo.description;
 const seoKeywords = t.services.seo.keywords;
 
 // Datos estructurados para SEO (Schema.org)
-const structuredData = {
+const structuredData: ServiceStructuredData = {
   "@context": "https://schema.org",
   "@type": "Service",
   "serviceType": "Servicios de Comunicación Visual y Diseño",
   "provider": {
     "@type": "Organization",
-    "name": "Aurin",
-    "url": "https://aurin.mx",
-    "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+    "name": SITE.name,
+    "url": SITE.url,
+    "logo": SITE.logoUrl,
     "contactPoint": {
       "@type": "ContactPoint",
-      "email": "hey@aurin.mx",
+      "email": SITE.contactEmail,
       "contactType": "customer service"
     }
   },
@@ -86,14 +86,16 @@ const speakable = [".services-banner", ".services-list", ".ux-description"];
   keywords={seoKeywords}
   structuredData={structuredData}
   speakable={speakable}
-  canonical="https://aurin.mx/services"
-  ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+  canonical={`${SITE.url}/services`}
+  ogImage={SITE.logoUrl}
 >
   <Header />
-  <ServicesBanner />
-  <Services />
-  <ToolsScrollStory />
-  <DynamicProjects />
-  <CtaBanner />
-  <StickyFooter />
+  <main id="main-content">
+    <ServicesBanner />
+    <Services />
+    <ToolsScrollStory />
+    <DynamicProjects />
+    <CtaBanner />
+  </main>
+  <Footer />
 </Layout>
