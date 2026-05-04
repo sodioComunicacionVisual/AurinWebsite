@@ -1,0 +1,111 @@
+@layer base {
+
+  /* CUERPO — base de toda la tipografía */
+  body {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-base);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-white);
+    background-color: var(--color-black-a);
+  }
+
+  /* PÁRRAFO — hereda de body; se define explícito para que CSS Modules puedan sobreescribir */
+  p {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-base);
+    font-weight: var(--font-weight-regular);
+  }
+
+  /* ── HEADINGS ─────────────────────────────────────────────── */
+
+  h1 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-5xl);
+    /* 48px */
+    line-height: 56px;
+    font-weight: var(--font-weight-regular);
+    color: var(--color-yellow);
+  }
+
+  h2 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-5xl);
+    /* 48px */
+    line-height: 56px;
+    font-weight: var(--font-weight-regular);
+    color: var(--color-yellow);
+  }
+
+  h3 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-4xl);
+    /* 40px */
+    line-height: 50px;
+    font-weight: var(--font-weight-regular);
+  }
+
+  h4 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-4xl);
+    /* 40px — mismo que h3, line-height diferente */
+    line-height: 40px;
+    font-weight: var(--font-weight-regular);
+  }
+
+  h5 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-5xl);
+    /* 48px — display/hero, mayor que h3/h4 intencionalmente */
+    line-height: 45px;
+    font-weight: var(--font-weight-regular);
+  }
+
+  h6 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-2xl);
+    /* 24px */
+    line-height: 30px;
+    font-weight: var(--font-weight-regular);
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────── */
+  @media (max-width: 768px) {
+
+    body,
+    p {
+      font-size: var(--font-size-base);
+      /* 20px → 16px */
+    }
+
+    h1,
+    h2 {
+      font-size: 36px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: var(--font-size-3xl);
+      /* 40px → 32px */
+      line-height: 1.25;
+    }
+
+    h4 {
+      font-size: var(--font-size-2xl);
+      /* 40px → 24px */
+      line-height: 1.25;
+    }
+
+    h5 {
+      font-size: var(--font-size-3xl);
+      /* 48px → 32px */
+      line-height: 1.2;
+    }
+
+    h6 {
+      font-size: var(--font-size-xl);
+      /* 24px → 20px */
+      line-height: 1.3;
+    }
+  }
+}

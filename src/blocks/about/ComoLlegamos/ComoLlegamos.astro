@@ -1,0 +1,41 @@
+---
+import MainButton from '../../../components/MainButton.astro';
+import LampLight from '../../../components/LampLight.astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+import styles from './ComoLlegamos.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles['como-llegamos']}>
+  <div class={styles['lamp-decoration']}>
+    <LampLight lightColor="#D0DF00" intensity="medium" />
+  </div>
+  <div class={styles['como-llegamos-container']}>
+    <div class={styles['left-column']}>
+      <h3 class={styles['heading-white']}>{t.about.comoLlegamos.headingWhite}</h3>
+      <h2 class={styles['heading-yellow']}>{t.about.comoLlegamos.headingYellow}</h2>
+      <div class={styles['button-group']}>
+        <MainButton
+          text={t.about.comoLlegamos.buttonText}
+          href="/contacto"
+        />
+      </div>
+    </div>
+
+    <div class={styles['right-column']}>
+      <div class={styles['text-content']}>
+        <p class="description" style="color: var(--color-white);">
+          {t.about.comoLlegamos.paragraph1}
+        </p>
+        <p class="description" style="color: var(--color-white);">
+          {t.about.comoLlegamos.paragraph2}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+

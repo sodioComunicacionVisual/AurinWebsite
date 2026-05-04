@@ -1,0 +1,18 @@
+@layer tokens {
+  :root {
+    /* ----------------------------------------------------------
+       COLORES
+       ---------------------------------------------------------- */
+    --color-white: #FFFFFF;
+    --color-black-a: #0A0A0A;
+    /* fondo oscuro principal */
+    --color-black-b: #161616;
+    /* fondo secundario */
+    --color-gray-a: #A0A0A0;
+    /* texto secundario */
+    --color-gray-b: #282828;
+    /* bordes / superficies */
+    --color-yellow: #D0DF00;
+    /* acento de marca */
+  }
+}

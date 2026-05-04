@@ -1,0 +1,74 @@
+---
+import InteractiveBackground from '../../../components/InteractiveBackground.astro';
+import Vignette from '../../../components/Vignette.astro';
+import Header from '../../../components/Header.astro';
+import MainCat from '../../../components/MainCat.astro';
+import DynamicProjects from '../../../components/DynamicProjects.astro';
+import StickyFooter from '../../../components/StickyFooter.astro';
+import ProjectBanner from '../../projects/ProjectBanner/ProjectBanner.astro';
+import GalleryCarousel from '../../../components/carousel/GalleryCarousel';
+import styles from './Template.module.css';
+
+// TypeScript interfaces para props dinámicas desde Payload
+interface GalleryImage {
+  imgUrl: string;
+  alt: string;
+}
+
+interface ProjectTemplateProps {
+  // Banner Section
+  projectTitle: string;
+  projectCategories: string[]; // Ahora son los servicios ofrecidos
+  projectDescription: string;
+  bannerImage?: string;
+
+  // Gallery Section (replaces Main Image)
+  gallery?: GalleryImage[];
+
+  // Optional Payload fields
+  publishDate?: Date;
+  featured?: boolean;
+  status?: string;
+}
+
+interface Props {
+  projectData: ProjectTemplateProps;
+}
+
+const { projectData } = Astro.props;
+---
+
+<InteractiveBackground />
+<Vignette intensity="medium" />
+
+<!-- Header Navigation -->
+<Header />
+
+<article class={styles.projectTemplate}>
+  <!-- Strip 1: Project Banner (Hero) -->
+  <ProjectBanner
+    title={projectData.projectTitle}
+    categories={projectData.projectCategories}
+    description={projectData.projectDescription}
+    bannerImage={projectData.bannerImage}
+  />
+
+  <!-- Strip 2: Image Gallery Carousel -->
+  {projectData.gallery && projectData.gallery.length > 0 && (
+    <section class={styles.gallerySection}>
+      <GalleryCarousel
+        client:visible
+        data={projectData.gallery}
+      />
+    </section>
+  )}
+</article>
+
+<!-- Projects Section -->
+<DynamicProjects />
+
+<!-- Main Category Navigation -->
+<MainCat />
+
+<!-- Footer -->
+<StickyFooter />

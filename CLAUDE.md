@@ -21,13 +21,17 @@ No test suite or lint script is configured.
 ```
 src/
 ├── pages/             # File-based routes (SSR)
-│   ├── api/           # Server endpoints (contact, calendar, chat, speedlify, etc.)
+│   ├── api/           # Server endpoints (contact, calendar, chat, etc.)
 │   ├── en/            # English locale mirrors of main pages
 │   └── proyecto-payload/  # Dynamic project detail pages
-├── components/
-│   ├── ui/            # Reusable primitives (Header, Footer, MegaMenu, Cards, Buttons…)
-│   ├── modules/       # Feature modules (chatbot, contact form, SEO, banner effects)
-│   └── sections/      # Page sections organized by page (home/, services/, projects/, us/)
+├── components/        # Reusable UI primitives (Header, Footer, MegaMenu, Cards, Buttons…)
+│   └── carousel/      # Gallery carousel component
+├── blocks/            # Page sections, organized by page
+│   ├── home/          # Sections exclusive to the Home page
+│   ├── about/         # Sections exclusive to the Nosotros/About page
+│   ├── services/      # Sections exclusive to the Servicios/Services page
+│   ├── projects/      # Sections related to Projects pages
+│   └── shared/        # Reusable sections used across multiple pages (SEO, Chatbot, Banner, Contact, etc.)
 ├── layouts/
 │   └── Layout.astro   # Root layout — injects global CSS, SEO, Chatbot, SpotlightCursor, Analytics
 ├── lib/
@@ -39,7 +43,14 @@ src/
 │   ├── translations.ts  # Full string catalog (ES/EN objects)
 │   └── utils.ts         # getLangFromUrl, getLocalizedUrl helpers
 └── styles/
-    └── global.css     # CSS custom properties (design tokens) + reset
+    ├── global.css        # Entry point — imports tokens, base, utilities
+    ├── base.css          # CSS reset and base element styles
+    ├── utilities.css     # Utility classes
+    ├── chatbot.css       # Chatbot-specific global styles
+    └── tokens/           # Design tokens
+        ├── colors.css
+        ├── typography.css
+        └── spacing.css
 ```
 
 ### Data sources
@@ -77,7 +88,6 @@ Required in `.env` for local dev:
 
 ```
 RECAPTCHA_SITE_KEY / RECAPTCHA_SECRET_KEY
-PAGESPEED_API_KEY
 PAYLOAD_API_URL / PAYLOAD_SERVER_URL
 BLOB_READ_WRITE_TOKEN
 RESEND_API_KEY

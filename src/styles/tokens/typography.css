@@ -1,0 +1,40 @@
+@layer tokens {
+  :root {
+    /* ----------------------------------------------------------
+       TIPOGRAFÍA — Familias
+       ---------------------------------------------------------- */
+    --font-family-primary: 'Titillium Web', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-family-display: 'Titillium Web', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-heading: var(--font-family-display);
+    /* alias legacy */
+    --font-body: var(--font-family-primary);
+    /* alias legacy */
+
+    /* ----------------------------------------------------------
+       TIPOGRAFÍA — Tamaños de fuente (escala fija en px)
+       ---------------------------------------------------------- */
+    --font-size-sm: 14px;
+    --font-size-base: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 32px;
+    --font-size-4xl: 40px;
+    --font-size-5xl: 48px;
+    --font-size-6xl: 64px;
+
+    /* ----------------------------------------------------------
+       TIPOGRAFÍA — Pesos
+       ---------------------------------------------------------- */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* ----------------------------------------------------------
+       TIPOGRAFÍA — Interlineados
+       ---------------------------------------------------------- */
+    --line-height-base: 1.5;
+    --line-height-relaxed: 1.75;
+  }
+}

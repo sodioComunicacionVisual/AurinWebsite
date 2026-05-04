@@ -1,0 +1,56 @@
+---
+import SecondaryButton from '../../../components/SecondaryButton.astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+import styles from './DisenoColaboracion.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles['diseno-colaboracion']}>
+    <div class={styles['diseno-container']}>
+        <div class={styles['content-column']}>
+            <div class={styles['text-card']}>
+                <div class={styles['text-content']}>
+                    <h2 class={styles['heading-2']}>{t.about.disenoColaboracion.heading}</h2>
+                </div>
+                <p class={styles['body-1']}>{t.about.disenoColaboracion.description}</p>
+                <div class={styles['button-group']}>
+                    <SecondaryButton
+                        text={t.about.disenoColaboracion.buttonText}
+                        href="https://aldeacreativa.com"
+                        target="_blank"
+                    />
+                </div>
+            </div>
+        </div>
+        <div class={styles['image-column']}>
+            <div class={styles['image-wrapper']}>
+                <img
+                    src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/DisenoColaboracionInnovacion.webp"
+                    alt={t.about.disenoColaboracion.imageAlt}
+                    class="ukiyo"
+                    loading="lazy"
+                    data-u-speed="1.2"
+                    data-u-scale="1.1"
+                />
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+  import Ukiyo from 'ukiyojs';
+  
+  // Initialize Ukiyo parallax effect when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new Ukiyo('.ukiyo', {
+      speed: 1.2,
+      scale: 1.1,
+      wrapperClass: 'ukiyo-wrapper',
+      willChange: true
+    });
+  });
+</script>

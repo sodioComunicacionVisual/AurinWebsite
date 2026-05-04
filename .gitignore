@@ -34,3 +34,6 @@ src/components/modules/original-speedlify/
 /aurin-cms/
 ../aurin-cms/
 aurin-cms
+# Firebase
+firebase-debug.log
+.firebase/

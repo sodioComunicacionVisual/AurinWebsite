@@ -1,0 +1,292 @@
+---
+import SectionHeading from '../../../components/SectionHeading.astro';
+import LightTallCard from '../../../components/LightTallCard.astro';
+import DarkTallCard from '../../../components/DarkTallCard.astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+interface HerramientaItem {
+  id: string;
+  letter: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title?: string;
+  titlePart1?: string;
+  titlePart2?: string;
+  description?: string;
+  items?: HerramientaItem[];
+}
+
+const {
+  title = t.services.tools.titlePart1 + " " + t.services.tools.titlePart2,
+  titlePart1 = t.services.tools.titlePart1,
+  titlePart2 = t.services.tools.titlePart2,
+  description = t.services.tools.description,
+  items = [
+    {
+      id: "desarrollo-web",
+      letter: "W",
+      title: t.services.tools.items[0].title,
+      href: "/servicios",
+    },
+    {
+      id: "usabilidad",
+      letter: "U",
+      title: t.services.tools.items[1].title,
+      href: "/servicios",
+    },
+    {
+      id: "branding",
+      letter: "I",
+      title: t.services.tools.items[2].title,
+      href: "/servicios",
+    },
+    {
+      id: "marketing",
+      letter: "M",
+      title: t.services.tools.items[3].title,
+      href: "/servicios",
+    },
+    {
+      id: "diseno-ux-ui",
+      letter: "X",
+      title: t.services.tools.items[4].title,
+      href: "/servicios",
+    },
+  ],
+} = Astro.props;
+
+const uniqueId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<section class="herramientas-section">
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <div class="title-wrapper">
+          <SectionHeading
+            lightText={titlePart1}
+            highlightText={titlePart2}
+          />
+        </div>
+        <p class="description" style="color: var(--color-white);">{description}</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="splide" id={uniqueId} aria-label="Herramientas carousel">
+    <div class="splide__track">
+      <ul class="splide__list">
+        {items.map((item, index) => (
+          <li class="splide__slide" role="listitem" aria-label={`${index + 1} de ${items.length}: ${item.title}`}>
+            {index % 2 === 0 ? (
+              <LightTallCard 
+                letter={item.letter}
+                title={item.title}
+                href={item.href}
+              />
+            ) : (
+              <DarkTallCard 
+                letter={item.letter}
+                title={item.title}
+                href={item.href}
+              />
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</section>
+
+<style>
+  .herramientas-section {
+    padding: 8rem 0;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .container {
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3.5rem;
+    gap: 2rem;
+    padding: 49px 50px;
+  }
+
+  .header-content {
+    flex: 1;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 30px;
+  }
+
+  .title-wrapper {
+    max-width: 488px;
+  }
+
+  
+
+  .description {
+    align-self: stretch;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-white);
+    margin: 0;
+  }
+
+  .splide {
+    width: 100%;
+    max-width: var(--maxWidth);
+    margin: 0 auto;
+  }
+
+  @media (min-width: 1224px) {
+    :global(.splide__list) {
+      justify-content: space-between;
+    }
+  }
+
+  /* Splide pagination */
+  :global(.splide__pagination) {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 0;
+  }
+
+  :global(.splide__pagination__page) {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    border: none;
+    background: rgba(197, 212, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
+  }
+
+  :global(.splide__pagination__page.is-active) {
+    background: var(--color-yellow, #C5D400);
+    width: 2rem;
+    border-radius: 0.25rem;
+  }
+
+  :global(.splide__pagination__page:hover:not(.is-active)) {
+    background: rgba(197, 212, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .herramientas-section {
+      padding: 4rem 0;
+    }
+
+    .container {
+      padding: 0;
+    }
+
+    .header {
+      margin-bottom: 2rem;
+      padding: 49px 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 0;
+    }
+
+    .header {
+      padding: 49px 0;
+    }
+  }
+</style>
+
+<script>
+  import Splide from '@splidejs/splide';
+  import '@splidejs/splide/css/core';
+  import { animate, inView } from "motion";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Buscar todos los elementos splide con ID que empiece con "carousel-"
+    const splideElements = document.querySelectorAll('[id^="carousel-"]');
+
+    splideElements.forEach((splideElement) => {
+      const splide = new Splide(splideElement as HTMLElement, {
+        fixedWidth: '250px',
+        perMove: 1,
+        gap: '1.75rem',
+        accessibility: {
+          slideRole: '',
+          slideLabel: '',
+          slideLabelFormat: '',
+        },
+        padding: '2rem',
+        pagination: false,
+        arrows: false,
+        drag: true,
+        breakpoints: {
+          1024: {
+            fixedWidth: '250px',
+            gap: '1.5rem',
+            padding: '1.5rem',
+          },
+          768: {
+            fixedWidth: '220px',
+            gap: '1rem',
+            padding: '1rem',
+          },
+          480: {
+            fixedWidth: '200px',
+            gap: '0.5rem',
+            padding: '0.5rem',
+          },
+        },
+      });
+
+      splide.mount();
+
+      // Animaciones con IntersectionObserver para las cards dentro de este splide específico
+      const cards = splideElement.querySelectorAll('[class*="card"]:not([class*="card-"])');
+
+      const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      cards.forEach((card, index) => {
+        // Añadir delay escalonado
+        (card as HTMLElement).style.transitionDelay = `${index * 0.15}s`;
+        observer.observe(card);
+      });
+    });
+  });
+</script>

@@ -1,0 +1,108 @@
+---
+// @ts-nocheck
+import { ArrowUpRight } from 'lucide-astro';
+import { getLangFromUrl } from '../../../i18n/utils.js';
+import { translations } from '../../../i18n/translations.js';
+import CounterContainer from '../../../components/CounterContainer.astro';
+import styles from './LongCards.module.css';
+
+interface CardData {
+  number: string;
+  targetValue: number;
+  suffix: string;
+  label: string;
+}
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+const cards: CardData[] = [
+  { 
+    number: "600+", 
+    targetValue: 600, 
+    suffix: "+", 
+    label: t.about.longCards.clients 
+  },
+  { 
+    number: "26+", 
+    targetValue: 26, 
+    suffix: "+", 
+    label: t.about.longCards.years 
+  },
+  { 
+    number: "16+", 
+    targetValue: 16, 
+    suffix: "+", 
+    label: t.about.longCards.countries 
+  }
+];
+---
+
+<section class={styles['long-cards']}>
+  <div class={styles['cards-wrapper']}>
+    {cards.map((card, index) => (
+      <div
+        class={styles['long-card']}
+        data-card-index={index}
+        data-motion-id={`long-card-${index}`}
+      >
+        <div class={styles['card-main-content']}>
+          <div class={styles['card-number']}>
+            <CounterContainer
+              targetValue={card.targetValue}
+              suffix={card.suffix}
+              fontSize={200}
+              textColor="#D0DF00"
+              fontWeight={400}
+              startOffset={15}
+              className={styles['animated-counter']}
+            />
+          </div>
+          <div class={styles['card-label']}>{card.label}</div>
+        </div>
+        <div class={styles['card-icon-wrapper']}>
+          <div class={styles['card-icon']}>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+
+<script>
+  import { inView, animate } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.long-card');
+    
+    cards.forEach((card, index) => {
+      // Set initial state
+      (card as HTMLElement).style.opacity = '0';
+      (card as HTMLElement).style.transform = 'translateY(40px)';
+      
+      // Animate on scroll into view
+      inView(
+        card as HTMLElement,
+        () => {
+          animate(
+            card,
+            {
+              opacity: [0, 1],
+              y: [40, 0]
+            },
+            {
+              duration: 0.8,
+              delay: index * 0.15,
+              ease: [0.22, 1, 0.36, 1]
+            }
+          );
+          return () => {}; // Return cleanup function
+        },
+        { margin: '0px 0px -100px 0px' }
+      );
+    });
+  });
+</script>

@@ -5,10 +5,6 @@ node_modules
 .idea
 .DS_Store
 
-# Speedlify modules - deployed separately
-src/components/modules/speedlify/
-src/components/modules/original-speedlify/
-
 # Local environment files
 .env.local
 .env.development

@@ -1,0 +1,14 @@
+@layer utilities {
+
+  /* Texto descriptivo auxiliar — tamaño ligeramente menor que el cuerpo */
+  .description {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-lg);
+    /* 18px */
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    margin: 0;
+  }
+}

@@ -189,6 +189,12 @@ export class PayloadAPI {
 export function getImageUrl(imageUrl: string | undefined): string {
   if (!imageUrl) return '';
   if (imageUrl.startsWith('http')) return imageUrl;
+  
+  // Fallback for missing placeholder images from Payload CMS
+  if (imageUrl.includes('placeholder-2.jpg') || imageUrl.includes('placeholder')) {
+    return 'https://placehold.co/800x600?text=Proyecto+Aurin';
+  }
+  
   return `${PAYLOAD_SERVER_URL}${imageUrl}`;
 }
 

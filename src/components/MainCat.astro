@@ -1,0 +1,67 @@
+---
+import SecondaryButton from './SecondaryButton.astro';
+import { getLangFromUrl } from '../i18n/utils.js';
+import { translations } from '../i18n/translations.js';
+import styles from './MainCat.module.css';
+import { Tilt } from './Tilt';
+
+// Detect current language and page context
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+// Determine page context based on URL pathname
+const pathname = Astro.url.pathname;
+let pageContext = 'home';
+
+if (pathname.includes('/nosotros') || pathname.includes('/us')) {
+  pageContext = 'us';
+} else if (pathname.includes('/servicios') || pathname.includes('/services')) {
+  pageContext = 'services';
+} else if (pathname.includes('/proyectos') || pathname.includes('/projects') || pathname.includes('/proyecto/')) {
+  pageContext = 'projects';
+}
+
+// Get context-specific content
+const mainCatContent = (t.mainCat as any)[pageContext] || (t.mainCat as any).home;
+---
+
+<section class={styles.mainCatContainer}>
+  <Tilt 
+    client:visible
+    rotationFactor={1.5}
+    className="w-full"
+    style={{ transformOrigin: 'center center' }}
+  >
+    <div class={styles.mainCatWrapper} data-parallax-wrapper>
+      <div class={styles.mainCatContent}>
+        <div class={styles.mainCatText}>
+          <p class="description" style="color: var(--color-black-a);" set:html={mainCatContent.text}>
+          </p>
+        </div>
+        <div class={styles.buttonWrapper}>
+          <SecondaryButton text={mainCatContent.buttonText} href="/contacto" />
+        </div>
+      </div>
+    </div>
+  </Tilt>
+</section>
+
+
+
+<script>
+  import { scroll, animate } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.querySelector('[data-parallax-wrapper]') as HTMLElement;
+
+    if (wrapper) {
+      scroll(
+        animate(wrapper, { y: [0, -50] }),
+        {
+          target: wrapper,
+          offset: ['start end', 'end start']
+        }
+      );
+    }
+  });
+</script>
