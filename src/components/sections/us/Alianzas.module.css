@@ -27,19 +27,19 @@
 
   .heading-white {
     color: var(--color-white);
-    font-size: var(--heading-4-size);
+    font-size: var(--font-size-4xl);
     font-family: var(--font-heading);
     font-weight: 300;
-    line-height: var(--heading-4-line-height);
+    line-height: 40px;
     margin: 0;
   }
 
   .heading-yellow {
     color: var(--color-yellow);
-    font-size: var(--heading-1-size);
+    font-size: var(--font-size-5xl);
     font-family: var(--font-heading);
     font-weight: 300;
-    line-height: var(--heading-1-line-height);
+    line-height: 56px;
     margin: 0;
   }
 
@@ -63,10 +63,10 @@
 
   .body-text {
     color: var(--color-white);
-    font-size: var(--body-1-size);
+    font-size: var(--font-size-xl);
     font-family: var(--font-body);
     font-weight: 400;
-    line-height: var(--body-1-line-height);
+    line-height: normal;
     margin: 0;
   }
 
@@ -135,13 +135,13 @@
     }
 
     .heading-white {
-      font-size: var(--heading-5-size);
-      line-height: var(--heading-5-line-height);
+      font-size: var(--font-size-5xl);
+      line-height: 45px;
     }
 
     .heading-yellow {
-      font-size: var(--heading-2-size);
-      line-height: var(--heading-2-line-height);
+      font-size: var(--font-size-5xl);
+      line-height: 56px;
     }
 
     .logos-container {
@@ -173,7 +173,7 @@
     }
 
     .body-text {
-      font-size: var(--body-2-size);
+      font-size: var(--font-size-base);
     }
 
     .logos-container {

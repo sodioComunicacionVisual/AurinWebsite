@@ -11,6 +11,8 @@ const { lightText, highlightText, tag = 'h2' } = Astro.props;
 const Tag = tag;
 ---
 <div class={styles.headingWrapper}>
-  <span class="heading-5" style="color: var(--color-white);">{lightText}</span>
-  <Tag class="heading-5" style="color: var(--color-yellow); margin: 0;">{highlightText}</Tag>
+  <Tag>
+    <span>{lightText}</span>
+    {highlightText}
+  </Tag>
 </div>

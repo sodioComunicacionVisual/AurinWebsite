@@ -43,9 +43,9 @@
 .title {
   color: #D0DF00;
   font-family: var(--font-heading);
-  font-size: var(--body-bold-1-size);
+  font-size: var(--font-size-6xl);
   font-weight: 500;
-  line-height: var(--body-bold-1-line-height);
+  line-height: normal;
   margin: 0;
 }
 
@@ -62,9 +62,9 @@
   padding: 6px 12px;
   border-radius: 100px;
   font-family: var(--font-body);
-  font-size: var(--body-0-line-height);
+  font-size: normal;
   font-weight: 600;
-  line-height: var(--body-0-line-height);
+  line-height: normal;
   white-space: nowrap;
 }
 
@@ -88,9 +88,9 @@
 .placeholder span {
   color: white;
   font-family: var(--font-heading);
-  font-size: var(--heading-1-size);
-  font-weight: var(--heading-1-weight);
-  line-height: var(--heading-1-line-height);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-regular);
+  line-height: 56px;
   text-align: center;
 }
 
@@ -103,9 +103,9 @@
 .description {
   color: white;
   font-family: var(--font-body);
-  font-size: var(--body-1-size);
-  font-weight: var(--body-1-weight);
-  line-height: var(--body-1-line-height);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-regular);
+  line-height: normal;
   margin: 0;
 }
 

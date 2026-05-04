@@ -13,7 +13,7 @@
   .headingWrapper h4,
   .headingWrapper h5,
   .headingWrapper h6 {
-    font-size: var(--heading-5-size);
-    line-height: var(--heading-5-line-height);
+    font-size: var(--font-size-5xl);
+    line-height: 45px;
   }
 }

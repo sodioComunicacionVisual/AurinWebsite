@@ -1,5 +1,4 @@
 ---
-import ScrollReveal from '../../ui/ScrollReveal.astro';
 import { getLangFromUrl } from '../../../i18n/utils.js';
 import { translations } from '../../../i18n/translations.js';
 import styles from './ExpertosUsuarios.module.css';
@@ -19,17 +18,10 @@ const t = translations[currentLang];
     <div class={styles.contentWrapper}>
       <!-- Left Column: Title -->
       <div class={styles.titleColumn}>
-        <p class={styles.subtitle}>{t.expertosUsuarios.subtitle}</p>
-        <ScrollReveal
-          text={t.expertosUsuarios.title}
-          tag="h2"
-          textClass="heading-2"
-          textStyle="color: var(--color-yellow); margin: 0;"
-          baseOpacity={0.7}
-          baseRotation={2}
-          blurStrength={2}
-          enableBlur={true}
-        />
+        <h2>
+          <span>{t.expertosUsuarios.subtitle}</span>
+          {t.expertosUsuarios.title}
+        </h2>
       </div>
 
       <!-- Right Column: Description and CTA -->

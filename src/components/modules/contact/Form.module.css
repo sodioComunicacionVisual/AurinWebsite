@@ -21,17 +21,17 @@
   .contact-title {
     color: var(--color-white);
     font-family: var(--font-heading);
-    font-size: var(--heading-5-size);
+    font-size: var(--font-size-5xl);
     font-weight: 300;
-    line-height: var(--heading-5-line-height);
+    line-height: 45px;
     margin: 0;
   }
 
   .highlight {
     color: var(--color-yellow);
-    font-size: var(--heading-2-size);
+    font-size: var(--font-size-5xl);
     font-weight: 300;
-    line-height: var(--heading-2-line-height);
+    line-height: 56px;
   }
 
   .contact-content {
@@ -62,7 +62,7 @@
   .info-text {
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--body-2-size);
+    font-size: var(--font-size-base);
     font-weight: 400;
     margin: 0;
     text-decoration: none;
@@ -84,9 +84,9 @@
   .form-title {
     color: var(--color-yellow);
     font-family: var(--font-heading);
-    font-size: var(--heading-2-size);
+    font-size: var(--font-size-5xl);
     font-weight: 300;
-    line-height: var(--heading-2-line-height);
+    line-height: 56px;
     margin: 0;
   }
 
@@ -111,7 +111,7 @@
   .form-label {
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--body-bold-5-size);
+    font-size: var(--font-size-xl);
     font-weight: 600;
   }
 
@@ -126,7 +126,7 @@
     padding: 10px;
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--body-4-size);
+    font-size: var(--font-size-sm);
     font-weight: 400;
     transition: background 0.3s ease, outline 0.3s ease;
   }
@@ -158,7 +158,7 @@
     padding: 10px;
     color: var(--color-white)!important;
     font-family: var(--font-body);
-    font-size: var(--body-4-size);
+    font-size: var(--font-size-sm);
     font-weight: 400;
     height: 44px;
     display: flex;
@@ -308,7 +308,7 @@
 
   .file-upload-text {
     font-family: var(--font-body);
-    font-size: var(--body-4-size);
+    font-size: var(--font-size-sm);
     font-weight: 400;
   }
 
@@ -334,7 +334,7 @@
   .file-preview-name {
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: var(--body-4-size);
+    font-size: var(--font-size-sm);
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;

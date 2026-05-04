@@ -72,10 +72,10 @@
 
 .body0 {
   color: var(--color-black-a);
-  font-size: var(--body-0-size);
+  font-size: var(--font-size-2xl);
   font-family: var(--font-body);
   font-weight: 400;
-  line-height: var(--body-0-line-height);
+  line-height: normal;
   margin: 0;
 }
 

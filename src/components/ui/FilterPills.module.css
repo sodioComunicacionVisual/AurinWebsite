@@ -9,7 +9,7 @@
 
 .filterLabel {
   color: var(--color-gray-a);
-  font-size: var(--body-2-size);
+  font-size: var(--font-size-base);
   font-family: var(--font-body);
   font-weight: 400;
   text-transform: uppercase;
@@ -32,7 +32,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50px;
   color: var(--color-gray-a);
-  font-size: var(--body-2-size);
+  font-size: var(--font-size-base);
   font-family: var(--font-body);
   font-weight: 400;
   cursor: pointer;
@@ -93,7 +93,7 @@
 
   .pill {
     padding: 8px 16px;
-    font-size: var(--body-3-size);
+    font-size: 15px;
   }
 
   .pill.active {

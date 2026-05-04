@@ -142,8 +142,8 @@
 .footerCopyright p {
   color: white;
   font-family: var(--font-body);
-  font-size: var(--body-4-size);
-  font-weight: var(--body-4-weight);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-regular);
   text-decoration: underline;
   line-height: 14px;
   margin: 0;

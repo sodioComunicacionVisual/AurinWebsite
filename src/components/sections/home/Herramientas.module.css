@@ -113,10 +113,10 @@
   display: flex;
   flex-direction: column;
   color: #A0A0A0;
-  font-size: var(--body-1-size);
+  font-size: var(--font-size-xl);
   font-family: var(--font-heading);
   font-weight: 300;
-  line-height: var(--body-1-line-height);
+  line-height: normal;
   word-wrap: break-word;
   transition: color 0.3s ease, transform 0.3s ease;
 }

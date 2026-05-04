@@ -148,7 +148,7 @@
 @media (min-width: 768px) {
   .title1,
   .title2 {
-    font-size: var(--heading-5-size);
+    font-size: var(--font-size-5xl);
   }
 
   .socialIcon {

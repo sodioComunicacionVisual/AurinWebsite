@@ -15,10 +15,10 @@
 
 .gridTitle {
   color: var(--color-white);
-  font-size: var(--heading-3-size);
+  font-size: var(--font-size-4xl);
   font-family: var(--font-heading);
   font-weight: 300;
-  line-height: var(--heading-3-line-height);
+  line-height: 50px;
   margin: 0;
 }
 
@@ -50,7 +50,7 @@
 
 .emptyMessage {
   color: var(--color-gray-a);
-  font-size: var(--body-1-size);
+  font-size: var(--font-size-xl);
   font-family: var(--font-body);
   text-align: center;
   margin: 0;
@@ -75,8 +75,8 @@
   }
   
   .gridTitle {
-    font-size: var(--heading-4-size);
-    line-height: var(--heading-4-line-height);
+    font-size: var(--font-size-4xl);
+    line-height: 40px;
   }
 }
 

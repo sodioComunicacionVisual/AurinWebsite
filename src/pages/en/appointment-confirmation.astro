@@ -55,18 +55,18 @@ import MainButton from '../../components/ui/MainButton.astro';
         </svg>
       </div>
 
-      <h1 class="heading-bold-2">Appointment Confirmed!</h1>
+      <h1>Appointment Confirmed!</h1>
 
-      <p class="confirmation-message body-1">
+      <p class="confirmation-message">
         Your appointment has been confirmed successfully. You will receive all the details in your email.
       </p>
 
       <div class="confirmation-details">
-        <p class="body-bold-5">What's next?</p>
+        <p>What's next?</p>
         <ul>
-          <li class="body-2">Check your email for the Google Meet link</li>
-          <li class="body-2">Add the event to your calendar</li>
-          <li class="body-2">Get ready for our meeting</li>
+          <li>Check your email for the Google Meet link</li>
+          <li>Add the event to your calendar</li>
+          <li>Get ready for our meeting</li>
         </ul>
       </div>
 
@@ -132,11 +132,16 @@ import MainButton from '../../components/ui/MainButton.astro';
 
   h1 {
     color: var(--color-yellow);
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-bold);
+    line-height: normal;
     margin-bottom: 1.5rem;
   }
 
   .confirmation-message {
     color: var(--color-white);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-regular);
     margin-bottom: 2rem;
     line-height: 1.6;
   }
@@ -149,6 +154,8 @@ import MainButton from '../../components/ui/MainButton.astro';
 
   .confirmation-details p {
     color: var(--color-yellow);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
     margin-bottom: 1rem;
   }
 
@@ -162,6 +169,8 @@ import MainButton from '../../components/ui/MainButton.astro';
     padding-left: 1.5rem;
     position: relative;
     color: var(--color-gray-a);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
   }
 
   .confirmation-details li::before {

@@ -55,17 +55,17 @@
   .subtitle {
     color: var(--color-white);
     font-family: var(--font-heading);
-    font-size: clamp(24px, 4vw, var(--heading-4-size));
+    font-size: clamp(24px, 4vw, var(--font-size-4xl));
     font-weight: 300;
-    line-height: var(--heading-4-line-height);
+    line-height: 40px;
   }
 
   :global(.main-title) {
     color: var(--color-yellow) !important;
     font-family: var(--font-heading) !important;
-    font-size: clamp(40px, 6vw, var(--heading-1-size)) !important;
+    font-size: clamp(40px, 6vw, var(--font-size-5xl)) !important;
     font-weight: 300 !important;
-    line-height: var(--heading-1-line-height) !important;
+    line-height: 56px !important;
     margin: 0 !important;
   }
 
@@ -95,8 +95,8 @@
   .description p {
     color: var(--color-white);
     font-family: var(--font-body);
-    font-size: clamp(16px, 2vw, var(--body-1-size));
-    font-weight: var(--body-1-weight);
+    font-size: clamp(16px, 2vw, var(--font-size-xl));
+    font-weight: var(--font-weight-regular);
     line-height: 1.4;
     margin: 0;
   }

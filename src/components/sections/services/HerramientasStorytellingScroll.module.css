@@ -59,18 +59,18 @@
   :global(.title .scroll-reveal-word:nth-child(1)),
   :global(.title .scroll-reveal-word:nth-child(2)) {
     color: var(--color-white) !important;
-    font-size: var(--heading-5-size) !important;
+    font-size: var(--font-size-5xl) !important;
     font-family: var(--font-family-display) !important;
     font-weight: var(--font-weight-light) !important;
-    line-height: var(--heading-5-line-height) !important;
+    line-height: 45px !important;
   }
 
   :global(.title .scroll-reveal-word:nth-child(n+3)) {
     color: var(--color-yellow) !important;
-    font-size: var(--heading-2-size) !important;
+    font-size: var(--font-size-5xl) !important;
     font-family: var(--font-family-display) !important;
     font-weight: var(--font-weight-light) !important;
-    line-height: var(--heading-2-line-height) !important;
+    line-height: 56px !important;
   }
 
   .description {
@@ -280,10 +280,10 @@
 
   .content-subtitle {
     color: var(--color-white);
-    font-size: var(--heading-5-size);
+    font-size: var(--font-size-5xl);
     font-family: var(--font-family-display);
     font-weight: var(--font-weight-light);
-    line-height: var(--heading-5-line-height);
+    line-height: 45px;
     word-wrap: break-word;
   }
 
@@ -295,7 +295,7 @@
 
   .content-description {
     color: var(--color-white);
-    font-size: var(--body-1-size);
+    font-size: var(--font-size-xl);
     font-family: var(--font-family-primary);
     font-weight: var(--font-weight-regular);
     word-wrap: break-word;
