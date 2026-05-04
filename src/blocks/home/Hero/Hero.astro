@@ -1,0 +1,48 @@
+---
+import { getLangFromUrl, translations } from "@/i18n";
+import styles from "./Hero.module.css";
+import HeroBackgroundEffectsContainer from "@/blocks/shared/Hero/HeroBackgroundEffectsContainer.astro";
+import FloatingDustContainer from "@/blocks/shared/Hero/FloatingDustContainer.astro";
+import ChatbotSearchContainer from "@/blocks/shared/ChatbotSearch/ChatbotSearchContainer.astro";
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles.hero} aria-label={t.banner.title1}>
+  <div class={styles.heroContainer}>
+    <!-- Background layer: WebGL effects and texture -->
+    <HeroBackgroundEffectsContainer />
+
+    <!-- Floating dust particles -->
+    <FloatingDustContainer />
+
+    <!-- Main content -->
+    <div class={styles.content}>
+      <div class={styles.contentInner}>
+        <!-- Aurin Logo -->
+        <div class={styles.logoContainer}>
+          <div class={styles.logoTilt}>
+            <img
+              src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Header-logo.svg"
+              alt="Aurin Logo"
+              class={styles.logo}
+              width="672"
+              height="96"
+              fetchpriority="high"
+              draggable="false"
+            />
+          </div>
+        </div>
+
+        <!-- Headings -->
+        <h1 class={styles.titles}>
+          {t.banner.title1}
+        </h1>
+
+        <!-- Chatbot Search Input -->
+        <ChatbotSearchContainer />
+      </div>
+    </div>
+  </div>
+</section>

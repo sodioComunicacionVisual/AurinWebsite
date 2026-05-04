@@ -1,0 +1,65 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+import SecondaryButton from '@/components/ui/SecondaryButton.astro';
+
+import styles from './CtaBanner.module.css';
+import { Tilt } from '@/components/animation/Tilt';
+
+// Detect current language and page context
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+// Determine page context based on URL pathname
+const pathname = Astro.url.pathname;
+let pageContext = 'home';
+
+if (pathname.includes('/about') || pathname.includes('/us')) {
+  pageContext = 'us';
+} else if (pathname.includes('/services') || pathname.includes('/services')) {
+  pageContext = 'services';
+} else if (pathname.includes('/projects') || pathname.includes('/projects') || pathname.includes('/proyecto/')) {
+  pageContext = 'projects';
+}
+
+// Get context-specific content
+const ctaBannerContent = (t.ctaBanner as any)[pageContext] || (t.ctaBanner as any).home;
+---
+
+<section class={styles.ctaBannerContainer}>
+  <Tilt 
+    client:visible
+    rotationFactor={1.5}
+    className="w-full"
+    style={{ transformOrigin: 'center center' }}
+  >
+    <div class={styles.ctaBannerWrapper} data-parallax-wrapper>
+      <div class={styles.ctaBannerContent}>
+        <div class={styles.ctaBannerText}>
+          <p class="description" style="color: var(--color-black-a);" set:html={ctaBannerContent.text}>
+          </p>
+        </div>
+        <div class={styles.buttonWrapper}>
+          <SecondaryButton text={ctaBannerContent.buttonText} href="/contact" />
+        </div>
+      </div>
+    </div>
+  </Tilt>
+</section>
+
+<script>
+  import { scroll, animate } from 'motion';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.querySelector('[data-parallax-wrapper]') as HTMLElement;
+
+    if (wrapper) {
+      scroll(
+        animate(wrapper, { y: [0, -50] }),
+        {
+          target: wrapper,
+          offset: ['start end', 'end start']
+        }
+      );
+    }
+  });
+</script>

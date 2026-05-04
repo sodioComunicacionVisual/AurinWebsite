@@ -31,8 +31,8 @@
  */
 
 import type { APIRoute } from 'astro';
-import { GoogleCalendarService } from '../../../lib/calendar/googleCalendar';
-import type { TimeSlot } from '../../../lib/calendar/types';
+import { GoogleCalendarService } from '@/lib/calendar/googleCalendar';
+import type { TimeSlot } from '@/lib/calendar/types';
 import {
   generateDailyTimeSlots,
   isSlotAvailable,
@@ -40,7 +40,7 @@ import {
   createBusySlots,
   formatDateISO,
   DAYS_AHEAD,
-} from '../../../lib/calendar/utils';
+} from '@/lib/calendar/utils';
 
 export const prerender = false;
 

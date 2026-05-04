@@ -1,0 +1,88 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import UsBanner from '@/blocks/about/UsBanner/UsBanner.astro';
+import MainImage from '@/blocks/about/MainImage/MainImage.astro';
+import UnexploredPaths from '@/blocks/about/UnexploredPaths/UnexploredPaths.astro';
+import LongCards from '@/blocks/about/LongCards/LongCards.astro';
+import OurStory from '@/blocks/about/OurStory/OurStory.astro';
+import CollaborativeDesign from '@/blocks/about/CollaborativeDesign/CollaborativeDesign.astro';
+import Alliances from '@/blocks/about/Alliances/Alliances.astro';
+import DynamicProjects from '@/components/projects/DynamicProjects.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+// SEO optimizado para LLMs y motores de búsqueda
+const seoTitle = t.about.seo.title;
+const seoDescription = t.about.seo.description;
+const seoKeywords = t.about.seo.keywords;
+
+// Datos estructurados para SEO (Schema.org)
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Aurin",
+    "url": "https://aurin.mx",
+    "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+    "description": t.about.structuredData.description,
+    "foundingDate": "2020",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Aldea Creativa",
+      "addressCountry": "MX"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hey@aurin.mx",
+      "contactType": "customer service",
+      "areaServed": "MX",
+      "availableLanguage": currentLang === 'en' ? "English" : "Spanish"
+    },
+    "sameAs": [
+      "https://aldeacreativa.mx/"
+    ],
+    "knowsAbout": t.about.structuredData.knowsAbout,
+    "areaServed": "MX",
+    "serviceType": t.about.structuredData.serviceTypes
+  }
+};
+
+// Selectores CSS para contenido speakable (optimización de voz)
+const speakable = [".us-banner", ".unexplored-paths", ".our-story", ".collaborative-design"];
+---
+
+<Layout 
+  title={seoTitle}
+  description={seoDescription}
+  keywords={seoKeywords}
+  structuredData={structuredData}
+  speakable={speakable}
+  canonical="https://aurin.mx/about"
+  ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+>
+  <Header />
+  <main>
+    <UsBanner />
+    <MainImage />
+    <UnexploredPaths />
+    <LongCards />
+    <OurStory />
+    <CollaborativeDesign />
+    <Alliances />
+    <DynamicProjects />
+  </main>
+  <StickyFooter />
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    margin: 0 auto;
+  }
+</style>

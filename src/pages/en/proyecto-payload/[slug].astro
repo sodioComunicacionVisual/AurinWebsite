@@ -1,9 +1,8 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import Template from '../../../blocks/shared/Template/Template.astro';
-import { PayloadAPI, type PayloadProject, getImageUrl, renderRichText } from '../../../lib/payload';
-import { getLangFromUrl } from '../../../i18n/utils';
-import { translations } from '../../../i18n/translations';
+import { getLangFromUrl, translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Template from '@/blocks/shared/Template/Template.astro';
+import { PayloadAPI, type PayloadProject, getImageUrl, renderRichText } from '@/lib/payload';
 
 export const prerender = false;
 

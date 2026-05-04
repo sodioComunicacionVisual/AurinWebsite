@@ -1,0 +1,44 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+
+import styles from './UserExperts.module.css';
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles.userExperts}>
+  <img
+    src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Vector.svg"
+    alt=""
+    class={styles.vectorDecoration}
+    aria-hidden="true"
+  />
+  <div class={styles.container}>
+    <div class={styles.contentWrapper}>
+      <!-- Left Column: Title -->
+      <div class={styles.titleColumn}>
+        <h2>
+          <span>{t.userExperts.subtitle}</span>
+          {t.userExperts.title}
+        </h2>
+      </div>
+
+      <!-- Right Column: Description and CTA -->
+      <div class={styles.contentColumn}>
+        <p class={styles.description}>{t.userExperts.description}</p>
+
+        <div class={styles.splitButton}>
+          <a href="/about" class={styles.splitButtonText}>
+            {t.userExperts.buttonText}
+          </a>
+          <a href="/about" class={styles.splitButtonIcon} aria-label="Ver más">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 17L17 5M17 5H8M17 5V14" stroke="#0A0A0A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

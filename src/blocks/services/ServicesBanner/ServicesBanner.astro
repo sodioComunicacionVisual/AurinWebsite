@@ -1,0 +1,50 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+import MainButton from '@/components/ui/MainButton.astro';
+import LampLight from '@/components/ui/LampLight.astro';
+import ScrollReveal from '@/components/animation/ScrollReveal.astro';
+
+import styles from './ServicesBanner.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles['services-banner']}>
+  <div class={styles['lamp-decoration']} style="padding-top: 50px;">
+    <LampLight lightColor="#D0DF00" intensity="medium" />
+  </div>
+  <div class={styles.container}>
+    <div class={styles['content-wrapper']}>
+      <!-- Left Column: Title -->
+      <div class={styles['title-column']}>
+        <div class={styles.subtitle}>{t.services.banner.subtitle}</div>
+        <ScrollReveal
+          text={t.services.banner.title}
+          tag="h1"
+          textClass="main-title"
+          baseOpacity={0.15}
+          baseRotation={5}
+          blurStrength={6}
+          enableBlur={true}
+        />
+      </div>
+
+      <!-- Right Column: Description and CTA -->
+      <div class={styles['content-column']}>
+        <div class={styles.description}>
+          <p class="description" style="color: var(--color-white);">
+            {t.services.banner.description}
+          </p>
+        </div>
+
+        <MainButton
+          text={t.services.banner.buttonText}
+          href="/contact"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+

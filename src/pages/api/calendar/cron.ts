@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { GoogleCalendarService } from '../../../lib/calendar/googleCalendar';
-import { sendAppointmentCancellation } from '../../../lib/mailing/service';
+import { GoogleCalendarService } from '@/lib/calendar/googleCalendar';
+import { sendAppointmentCancellation } from '@/lib/mailing/service';
 
 export const prerender = false;
 

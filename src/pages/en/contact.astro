@@ -1,12 +1,10 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import InteractiveBackground from '../../components/InteractiveBackground.astro';
-import StickyFooter from '../../components/StickyFooter.astro';
-import Form from '../../blocks/shared/Contact/Form.astro';
-import Toast from '../../components/Toast.astro';
-import { getLangFromUrl } from '../../i18n/utils.js';
-import { translations } from '../../i18n/translations.js';
+import { getLangFromUrl, translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Form from '@/blocks/shared/Contact/Form.astro';
+import Toast from '@/components/ui/Toast.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -54,7 +52,6 @@ const speakable = [".contact-form", ".contact-info"];
   canonical="https://aurin.mx/en/contact"
   ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
-  <InteractiveBackground />
   <Header />
   <main>
     <Form />

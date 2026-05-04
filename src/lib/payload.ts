@@ -91,7 +91,7 @@ export interface ProjectFilter {
 
 // Definición de filtros predefinidos
 export const PROJECT_FILTERS: ProjectFilter[] = [
-  { value: 'todos', label: 'Todos' },
+  { value: 'all', label: 'All' },
   { value: 'diseno-ux-ui', label: 'Diseño UX/UI' },
   { value: 'desarrollo-web-movil', label: 'Desarrollo web y de aplicaciones móviles' },
   { value: 'desarrollo-branding', label: 'Desarrollo de branding' },
@@ -147,7 +147,7 @@ export class PayloadAPI {
 
   // Get projects by filter (single or multiple)
   static async getProjectsByFilter(filters: string[], locale: string = 'es'): Promise<PayloadProject[]> {
-    if (filters.length === 0 || filters.includes('todos')) {
+    if (filters.length === 0 || filters.includes('all')) {
       return this.getProjects(locale);
     }
 
@@ -201,12 +201,12 @@ export function getImageUrl(imageUrl: string | undefined): string {
 // Helper functions for Astro components
 export function getProjectUrl(project: PayloadProject, locale: string = 'es'): string {
   const prefix = locale === 'es' ? '' : `/${locale}`;
-  return `${prefix}/proyecto-payload/${project.slug}`;
+  return `${prefix}/project-payload/${project.slug}`;
 }
 
 export function getTagUrl(tag: PayloadTag, locale: string = 'es'): string {
   const prefix = locale === 'es' ? '' : `/${locale}`;
-  return `${prefix}/proyectos/etiqueta/${tag.slug}`;
+  return `${prefix}/projects/etiqueta/${tag.slug}`;
 }
 
 export function formatDate(dateString: string, locale: string = 'es'): string {

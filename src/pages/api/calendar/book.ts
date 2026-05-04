@@ -27,9 +27,9 @@
  */
 
 import type { APIRoute } from 'astro';
-import type { PendingBooking, CustomerData } from '../../../lib/calendar/types';
-import { GoogleCalendarService } from '../../../lib/calendar/googleCalendar';
-import { sendAppointmentConfirmation, sendAppointmentNotificationToAdmin } from '../../../lib/mailing/service';
+import type { PendingBooking, CustomerData } from '@/lib/calendar/types';
+import { GoogleCalendarService } from '@/lib/calendar/googleCalendar';
+import { sendAppointmentConfirmation, sendAppointmentNotificationToAdmin } from '@/lib/mailing/service';
 
 export const prerender = false;
 

@@ -1,19 +1,18 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import MegaMenu from '../../components/MegaMenu.astro';
-import InteractiveBackground from '../../components/InteractiveBackground.astro';
-import Vignette from '../../components/Vignette.astro';
-import Banner from '../../blocks/home/HomeBanner/Banner.astro';
-import Descripcion from '../../blocks/home/Descripcion/Descripcion.astro';
-import ExpertosUsuarios from '../../blocks/home/ExpertosUsuarios/ExpertosUsuarios.astro';
-import EnterpriseMarquee from '../../blocks/home/EnterpriseMarquee/EnterpriseMarquee.astro';
-import Especialidades from '../../blocks/home/Especialidades/Especialidades.astro';
-import MainCat from '../../components/MainCat.astro';
-import HerramientasVariant from '../../blocks/shared/HerramientasVariant/HerramientasVariant.astro';
-import DynamicProjects from '../../components/DynamicProjects.astro';
-import StickyFooter from '../../components/StickyFooter.astro';
-import { translations } from '../../i18n/translations.js';
+import { translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import MegaMenu from '@/components/layout/MegaMenu.astro';
+import Vignette from '@/components/ui/Vignette.astro';
+import Hero from '@/blocks/home/Hero/Hero.astro';
+import Description from '@/blocks/home/Description/Description.astro';
+import UserExperts from '@/blocks/home/UserExperts/UserExperts.astro';
+import EnterpriseMarquee from '@/blocks/home/EnterpriseMarquee/EnterpriseMarquee.astro';
+import Specialties from '@/blocks/home/Specialties/Specialties.astro';
+import CtaBanner from '@/components/layout/CtaBanner.astro';
+import ToolsVariant from '@/blocks/shared/ToolsVariant/ToolsVariant.astro';
+import DynamicProjects from '@/components/projects/DynamicProjects.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
 
 // Get English translations
 const t = translations.en;
@@ -49,7 +48,7 @@ const structuredData = {
 };
 
 // CSS selectors for speakable content (voice optimization)
-const speakable = [".banner-content", ".descripcion-principal", ".especialidades-section"];
+const speakable = [".banner-content", ".description-main", ".specialties-section"];
 
 ---
 
@@ -62,26 +61,25 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 	canonical="https://aurin.mx/en/"
 	ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
-	<InteractiveBackground />
 	<Vignette intensity="medium" />
 	<Header />
 	<MegaMenu />
 	<main>
 	
-		<Banner/>
-		<Descripcion />
+		<Hero/>
+		<Description />
 		
 		<EnterpriseMarquee />
 		
 		
-		<ExpertosUsuarios />
+		<UserExperts />
 
-		<Especialidades />
+		<Specialties />
 		
 		
-		<MainCat/>
+		<CtaBanner/>
 
-		<HerramientasVariant />
+		<ToolsVariant />
 
 		<DynamicProjects maxProjects={4} showChips={false} variant="four-column" />
 

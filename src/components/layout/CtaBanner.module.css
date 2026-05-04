@@ -1,0 +1,139 @@
+.ctaBannerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 0px 20px;
+}
+
+.ctaBannerWrapper {
+  width: 100%;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
+  display: flex;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.ctaBannerContent {
+  flex: 1;
+  padding: 2rem 3rem;
+  background: url('https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/MainCATBackground.webp') center/cover;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de glow sobre el logo en el background */
+.ctaBannerContent::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  width: 300px;
+  height: 300px;
+  transform: translate(0, -50%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.15) 30%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(40px);
+}
+
+.ctaBannerContent::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  transform: translate(0, -50%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.2) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(20px);
+}
+
+.ctaBannerText {
+  width: 100%;
+  color: var(--color-black-a);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  position: relative;
+  z-index: 3;
+}
+
+.ctaBannerText p {
+  margin: 0;
+}
+
+.body0 {
+  color: var(--color-black-a);
+  font-size: var(--font-size-2xl);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+.buttonWrapper {
+  position: relative;
+  z-index: 3;
+  flex-shrink: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .ctaBannerContent {
+    padding: 1.5rem 2rem;
+
+  }
+}
+
+@media (max-width: 768px) {
+  .ctaBannerContent {
+    padding: 1rem 1.5rem;
+    gap: 150px;
+
+  }
+
+  .ctaBannerText p {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 640px) {
+  .ctaBannerContent {
+    padding: 1rem;
+    gap: 20px;
+
+  }
+
+  .ctaBannerText p {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaBannerContainer {
+    padding: 1rem 0.5rem;
+  }
+
+  .ctaBannerContent {
+    padding: 0.75rem;
+  }
+
+  .ctaBannerText p {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .buttonWrapper :global(.button-text span) {
+    font-size: 14px;
+  }
+}

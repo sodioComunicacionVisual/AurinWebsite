@@ -37,7 +37,7 @@
  */
 
 import type { APIRoute } from 'astro';
-import type { PendingBooking } from '../../../lib/calendar/types';
+import type { PendingBooking } from '@/lib/calendar/types';
 import {
   getNextWeekdayByName,
   formatDateISO,
@@ -46,7 +46,7 @@ import {
   createDateTimeISO,
   calculateEndTime,
   isValidBookingDate,
-} from '../../../lib/calendar/utils';
+} from '@/lib/calendar/utils';
 
 export const prerender = false;
 

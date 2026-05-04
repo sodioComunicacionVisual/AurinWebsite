@@ -1,0 +1,167 @@
+/* =====================================================
+   StoryTellingCard — CSS Module
+   Card usada dentro del carousel de HerramientasStorytellingScroll
+   ===================================================== */
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* ── Card base ── */
+.card {
+  width: 250px;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 10px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  flex-shrink: 0;
+}
+
+.card:global(.is-visible) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Variantes de color (alternadas por posición en el carrusel) ── */
+.card.light {
+  background: linear-gradient(197deg, rgba(0, 0, 0, 0) 47%, #A0A0A0 47%), #C2C2C2;
+}
+
+.card.dark {
+  background: linear-gradient(197deg, rgba(0, 0, 0, 0) 47%, #1A1A1A 47%), #282828;
+}
+
+/* ── Overlay verde en hover (activo o scroll-active) ── */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(197deg, rgba(0, 0, 0, 0) 47%, #C5D400 47%), #D0DF00;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card:global(.scroll-active)::before,
+.card-link:hover .card::before {
+  opacity: 1;
+}
+
+/* ── Título en estado activo ── */
+.card:global(.scroll-active) .card-title,
+.card-link:hover .card-title {
+  color: #0A0A0A !important;
+  transform: translateY(-2px);
+}
+
+/* ── Letra grande decorativa ── */
+.card-letter {
+  width: clamp(150px, 100px, 237px);
+  text-align: right;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-black-a);
+  font-size: clamp(140px, 25vw, 280px);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 0.905;
+  word-wrap: break-word;
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1;
+  position: relative;
+  left: -4vw;
+}
+
+/* ── Contenido inferior ── */
+.card-content {
+  align-self: stretch;
+  padding: 0 10px 35px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  display: inline-flex;
+  z-index: 2;
+  position: relative;
+}
+
+/* ── Título de la card ── */
+.card-title {
+  flex: 1 1 0;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-heading);
+  font-weight: 300;
+  line-height: normal;
+  word-wrap: break-word;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Colores de texto según variante */
+.card.light .card-title {
+  color: #0A0A0A;
+}
+
+.card.dark .card-title {
+  color: white;
+}
+
+/* =====================================================
+   Responsive
+   ===================================================== */
+
+@media (max-width: 768px) {
+  .card-letter {
+    font-size: clamp(150px, 30vw, 250px);
+    width: clamp(100px, 35%, 180px);
+  }
+
+  .card-title {
+    font-size: clamp(16px, 3vw, 20px);
+  }
+
+  .card {
+    width: 220px;
+    min-height: 320px;
+  }
+
+  .card-content {
+    padding: clamp(15px, 4vw, 30px) 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-letter {
+    font-size: clamp(120px, 28vw, 200px);
+    width: clamp(80px, 30%, 150px);
+  }
+
+  .card-title {
+    font-size: clamp(14px, 2.5vw, 18px);
+  }
+
+  .card {
+    width: 200px;
+    min-height: 280px;
+  }
+
+  .card-content {
+    padding: clamp(12px, 3vw, 25px) 8px;
+  }
+}

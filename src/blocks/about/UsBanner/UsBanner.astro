@@ -1,7 +1,7 @@
 ---
-import MainButton from '../../../components/MainButton.astro';
-import { getLangFromUrl } from '../../../i18n/utils.js';
-import { translations } from '../../../i18n/translations.js';
+import { getLangFromUrl, translations } from '@/i18n';
+import MainButton from '@/components/ui/MainButton.astro';
+
 import styles from './UsBanner.module.css';
 
 // Detect current language
@@ -33,7 +33,7 @@ const t = translations[currentLang];
     <div class={styles['button-section']}>
       <MainButton
         text={t.about.usBanner.buttonText}
-        href="/contacto"
+        href="/contact"
         class="banner-button"
       />
     </div>

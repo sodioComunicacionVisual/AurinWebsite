@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { sendAppointmentConfirmation } from '../../../lib/mailing/service';
-import type { AppointmentData } from '../../../lib/mailing/types';
+import { sendAppointmentConfirmation } from '@/lib/mailing/service';
+import type { AppointmentData } from '@/lib/mailing/types';
 
 export const prerender = false;
 

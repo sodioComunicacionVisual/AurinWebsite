@@ -1,0 +1,28 @@
+---
+import styles from './StoryTellingCard.module.css';
+
+interface Props {
+  letter: string;
+  title: string;
+  href: string;
+  /** 'light' = fondo gris claro, 'dark' = fondo oscuro. Default: 'dark' */
+  variant?: 'light' | 'dark';
+}
+
+const { letter, title, href, variant = 'dark' } = Astro.props;
+---
+
+<li class="splide__slide" role="listitem">
+  <a href={href} class={styles['card-link']} aria-label={`Ver más sobre ${title}`}>
+    <div class={`${styles.card} ${styles[variant]}`}>
+      <div class={styles['card-letter']} aria-hidden="true">
+        {letter}
+      </div>
+      <div class={styles['card-content']}>
+        <div class={styles['card-title']}>
+          {title}
+        </div>
+      </div>
+    </div>
+  </a>
+</li>

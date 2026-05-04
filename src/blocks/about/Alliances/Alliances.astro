@@ -1,0 +1,71 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+// Alianzas.astro
+
+import ScrollAnimationContainer from '@/components/animation/ScrollAnimationContainer.astro';
+import styles from './Alliances.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles.alliances}>
+  <div class={styles['alliances-container']}>
+    <ScrollAnimationContainer 
+      opacity={0}
+      y={40}
+      duration={0.8}
+      delay={0.1}
+    >
+      <div class={styles['heading-column']}>
+        <h3 class={styles['heading-white']}>{t.about.alliances.headingWhite}</h3>
+        <h2 class={styles['heading-yellow']}>{t.about.alliances.headingYellow}</h2>
+      </div>
+    </ScrollAnimationContainer>
+
+    <div class={styles['content-column']}>
+      <ScrollAnimationContainer 
+        opacity={0}
+        y={30}
+        duration={0.7}
+        delay={0.3}
+      >
+        <div class={styles['text-content']}>
+          <p class={`${styles['body-text']} description`} style="color: var(--color-white);" set:html={t.about.alliances.description}>
+          </p>
+        </div>
+      </ScrollAnimationContainer>
+
+      <ScrollAnimationContainer 
+        opacity={0}
+        y={20}
+        duration={0.8}
+        delay={0.5}
+      >
+        <div class={styles['logos-container']}>
+          <img
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AncientLogo.svg"
+            alt="Ancient Technologies"
+            class={styles['partner-logo']}
+            style="transform: scale(0.7);"
+            loading="lazy"
+          />
+          <img
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/IdeogramaGreen.svg"
+            alt="Ideograma"
+            class={styles['partner-logo']}
+            loading="lazy"
+          />
+          <img
+            src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/TopDesignGreen.svg"
+            alt="TopDesign"
+            class={styles['partner-logo']}
+            loading="lazy"
+          />
+        </div>
+      </ScrollAnimationContainer>
+    </div>
+  </div>
+</section>
+

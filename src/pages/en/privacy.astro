@@ -1,13 +1,11 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import StickyFooter from '../../components/StickyFooter.astro';
-import MainCat from '../../components/MainCat.astro';
-import Privacy from '../../blocks/shared/Privacy/Privacy.astro';
-import InteractiveBackground from '../../components/InteractiveBackground.astro';
-import Vignette from '../../components/Vignette.astro';
-import { getLangFromUrl } from '../../i18n/utils';
-import { translations } from '../../i18n/translations';
+import { getLangFromUrl, translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
+import CtaBanner from '@/components/layout/CtaBanner.astro';
+import Privacy from '@/blocks/shared/Privacy/Privacy.astro';
+import Vignette from '@/components/ui/Vignette.astro';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang].privacy;
@@ -18,13 +16,12 @@ const t = translations[currentLang].privacy;
   description={t.seo.description}
   keywords={t.seo.keywords}
 >
-  <InteractiveBackground />
   <Vignette intensity="medium" />
   <Header />
 
   <main>
     <Privacy lang={currentLang} />
-    <MainCat />
+    <CtaBanner />
   </main>
 
   <StickyFooter />

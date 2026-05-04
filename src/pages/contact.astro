@@ -1,0 +1,74 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Form from '@/blocks/shared/Contact/Form.astro';
+import Toast from '@/components/ui/Toast.astro';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+
+// SEO optimizado para LLMs y motores de búsqueda
+const seoTitle = t.contact.seo.title;
+const seoDescription = t.contact.seo.description;
+const seoKeywords = t.contact.seo.keywords;
+
+// Datos estructurados para SEO (Schema.org)
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Aurin",
+    "url": "https://aurin.mx",
+    "logo": "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "hey@aurin.mx",
+      "contactType": "customer service",
+      "areaServed": "MX",
+      "availableLanguage": ["Spanish", "English"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Aldea Creativa",
+      "addressCountry": "MX"
+    }
+  }
+};
+
+// Selectores CSS para contenido speakable (optimización de voz)
+const speakable = [".contact-form", ".contact-info"];
+---
+
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+  keywords={seoKeywords}
+  structuredData={structuredData}
+  speakable={speakable}
+  canonical="https://aurin.mx/contact"
+  ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
+>
+  <Header />
+  <main>
+    <Form />
+  </main>
+  <StickyFooter />
+  <Toast />
+</Layout>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  main {
+    min-height: 100vh;
+    padding-top: 88px;
+  }
+</style>

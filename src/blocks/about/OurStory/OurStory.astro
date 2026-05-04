@@ -1,0 +1,41 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+import MainButton from '@/components/ui/MainButton.astro';
+import LampLight from '@/components/ui/LampLight.astro';
+
+import styles from './OurStory.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles['our-story']}>
+  <div class={styles['lamp-decoration']}>
+    <LampLight lightColor="#D0DF00" intensity="medium" />
+  </div>
+  <div class={styles['our-story-container']}>
+    <div class={styles['left-column']}>
+      <h3 class={styles['heading-white']}>{t.about.ourStory.headingWhite}</h3>
+      <h2 class={styles['heading-yellow']}>{t.about.ourStory.headingYellow}</h2>
+      <div class={styles['button-group']}>
+        <MainButton
+          text={t.about.ourStory.buttonText}
+          href="/contact"
+        />
+      </div>
+    </div>
+
+    <div class={styles['right-column']}>
+      <div class={styles['text-content']}>
+        <p class="description" style="color: var(--color-white);">
+          {t.about.ourStory.paragraph1}
+        </p>
+        <p class="description" style="color: var(--color-white);">
+          {t.about.ourStory.paragraph2}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -1,17 +1,15 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import InteractiveBackground from '../../components/InteractiveBackground.astro';
-import Vignette from '../../components/Vignette.astro';
-import BannerBackgroundEffectsContainer from '../../blocks/shared/Banner/BannerBackgroundEffectsContainer.astro';
-import FloatingDustContainer from '../../blocks/shared/Banner/FloatingDustContainer.astro';
-import MainButton from '../../components/MainButton.astro';
+import Layout from '@/layouts/Layout.astro';
+import Vignette from '@/components/ui/Vignette.astro';
+import BannerBackgroundEffectsContainer from '@/blocks/shared/Banner/BannerBackgroundEffectsContainer.astro';
+import FloatingDustContainer from '@/blocks/shared/Banner/FloatingDustContainer.astro';
+import MainButton from '@/components/ui/MainButton.astro';
 ---
 
 <Layout
   title="Appointment Confirmed - Aurin"
   description="Your appointment has been confirmed successfully"
 >
-  <InteractiveBackground />
   <Vignette intensity="medium" />
 
   <section class="confirmation-page">

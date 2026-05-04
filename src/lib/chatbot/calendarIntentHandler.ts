@@ -5,7 +5,7 @@
  * Orchestrates calls to calendar APIs and manages booking state.
  */
 
-import type { PendingBooking, CustomerData, CalendarMetadata } from '../calendar/types';
+import type { PendingBooking, CustomerData, CalendarMetadata } from '@/lib/calendar/types';
 
 interface IntentHandlerResult {
   shouldCallAPI: boolean;

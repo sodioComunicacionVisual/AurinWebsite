@@ -1,37 +1,29 @@
 ---
 // EJEMPLO DE USO: Strip de proyectos con 4 columnas y sin chips
-// Este archivo demuestra cómo integrar la nueva variante en una página
+// Este archivo demuestra cómo integrar la variante four-column en una página
 
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import InteractiveBackground from '../components/InteractiveBackground.astro';
-import Vignette from '../components/Vignette.astro';
-import ProjectsFourColumn from '../components/ProjectsFourColumn.astro';
-import StickyFooter from '../components/StickyFooter.astro';
-import { getLangFromUrl } from '../i18n/utils';
-import { translations } from '../i18n/translations';
-
-// Detect current language
-const currentLang = getLangFromUrl(Astro.url);
-const t = translations[currentLang];
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import Vignette from '@/components/ui/Vignette.astro';
+import DynamicProjects from '@/components/projects/DynamicProjects.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
 ---
 
 <Layout
   title="Ejemplo - Variante 4 Columnas"
   description="Página de ejemplo mostrando la strip de proyectos con 4 columnas sin chips"
 >
-  <InteractiveBackground />
   <Vignette intensity="medium" />
   <Header />
   
   <main style="padding-top: 100px;">
     <!-- 
-      Nueva variante: ProjectsFourColumn
-      - Muestra 4 proyectos aleatorios
-      - Usa ProjectCard con showChips={false} (sin chips de servicios)
-      - Grid de 4 columnas en desktop
+      Variante four-column: usa DynamicProjects con props específicas
+      - maxProjects={4}: muestra 4 proyectos aleatorios
+      - showChips={false}: oculta los chips de servicios
+      - variant="four-column": activa el grid de 4 columnas en desktop
     -->
-    <ProjectsFourColumn />
+    <DynamicProjects maxProjects={4} showChips={false} variant="four-column" />
   </main>
   
   <StickyFooter />

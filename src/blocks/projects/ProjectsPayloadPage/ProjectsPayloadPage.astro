@@ -1,7 +1,7 @@
 ---
-import Layout from '../../../layouts/Layout.astro';
-import { PayloadAPI, getImageUrl, getProjectUrl, PROJECT_FILTERS } from '../../../lib/payload';
-import { translations } from '../../../i18n/translations';
+import { translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import { PayloadAPI, getImageUrl, getProjectUrl, PROJECT_FILTERS } from '@/lib/payload';
 
 interface Props {
   lang: 'es' | 'en';
@@ -16,13 +16,13 @@ const seoTitle = t.projects?.seo?.title || (lang === 'en' ? 'Projects - Aurin' :
 const seoDescription = t.projects?.seo?.description || (lang === 'en' ? 'Projects by Aurin' : 'Proyectos de Aurin');
 
 const ui = {
-  heading:         lang === 'en' ? 'Projects'          : 'Proyectos',
+  heading:         t.projects?.introduction?.headingLight + " " + t.projects?.introduction?.headingHighlight,
   description:     t.projects?.introduction?.description || '',
   filtersHeading:  lang === 'en' ? 'Project Filters'   : 'Filtros de Proyectos',
   imagePlaceholder:lang === 'en' ? 'Project image'     : 'Imagen del proyecto',
   featuredBadge:   lang === 'en' ? 'Featured'          : 'Destacado',
-  emptyTitle:      lang === 'en' ? 'No projects available'           : 'No hay proyectos disponibles',
-  emptyDesc:       lang === 'en' ? "We'll add new projects soon."    : 'Pronto agregaremos nuevos proyectos.',
+  emptyTitle:      t.projects?.emptyTitle || (lang === 'en' ? 'No projects available' : 'No hay proyectos disponibles'),
+  emptyDesc:       t.projects?.emptyDesc || (lang === 'en' ? "We'll add new projects soon." : 'Pronto agregaremos nuevos proyectos.'),
 };
 ---
 
@@ -42,9 +42,9 @@ const ui = {
           {PROJECT_FILTERS.map((filter) => (
             <button
               type="button"
-              class={`filter-btn ${filter.value === 'todos' ? 'active' : ''}`}
+              class={`filter-btn ${filter.value === 'all' ? 'active' : ''}`}
               data-filter={filter.value}
-              data-is-all={filter.value === 'todos'}
+              data-is-all={filter.value === 'all'}
             >
               <span class="filter-checkbox">
                 <svg class="checkmark" width="12" height="10" viewBox="0 0 12 10" fill="none">
@@ -123,13 +123,13 @@ const ui = {
   document.addEventListener('DOMContentLoaded', () => {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
-    const activeFilters = new Set(['todos']);
+    const activeFilters = new Set(['all']);
 
     function updateProjectsVisibility() {
       projectCards.forEach((card) => {
         const cardFilters = JSON.parse(card.getAttribute('data-filters') || '[]');
 
-        if (activeFilters.has('todos')) {
+        if (activeFilters.has('all')) {
           (card as HTMLElement).style.display = 'block';
           return;
         }
@@ -154,11 +154,11 @@ const ui = {
 
         if (isAllButton) {
           activeFilters.clear();
-          activeFilters.add('todos');
+          activeFilters.add('all');
           filterButtons.forEach((btn) => btn.classList.remove('active'));
           button.classList.add('active');
         } else {
-          activeFilters.delete('todos');
+          activeFilters.delete('all');
           filterButtons.forEach((btn) => {
             if (btn.getAttribute('data-is-all') === 'true') {
               btn.classList.remove('active');
@@ -174,7 +174,7 @@ const ui = {
           }
 
           if (activeFilters.size === 0) {
-            activeFilters.add('todos');
+            activeFilters.add('all');
             filterButtons.forEach((btn) => {
               if (btn.getAttribute('data-is-all') === 'true') btn.classList.add('active');
             });

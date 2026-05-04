@@ -1,8 +1,8 @@
 //Esta API se encarga de hacer un POST a la API de SendGrid para enviar un email con el ticket
 import type { APIRoute } from 'astro';
-import { sendTicketEmail } from '../../lib/mailing/service';
-import { ticketConfirmationMessage } from '../../lib/mailing/templates';
-import type { TicketData } from '../../lib/mailing/types';
+import { sendTicketEmail } from '@/lib/mailing/service';
+import { ticketConfirmationMessage } from '@/lib/mailing/templates';
+import type { TicketData } from '@/lib/mailing/types';
 
 export const prerender = false;
 

@@ -1,14 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import InteractiveBackground from '../../components/InteractiveBackground.astro';
-import StickyFooter from '../../components/StickyFooter.astro';
-import Introduction from '../../blocks/projects/Introduction/Introduction.astro';
-import ProjectsGrid from '../../components/ProjectsGrid.astro';
-import FilterPills from '../../components/FilterPills.astro';
-import MainCat from '../../components/MainCat.astro';
-import { getLangFromUrl } from '../../i18n/utils.js';
-import { translations } from '../../i18n/translations.js';
+import { getLangFromUrl, translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
+import Introduction from '@/blocks/projects/Introduction/Introduction.astro';
+import ProjectsGrid from '@/components/projects/ProjectsGrid.astro';
+import FilterPills from '@/components/ui/FilterPills.astro';
+import CtaBanner from '@/components/layout/CtaBanner.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -87,7 +85,6 @@ const canonicalUrl = "https://aurin.mx/en/projects";
   canonical={canonicalUrl}
   ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
-  <InteractiveBackground />
   <Header />
   
   <main class="proyectos-page">
@@ -106,7 +103,7 @@ const canonicalUrl = "https://aurin.mx/en/projects";
     </section>
 
     <!-- Call to Action -->
-    <MainCat />
+    <CtaBanner />
   </main>
   
   <StickyFooter />

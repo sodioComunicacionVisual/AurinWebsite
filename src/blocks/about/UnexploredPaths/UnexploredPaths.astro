@@ -1,0 +1,43 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+import MainButton from '@/components/ui/MainButton.astro';
+
+import styles from './UnexploredPaths.module.css';
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={styles['unexplored-paths']}>
+  <div class={styles['paths-container']}>
+    <!-- Título -->
+    <div class={styles['title-wrapper']}>
+      <h2 class={styles['paths-title']}>
+        <span class={styles['title-normal']}>{t.about.unexploredPaths.titleNormal}</span><br/>
+        <span class={styles['title-highlight']}>{t.about.unexploredPaths.titleHighlight}</span>
+      </h2>
+    </div>
+
+    <!-- Contenido -->
+    <div class={styles['content-wrapper']}>
+      <div class={styles['text-columns']}>
+        <p class={`${styles['column-text']} description`} style="color: var(--color-white);">
+          {t.about.unexploredPaths.paragraph1}
+        </p>
+        <p class={`${styles['column-text']} description`} style="color: var(--color-white);">
+          {t.about.unexploredPaths.paragraph2}
+        </p>
+      </div>
+
+      <!-- Botón -->
+      <div class={styles['button-wrapper']}>
+        <MainButton
+          text={t.about.unexploredPaths.buttonText}
+          href="/contact"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+

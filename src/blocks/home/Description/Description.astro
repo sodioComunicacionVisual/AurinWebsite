@@ -1,0 +1,78 @@
+---
+import { getLangFromUrl, translations } from '@/i18n';
+import ScrollReveal from "@/components/animation/ScrollReveal.astro";
+
+import styles from "./Description.module.css";
+
+// Detect current language
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class={`${styles.description} description-main`}>
+  <div class={styles.descriptionContainer}>
+    <!-- Left column -->
+    <div class={styles.leftColumn}>
+      <ScrollReveal
+        text={t.homeDescription.mainHeading}
+        tag="h2"
+        textClass={styles.mainHeadingText}
+        baseOpacity={0.2}
+        baseRotation={4}
+        blurStrength={5}
+        enableBlur={true}
+      />
+
+      <div class={styles.contentText}>
+        <p class="description" style="color: var(--color-white);">
+          {t.homeDescription.contentText}<br />
+          <strong class={styles.textHighlight}
+            >{t.homeDescription.contentHighlight}</strong
+          >
+          {t.homeDescription.contentContinue}
+        </p>
+      </div>
+
+      <div class={styles.contrastTextWrapper}>
+        <p class={styles.contrastText}>
+          {t.homeDescription.contrastText}
+        </p>
+      </div>
+    </div>
+
+  </div>
+  <div class={styles.svgAbsolute}>
+    <img
+      src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg"
+      alt=""
+      class={styles.svgElement}
+    />
+  </div>
+</section>
+
+<script>
+  import { scroll, animate } from "motion";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const smallText = document.querySelector(
+      "[data-parallax-small]",
+    ) as HTMLElement;
+    const largeText = document.querySelector(
+      "[data-parallax-large]",
+    ) as HTMLElement;
+
+    if (smallText) {
+      scroll(animate(smallText, { y: [0, 40] }), {
+        target: smallText,
+        offset: ["start end", "end start"],
+      });
+    }
+
+    if (largeText) {
+      scroll(animate(largeText, { y: [0, -60] }), {
+        target: largeText,
+        offset: ["start end", "end start"],
+      });
+    }
+  });
+</script>

@@ -10,7 +10,7 @@ import styles from "./SearchInput.module.css"
 const DEFAULT_TRANSLATIONS: SearchTranslations = {
   label: "¿Qué servicio buscas?",
   placeholder: "¿Qué servicio buscas?",
-  ariaLabel: "Escribe tu pregunta sobre servicios",
+  ariaLabel: "¿Qué servicio buscas?",
   submitAriaLabel: "Enviar pregunta",
   services: [
     "Desarrollo web y de aplicaciones móviles",

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { sendContactEmail } from '../../lib/mailing/service';
-import type { ContactFormData } from '../../lib/mailing/types';
+import { sendContactEmail } from '@/lib/mailing/service';
+import type { ContactFormData } from '@/lib/mailing/types';
 
 // reCAPTCHA verification function
 async function verifyRecaptcha(token: string, remoteIp?: string): Promise<{ success: boolean; score?: number; error?: string }> {

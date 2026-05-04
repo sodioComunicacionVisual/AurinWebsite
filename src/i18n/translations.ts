@@ -1,7 +1,8 @@
 export const translations = {
   en: {
     common: {
-      loading: 'Loading...'
+      loading: 'Loading...',
+      viewMore: 'View more'
     },
     seo: {
       title: "Aurin User Experts | Graphic Design and Branding in Mexico",
@@ -167,7 +168,7 @@ export const translations = {
         "Marketing": "Marketing"
       },
       filters: {
-        "todos": "All",
+        "all": "All",
         "diseno-ux-ui": "UX/UI Design",
         "desarrollo-web-movil": "Web and mobile app development",
         "desarrollo-branding": "Branding development",
@@ -227,16 +228,42 @@ export const translations = {
         highlight: "UX/UI Design:",
         subtitle: "We simplify the complex",
         description: "As technology users that we are, we love to explore and build intuitive interfaces designed to adapt to user needs, achieving experiences that balance form and function. From designing banking applications that simplify transactions to accessible navigation systems for complex websites, our solutions transform the complicated into something easy to use."
-      }
+      },
+      toolsDetail: [
+        {
+          title: "UX/UI Design:",
+          subtitle: "We simplify the complex.",
+          description: "As technology users that we are, we love to explore and build intuitive interfaces designed to adapt to user needs, achieving experiences that balance form and function. From designing banking applications that simplify transactions to accessible navigation systems for complex websites, our solutions transform the complicated into something easy to use."
+        },
+        {
+          title: "Web and mobile app development:",
+          subtitle: "Information and functionality, at hand.",
+          description: "We design and develop websites and mobile applications that combine functionality, design and performance. From sites that offer immersive experiences to apps that optimize processes and improve user interaction, our solutions are designed to adapt to your needs and generate impact."
+        },
+        {
+          title: "Branding development:",
+          subtitle: "We design your brand from start to finish.",
+          description: "We create systems that transcend, connecting deeply with audiences. From the complete redesign of visual identities, including logos and corporate stationery, to the creation of style guides that guarantee consistency across all channels, our solutions bring life to memorable and consistent brands."
+        },
+        {
+          title: "Digital marketing and social media:",
+          subtitle: "We connect with intention.",
+          description: "We create digital strategies that build communities and generate results. From content marketing campaigns to creative social media management, we develop messages that reflect your voice and connect with the right audience. We focus on real metrics, meaningful content and constant creativity to strengthen your digital presence."
+        },
+        {
+          title: "Usability testing:",
+          subtitle: "We improve with precision.",
+          description: "We conduct tests to ensure that every solution meets usability and performance standards."
+        }
+      ]
     },
     banner: {
       badge: 'User Experts',
-      title1: 'Design that connects.',
-      title2: 'Experiences that transform.',
+      title1: 'Design that connects. Experiences that transform.',
       description: 'We create visual narratives that inspire and generate real impact. From branding to digital experiences, we turn your vision into memorable results.',
       buttonText: 'Start your project now'
     },
-    descripcion: {
+    homeDescription: {
       mainHeading: 'In a world overflowing with visual stimuli, our mission is to create connections that truly matter. ',
       contentText: 'The closer we align in ideas, goals, and dreams, the farther we can go together.',
       contentHighlight: 'At Aurin, we embrace the symbiosis of contrasts:',
@@ -245,13 +272,13 @@ export const translations = {
       parallaxLarge: '+Closer',
       contrastText: '+Closer, +Further'
     },
-    expertosUsuarios: {
+    userExperts: {
       subtitle: 'User',
       title: 'experts',
       description: 'We believe that truly great design places the human experience at the heart of everything, bringing meaning to our world through visual narratives that move and transform.',
       buttonText: 'Meet our authors of experiences'
     },
-    especialidades: {
+    specialties: {
       heading: 'Our',
       headingHighlight: 'Expertise',
       description: 'Every idea transforms into a unique journey, crafted to inspire and connect.',
@@ -260,7 +287,7 @@ export const translations = {
       card2Title: 'Experience design',
       card3Title: 'Digital ecosystem construction'
     },
-    mainCat: {
+    ctaBanner: {
       home: {
         text: "Let's bridge the gap and reach new horizons together",
         buttonText: 'Start your project now'
@@ -278,7 +305,7 @@ export const translations = {
         buttonText: 'Take the first step'
       }
     },
-    herramientas: {
+    tools: {
       titlePart1: 'Our',
       titlePart2: 'Toolbox',
       description: 'Each tool we master brings us closer to what matters most: creating something meaningful.',
@@ -390,7 +417,6 @@ export const translations = {
             "Brand and experience audits",
             "Corporate identity and branding design",
             "User experience design (UX/UI)",
-            "Web and mobile application development",
             "Digital strategy and marketing",
             "Visual communication consulting"
           ],
@@ -543,7 +569,7 @@ export const translations = {
         description2: "Through our innovative approach and the use of design and technology, we amplify the impact and visibility of our clients, partners, and team, projecting them toward new horizons.",
         buttonText: "Start your Aurin journey"
       },
-      rutasInexploradas: {
+      unexploredPaths: {
         titleNormal: "We are",
         titleHighlight: "Pathfinders",
         paragraph1: "As bold explorers, our multidisciplinary team ventures into the unknown, seeking the most innovative ways to ensure each project's success. Each member, like an expert adventurer, contributes their unique perspective and skills in design, UX/UI, strategy, web development, and project management, charting paths others have yet to explore.",
@@ -555,20 +581,20 @@ export const translations = {
         years: "Years",
         countries: "Countries"
       },
-      comoLlegamos: {
+      ourStory: {
         headingWhite: "How did we get",
         headingYellow: "Here?",
         buttonText: "Start your project today",
         paragraph1: "You may wonder how, after 26 years, you're only now hearing about Aurin. The answer lies in our journey of transformation. We ventured into uncharted territories and reinvented ourselves.",
         paragraph2: "We became our own success story, proving that by staying close to our essence and looking further ahead, we could evolve. Today, this new identity reflects who we are and the impact we want to create with you."
       },
-      disenoColaboracion: {
+      collaborativeDesign: {
         heading: "Design, Collaboration, and Innovation in a Space Built to Create",
         description: "Aurin is based at Aldea Creativa, a space where design and innovation converge. Surrounded by creative minds, we work in an environment that inspires, connects, and enriches every project, fostering collaboration and idea exchange.",
         buttonText: "Discover Aldea Creativa",
         imageAlt: "Aldea Creativa - Design and innovation space"
       },
-      alianzas: {
+      alliances: {
         headingWhite: "The Power of",
         headingYellow: "Partnerships",
         description: "Collaboration is the foundation for creating exceptional solutions. Together with strategic partners like Ancient Technologies, Ideograma, and TopDesign, we combine our expertise to develop unique projects. This synergy drives innovation, keeps us at the forefront, and expands the boundaries of design and development."
@@ -580,7 +606,8 @@ export const translations = {
   },
   es: {
     common: {
-      loading: 'Cargando...'
+      loading: 'Cargando...',
+      viewMore: 'Ver más'
     },
     seo: {
       title: "Aurin User Experts | Diseño Gráfico y Branding en México",
@@ -746,7 +773,7 @@ export const translations = {
         "Marketing": "Marketing"
       },
       filters: {
-        "todos": "Todos",
+        "all": "Todos",
         "diseno-ux-ui": "Diseño UX/UI",
         "desarrollo-web-movil": "Desarrollo web y de aplicaciones móviles",
         "desarrollo-branding": "Desarrollo de branding",
@@ -806,16 +833,42 @@ export const translations = {
         highlight: "Diseño UX/UI:",
         subtitle: "Simplificamos lo complejo",
         description: "Como usuarios de tecnología que somos, nos encanta explorar y construir interfaces intuitivas diseñadas para adaptarse a las necesidades de los usuarios, logrando experiencias que equilibran forma y función. Desde el diseño de aplicaciones bancarias que simplifican transacciones hasta sistemas de navegación accesibles para sitios web complejos, nuestras soluciones transforman lo complicado en algo fácil de usar."
-      }
+      },
+      toolsDetail: [
+        {
+          title: "Diseño UX/UI: ",
+          subtitle: "Simplificamos lo complejo.",
+          description: "Como usuarios de tecnología que somos, nos encanta explorar y construir interfaces intuitivas diseñadas para adaptarse a las necesidades de los usuarios, logrando experiencias que equilibran forma y función. Desde el diseño de aplicaciones bancarias que simplifican transacciones hasta sistemas de navegación accesibles para sitios web complejos, nuestras soluciones transforman lo complicado en algo fácil de usar."
+        },
+        {
+          title: "Desarrollo web y de aplicaciones móviles: ",
+          subtitle: "Información y funcionalidad, a la mano.",
+          description: "Diseñamos y desarrollamos sitios web y aplicaciones móviles que combinan funcionalidad, diseño y rendimiento. Desde sitios que ofrecen experiencias inmersivas hasta apps que optimizan procesos y mejoran la interacción del usuario, nuestras soluciones están pensadas para adaptarse a tus necesidades y generar impacto."
+        },
+        {
+          title: "Desarrollo de branding: ",
+          subtitle: "Diseñamos tu marca de principio a fin.",
+          description: "Creamos sistemas que trascienden, conectando profundamente con las audiencias. Desde el rediseño completo de identidades visuales, incluyendo logotipos y papelería corporativa, hasta la creación de guías de estilo que garantizan coherencia en todos los canales, nuestras soluciones dan vida a marcas memorables y consistentes."
+        },
+        {
+          title: "Marketing digital y redes sociales: ",
+          subtitle: "Conectamos con intención.",
+          description: "Creamos estrategias digitales que construyen comunidades y generan resultados. Desde campañas de marketing de contenido hasta la gestión creativa de redes sociales, desarrollamos mensajes que reflejan tu voz y conectan con la audiencia correcta. Nos enfocamos en métricas reales, contenido significativo y creatividad constante para fortalecer tu presencia digital."
+        },
+        {
+          title: "Pruebas de usabilidad: ",
+          subtitle: "Mejoramos con precisión.",
+          description: "Llevamos a cabo pruebas para asegurar que cada solución cumpla con los estándares de usabilidad y rendimiento."
+        }
+      ]
     },
     banner: {
       badge: 'Expertos en usuarios',
-      title1: 'Diseño que conecta.',
-      title2: 'Experiencias que transforman.',
+      title1: 'Diseño que conecta. Experiencias que transforman.',
       description: 'Creamos narrativas visuales que inspiran y generan impacto real. Desde branding hasta experiencias digitales, convertimos tu visión en resultados memorables.',
       buttonText: 'Inicia tu proyecto ahora'
     },
-    descripcion: {
+    homeDescription: {
       mainHeading: 'En un mundo lleno de estímulos visuales, nuestra misión es crear conexiones que realmente importen.',
       contentText: 'Porque cuanto más unidos estemos en ideas, objetivos y sueños, más lejos podremos llegar juntos.',
       contentHighlight: 'En Aurin, abrazamos la simbiosis de los contrastes:',
@@ -824,22 +877,22 @@ export const translations = {
       parallaxLarge: '+Cerca',
       contrastText: '+Cerca +Lejos'
     },
-    expertosUsuarios: {
+    userExperts: {
       subtitle: 'Expertos en',
       title: 'usuarios',
       description: 'Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.',
       buttonText: 'Conoce a nuestros autores de experiencias'
     },
-    especialidades: {
+    specialties: {
       heading: 'Nuestras',
       headingHighlight: 'especialidades',
-      description: 'Creemos que el verdadero buen diseño pone la experiencia humana en el centro de todo, y le da sentido a nuestro mundo a través de narrativas visuales que emocionan y transforman.',
+      description: 'Cada idea se convierte en un recorrido único, diseñado para inspirar y conectar.',
       buttonText: 'Conoce más de nuestros servicios',
       card1Title: 'Auditorías de marca y experiencia',
       card2Title: 'Diseño de experiencias',
       card3Title: 'Construcción de ecosistemas digitales'
     },
-    mainCat: {
+    ctaBanner: {
       home: {
         text: 'Acortemos distancias y alcancemos nuevos horizontes juntos.',
         buttonText: 'Comienza tu proyecto ahora'
@@ -857,7 +910,7 @@ export const translations = {
         buttonText: 'Da el primer paso'
       }
     },
-    herramientas: {
+    tools: {
       titlePart1: 'Nuestra caja',
       titlePart2: 'de Herramientas',
       description: 'Con estas capacidades, damos forma a soluciones que conectan, inspiran y generan impacto.',
@@ -1122,7 +1175,7 @@ export const translations = {
         description2: "Gracias a nuestro enfoque y al uso de diseño y tecnología, ampliamos el impacto y la visibilidad de nuestros clientes, aliados y equipo, proyectándolos hacia nuevos horizontes.",
         buttonText: "Comienza tu proceso Aurin"
       },
-      rutasInexploradas: {
+      unexploredPaths: {
         titleNormal: "Descubridores de",
         titleHighlight: "rutas inexploradas",
         paragraph1: "Como exploradores intrépidos, nuestro equipo multidisciplinario se adentra en lo desconocido, buscando los caminos más innovadores para llevar cada proyecto al éxito. Cada miembro, como un aventurero experto, aporta su visión única y sus habilidades en diseño, UX/UI, estrategia, desarrollo web y gestión de proyectos, trazando rutas que otros no han recorrido.",
@@ -1134,20 +1187,20 @@ export const translations = {
         years: "Años",
         countries: "Países"
       },
-      comoLlegamos: {
+      ourStory: {
         headingWhite: "¿Cómo llegamos",
         headingYellow: "Hasta aquí?",
         buttonText: "Comienza tu proyecto hoy",
         paragraph1: "Quizá te preguntes cómo, después de 26 años, apenas escuchas de Aurin. La respuesta está en nuestro propio viaje de transformación. Recorrimos nuevas rutas y nos reinventamos.",
         paragraph2: "Hemos sido nuestro propio caso de éxito, demostrando que al estar más cerca de nuestra esencia y mirar más lejos, logramos evolucionar. Hoy, esta nueva identidad refleja quiénes somos y el impacto que queremos crear contigo."
       },
-      disenoColaboracion: {
+      collaborativeDesign: {
         heading: "Diseño, colaboración e innovación en un entorno hecho para crear",
         description: "Aurin tiene su sede en Aldea Creativa, un espacio donde diseño e innovación convergen. Rodeados de mentes creativas, trabajamos en un ambiente que inspira, conecta y enriquece cada proyecto, fomentando la colaboración y el intercambio de ideas.",
         buttonText: "Conoce Aldea Creativa",
         imageAlt: "Aldea Creativa - Espacio de diseño e innovación"
       },
-      alianzas: {
+      alliances: {
         headingWhite: "El poder de",
         headingYellow: "las alianzas",
         description: "La colaboración es la base para crear soluciones excepcionales. Junto a socios estratégicos como Ancient Technologies, Ideograma y TopDesign, unimos nuestra experiencia para desarrollar proyectos únicos. Esta sinergia impulsa la innovación, nos mantiene a la vanguardia y expande los límites del diseño y el desarrollo."

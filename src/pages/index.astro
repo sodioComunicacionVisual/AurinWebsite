@@ -1,17 +1,17 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import MegaMenu from '../components/MegaMenu.astro';
-import Banner from '../blocks/home/HomeBanner/Banner.astro';
-import Descripcion from '../blocks/home/Descripcion/Descripcion.astro';
-import ExpertosUsuarios from '../blocks/home/ExpertosUsuarios/ExpertosUsuarios.astro';
-import EnterpriseMarquee from '../blocks/home/EnterpriseMarquee/EnterpriseMarquee.astro';
-import Especialidades from '../blocks/home/Especialidades/Especialidades.astro';
-import MainCat from '../components/MainCat.astro';
-import HerramientasVariant from '../blocks/shared/HerramientasVariant/HerramientasVariant.astro';
-import DynamicProjects from '../components/DynamicProjects.astro';
-import StickyFooter from '../components/StickyFooter.astro';
-import { translations } from '../i18n/translations.js';
+import { translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import MegaMenu from '@/components/layout/MegaMenu.astro';
+import Hero from '@/blocks/home/Hero/Hero.astro';
+import Description from '@/blocks/home/Description/Description.astro';
+import UserExperts from '@/blocks/home/UserExperts/UserExperts.astro';
+import EnterpriseMarquee from '@/blocks/home/EnterpriseMarquee/EnterpriseMarquee.astro';
+import Specialties from '@/blocks/home/Specialties/Specialties.astro';
+import CtaBanner from '@/components/layout/CtaBanner.astro';
+import ToolsVariant from '@/blocks/shared/ToolsVariant/ToolsVariant.astro';
+import DynamicProjects from '@/components/projects/DynamicProjects.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
 
 // Get Spanish translations (default)
 const t = translations.es;
@@ -47,7 +47,7 @@ const structuredData = {
 };
 
 // Selectores CSS para contenido speakable (optimización de voz)
-const speakable = [".banner-content", ".descripcion-principal", ".especialidades-section"];
+const speakable = [".banner-content", ".description-main", ".specialties-section"];
 
 ---
 
@@ -63,16 +63,15 @@ const speakable = [".banner-content", ".descripcion-principal", ".especialidades
 	<Header />
 	<MegaMenu />
 	<main>
-		<Banner/>
-		<Descripcion />
+		<Hero/>
+		<Description />
 		<EnterpriseMarquee />
-		<ExpertosUsuarios />
-		<Especialidades />
-		<HerramientasVariant />
+		<UserExperts />
+		<Specialties />
+		<ToolsVariant />
 		<DynamicProjects maxProjects={4} showChips={false} variant="four-column" />
-    <MainCat/>
+    <CtaBanner/>
 		<StickyFooter />
 	</main>
 </Layout>
-
 

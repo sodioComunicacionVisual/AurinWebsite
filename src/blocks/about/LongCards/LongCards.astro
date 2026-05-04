@@ -1,9 +1,9 @@
 ---
+import { getLangFromUrl, translations } from '@/i18n';
 // @ts-nocheck
 import { ArrowUpRight } from 'lucide-astro';
-import { getLangFromUrl } from '../../../i18n/utils.js';
-import { translations } from '../../../i18n/translations.js';
-import CounterContainer from '../../../components/CounterContainer.astro';
+
+import CounterContainer from '@/components/animation/CounterContainer.astro';
 import styles from './LongCards.module.css';
 
 interface CardData {
@@ -69,8 +69,6 @@ const cards: CardData[] = [
     ))}
   </div>
 </section>
-
-
 
 <script>
   import { inView, animate } from 'motion';

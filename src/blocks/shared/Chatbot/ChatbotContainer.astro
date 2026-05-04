@@ -1,9 +1,8 @@
 ---
+import { getLangFromUrl, translations } from '@/i18n';
 // Componente Astro que actúa como contenedor para el widget de React
 import ChatbotLazy from './ChatbotLazy.tsx';
-import '../../../styles/chatbot.css';
-import { getLangFromUrl } from '../../../i18n/utils.js';
-import { translations } from '../../../i18n/translations.js';
+import '@/styles/chatbot.css';
 
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];

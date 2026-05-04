@@ -5,11 +5,11 @@ import { nanoid } from 'nanoid'
 import type { Message } from './types'
 import { sampleMessages, botResponses } from './constants'
 import { getCurrentTime, validateFile, formatFileSize, formatMessageTime } from './utils'
-import { SessionManager, type ChatMessage } from '../../../lib/chatbot/sessionManager'
-import { ChatApiClient } from '../../../lib/chatbot/apiClient'
+import { SessionManager, type ChatMessage } from '@/lib/chatbot/sessionManager'
+import { ChatApiClient } from '@/lib/chatbot/apiClient'
 import { MarkdownRenderer } from './MarkdownRenderer'
-import { detectCalendarIntent, handleUserMessage, fetchAvailability } from '../../../lib/chatbot/calendarIntentHandler'
-import type { CalendarMetadata, PendingBooking, CustomerData } from '../../../lib/calendar/types'
+import { detectCalendarIntent, handleUserMessage, fetchAvailability } from '@/lib/chatbot/calendarIntentHandler'
+import type { CalendarMetadata, PendingBooking, CustomerData } from '@/lib/calendar/types'
 
 interface ChatbotTranslations {
   welcome: string;
@@ -40,7 +40,7 @@ interface ChatbotWidgetProps {
 export default function ChatbotWidget({ lang = 'es', translations }: ChatbotWidgetProps) {
   // Default translations (fallback to Spanish)
   const t = translations || {
-    welcome: "¡Hola! 👋 Soy el asistente virtual de Aurin. Estoy aquí para ayudarte con cualquier pregunta sobre nuestros servicios de comunicación visual y branding. ¿En qué puedo ayudarte hoy?",
+    welcome: t.chatbot.welcome,
     title: "Asistente IA",
     online: "En línea",
     offline: "Sin conexión",

@@ -1,0 +1,17 @@
+---
+import { HeroBackgroundEffects } from './HeroBackgroundEffects';
+---
+
+<div class="hero-background-effects">
+  <HeroBackgroundEffects client:idle />
+</div>
+
+<style>
+  .hero-background-effects {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+</style>

@@ -1,12 +1,11 @@
 ---
-import InteractiveBackground from '../../../components/InteractiveBackground.astro';
-import Vignette from '../../../components/Vignette.astro';
-import Header from '../../../components/Header.astro';
-import MainCat from '../../../components/MainCat.astro';
-import DynamicProjects from '../../../components/DynamicProjects.astro';
-import StickyFooter from '../../../components/StickyFooter.astro';
-import ProjectBanner from '../../projects/ProjectBanner/ProjectBanner.astro';
-import GalleryCarousel from '../../../components/carousel/GalleryCarousel';
+import Vignette from '@/components/ui/Vignette.astro';
+import Header from '@/components/layout/Header.astro';
+import CtaBanner from '@/components/layout/CtaBanner.astro';
+import DynamicProjects from '@/components/projects/DynamicProjects.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
+import ProjectBanner from '@/blocks/projects/ProjectBanner/ProjectBanner.astro';
+import GalleryCarousel from '@/components/projects/carousel/GalleryCarousel';
 import styles from './Template.module.css';
 
 // TypeScript interfaces para props dinámicas desde Payload
@@ -38,7 +37,6 @@ interface Props {
 const { projectData } = Astro.props;
 ---
 
-<InteractiveBackground />
 <Vignette intensity="medium" />
 
 <!-- Header Navigation -->
@@ -68,7 +66,7 @@ const { projectData } = Astro.props;
 <DynamicProjects />
 
 <!-- Main Category Navigation -->
-<MainCat />
+<CtaBanner />
 
 <!-- Footer -->
 <StickyFooter />

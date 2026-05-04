@@ -1,18 +1,16 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
-import InteractiveBackground from '../../components/InteractiveBackground.astro';
-import UsBanner from '../../blocks/about/UsBanner/UsBanner.astro';
-import MainImage from '../../blocks/about/MainImage/MainImage.astro';
-import RutasInexploradas from '../../blocks/about/RutasInexploradas/RutasInexploradas.astro';
-import LongCards from '../../blocks/about/LongCards/LongCards.astro';
-import ComoLlegamos from '../../blocks/about/ComoLlegamos/ComoLlegamos.astro';
-import DisenoColaboracion from '../../blocks/about/DisenoColaboracion/DisenoColaboracion.astro';
-import Alianzas from '../../blocks/about/Alianzas/Alianzas.astro';
-import DynamicProjects from '../../components/DynamicProjects.astro';
-import StickyFooter from '../../components/StickyFooter.astro';
-import { getLangFromUrl } from '../../i18n/utils.js';
-import { translations } from '../../i18n/translations.js';
+import { getLangFromUrl, translations } from '@/i18n';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/layout/Header.astro';
+import UsBanner from '@/blocks/about/UsBanner/UsBanner.astro';
+import MainImage from '@/blocks/about/MainImage/MainImage.astro';
+import UnexploredPaths from '@/blocks/about/UnexploredPaths/UnexploredPaths.astro';
+import LongCards from '@/blocks/about/LongCards/LongCards.astro';
+import OurStory from '@/blocks/about/OurStory/OurStory.astro';
+import CollaborativeDesign from '@/blocks/about/CollaborativeDesign/CollaborativeDesign.astro';
+import Alliances from '@/blocks/about/Alliances/Alliances.astro';
+import DynamicProjects from '@/components/projects/DynamicProjects.astro';
+import StickyFooter from '@/components/layout/StickyFooter.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -56,7 +54,7 @@ const structuredData = {
 };
 
 // Selectores CSS para contenido speakable (optimización de voz)
-const speakable = [".us-banner", ".rutas-inexploradas", ".como-llegamos", ".diseno-colaboracion"];
+const speakable = [".us-banner", ".unexplored-paths", ".our-story", ".collaborative-design"];
 ---
 
 <Layout 
@@ -68,16 +66,15 @@ const speakable = [".us-banner", ".rutas-inexploradas", ".como-llegamos", ".dise
   canonical="https://aurin.mx/en/about"
   ogImage="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/aurinWhiteLogo.webp"
 >
-  <InteractiveBackground />
   <Header />
   <main>
     <UsBanner />
     <MainImage />
-    <RutasInexploradas />
+    <UnexploredPaths />
     <LongCards />
-    <ComoLlegamos />
-    <DisenoColaboracion />
-    <Alianzas />
+    <OurStory />
+    <CollaborativeDesign />
+    <Alliances />
     <DynamicProjects />
   </main>
   <StickyFooter />

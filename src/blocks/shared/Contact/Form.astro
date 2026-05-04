@@ -1,9 +1,8 @@
 ---
+import { getLangFromUrl, translations } from '@/i18n';
 // @ts-nocheck
 import { Mail, MapPin } from 'lucide-astro';
-import MainButton from '../../../components/MainButton.astro';
-import { getLangFromUrl } from '../../../i18n/utils.js';
-import { translations } from '../../../i18n/translations.js';
+import MainButton from '@/components/ui/MainButton.astro';
 
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
@@ -637,8 +636,6 @@ const RECAPTCHA_SITE_KEY = import.meta.env.RECAPTCHA_SITE_KEY;
 
 <script>
   import { animate, stagger } from 'motion';
-  import { getLangFromUrl } from '../../../i18n/utils.js';
-  import { translations } from '../../../i18n/translations.js';
 
   document.addEventListener('DOMContentLoaded', () => {
     // Get current language and translations

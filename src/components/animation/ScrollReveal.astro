@@ -1,0 +1,27 @@
+---
+import styles from './ScrollReveal.module.css';
+
+interface Props {
+  text: string;
+  enableBlur?: boolean;
+  baseOpacity?: number;
+  baseRotation?: number;
+  blurStrength?: number;
+  containerClass?: string;
+  textClass?: string;
+  textStyle?: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+}
+
+const {
+  text,
+  containerClass = '',
+  textClass = '',
+  textStyle = '',
+  tag: Tag = 'h2',
+} = Astro.props;
+---
+
+<div class={containerClass}>
+  <Tag class={textClass} style={textStyle}>{text}</Tag>
+</div>
