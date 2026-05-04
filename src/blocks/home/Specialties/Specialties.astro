@@ -4,29 +4,27 @@ import SectionHeading from '@/components/ui/SectionHeading.astro';
 import MainButton from '@/components/ui/MainButton.astro';
 import Card from '@/components/cards/Card.astro';
 
-import styles from './Specialties.module.css'; 
-
 // Detect current language
 const currentLang = getLangFromUrl(Astro.url);
 const t = translations[currentLang];
 ---
 
-<section class={`${styles.specialties} specialties-section`}>
-  <div class={styles.specialtiesContainer}>
+<section class="specialties specialties-section">
+  <div class="specialtiesContainer">
     <!-- Left content section -->
-    <div class={styles.contentSection}>
-      <div class={styles.headingWrapper}>
+    <div class="contentSection">
+      <div class="headingWrapper">
         <SectionHeading
           lightText={t.specialties.heading}
           highlightText={t.specialties.headingHighlight}
         />
       </div>
 
-      <p class={styles.description}>
+      <p class="description">
         {t.specialties.description}
       </p>
 
-      <div class={styles.buttonWrapper}>
+      <div class="buttonWrapper">
         <MainButton
           text={t.specialties.buttonText}
           href="/services"
@@ -35,8 +33,8 @@ const t = translations[currentLang];
     </div>
 
     <!-- Right cards section -->
-    <div class={styles.cardsSection}>
-      <div class={styles.cardsRow}>
+    <div class="cardsSection">
+      <div class="cardsRow">
         <Card
           letter="M"
           title={t.specialties.card1Title}
@@ -78,3 +76,132 @@ const t = translations[currentLang];
     });
   });
 </script>
+
+<style>
+.specialties {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: var(--color-black-a, #0A0A0A);
+  padding: 48px 115px 32px 115px;
+  box-sizing: border-box;
+}
+
+.specialtiesContainer {
+  width: 100%;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-betweengit stat;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: clamp(32px, 4vw, 64px);
+  box-sizing: border-box;
+}
+
+/* --- Left Information Section --- */
+
+.contentSection {
+  flex: 0 1 606px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.headingWrapper {
+  width: 100%;
+}
+
+.description {
+  color: var(--color-white, #FFFFFF);
+  font-family: var(--font-family-primary, 'Urbanist', sans-serif);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+  max-width: 350px;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.buttonWrapper {
+  width: 100%;
+  max-width: 466px;
+}
+
+/* --- Right Cards Section --- */
+
+.cardsSection {
+  flex: 0 1 712px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.cardsRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* --- Responsive Adjustments --- */
+
+@media (max-width: 1024px) {
+  .specialties {
+    padding: 48px 40px 48px 40px;
+  }
+
+  .specialtiesContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .contentSection,
+  .cardsSection {
+    align-items: center;
+    text-align: center;
+  }
+
+  .description {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .buttonWrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .cardsSection {
+    align-items: center;
+  }
+
+  .cardsRow {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .specialties {
+    padding: 40px 16px 40px 16px;
+  }
+
+  .cardsRow {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+</style>

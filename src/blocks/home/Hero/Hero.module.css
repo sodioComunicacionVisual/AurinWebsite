@@ -1,38 +1,17 @@
-/* ============================================================
-   Hero Section — CSS Module
-   ============================================================ */
-
 .hero {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  font-family: var(--font-family-primary);
-}
-
-.heroContainer {
   width: 100%;
   min-height: 100vh;
   position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
-
-/* ── Content layout ──────────────────────────────────────── */
 
 .content {
   position: relative;
   z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 100vh;
-}
-
-.contentInner {
-  text-align: center;
+  box-sizing: border-box;
   width: 100%;
   max-width: 1600px;
   margin: 0 auto;
@@ -41,67 +20,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
-}
-
-/* ── Logo ────────────────────────────────────────────────── */
-
-.logoContainer {
-  margin: 1.5rem 0;
-  position: relative;
-  z-index: 50;
-  overflow: hidden;
-}
-
-.logoTilt {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo {
-  width: 42rem;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  z-index: 50;
-  user-select: none;
-  -webkit-user-drag: none;
-  pointer-events: none;
-  cursor: default;
-}
-
-/* ── Headings ────────────────────────────────────────────── */
-
-.titles {
-  display: flex;
-  flex-direction: row;
-  gap: 0.35em;
-  margin: 1.5rem auto;
-  position: relative;
-  z-index: 50;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  /* Reset h1 defaults */
-  padding: 0;
-}
-
-.titles span {
-  color: var(--color-yellow);
-  font-family: var(--font-family-display);
-  font-size: 32px;
-  line-height: 35px;
-  font-weight: var(--font-weight-light);
   text-align: center;
 }
 
-/* ── Responsive — mobile ─────────────────────────────────── */
+.logo {
+  width: 32rem;
+  max-width: 100%;
+  height: auto;
+  margin: 0px;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.title {
+  color: var(--color-yellow);
+  font-family: var(--font-family-display);
+  font-size: 32px;
+  line-height: 132%;
+  font-weight: var(--font-weight-light);
+  margin: 56px 0px 56px 0px;
+  padding: 0;
+}
 
 @media (max-width: 768px) {
-  .contentInner {
+  .content {
     padding-block: 48px;
   }
 
@@ -109,8 +52,8 @@
     width: min(16rem, 85vw);
   }
 
-  .titles span {
-    font-size: 22px;
-    line-height: 28px;
+  .title {
+    font-size: 24px;
+    margin: 32px 0px 32px 0px;
   }
 }
