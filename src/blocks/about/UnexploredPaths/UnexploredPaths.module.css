@@ -69,8 +69,8 @@
     color: var(--color-white);
     font-size: clamp(1rem, 1.25vw, 1.25rem);
     font-family: var(--font-body);
-    font-weight: 400;
-    line-height: 1.5;
+    font-weight: var(--font-weight-light);
+    line-height: var(--line-height-tight);
     word-wrap: break-word;
     margin: 0;
   }

@@ -1,128 +1,79 @@
 ---
-import { ArrowUpRight } from 'lucide-astro';
-import styles from './ButtonIsland.module.css';
+import { ArrowUpRight } from "lucide-astro";
+import styles from "./ButtonIsland.module.css";
 
 interface Props {
   text?: string;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   onClick?: string;
   disabled?: boolean;
   class?: string;
   href?: string;
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
 }
 
-const { 
-  text = 'Button', 
-  type = 'button', 
-  onClick, 
+const {
+  text = "Button",
+  type = "button",
+  onClick,
   disabled = false,
-  class: className = '',
+  class: className = "",
   href,
-  variant = 'primary'
+  variant = "primary",
 } = Astro.props;
 
-const uniqueId = `btn-${variant}-${Math.random().toString(36).substr(2, 9)}`;
-const wrapperClass = `${styles['button-wrapper']} ${styles[`button-wrapper--${variant}`]} ${className}`;
+const cls = [
+  styles.btn,
+  variant === "secondary" && styles.btnSecondary,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
 ---
 
-<div class={wrapperClass} data-button-id={uniqueId} data-button-variant={variant} data-animate-button>
-  {href ? (
-    <a href={href} class={styles['button-container']}>
-      <div class={styles['button-text']} data-text-container>
-        <span class="description">{text}</span>
-      </div>
-      <div class={styles['button-icon']} data-icon-container>
-        <ArrowUpRight size={22} strokeWidth={2.5} />
-      </div>
+{
+  href ? (
+    <a href={href} class={cls} data-animate-button>
+      <span class={styles.btnText}>{text}</span>
+      <span class={styles.btnIcon}>
+        <ArrowUpRight size={26} strokeWidth={6} />
+      </span>
     </a>
   ) : (
-    <button 
-      type={type} 
+    <button
+      type={type}
       onclick={onClick}
       disabled={disabled}
-      class={styles['button-container']}
+      class={cls}
+      data-animate-button
     >
-      <div class={styles['button-text']} data-text-container>
-        <span class="description">{text}</span>
-      </div>
-      <div class={styles['button-icon']} data-icon-container>
-        <ArrowUpRight size={22} strokeWidth={2.5} />
-      </div>
+      <span class={styles.btnText}>{text}</span>
+      <span class={styles.btnIcon}>
+        <ArrowUpRight size={26} strokeWidth={6} />
+      </span>
     </button>
-  )}
-</div>
-
-
-<script is:inline>
-  // Isla de interactividad compartida - Patrón DRY
-  // Un solo script maneja todos los botones (primary y secondary)
-  // Usa is:inline para evitar procesamiento de Vite
-  
-  (function() {
-    function initButtons() {
-      const wrappers = document.querySelectorAll('[data-button-id]');
-      
-      wrappers.forEach((wrapper) => {
-        const textContainer = wrapper.querySelector('[data-text-container]');
-        const iconContainer = wrapper.querySelector('[data-icon-container]');
-        
-        if (!textContainer || !iconContainer) return;
-        
-        // Sincronizar hover entre texto e ícono
-        const handleEnter = () => wrapper.classList.add('is-hovering');
-        const handleLeave = () => wrapper.classList.remove('is-hovering');
-        
-        textContainer.addEventListener('mouseenter', handleEnter);
-        textContainer.addEventListener('mouseleave', handleLeave);
-        iconContainer.addEventListener('mouseenter', handleEnter);
-        iconContainer.addEventListener('mouseleave', handleLeave);
-      });
-    }
-    
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initButtons);
-    } else {
-      initButtons();
-    }
-    
-    // Soporte para view transitions de Astro
-    document.addEventListener('astro:page-load', initButtons);
-  })();
-</script>
+  )
+}
 
 <script>
-  // Animación de fade-in con IntersectionObserver
-  (function() {
-    function initButtonAnimations() {
-      const buttons = document.querySelectorAll('[data-animate-button]');
-      
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-      };
-      
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
+  function init() {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            observer.unobserve(e.target);
           }
-        });
-      }, observerOptions);
-      
-      buttons.forEach((button) => {
-        observer.observe(button);
-      });
-    }
-    
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initButtonAnimations);
-    } else {
-      initButtonAnimations();
-    }
-    
-    // Soporte para view transitions de Astro
-    document.addEventListener('astro:page-load', initButtonAnimations);
-  })();
+        }),
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+    );
+    document
+      .querySelectorAll("[data-animate-button]")
+      .forEach((el) => observer.observe(el));
+  }
+
+  document.addEventListener("astro:page-load", init);
+  // Fallback: astro:page-load puede disparar antes de que el module script se registre
+  if (document.readyState !== "loading") init();
+  else document.addEventListener("DOMContentLoaded", init);
 </script>

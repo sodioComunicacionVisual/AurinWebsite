@@ -1,0 +1,35 @@
+---
+import styles from "./SliderClients.module.css";
+
+const LOGOS = [
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/AntojosSabores.svg", alt: "Antojos Sabores Logo", height: 80 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Galicia.svg", alt: "Galicia Logo", height: 72 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/InglesIndividual.svg", alt: "Inglés Individual Logo", height: 60 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Latiz.svg", alt: "Latiz Logo", height: 108 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/MexicoPacific.svg", alt: "Mexico Pacific Logo", height: 96 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/Pinnacle.svg", alt: "Pinnacle Logo", height: 80 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/SinfonicadeMineria.svg", alt: "Sinfónica de Minería Logo", height: 96 },
+  { src: "https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/TioFrancisco%20.svg", alt: "Tío Francisco Logo", height: 80 },
+];
+
+const ALL_LOGOS = [...LOGOS, ...LOGOS];
+---
+
+<section class={styles.slider}>
+  <div class={styles.track}>
+    {ALL_LOGOS.map((logo, i) => (
+      <>
+        <div class={styles.logo}>
+          <img
+            src={logo.src}
+            alt={logo.alt}
+            style={`height: calc(${logo.height}px * var(--logo-scale, 1))`}
+            width="auto"
+            draggable="false"
+          />
+        </div>
+        {(i + 1) % LOGOS.length !== 0 && <div class={styles.sep} />}
+      </>
+    ))}
+  </div>
+</section>

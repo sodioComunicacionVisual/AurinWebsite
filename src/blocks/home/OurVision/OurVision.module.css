@@ -1,74 +1,62 @@
-.description {
+.section {
   position: relative;
-  padding-top: var(--spacing-12);
-  padding-bottom: var(--spacing-8);
+  padding-top: 40px;
+  padding-bottom: 24px;
   padding-inline: var(--section-padding-x);
   overflow: hidden;
 }
 
-.descriptionContainer {
+.container {
   max-width: var(--maxWidth);
   margin: 0 auto;
-  display: flex;
-  align-items: flex-start;
 }
 
-/* Left column */
 .leftColumn {
   width: 600px;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 50px;
-  padding-top: var(--spacing-5);
-  padding-bottom: var(--spacing-5);
+  gap: 40px;
+  padding-block: (--spacing-5);
 }
 
-.mainHeadingText {
+.heading {
   font-family: var(--font-family-display);
   font-size: 32px;
-  line-height: 35px;
-  font-weight: var(--font-weight-light);
+  line-height: 132%;
+  font-weight: 200;
   color: var(--color-yellow);
   margin: 0;
 }
 
-.contentText {
+.bodyText {
   align-self: stretch;
+  color: var(--color-white);
+  font-size: 20px;
+  font-weight: 300;
 }
 
-.contentText p {
-  font-size: var(--font-size-xl);
+.bodyText p {
+  margin: 0;
 }
 
-.textHighlight {
+.highlight {
   color: var(--color-yellow);
-  font-weight: var(--font-weight-bold);
-}
-
-.contrastTextWrapper {
-  width: 100%;
+  font-weight: 300;
 }
 
 .contrastText {
   color: var(--color-yellow);
   font-family: var(--font-family-display);
   font-size: 48px;
-  font-weight: var(--font-weight-light);
-  line-height: 50px;
+  font-weight: 300;
+  line-height: 132%;
   margin: 0;
-  word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
 }
 
-/* SVG — absolutely positioned, tracks end of text column at all widths.
-   At ≤1830px (1600+2×115) the left edge is always 763px from the section left.
-   On wider screens the centered container shifts right, so the formula adjusts:
-   max( (viewport - 1830px) / 2 + 763px, 763px ) */
-.svgAbsolute {
+.svgDecor {
   position: absolute;
   left: max(calc((100% - 1830px) / 2 + 763px), 763px);
   top: 75px;
@@ -76,36 +64,28 @@
   pointer-events: none;
 }
 
-.svgElement {
+.svgImage {
   display: block;
   width: 100%;
   height: auto;
   mix-blend-mode: plus-lighter;
 }
 
-
-/* Responsive */
-
-/* Tablet angosto + desktop estrecho (1025–1279px):
-   el SVG quedaría demasiado delgado, se oculta */
 @media (max-width: 1279px) {
-  .svgAbsolute {
+  .svgDecor {
     display: none;
   }
 }
 
-/* Tablet (≤1024px): columna de texto a ancho completo */
 @media (max-width: 1024px) {
   .leftColumn {
     width: 100%;
-    max-width: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-block: 0;
   }
 }
 
 @media (max-width: 767px) {
-  .description {
+  .section {
     padding-top: var(--spacing-10);
     padding-bottom: var(--spacing-8);
   }
@@ -116,7 +96,7 @@
 }
 
 @media (max-width: 480px) {
-  .description {
+  .section {
     padding-top: var(--spacing-8);
     padding-bottom: var(--spacing-6);
   }
@@ -125,8 +105,8 @@
     gap: var(--spacing-5);
   }
 
-  .mainHeadingText {
-    font-size: 24px;
+  .heading {
+    font-size: var(--font-size-2xl);
     line-height: 28px;
   }
 

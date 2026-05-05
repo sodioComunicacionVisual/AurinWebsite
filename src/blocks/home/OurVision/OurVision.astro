@@ -1,0 +1,37 @@
+---
+import { getLangFromUrl, translations } from "@/i18n";
+import styles from "./OurVision.module.css";
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = translations[currentLang];
+---
+
+<section class:list={[styles.section, "description-main"]}>
+  <div class={styles.container}>
+    <div class={styles.leftColumn}>
+      <h2 class={styles.heading}>{t.homeDescription.mainHeading}</h2>
+
+      <div class={styles.bodyText}>
+        <p>
+          {t.homeDescription.contentText}<br />
+          <strong class={styles.highlight}
+            >{t.homeDescription.contentHighlight}</strong
+          >
+          {t.homeDescription.contentContinue}
+        </p>
+      </div>
+
+      <p class={styles.contrastText}>
+        {t.homeDescription.contrastText}
+      </p>
+    </div>
+  </div>
+
+  <div class={styles.svgDecor}>
+    <img
+      src="https://pub-d17bbbdbf8e348c5a57c8168ad69c92f.r2.dev/LightSVG.svg"
+      alt="Light svg"
+      class={styles.svgImage}
+    />
+  </div>
+</section>

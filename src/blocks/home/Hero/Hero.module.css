@@ -38,7 +38,7 @@
   font-family: var(--font-family-display);
   font-size: 32px;
   line-height: 132%;
-  font-weight: var(--font-weight-light);
+  font-weight: 200;
   margin: 56px 0px 56px 0px;
   padding: 0;
 }

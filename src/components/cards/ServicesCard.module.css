@@ -84,8 +84,8 @@
   color: #0A0A0A;
   font-size: clamp(16px, 1.5vw, 20px);
   font-family: var(--font-body);
-  font-weight: 400;
-  line-height: 1.5;
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-tight);
   margin: 0;
   transition: all 0.3s ease;
 }

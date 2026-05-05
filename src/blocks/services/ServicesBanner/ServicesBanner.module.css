@@ -153,7 +153,7 @@
 
     .description p {
       font-size: clamp(14px, 3.5vw, 18px);
-      line-height: 1.5;
+      line-height: var(--line-height-tight);
     }
   }
 
